@@ -1,0 +1,38 @@
+[
+    {
+        "pk": 1, 
+        "model": "memos.clasificacionmemo", 
+        "fields": {
+            "descripcion": "Estado de aprobaci\u00f3n de un memo.\r\nSe establece asignaci\u00f3n a ambos, dado que en algunos casos quien redacta, puede aprobar.", 
+            "nombre": "Aprobado", 
+            "asignacion": 2
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "memos.clasificacionmemo", 
+        "fields": {
+            "descripcion": "Se asigna a 'Nadie' porque luego de establecer un modo, no se puede cambiar de nuevo a 'En espera'.", 
+            "nombre": "En espera", 
+            "asignacion": 3
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "memos.clasificacionmemo", 
+        "fields": {
+            "descripcion": "", 
+            "nombre": "Rechazado", 
+            "asignacion": 2
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "memos.clasificacionmemo", 
+        "fields": {
+            "descripcion": "", 
+            "nombre": "Anulado", 
+            "asignacion": 1
+        }
+    }
+]

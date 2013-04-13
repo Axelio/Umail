@@ -1,0 +1,12 @@
+ * Revisar modelos y duplicación de data
+ * Agregar por quienes seran leidos
+ * Agregar django-qbe para el uso de reportes
+ * Sólo los implicados en el memo (destinatarios/remitentes) pueden leer el memo
+ * Añadir los estatus al listado en los mensajes
+ * Añadir con copias a los destinatarios
+ * Añadir m2m para leído por...
+
+
+# PROXIMA VERSIÓN
+ * Soporte para adjunción de múltiples archivos
+ * Encriptar/Desencriptar toda información de los memos a nivel de base de datos

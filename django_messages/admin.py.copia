@@ -1,0 +1,211 @@
+# -*- coding: utf-8 -*-
+from django import forms
+from django.conf import settings
+from django.utils.translation import gettext_lazy as _
+from django.contrib import admin
+from django.contrib.auth.models import User
+from auth.models import Group, UserProfile
+from lib import admin as Autocompletar
+
+if "notification" in settings.INSTALLED_APPS:
+    from notification import models as notification
+else:
+    notification = None
+    
+from ajax_select.fields import AutoCompleteSelectMultipleField, AutoCompleteSelectField
+
+from django_messages.models import Message, EstadoMemo, Destinatarios
+
+class MessageAdminForm(forms.ModelForm):
+    """
+    Custom AdminForm to enable messages to groups and all users.
+    """
+    # recipient = forms.ModelMultipleChoiceField(
+    #     label=_('Recipient'), queryset=User.objects.all(), required=True)
+    #recipient = AutoCompleteSelectMultipleField('destinatarios', required=True, label=_('Destinatario'),help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
+    con_copia = AutoCompleteSelectMultipleField('destinatarios', required=False,help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
+    leido_por = AutoCompleteSelectMultipleField('destinatarios', required=False)
+    sender = AutoCompleteSelectField('destinatarios', required=False)
+
+    class Meta:
+        model = Message
+    def clean(self):
+        ''' Validar si se eligió algún destinatario '''
+        if not self.cleaned_data.__contains__('recipient'):
+            raise forms.ValidationError('No hay nadie a quien enviar el mensaje.')
+
+        else:
+            ''' Validar si el grupoo tiene algún usuario '''
+            for destinatario in self.cleaned_data['recipient']:
+                dest = Destinatarios.objects.get(id=destinatario.id)
+                #dest = Destinatarios.objects.get(id=destinatario)
+                if not dest.grupos == None:
+                    if dest.grupos.user_set.get_query_set().count() == 0 and not dest.grupos.name == 'Todos':
+                        raise forms.ValidationError(u'No hay nadie en el grupo seleccionado. Por favor, ingrese un usuario o registre usuarios en ese grupo')
+
+        '''
+        # Si hay algún grupo elegido:
+        if self.cleaned_data['group'].__len__() > 0:
+
+            # Si el grupo NO es 'Todos los usuarios':
+            if self.cleaned_data['group'] == 'all':
+                # Enviar a todos los usuarios excepto al que esté en los usuarios agregados
+
+                # Si hay destinatarios en el mensaje:
+                if self.cleaned_data['recipient']:
+                    dest_id = []
+                    for destinatarios in self.cleaned_data['recipient']:
+                        dest_id.append(destinatarios.id)
+                    recipients = User.objects.exclude(id__in=dest_id)
+
+                # Sino, se se busca a todos los usuarios
+                else:
+                    recipients = User.objects.all()
+
+                self.cleaned_data['recipient'] = recipients
+            else:
+
+                grupo = Group.objects.get(id=self.cleaned_data['group'])
+
+                # Si no hay nadie en ese grupo:
+                if not usuarios.exists():
+                    raise forms.ValidationError(u'No hay nadie en el grupo seleccionado. Por favor, ingrese un usuario o registre usuarios en ese grupo')
+                else:
+                    # Envío de mensajes a un grupo que NO sea 'Todos los usuarios'
+                    recipients = []
+                    group_id = form.cleaned_data['group']
+                    if group:
+                        group = Group.objects.get(id=group_id)
+                        recipients = group.user_set.get_query_set()
+                    #for usuario in usuarios:
+                    #    self.cleaned_data['recipient'].add(user)
+            self.cleaned_data['recipient'] = recipients
+        '''
+
+        return self.cleaned_data
+
+class MessageAdmin(admin.ModelAdmin):
+    
+    #form = Autocompletar.make_ajax_form(Message,dict(recipient='usuarios', con_copia='usuarios', leido_por='usuarios', sender='usuarios'))
+    #sender = forms.ModelMultipleChoiceField(label=_('Sender'), queryset=User.objects.all(), required=True)
+    form = MessageAdminForm
+    fieldsets = (
+        (None, {
+            'fields': (
+                'sender',
+                ('recipient', 'con_copia'),
+            ),
+        }),
+        (_('Message'), {
+            'fields': (
+                'parent_msg',
+                'subject', 'adjuntos', 'body',
+            ),
+            'classes': ('monospace' ),
+        }),
+        (('Detalles'), {
+            'fields': (
+                'status', 'tipo',
+            ),
+            'classes': ('collapse', 'wide'),
+        }),
+        (_('Date/time'), {
+            'fields': (
+                'sent_at', 'read_at', 'replied_at',
+                'sender_deleted_at', 'recipient_deleted_at',
+                'leido_por',
+            ),
+            'classes': ('collapse', 'wide'),
+        }),
+    )
+    list_display = ('subject', 'sender', 'sent_at', 'read_at')
+    list_filter = ('sent_at', 'sender', 'read_at')
+    search_fields = ('subject', 'body')
+    filter_horizontal = ('recipient',)
+
+    def save_model(self, request, obj, form, change):
+        """
+        Saves the message for the recipient and looks in the form instance
+        for other possible recipients. Prevents duplication by excludin the
+        original recipient from the list of optional recipients.
+
+        When changing an existing message and choosing optional recipients,
+        the message is effectively resent to those users.
+        """
+        '''
+        obj.save()
+        obj.recipient.clear()
+        obj.save()
+        import pdb
+        mensaje =  Message.objects.filter(pk=obj.pk)
+        if mensaje.exists():
+            mensaje = mensaje[0]
+        else:
+            mensaje =  Message.objects.create(pk=obj.pk)
+
+        for destinatarios in request.POST['recipient']:
+            destinatario = Destinatarios.objects.get(pk=destinatarios)
+            if not destinatario.grupos == None:
+                if destinatario.grupos.name == 'Todos':
+                    mensaje.recipient.remove(destinatario)
+            mensaje.save()
+                obj.recipient.remove(prueba)
+                print prueba
+                obj.save()
+                print obj.recipient.get_query_set()
+        '''
+        
+        '''
+        if notification:
+            # Getting the appropriate notice labels for the sender and recipients.
+            if obj.parent_msg is None:
+                sender_label = 'messages_sent'
+                recipients_label = 'messages_received'
+            else:
+                sender_label = 'messages_replied'
+                recipients_label = 'messages_reply_received'
+                
+            # Notification for the sender.
+            notification.send([obj.sender], sender_label, {'message': obj,})
+
+        for destinatario in obj.recipient.get_query_set():
+            destinatario = Destinatarios.objects.get(id=destinatario.id)
+            #destinatario = Destinatarios.objects.get(id=destinatario)
+            if not destinatario.grupos == None:
+                if destinatario.grupos.name == 'Todos':
+                    # Enviar a todos los usuarios excepto a los destinatarios originales
+
+
+
+                    dest_id = []
+                    for destinatarios in obj.recipient.get_query_set():
+                        dest_id.append(destinatarios.id)
+
+
+
+                    recipients = Destinatarios.objects.filter(usuarios__id__gte=0)
+                    obj.recipient.remove(destinatario)
+                    obj.save()
+                else:
+                    # send to a group of users
+                    recipients = []
+                    group = form.cleaned_data['group']
+                    if group:
+                        group = Group.objects.get(pk=group)
+                        recipients = group.user_set.get_query_set()
+        # create messages for all found recipients
+
+        for user in recipients:
+            obj.recipient.add(user)
+            obj.save()
+
+            if notification:
+                # Notification for the recipient.
+                notification.send([user], recipients_label, {'message' : obj,})
+        '''
+            
+admin.site.register(Message, MessageAdmin)
+class EstadoMemoAdmin(admin.ModelAdmin):
+    filter_horizontal = ('modificable',)
+admin.site.register(EstadoMemo, EstadoMemoAdmin)
+admin.site.register(Destinatarios)

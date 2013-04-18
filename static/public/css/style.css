@@ -53,7 +53,7 @@ img { margin: 0px; padding: 0px; border: none; }
 	width: 106px;
 	height: 28px;
 	padding-top: 8px;
-	background: url(static/images/button_01.png) no-repeat;
+	background: url(/static/images/button_01.png) no-repeat;
 	font-size: 12px;
 	color: #ffffff;
 	font-weight: bold;
@@ -277,7 +277,7 @@ img { margin: 0px; padding: 0px; border: none; }
 	float: right;
 	width: 620px;
 	margin: 0px;
-	background: url(images/content_top.jpg) top repeat-x;
+	background: url(/images/content_top.jpg) top repeat-x;
 }
 
 .content_header_01 {

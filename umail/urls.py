@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^django_messages/', include('django_messages.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', TemplateView.as_view(template_name="user/index.html")),
+    url(r'^$','auth.views.index'),
 )
 if not settings.DEBUG:
     urlpatterns += patterns('',

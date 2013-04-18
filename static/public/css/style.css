@@ -39,7 +39,7 @@ img { margin: 0px; padding: 0px; border: none; }
 	display: block;
 	width: 200px;
 	font-size: 12px;
-	background: url(static/images/icon_01.png) no-repeat;
+	background: url(/static/images/icon_01.png) no-repeat;
 	color: #ffffff;
 	font-weight: bold;
 	text-decoration: none;
@@ -130,7 +130,7 @@ img { margin: 0px; padding: 0px; border: none; }
 	text-align: center;
 	vertical-align: bottom;
 	white-space: pre;
-	background: url(static/images/search_button.png); 
+	background: url(/static/images/search_button.png); 
 	border: none;
 }
 /* end of header */
@@ -344,7 +344,7 @@ img { margin: 0px; padding: 0px; border: none; }
 	text-align: center;
 	vertical-align: bottom;
 	white-space: pre;
-	background: url(static/images/button_01.png) no-repeat; 
+	background: url(/static/images/button_01.png) no-repeat; 
 	color: #ffffff;
 	border: none;
 }

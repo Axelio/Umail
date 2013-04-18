@@ -1,0 +1,19 @@
+[
+{
+    "pk": 1, 
+    "model": "personas.personas", 
+    "fields": {
+        "num_identificacion": "16407820", 
+        "genero": 0, 
+        "cargo_principal": 1, 
+        "segundo_apellido": "Urrutia", 
+        "segundo_nombre": "Gabriel", 
+        "primer_apellido": "Rodriguez", 
+        "primer_nombre": "Alberto", 
+        "cargos_autorizados": [], 
+        "telefono": null, 
+        "email": "arod.unerg@gmail.com", 
+        "tipodoc": "c"
+    }
+}
+]

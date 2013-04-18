@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load admin_static %}{% load url from future %}{% load i18n grp_tags %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8" />
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+    <!-- STYLESHEETS -->
+    {% block stylesheets %}
+        <link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" media="screen" />
+    {% endblock %}
+    <!-- EXTRASTYLES -->
+    {% block extrastyle %}{% endblock %}
+    <!-- EXTRAHEAD -->
+    {% block extrahead %}{% endblock %}
+</head>
+
+<body>
+
+<!-- Banner -->
+{% include "user/banner.html" %}
+
+<!-- Umail info -->
+{% include "user/umail_info.html" %}
+
+<!-- Menú -->
+{% include "user/menu.html" %}
+
+    <div id="content_wrapper">
+    <div id="content">
+
+                <div class="content_header_01" align=center>Noticias</div>
+
+                {% for noticia in noticias %}
+                <div class="news_section">
+                    <div class="news_date">{{ noticia.fecha }}</div>
+                    <div class="news_title">{{ noticia.titulo }}</div>
+                    <p>{{ noticia.texto }} 
+                    <a href="/noticias/{{ noticia.id }}">Leer más</a></p>
+                </div>
+            
+                <div class="margin_bottom_30"></div>
+                {% endfor %}
+            
+                <div class="margin_bottom_20"></div>
+            <div class="cleaner"></div>
+            
+            </div>   <!-- FIN DE NOTICIAS -->
+            
+
+    <div class="cleaner">&nbsp;</div>
+
+    </div> <!-- end of content -->
+    </div> <!-- end of content wrapper -->
+
+<div id="footer_wrapper">        
+    <div id="footer">
+        Copyright © <a href="https://github.com/Axelio/umail/blob/master/copyright">Umail</a> | 
+    </div><!-- end of footer -->
+</div><!-- end of footer wrapper -->
+</body>
+</html>

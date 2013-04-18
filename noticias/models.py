@@ -11,4 +11,4 @@ class Noticias(models.Model):
         verbose_name_plural = u'noticias'
         verbose_name        = u'noticias'
     def __unicode__(self):
-        return u'%s - %s' (self.titulo, self.texto)
+        return u'%s - %s' %(self.titulo, self.texto)

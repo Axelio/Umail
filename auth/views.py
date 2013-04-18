@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response
 def index(request):
     diccionario = {}
     diccionario.update(csrf(request))
+    diccionario.update({'request':request})
     loggeado = request.user.is_authenticated()
     diccionario.update({'loggeado':loggeado})
     if loggeado:

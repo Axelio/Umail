@@ -167,6 +167,7 @@ INSTALLED_APPS = (
 	'personas',
     'sedes',
     'memos',
+    'noticias',
 )
 
 # A sample logging configuration. The only tangible logging

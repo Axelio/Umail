@@ -31,26 +31,32 @@
             <div class="cleaner">&nbsp;</div>
         </div>
         
-        <div id="search_section">
-            <form action="#" method="get">
-                <input type="text" name="q" size="10" id="searchfield" title="searchfield" />
-                <input type="submit" name="Search" value="" alt="Search" id="searchbutton" title="Search" />
-            </form>
-        </div>    
+        {% if loggeado %}
+            <div id="search_section">
+                <table>
+                    <td>
+                        <h1>Bienvenido {{ request.user.profile.persona.primer_nombre }}</h1>
+                    </td>
+                    <td width=25%>
+                    </td>
+                    <td>
+                        <a href='/admin'>¿Deseas ir al panel administrativo?</a>
+                    </td>
+                </table>
+
+            </div>    
+        {% else %}
+            <div id="search_section">
+                <form action="#" method="get">
+                    <input type="text" name="q" size="10" id="searchfield" title="searchfield" />
+                    <input type="submit" name="Search" value="" alt="Search" id="searchbutton" title="Search" />
+                </form>
+            </div>    
+        {% endif %}
     </div> <!-- end of header -->
 </div>  <!-- end of header wrapper -->
 
-<div id="banner_wrapper">
-    <div id="banner">
-    
-        <div id="banner_header_01">FREE CSS TEMPLATE</div>
-        <div id="banner_header_02">Your website is important to everyone.</div>
-        <div id="banner_text">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo lacus ac orci dapibus tempor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.</p>
-            <div class="rc_btn_01"><a href="#">Continue reading...</a></div>
-        </div>
-    </div>	<!-- end of banner -->
-</div> <!-- end of banner wrapper -->
+{% include "user/umail_info.html" %}
 
 {% if loggeado %}
     <div id="menu_wrapper">    
@@ -72,7 +78,7 @@
         <div id="content_left">
             <div class="content_left_section">
                 <!-- NOTICIAS -->
-                <div class="content_header_01">Nuestras noticias</div>
+                <div class="content_header_01">Últimas noticias</div>
 
                 {% for noticia in ult_notic %}
                 <div class="news_section">

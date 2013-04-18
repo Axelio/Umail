@@ -1,21 +1,32 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+{% load admin_static %}{% load url from future %}{% load i18n grp_tags %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Professional Template, HTML, CSS, free website template</title>
-<meta name="keywords" content="Professional Template, HTML, CSS, free website template" />
-<meta name="description" content="Professional Template, HTML, CSS, free website template provided by freecsstemplates.in" />
-<link href="style.css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8" />
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+    <!-- STYLESHEETS -->
+    {% block stylesheets %}
+        <link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" media="screen" />
+    {% endblock %}
+    <!-- EXTRASTYLES -->
+    {% block extrastyle %}{% endblock %}
+    <!-- EXTRAHEAD -->
+    {% block extrahead %}{% endblock %}
 </head>
+
 <body>
 <div id="header_wrapper">
     <div id="header">
         <div id="site_title_section">
             <div id="site_title">
-	          Professional
+	          Umail
             </div>
             <div id="salogon">
-	            New Media Company</div>
+	            Tojpkalsds</div>
             <div class="cleaner">&nbsp;</div>
         </div>
         
@@ -43,7 +54,7 @@
 <div id="menu_wrapper">    
     <div id="menu">
         <ul>
-            <li><a href="#" class="current"><span></span>Home</a></li>
+            <li><a href="#" class="current"><span></span>Inicio</a></li>
             <li><a href="http://www.freecsstemplates.in" target="_parent"><span></span>Templates</a></li>
             <li><a href="#"><span></span>Projects</a></li>
             <li><a href="#"><span></span>Partners</a></li>
@@ -58,7 +69,7 @@
 
     <div id="content_left">
         <div class="content_left_section">
-            <div class="content_header_01">Our news</div>
+            <div class="content_header_01">Nuestras noticias</div>
             <div class="news_section">
                 <div class="news_date">OCT 20, 2048</div>
                 <div class="news_title">Nam auctor aliquam leo</div>
@@ -107,7 +118,7 @@
     
         <div class="content_right_280_section margin_right_60">
             <div class="content_header_01">Welcome to our website</div>
-            <div class="image_wrapper"><img src="images/image_01.jpg" alt="image" /></div>
+            <div class="image_wrapper"><img src="static/images/image_01.jpg" alt="image" /></div>
             <p>Professional <a href="http://www.freecsstemplates.in/" target="_parent">website template</a> is provided by <a href="http://www.freecsstemplates.in" target="_parent">freecsstemplates.in</a> for everyone. You may download, modify and apply this layout for your personal or business websites. Credit go to <a href="http://www.photovaco.com" target="_blank">Free Photos</a> for photos. <a href="#">Read more...</a></p>
       </div>
     
@@ -138,17 +149,17 @@
             <div class="content_right_w620_wrapper">
                 <div class="content_right_w620_inner">
                     <div class="box_w170 margin_right_25">
-                        <div class="image_wrapper"><a href="#"><img src="images/image_03.jpg" alt="image 2" /></a></div>
+                        <div class="image_wrapper"><a href="#"><img src="static/images/image_03.jpg" alt="image 2" /></a></div>
                         <p>Vestibulum a augue nec dolor vulputate fermentum.</p>
                     </div>
         
                     <div class="box_w170 margin_right_25">
-                        <div class="image_wrapper"><a href="#"><img src="images/image_02.jpg" alt="image 3" /></a></div>
+                        <div class="image_wrapper"><a href="#"><img src="static/images/image_02.jpg" alt="image 3" /></a></div>
                         <p>liquam erat volutpat. Vestibulum neque felis.</p>
                     </div>
     
                     <div class="box_w170">
-                        <div class="image_wrapper"><a href="#"><img src="images/image_04.jpg" alt="image 4" /></a></div>
+                        <div class="image_wrapper"><a href="#"><img src="static/images/image_04.jpg" alt="image 4" /></a></div>
                         <p>Donec nec lectus turpis mauris viverra leo at tortor.</p>
                     </div>
     
@@ -173,8 +184,7 @@
 
 <div id="footer_wrapper">        
     <div id="footer">
-        Copyright © 2048 <a href="subpage.html">Your Company Name</a> | 
-        <a href="http://www.templatemo.com" target="_parent">Website Templates</a> by <a href="http://www.freecsstemplates.in" target="_parent">Free CSS Templates</a>
+        Copyright © <a href="https://github.com/Axelio/umail/blob/master/copyright">Umail</a> | 
     </div><!-- end of footer -->
 </div><!-- end of footer wrapper -->
 </body>

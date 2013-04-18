@@ -13,4 +13,4 @@ def index(request):
         ultimas_noticias = Noticias.objects.all().order_by('-fecha')[:2]
         diccionario.update({'ult_notic':ultimas_noticias})
 
-    return render_to_response('user/index.html', diccionario)
+    return render_to_response('user/index/index.html', diccionario)

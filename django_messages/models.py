@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from auth.models import Group
 from auth.models import UserProfile
 from django.utils.translation import ugettext_lazy as _
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 
 class MessageManager(models.Manager):
@@ -89,7 +89,7 @@ class Message(models.Model):
     sender_deleted_at = models.DateTimeField(_("Sender deleted at"), null=True, blank=True)
     recipient_deleted_at = models.DateTimeField(_("Recipient deleted at"), null=True, blank=True)
     status = models.ForeignKey('EstadoMemo')
-    tipo = models.CharField(max_length=10)
+    tipo = models.CharField(max_length=10, blank=True, null=True)
     leido_por = models.ManyToManyField('Destinatarios', related_name='leido_por', null=True, blank=True, verbose_name=("leido por: "))
 
     objects = MessageManager()
@@ -114,19 +114,6 @@ class Message(models.Model):
     get_absolute_url = models.permalink(get_absolute_url)
     
     def save(self, **kwargs):
-        destinatario = self.recipient.get_query_set()
-        if destinatario.count() > 1:
-            self.tipo = u'Circular'
-        else:
-            destinatario = destinatario[0]
-            # Si el grupo está vacío entonces es a un solo usuario
-            if destinatario.grupos == None:
-                self.tipo = u'Personal'
-            elif destinatario.grupos.user_set.get_query_set().count() > 1:
-                self.tipo = u'Circular'
-            else:
-                self.tipo = u'Personal'
-
         if not self.id:
             self.sent_at = datetime.datetime.now()
         super(Message, self).save(**kwargs) 

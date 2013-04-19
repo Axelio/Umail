@@ -45,10 +45,23 @@ class MessageAdminForm(forms.ModelForm):
     class Meta:
         model = Message
     def clean(self):
+        destinatarios = self.cleaned_data['recipient']
+        # --- Tipo --- #
+        if destinatarios.__len__() > 1:
+            self.cleaned_data['tipo'] = u'Circular'
+        else:
+            destin = Destinatarios.objects.get(id=destinatarios[0])
+            # Si el grupo está vacío entonces es a un solo usuario
+            if destin.grupos == None:
+                self.cleaned_data['tipo'] = u'Personal'
+            elif destin.grupos.user_set.get_query_set().count() > 1:
+                self.cleaned_data['tipo'] = u'Circular'
+            else:
+                self.cleaned_data['tipo'] = u'Personal'
+
         # --- Destinatarios --- #
         # Revisar si está el grupo Todos en destinatarios
         todos = Destinatarios.objects.get(grupos__name__iexact='Todos')
-        destinatarios = self.cleaned_data['recipient']
         if todos.id in (self.cleaned_data['recipient']):
             self.cleaned_data['recipient'].__init__()
             self.cleaned_data['recipient'].append(todos.id)

@@ -30,6 +30,7 @@ def inbox(request):
         return render_to_response('user/mensajes/inbox.html', {
             'message_list': message_list,
             'loggeado': request.user.is_authenticated,
+            'request':request,
         }, context_instance=RequestContext(request))
     else:
         return HttpResponseRedirect('/')

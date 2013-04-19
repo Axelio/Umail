@@ -70,7 +70,8 @@ img { margin: 0px; padding: 0px; border: none; }
 
 #header {
 	width: 980px;
-	height: 120px;
+	/*height: 120px;*/
+    height: 100%;
 	margin: 0 auto;
 	background: url(images/template_header_bg_01.jpg)  no-repeat;
 }
@@ -117,6 +118,21 @@ img { margin: 0px; padding: 0px; border: none; }
 	line-height: normal;
 	background: #86d8ff;
 	border: 1px solid #ffffff;	
+}
+
+#enviar_buton{
+	width: 75px;
+ 	height: 24px;
+	margin: 0 0 0 7px;
+	padding: 0 6px;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: bottom;
+	white-space: pre;
+	background: url(/static/images/enviar.png); 
+	border: none;
 }
 
 #searchbutton {

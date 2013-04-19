@@ -14,21 +14,54 @@
             <div id="search_section">
                 <table>
                     <tr>
-                        <h1>Bienvenido {{ request.user.profile.persona.primer_nombre }}</h1>
+                        <td align=right colspan=2>
+                            <h1>Bienvenido {{ request.user.profile.persona.primer_nombre }}</h1>
+                        </td>
                     </tr>
                     <tr width=25%>
                     </tr>
                     <tr>
-                        <a href='/admin'>¿Deseas ir al panel administrativo?</a>
+                        <td>
+                        <a href='/admin'>¿Deseas ir al panel administrativo?</a> |
+                        </td>
+                        <td>
+                        <a href='/logout'>Cerrar sesión</a>
+                        </td>
                     </tr>
                 </table>
 
             </div>    
         {% else %}
             <div id="search_section">
-                <form action="#" method="get">
-                    <input type="text" name="q" size="10" id="searchfield" title="searchfield" />
-                    <input type="submit" name="Search" value="" alt="Search" id="searchbutton" title="Search" />
+                <form method="post" id="login-form" action="/" >{% csrf_token %}
+                    <table>
+                        <td>
+                            <div style="margin:0;padding:0"></div>
+                            <div class="row user">
+                                <strong><label for="username_or_email">Correo:</label></strong>
+                                <span class="field">
+                                    <input type="text" name="username" class="text" autofocus="autofocus" required="required" value="" id="password" title="Usuario">
+                                    <input type="hidden" name="next" value="/">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="row password">
+                                <strong><label for="password">Clave:</label></strong>
+                                    <span class="field">
+                                    <input type="password" name="password" required="required" value="" id="password" class="password" title="Contraseña">
+                                </span>
+                                <!--<p><a href="password_reset/">¿Olvidaste tu contraseña?</a></p>-->
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="row submit">
+                                <input type="submit" name="entrar" value="" id="enviar_buton" title="Entrar"/>
+                            </div>
+                        </td>
+                    </table>
                 </form>
             </div>    
         {% endif %}

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="botón.svg">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3762">
+      <stop
+         id="stop3776"
+         offset="0"
+         style="stop-color:#4c4c4c;stop-opacity:1;" />
+      <stop
+         style="stop-color:#797979;stop-opacity:1;"
+         offset="1"
+         id="stop3766" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3762"
+       id="linearGradient3768"
+       x1="454.72864"
+       y1="336.03632"
+       x2="454.99466"
+       y2="308.81741"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3762"
+       id="linearGradient3811"
+       x1="377.16266"
+       y1="321.13113"
+       x2="377.69052"
+       y2="289.98685"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3762"
+       id="linearGradient3839"
+       gradientUnits="userSpaceOnUse"
+       x1="377.16266"
+       y1="321.13113"
+       x2="377.69052"
+       y2="289.98685" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.7888162"
+     inkscape:cx="418.3621"
+     inkscape:cy="720.55748"
+     inkscape:document-units="px"
+     inkscape:current-layer="g3834"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="709"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:snap-grids="false"
+     inkscape:snap-to-guides="false" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <image
+       y="306.32269"
+       x="400.22421"
+       id="image3004"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAAAkCAYAAABhc6+LAAAABHNCSVQICAgIfAhkiAAABHJJREFU aIHtmz9II0scxz8xQXD3ilcY213L02seqKXRzkRN4x/0irtYq82JhQgiiKAgKDysg4XmLqQ5Fe3U 2IW744GKpYmdl9iZjQ/RnVck2dvkclx12Q3MB4bJ7s7M/nZ+852ZXfLzAB6gCfACvlLeVDovqT8C MIEX4LmUmz6KTmkGWoBXpbyZosMk9ecFeAIegXwpfyorqGVqauofRVHeOmigpIpCobAXjUZngRcf xenulaIob71eKSI3URLOAvCfpSgAIYSTdklq0wJ4m/ixRkncSTPQ5KO4u/OCVJRL8QIen/2MdJR7 kY5yMR7Pj1dZ6SgXIx3VgFQ4yjRNp+yQ1MD+XisVVYWmaSwuLgKwurrK7e2twxYVcdRRmqYxMDBA V1cXALlcjm/fvpHL5Tg/P6+rLWXsfSCEcM3gdWzq8/v9fPjwAUVRSCQSHB8fo2ka79+/p7W1lbOz s7rZYsfeB6ZpumY5cExRXV1dKIoCQDKZRAhBJpNhY2ODYDCIEILu7m6CwSC6rlv1kskkOzs7AAQC AXRdJxAIWNcTiQRHR0cAjI6OEgqFMAyDZDJJKBQikUiQTCZZW1tDVVWr3tHREV+/fv3Jxrm5OVRV 5fr6mo2NjT/VHb+lyX5QHkH1SPZBsbS0xMjICMFgkIeHB+LxOKZp8u7dO3Rd5+zsjEgkwpcvXwgE AoyMjGCaJpqmkc1miUQiLC8vYxgGo6Oj9Pb2VtxDVVVCoRBQHIy9vb2oqkoul2N+fp5IJIIQgtev X1coKJ1OMz09jWEYdHR0EAwG69pHdhxT1OHhIR0dHXR2duL3+xkcHARgbGyMaDRKJpOxRvzh4SFC CK6uruju7qavr494PE40GrXaS6fT5HI5VFXF7/dXPIthGMzPz2MYBoCljNPTU7LZLADxeBygQr3Z bBYhhNWuoiiOrVmObibW19dpa2ujr6+PQqFAT08Puq4zPj7O+vq6Va7WlCOEoKenx0rV16o3Avl8 3vpdnnLLZavrVrfzq+N64thmYnh4mFQqxd3dHR8/fgSgpaXFGtH2jl1bW+Pq6qqifltbGzMzMwB8 +vSJg4MDVlZWaG9vRwjx0/RqfzbDMFBV1Spnp9ox9nZqla8XFWuUfST+6aQoCisrKwwNDVnHb968 ASCVSvH9+3dSqRSAVUYIQX9/P7Ozs/j9fsvum5sbFEWp2BzUUko5nZycANDf329Nk0NDQ9Z9qus4 1Ud2HFNUuXMnJiaYmJgAimtCLBZjf38fgK2tLcLhMOFwmN3dXaCohlgsxsXFBbFYjMnJSRYWFkin 01bbv1PU58+fyefzhMNhNjc3Abi8vCQWi1XYWL2oO6koD/AXoE9PT/97f3/viBGS2rS2trK9vf03 kJHf+hoE+a2vQZCOahCkoxoEuUY1CFJRDYJ0VIPgoxg98ALSUS7lBRA+iiEeTyAd5VKeALOJosce HTZG8mseKUVzPAP5QqGwp2maDLtxEYVCYY9ijNRz+X/nMpDNPdQMZPMgQ0PdRs3Q0P8BMsuRIi2T h4sAAAAASUVORK5CYII= "
+       height="36"
+       width="106" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="405.43027"
+       y="299.93469"
+       id="text3007"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3009"
+         x="405.43027"
+         y="299.93469" /></text>
+    <g
+       id="g3834"
+       transform="matrix(1.0465668,0,0,1.122197,58.624499,20.534734)"
+       inkscape:export-filename="/home/axelio/public_html/umail/static/public/images/enviar.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         ry="3.6643198"
+         y="289.85489"
+         x="328.0708"
+         height="31.408226"
+         width="101.87878"
+         id="rect3803"
+         style="fill:url(#linearGradient3839);fill-opacity:1;stroke:none"
+         inkscape:export-filename="/home/axelio/public_html/umail/static/public/images/enviar.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/axelio/public_html/umail/static/public/images/enviar.png"
+         sodipodi:linespacing="125%"
+         id="text3011-5"
+         y="311.922"
+         x="350.15451"
+         style="font-size:144px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Century Schoolbook L;-inkscape-font-specification:Century Schoolbook L Medium"
+         xml:space="preserve"><tspan
+           style="font-size:18px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;fill:#ffffff;font-family:Century Schoolbook L;-inkscape-font-specification:Century Schoolbook L Medium"
+           y="311.922"
+           x="350.15451"
+           id="tspan3013-8"
+           sodipodi:role="line">Entrar</tspan></text>
+    </g>
+  </g>
+</svg>

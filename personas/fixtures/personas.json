@@ -15,5 +15,22 @@
         "email": "arod.unerg@gmail.com", 
         "tipodoc": "c"
     }
+},
+{
+    "pk": 2, 
+    "model": "personas.personas", 
+    "fields": {
+        "num_identificacion": "19276008", 
+        "genero": 0, 
+        "cargo_principal": 1, 
+        "segundo_apellido": "", 
+        "segundo_nombre": "", 
+        "primer_apellido": "D\u00edaz", 
+        "primer_nombre": "Axel", 
+        "cargos_autorizados": [], 
+        "telefono": 4264347463, 
+        "email": "diaz.axelio@gmail.com", 
+        "tipodoc": "c"
+    }
 }
 ]

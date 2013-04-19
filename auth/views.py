@@ -2,10 +2,11 @@
 from noticias.models import *
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
-from auth.forms import AuthenticacionForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import login
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 
 def index(request):
     diccionario = {}
@@ -29,6 +30,4 @@ def index(request):
         diccionario.update({'ult_notic':ultimas_noticias})
         return login(request,template_name='user/index/index.html', extra_context=diccionario) #extra_context={'mensaje':'mssdensaje'
     else:
-        return login(request,template_name='user/index/index.html', authentication_form=AuthenticacionForm, extra_context=diccionario) #extra_context={'mensaje':'mssdensaje'
-
-    #return render_to_response('user/index/index.html', diccionario)
+        return render_to_response('user/index/index.html', diccionario)

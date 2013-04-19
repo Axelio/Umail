@@ -35,9 +35,12 @@
             <div id="search_section">
                 <form method="post" id="login-form" action="/" >{% csrf_token %}
                     <table>
+                        <tr>
+                            <p class='error'>{{ error }}</p>
+                        </tr>
                         <td>
                             <div style="margin:0;padding:0"></div>
-                            <div class="row user">
+                            <div>
                                 <strong><label for="username_or_email">Correo:</label></strong>
                                 <span class="field">
                                     <input type="text" name="username" class="text" autofocus="autofocus" required="required" value="" id="password" title="Usuario">
@@ -47,7 +50,7 @@
                         </td>
 
                         <td>
-                            <div class="row password">
+                            <div>
                                 <strong><label for="password">Clave:</label></strong>
                                     <span class="field">
                                     <input type="password" name="password" required="required" value="" id="password" class="password" title="Contraseña">
@@ -57,7 +60,7 @@
                         </td>
 
                         <td>
-                            <div class="row submit">
+                            <div>
                                 <input type="submit" name="entrar" value="" id="enviar_buton" title="Entrar"/>
                             </div>
                         </td>

@@ -19,17 +19,20 @@ if "notification" in settings.INSTALLED_APPS:
 else:
     notification = None
 
-def inbox(request, template_name='django_messages/inbox.html'):
+def inbox(request):
     """
     Displays a list of received messages for the current user.
     Optional Arguments:
         ``template_name``: name of the template to use.
     """
-    message_list = Message.objects.inbox_for(request.user)
-    return render_to_response(template_name, {
-        'message_list': message_list,
-    }, context_instance=RequestContext(request))
-inbox = login_required(inbox)
+    if request.user.is_authenticated():
+        message_list = Message.objects.inbox_for(request.user)
+        return render_to_response('user/mensajes/inbox.html', {
+            'message_list': message_list,
+            'loggeado': request.user.is_authenticated,
+        }, context_instance=RequestContext(request))
+    else:
+        return HttpResponseRedirect('/')
 
 def outbox(request, template_name='django_messages/outbox.html'):
     """

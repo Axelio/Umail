@@ -27,28 +27,41 @@
 {% include "user/umail_info.html" %}
 
 <!-- Menú -->
-{% include "user/menu.html" %}
+    <div id="menu_wrapper">    
+        <div id="menu">
+            <ul>
+                <li><a href="/"><span></span>Inicio</a></li>
+                <li><a href="http://www.freecsstemplates.in" target="_parent"><span></span>Templates</a></li>
+                <li><a href="#"><span></span>Projects</a></li>
+                <li><a href="#"><span></span>Partners</a></li>
+                <li><a href="/noticias" class="current"><span></span>Noticias</a></li>
+                <li><a href="#"><span></span>Contact</a></li>
+            </ul>    	
+        </div> <!-- end of menu -->
+    </div> <!-- end of menu wrapper -->
 
     <div id="content_wrapper">
     <div id="content">
 
-                <div class="content_header_01" align=center>Noticias</div>
+        <div class="content_header_01" align=center>Noticias</div>
 
-                {% for noticia in noticias %}
-                <div class="news_section">
-                    <div class="news_date">{{ noticia.fecha }}</div>
-                    <div class="news_title">{{ noticia.titulo }}</div>
-                    <p>{{ noticia.texto }} 
-                    <a href="/noticias/{{ noticia.id }}">Leer más</a></p>
-                </div>
-            
-                <div class="margin_bottom_30"></div>
-                {% endfor %}
-            
-                <div class="margin_bottom_20"></div>
-            <div class="cleaner"></div>
-            
-            </div>   <!-- FIN DE NOTICIAS -->
+        
+        {% load disminuir %}
+        {% for noticia in noticias %}
+            <div class="news_section">
+                <div class="news_date">{{ noticia.fecha }}</div>
+                <div class="news_title">{{ noticia.titulo }}</div>
+                <p>{{ noticia.texto|disminuir:200 }} 
+                <a href="/noticias/{{ noticia.id }}">Leer más</a></p>
+            </div>
+        
+            <div class="margin_bottom_30"></div>
+        {% endfor %}
+    
+        <div class="margin_bottom_20"></div>
+        <div class="cleaner"></div>
+        
+    </div>   <!-- FIN DE NOTICIAS -->
             
 
     <div class="cleaner">&nbsp;</div>

@@ -39,11 +39,12 @@
                 <!-- NOTICIAS -->
                 <div class="content_header_01">Últimas noticias</div>
 
+                {% load disminuir %}
                 {% for noticia in ult_notic %}
                 <div class="news_section">
                     <div class="news_date">{{ noticia.fecha }}</div>
                     <div class="news_title">{{ noticia.titulo }}</div>
-                    <p>{{ noticia.texto }} 
+                    <p>{{ noticia.texto|disminuir:100 }} 
                     <a href="/noticias/{{ noticia.id }}">Leer más</a></p>
                 </div>
             

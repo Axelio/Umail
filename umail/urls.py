@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'logout$',logout,{'next_page':'/'},),
     url(r'^$','auth.views.index'),
+    url(r'^inbox/$', 'django_messages.views.inbox'),
 )
 if not settings.DEBUG:
     urlpatterns += patterns('',

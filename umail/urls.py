@@ -20,7 +20,9 @@ urlpatterns = patterns('',
     url(r'^$','auth.views.index'),
     url(r'^inbox/$', 'django_messages.views.inbox'),
 )
+'''
 if not settings.DEBUG:
     urlpatterns += patterns('',
         (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
     )
+'''

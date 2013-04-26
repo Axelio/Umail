@@ -20,8 +20,9 @@ class MessageManager(models.Manager):
         """
         destinatarios = Destinatarios.objects.filter(usuarios__user=user)
         return self.filter(
-            recipient__in=destinatarios,
-            recipient_deleted_at__isnull=True,
+            models.Q(recipient__in=destinatarios)|
+            models.Q(con_copia__in=destinatarios),
+            models.Q(recipient_deleted_at__isnull=True),
         )
 
     def outbox_for(self, user):

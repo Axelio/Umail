@@ -12,12 +12,14 @@ else:
 
 from django_messages.models import Message
 from django_messages.fields import CommaSeparatedUserField
+from ajax_select.fields import AutoCompleteSelectMultipleField
 
 class ComposeForm(forms.Form):
     """
     A simple default form for private messages.
     """
-    recipient = CommaSeparatedUserField(label=_(u"Recipient"))
+    #recipient = CommaSeparatedUserField(label=_(u"Recipient"))
+    recipient = AutoCompleteSelectMultipleField('destinatarios', required=True, label=_('Destinatario'),help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
     subject = forms.CharField(label=_(u"Subject"), max_length=120)
     body = forms.CharField(label=_(u"Body"),
         widget=forms.Textarea(attrs={'rows': '12', 'cols':'55'}))

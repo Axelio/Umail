@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'logout$',logout,{'next_page':'/'},),
     url(r'^$','auth.views.index'),
     url(r'^inbox/$', 'django_messages.views.inbox'),
+    url(r'^redactar/$', 'django_messages.views.compose'),
 )
 '''
 if not settings.DEBUG:

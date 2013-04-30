@@ -62,7 +62,7 @@ def trash(request, template_name='django_messages/trash.html'):
 trash = login_required(trash)
 
 def compose(request, recipient=None, form_class=ComposeForm,
-        template_name='django_messages/compose.html', success_url=None, recipient_filter=None):
+        template_name='user/mensajes/redactar.html', success_url=None, recipient_filter=None):
     """
     Displays and handles the ``form_class`` form to compose new messages.
     Required Arguments: None

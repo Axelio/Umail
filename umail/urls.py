@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.contrib.auth.views import logout
 from django.views.generic import TemplateView
+from ajax_select import urls as ajax_select_urls
 
 admin.autodiscover()
 
@@ -12,6 +13,7 @@ urlpatterns = patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
     (r'^grappelli/', include('grappelli.urls')),
     (r'^ajax_select/', include('ajax_select.urls')),
+    (r'^admin/lookups/', include(ajax_select_urls)),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^noticias/', include('noticias.urls')),
     url(r'^django_messages/', include('django_messages.urls')),

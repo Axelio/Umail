@@ -113,6 +113,7 @@ def compose(request, recipient=None,
             form.fields['recipient'].initial = recipients
     return render_to_response(template_name, {
         'loggeado': request.user.is_authenticated,
+        'request':request,
         'form': form,
     }, context_instance=RequestContext(request))
 compose = login_required(compose)

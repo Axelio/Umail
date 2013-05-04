@@ -93,11 +93,16 @@
             {{campo}} 
         </td>
     <tr>
+        <td>
+        </td>
+        <td align=top>
+            {{campo.help_text}}
+        </td>
     {% endfor %}
     </tbody>
 
 </table>
-<input type="submit" value="{% trans "Send" %} &raquo;"/>
+<input type="submit" class="boton" value="{% trans "Send" %} &raquo;"/>
 </form>
                 {% endblock %}
 

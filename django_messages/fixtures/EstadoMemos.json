@@ -1,0 +1,22 @@
+[
+{
+    "pk": 1, 
+    "model": "django_messages.estadomemo", 
+    "fields": {
+        "nombre": "Aprobado", 
+        "modificable": [
+            1
+        ]
+    }
+},
+{
+    "pk": 3, 
+    "model": "django_messages.estadomemo", 
+    "fields": {
+        "nombre": "En espera", 
+        "modificable": [
+            3
+        ]
+    }
+}
+]

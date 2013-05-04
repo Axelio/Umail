@@ -117,7 +117,7 @@ class MessageAdminForm(forms.ModelForm):
 
 class MessageAdmin(admin.ModelAdmin):
     form = MessageAdminForm
-    inlines = [AdjuntosInline]
+    #inlines = [AdjuntosInline]
     fieldsets = (
         (None, {
             'fields': (

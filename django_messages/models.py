@@ -79,11 +79,11 @@ class Message(models.Model):
     """
     A private message from user to multiple users
     """
+    recipient = models.ManyToManyField('Destinatarios', related_name='received_messages', null=True, blank=True, verbose_name=_("Destinatario"))
+    con_copia = models.ManyToManyField('Destinatarios', related_name='con_copia', null=True, blank=True, verbose_name=("con copia a:"))
     subject = models.CharField(_("Subject"), max_length=120)
     body = models.TextField(("Texto"))
     sender = models.ForeignKey('Destinatarios', related_name='sent_messages', verbose_name=_("Sender"))
-    recipient = models.ManyToManyField('Destinatarios', related_name='received_messages', null=True, blank=True, verbose_name=_("Destinatario"))
-    con_copia = models.ManyToManyField('Destinatarios', related_name='con_copia', null=True, blank=True, verbose_name=("con copia a:"))
     parent_msg = models.ForeignKey('self', related_name='next_messages', null=True, blank=True, verbose_name=_("Parent message"))
     sent_at = models.DateTimeField(_("sent at"), null=True, blank=True)
     read_at = models.DateTimeField(_("read at"), null=True, blank=True)

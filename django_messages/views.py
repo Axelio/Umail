@@ -61,7 +61,7 @@ def trash(request, template_name='django_messages/trash.html'):
     }, context_instance=RequestContext(request))
 trash = login_required(trash)
 
-def compose(request, recipient=None, form_class=ComposeForm,
+def compose(request, recipient=None,
         template_name='user/mensajes/redactar.html', success_url=None, recipient_filter=None):
     """
     Displays and handles the ``form_class`` form to compose new messages.
@@ -75,22 +75,44 @@ def compose(request, recipient=None, form_class=ComposeForm,
         ``success_url``: where to redirect after successfull submission
     """
     if request.method == "POST":
-        sender = request.user
-        form = form_class(request.POST, recipient_filter=recipient_filter)
+        form = ComposeForm(request.POST)
         if form.is_valid():
-            form.save(sender=request.user)
+            from django_messages.models import Destinatarios, EstadoMemo
+            estado_memo = EstadoMemo.objects.get(nombre='En espera')
+            #form = form_class(request.POST)
+            #form = form_class(request.POST, recipient_filter=recipient_filter)
+            mensaje = Message(
+                            sender = Destinatarios.objects.get(usuarios__user=request.user),
+                            subject = request.POST['subject'],
+                            body = request.POST['body'],
+                            status = estado_memo,
+                            tipo = '',
+                        )
+            mensaje.save()
+            print mensaje
+            for destin in request.POST['recipient']:
+                try:
+                    sender = Destinatarios.objects.filter(id=destin)
+                except:
+                    continue
+                else:
+                    sender = Destinatarios.objects.filter(id=destin)
+                    mensaje.recipient.add(sender[0])
+            print mensaje
             messages.info(request, _(u"Message successfully sent."))
             if success_url is None:
+                #   QUEDASTE AQUIIII
                 success_url = reverse('messages_inbox')
             if request.GET.has_key('next'):
                 success_url = request.GET['next']
             return HttpResponseRedirect(success_url)
     else:
-        form = form_class()
+        form = ComposeForm()
         if recipient is not None:
             recipients = [u for u in User.objects.filter(username__in=[r.strip() for r in recipient.split('+')])]
             form.fields['recipient'].initial = recipients
     return render_to_response(template_name, {
+        'loggeado': request.user.is_authenticated,
         'form': form,
     }, context_instance=RequestContext(request))
 compose = login_required(compose)

@@ -11,12 +11,8 @@
         <div id="menu_wrapper">    
             <div id="menu">
                 <ul>
-                    <li><a href="/"><span></span>Inicio</a></li>
-                    <li><a href="/entrada" class="current"><span></span>Recibidos</a></li>
-                    <li><a href="#"><span></span>Projects</a></li>
-                    <li><a href="#"><span></span>Partners</a></li>
-                    <li><a href="/noticias"><span></span>Noticias</a></li>
-                    <li><a href="#"><span></span>Contact</a></li>
+                    {% load menu %}
+                    {{ 'Memos'|menu }}
                 </ul>    	
             </div> <!-- end of menu -->
         </div> <!-- end of menu wrapper -->

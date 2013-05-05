@@ -30,12 +30,8 @@
     <div id="menu_wrapper">    
         <div id="menu">
             <ul>
-                <li><a href="/"><span></span>Inicio</a></li>
-                <li><a href="http://www.freecsstemplates.in" target="_parent"><span></span>Templates</a></li>
-                <li><a href="#"><span></span>Projects</a></li>
-                <li><a href="#"><span></span>Partners</a></li>
-                <li><a href="/noticias" class="current"><span></span>Noticias</a></li>
-                <li><a href="#"><span></span>Contact</a></li>
+                {% load menu %}
+                {{ 'Noticias'|menu }}
             </ul>    	
         </div> <!-- end of menu -->
     </div> <!-- end of menu wrapper -->

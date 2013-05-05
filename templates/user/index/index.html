@@ -10,7 +10,14 @@
 {% if loggeado %}
 
     <!-- Menú -->
-    {% include "user/menu.html" %}
+    <div id="menu_wrapper">    
+        <div id="menu">
+            <ul>
+                {% load menu %}
+                {{ 'Inicio'|menu }}
+            </ul>    	
+        </div> <!-- end of menu -->
+    </div> <!-- end of menu wrapper -->
 
     <div id="content_wrapper">
     <div id="content">

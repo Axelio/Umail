@@ -20,8 +20,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'logout$',logout,{'next_page':'/'},),
     url(r'^$','auth.views.index'),
-    url(r'^inbox/$', 'django_messages.views.inbox'),
+    url(r'^entrada/$', 'django_messages.views.inbox'),
     url(r'^redactar/$', 'django_messages.views.compose'),
+    url(r'^leer/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='messages_detail'),
 )
 '''
 if not settings.DEBUG:

@@ -215,7 +215,7 @@ def undelete(request, message_id, success_url=None):
     raise Http404
 undelete = login_required(undelete)
 
-def view(request, message_id, template_name='django_messages/view.html'):
+def view(request, message_id, template_name='user/mensajes/leer.html'):
     """
     Shows a single message.``message_id`` argument is required.
     The user is only allowed to see the message, if he is either 
@@ -224,21 +224,37 @@ def view(request, message_id, template_name='django_messages/view.html'):
     If the user is the recipient and the message is unread 
     ``read_at`` is set to the current datetime.
     """
+    import pdb
+    #pdb.set_trace()
     user = request.user
     now = datetime.datetime.now()
     message = get_object_or_404(Message, id=message_id)
     esta_destinatario = False
+
     for destinatario in message.recipient.get_query_set():
-        if destinatario == user:
-            esta_destinatario = True
-            continue
+        if destinatario.grupos == None:
+            if destinatario.usuarios.user == user:
+                esta_destinatario = True
+                continue
+        elif destinatario.usuarios == None:
+            if user in destinatario.grupos.user_set.get_query_set():
+                esta_destinatario = True
+                continue
+
     if (message.sender != user) and (esta_destinatario == False):
         raise Http404
+
     if message.read_at is None and esta_destinatario == True:
         message.read_at = now
-        message.leido_por.add(user)
+        from django_messages.models import Destinatarios
+        #pdb.set_trace()
+        
+        message.leido_por.add(Destinatarios.objects.get(usuarios__user=user))
         message.save()
     return render_to_response(template_name, {
+        'loggeado': request.user.is_authenticated,
+        'request':request,
         'message': message,
+        
     }, context_instance=RequestContext(request))
 view = login_required(view)

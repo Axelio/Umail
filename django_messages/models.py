@@ -18,7 +18,7 @@ class MessageManager(models.Manager):
         Returns all messages that were received by the given user and are not
         marked as deleted.
         """
-        destinatarios = Destinatarios.objects.filter(usuarios__user=user)
+        destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
         return self.filter(
             models.Q(recipient__in=destinatarios)|
             models.Q(con_copia__in=destinatarios),

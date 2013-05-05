@@ -4,7 +4,9 @@
 {% include "user/banner.html" %}
 
     <!-- Umail info -->
-    {% include "user/umail_info.html" %}
+{% include "user/umail_info.html" %}
+
+{% if loggeado %}
 
     <!-- Menú -->
         <div id="menu_wrapper">    
@@ -74,6 +76,7 @@
         </div> <!-- end of content right -->
 
 
+{% endif %}
 <div id="footer_wrapper">        
     <div id="footer">
         Copyright © <a href="https://github.com/Axelio/umail/blob/master/copyright">Umail</a> | 

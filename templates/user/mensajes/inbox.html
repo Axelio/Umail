@@ -4,14 +4,15 @@
 {% include "user/banner.html" %}
 
     <!-- Umail info -->
-    {% include "user/umail_info.html" %}
+{% include "user/umail_info.html" %}
+{% if loggeado %}
 
     <!-- Menú -->
         <div id="menu_wrapper">    
             <div id="menu">
                 <ul>
                     <li><a href="/"><span></span>Inicio</a></li>
-                    <li><a href="/inbox" class="current"><span></span>Recibidos</a></li>
+                    <li><a href="/entrada" class="current"><span></span>Recibidos</a></li>
                     <li><a href="#"><span></span>Projects</a></li>
                     <li><a href="#"><span></span>Partners</a></li>
                     <li><a href="/noticias"><span></span>Noticias</a></li>
@@ -49,7 +50,7 @@
                     <thead>
                         <tr>
                             <th>
-                                <div class="news_title">{% trans "Sender" %}</div>
+                                <div class="news_title">{% trans "De" %}</div>
                             </th>
                             <th>
                                 <div class="news_title">{% trans "Subject" %}</div>
@@ -94,6 +95,7 @@
         </div> <!-- end of content -->
         </div> <!-- end of content wrapper -->
         </div> <!-- end of content right -->
+{% endif %}
 
 
 <div id="footer_wrapper">        

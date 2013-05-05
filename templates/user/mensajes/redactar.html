@@ -36,31 +36,39 @@
             <div id="content">
 
                 {% block content %}
-<div class="content_header_01" >Redactar</div>
-<form action="" method="post">
-{% csrf_token %} 
-<table class="messages" width=600px>
-    <tbody>
-    {% for campo in form %}
-    <tr>
-        <td>
-            <b>{{campo.label}}</b>
-        </td>
-        <td>
-            {{campo}} 
-        </td>
-    <tr>
-        <td>
-        </td>
-        <td align=top>
-            {{campo.help_text}}
-        </td>
-    {% endfor %}
-    </tbody>
+                    <table class="messages" width=600px>
+                        <thead>
+                            <tr>
+                                <th colspan=4>
+                                    <div class="content_header_01" align=center>Redactar</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <form action="" method="post">
+                    {% csrf_token %} 
+                    <table class="messages" width=600px>
+                        <tbody>
+                        {% for campo in form %}
+                        <tr>
+                            <td>
+                                <b>{{campo.label}}</b>
+                            </td>
+                            <td>
+                                {{campo}} 
+                            </td>
+                        <tr>
+                            <td>
+                            </td>
+                            <td align=top>
+                                {{campo.help_text}}
+                            </td>
+                        {% endfor %}
+                        </tbody>
 
-</table>
-<input type="submit" class="boton" value="{% trans "Send" %} &raquo;"/>
-</form>
+                    </table>
+                    <input type="submit" class="boton" value="{% trans "Send" %} &raquo;"/>
+                    </form>
                 {% endblock %}
 
                 <div class="margin_bottom_20"></div>

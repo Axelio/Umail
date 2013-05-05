@@ -89,7 +89,6 @@ def compose(request, recipient=None,
                             tipo = '',
                         )
             mensaje.save()
-            print mensaje
             for destin in request.POST['recipient']:
                 try:
                     sender = Destinatarios.objects.filter(id=destin)
@@ -98,7 +97,6 @@ def compose(request, recipient=None,
                 else:
                     sender = Destinatarios.objects.filter(id=destin)
                     mensaje.recipient.add(sender[0])
-            print mensaje
             messages.info(request, _(u"Message successfully sent."))
             if success_url is None:
                 #   QUEDASTE AQUIIII

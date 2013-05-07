@@ -26,7 +26,7 @@ def inbox(request):
         ``template_name``: name of the template to use.
     """
     if request.user.is_authenticated():
-        message_list = Message.objects.inbox_for(request.user)
+        message_list = Message.objects.inbox_for(request.user).distinct()
         return render_to_response('user/mensajes/inbox.html', {
             'message_list': message_list,
             'loggeado': request.user.is_authenticated,

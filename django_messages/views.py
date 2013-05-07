@@ -229,6 +229,16 @@ def view(request, message_id, template_name='user/mensajes/leer.html'):
     message = get_object_or_404(Message, id=message_id)
     esta_destinatario = False
 
+    for destinatario in message.con_copia.get_query_set():
+        if destinatario.grupos == None:
+            if destinatario.usuarios.user == user:
+                esta_destinatario = True
+                continue
+        elif destinatario.usuarios == None:
+            if user in destinatario.grupos.user_set.get_query_set():
+                esta_destinatario = True
+                continue
+
     for destinatario in message.recipient.get_query_set():
         if destinatario.grupos == None:
             if destinatario.usuarios.user == user:

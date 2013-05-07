@@ -97,11 +97,13 @@ class Message(models.Model):
 
     objects = MessageManager()
 
+    '''
     def clean(self):
         for destin in self.recipient.get_query_set():
             if destin in self.con_copia.get_query_set():
+                print "asñdsdbcbsdvc"
                 raise ValidationError(u'%s está como destinatario y con copia a la vez. Debe estar sólo en una de ambas listas.'%(destin))
-
+    '''
 
     def new(self):
         """returns whether the recipient has read the message or not"""
@@ -141,8 +143,6 @@ def save_message(sender, **kwargs):
     if memo.status == None:
         estado = EstadoMemo.objects.get(nombre='En espera')
         memo.status=estado
-
-
 
 def inbox_count_for(user):
     """

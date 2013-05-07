@@ -222,8 +222,6 @@ def view(request, message_id, template_name='user/mensajes/leer.html'):
     If the user is the recipient and the message is unread 
     ``read_at`` is set to the current datetime.
     """
-    import pdb
-    #pdb.set_trace()
     user = request.user
     now = datetime.datetime.now()
     message = get_object_or_404(Message, id=message_id)
@@ -255,7 +253,6 @@ def view(request, message_id, template_name='user/mensajes/leer.html'):
     if message.read_at is None and esta_destinatario == True:
         message.read_at = now
         from django_messages.models import Destinatarios
-        #pdb.set_trace()
         
         message.leido_por.add(Destinatarios.objects.get(usuarios__user=user))
         message.save()
@@ -263,6 +260,5 @@ def view(request, message_id, template_name='user/mensajes/leer.html'):
         'loggeado': request.user.is_authenticated,
         'request':request,
         'message': message,
-        
     }, context_instance=RequestContext(request))
 view = login_required(view)

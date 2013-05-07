@@ -117,7 +117,6 @@ admin.site.unregister(User)
 admin.site.register(User,UserProfileAdmin)
 
 class GroupAdmin(admin.ModelAdmin):
-    print "probando"
     search_fields = ('name',)
     ordering = ('name',)
     filter_horizontal = ('permissions',)

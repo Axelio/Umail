@@ -99,20 +99,8 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table>
-                        <tr>
-                            <td width=25%>
-                            {% for dest in message.recipient.get_query_set %}
-                                {% ifequal dest.usuarios.user.pk user.pk %}
-                                    <div class="rc_btn_02"><a href="{% url 'messages_reply' message.id %}">{% trans "Reply" %}</a></div>
-                                {% endifequal %}
-                            {% endfor %}
-                            </td>
-                            <td width=25% align='left'>
-                                <div class="rc_btn_02"><a href="{% url 'messages_delete' message.id %}">{% trans "Delete" %}</a></div>
-                            </td>
-                        </tr>
-                    </table>
+                    {% load responder_memos %}
+                    {{ message.id|responder_memo:user.id }}
                 {% endblock %}
 
                 <div class="margin_bottom_20"></div>
@@ -129,15 +117,5 @@
 {% endif %}
 
 
-<div id="footer_wrapper">        
-    <div id="footer">
-        Copyright © <a href="https://github.com/Axelio/umail/blob/master/copyright">Umail</a> | 
-    </div><!-- end of footer -->
-</div><!-- end of footer wrapper -->
+{% include "user/pie.html" %}
 </body>
-
-
-
-
-
-

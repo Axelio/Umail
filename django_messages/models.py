@@ -10,6 +10,7 @@ from auth.models import UserProfile
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
+from django.core.exceptions import ValidationError
 
 class MessageManager(models.Manager):
 
@@ -90,11 +91,17 @@ class Message(models.Model):
     replied_at = models.DateTimeField(_("replied at"), null=True, blank=True)
     sender_deleted_at = models.DateTimeField(_("Sender deleted at"), null=True, blank=True)
     recipient_deleted_at = models.DateTimeField(_("Recipient deleted at"), null=True, blank=True)
-    status = models.ForeignKey('EstadoMemo')
+    status = models.ForeignKey('EstadoMemo', null=True, blank=True)
     tipo = models.CharField(max_length=10, blank=True, null=True)
     leido_por = models.ManyToManyField('Destinatarios', related_name='leido_por', null=True, blank=True, verbose_name=("leido por: "))
 
     objects = MessageManager()
+
+    def clean(self):
+        for destin in self.recipient.get_query_set():
+            if destin in self.con_copia.get_query_set():
+                raise ValidationError(u'%s está como destinatario y con copia a la vez. Debe estar sólo en una de ambas listas.'%(destin))
+
 
     def new(self):
         """returns whether the recipient has read the message or not"""
@@ -124,6 +131,18 @@ class Message(models.Model):
         ordering = ['-sent_at']
         verbose_name = _("Message")
         verbose_name_plural = _("Messages")
+
+@receiver(pre_save, sender=Message)
+def save_message(sender, **kwargs):
+    from django.contrib.auth.models import User
+    from auth.models import UserProfile
+    from django_messages.models import EstadoMemo
+    memo = kwargs['instance']
+    if memo.status == None:
+        estado = EstadoMemo.objects.get(nombre='En espera')
+        memo.status=estado
+
+
 
 def inbox_count_for(user):
     """

@@ -9,16 +9,20 @@ register = template.Library()
 def responder_memo(memo,arg):
     memo = Message.objects.get(id=memo)
     user = User.objects.get(id=arg)
+    con_copia = False
 
     for dest in memo.con_copia.get_query_set():
         if dest.usuarios.user.pk == user.pk:
             tabla = '<table></td><td width=100% align="left"><div class="rc_btn_02"><a href="/eliminar/' + str(memo.id) + '">Eliminar</a></div></td></tr></table>'
             con_copia=True
 
-
-    for dest in memo.recipient.get_query_set():
-        if dest.usuarios.user.pk == user.pk and not con_copia:
-            tabla = '<table><tr><td width=50%><div class="rc_btn_02"><a href="/responder/' + str(memo.id) + '">Responder</a></div></td><td width=50% align="left"><div class="rc_btn_02"><a href="/eliminar/' + str(memo.id) + '">Eliminar</a></div></td></tr></table>'
+    for destinatario in memo.recipient.get_query_set():
+        if destinatario.grupos == None:
+            if destinatario.usuarios.user.username == user.username and not con_copia:
+                tabla = '<table><tr><td width=50%><div class="rc_btn_02"><a href="/responder/' + str(memo.id) + '">Responder</a></div></td><td width=50% align="left"><div class="rc_btn_02"><a href="/eliminar/' + str(memo.id) + '">Eliminar</a></div></td></tr></table>'
+        elif destinatario.usuarios == None:
+            if user in destinatario.grupos.user_set.get_query_set():
+                tabla = '<table><tr><td width=50%><div class="rc_btn_02"><a href="/responder/' + str(memo.id) + '">Responder</a></div></td><td width=50% align="left"><div class="rc_btn_02"><a href="/eliminar/' + str(memo.id) + '">Eliminar</a></div></td></tr></table>'
 
     return format_html(tabla)
 responder_memo.is_safe = True 

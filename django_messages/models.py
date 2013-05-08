@@ -41,13 +41,18 @@ class MessageManager(models.Manager):
         Returns all messages that were either received or sent by the given
         user and are marked as deleted.
         """
-        return self.filter(
-            recipient=user,
-            recipient_deleted_at__isnull=False,
+        destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
+        filtro = self.filter(
+            models.Q(recipient__in=destinatarios)|
+            models.Q(con_copia__in=destinatarios),
+            models.Q(recipient_deleted_at__isnull=False),
+        
         ) | self.filter(
-            sender=user,
-            sender_deleted_at__isnull=False,
+            models.Q(sender=destinatarios)|
+            models.Q(con_copia__in=destinatarios),
+            models.Q(recipient_deleted_at__isnull=False),
         )
+        return filtro
 
 class Destinatarios(models.Model):
     grupos = models.ForeignKey(Group, unique=True, null=True, blank=True)

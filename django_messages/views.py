@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import datetime
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
@@ -19,18 +20,23 @@ if "notification" in settings.INSTALLED_APPS:
 else:
     notification = None
 
-def inbox(request):
+def inbox(request, mensaje=''):
     """
     Displays a list of received messages for the current user.
     Optional Arguments:
         ``template_name``: name of the template to use.
     """
+    notify = False
+    if not mensaje == '':
+        notify = True
     if request.user.is_authenticated():
         message_list = Message.objects.inbox_for(request.user).distinct()
         return render_to_response('user/mensajes/inbox.html', {
             'message_list': message_list,
             'loggeado': request.user.is_authenticated,
             'request':request,
+            'mensaje':mensaje,
+            'notify':notify,
         }, context_instance=RequestContext(request))
     else:
         return HttpResponseRedirect('/')
@@ -47,7 +53,7 @@ def outbox(request, template_name='django_messages/outbox.html'):
     }, context_instance=RequestContext(request))
 outbox = login_required(outbox)
 
-def trash(request, template_name='django_messages/trash.html'):
+def trash(request, template_name='user/mensajes/papelera.html'):
     """
     Displays a list of deleted messages. 
     Optional arguments:
@@ -58,6 +64,8 @@ def trash(request, template_name='django_messages/trash.html'):
     message_list = Message.objects.trash_for(request.user)
     return render_to_response(template_name, {
         'message_list': message_list,
+        'loggeado': request.user.is_authenticated,
+        'request':request,
     }, context_instance=RequestContext(request))
 trash = login_required(trash)
 
@@ -97,9 +105,10 @@ def compose(request, recipient=None,
                 else:
                     sender = Destinatarios.objects.filter(id=destin)
                     mensaje.recipient.add(sender[0])
-            messages.info(request, _(u"Message successfully sent."))
+            #messages.info(request, _(u"Message successfully sent."))
+            mensaje = u'Mensaje enviado satisfactoriamente'
+            return inbox(mensaje)
             if success_url is None:
-                #   QUEDASTE AQUIIII
                 success_url = reverse('messages_inbox')
             if request.GET.has_key('next'):
                 success_url = request.GET['next']
@@ -167,22 +176,33 @@ def delete(request, message_id, success_url=None):
     now = datetime.datetime.now()
     message = get_object_or_404(Message, id=message_id)
     deleted = False
+    notify = False
     if success_url is None:
         success_url = reverse('messages_inbox')
     if request.GET.has_key('next'):
         success_url = request.GET['next']
-    if message.sender == user:
+    if message.sender.usuarios.user == user:
         message.sender_deleted_at = now
         deleted = True
-    if message.recipient == user:
-        message.recipient_deleted_at = now
-        deleted = True
+    import pdb
+    #pdb.set_trace()
+    for destinatario in message.recipient.get_query_set():
+        if destinatario.grupos == None:
+            if destinatario.usuarios.user.username == user.username:
+                message.recipient_deleted_at = now
+                deleted = True
+        elif destinatario.usuarios == None:
+            if user in destinatario.grupos.user_set.get_query_set():
+                message.recipient_deleted_at = now
+                deleted = True
     if deleted:
         message.save()
-        messages.info(request, _(u"Message successfully deleted."))
+        notify = True
+        #messages.info(request, _(u"Message successfully deleted."))
         if notification:
             notification.send([user], "messages_deleted", {'message': message,})
-        return HttpResponseRedirect(success_url)
+        mensaje = u'¡Mensaje eliminado satisfactoriamente!'
+        return inbox(request, mensaje)
     raise Http404
 delete = login_required(delete)
 

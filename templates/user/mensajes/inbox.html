@@ -17,6 +17,18 @@
             </div> <!-- end of menu -->
         </div> <!-- end of menu wrapper -->
 
+    {% if notify %}
+        <table class="messages" width=100%>
+            <thead>
+                <tr>
+                    <th colspan=4>
+                        <div class="news_title" align=center><h1>{{mensaje}}</h1></div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    {% endif %}
+
         <!-- Menú mensajes -->
     <div id="content">
 

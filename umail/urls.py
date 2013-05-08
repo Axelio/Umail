@@ -20,8 +20,10 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'logout$',logout,{'next_page':'/'},),
     url(r'^$','auth.views.index'),
-    url(r'^entrada/$', 'django_messages.views.inbox'),
+    url(r'^entrada/$', 'django_messages.views.inbox', name='messages_inbox'),
     url(r'^redactar/$', 'django_messages.views.compose'),
+    url(r'^eliminar/(?P<message_id>[\d]+)/$', 'django_messages.views.delete', name='messages_delete'),
+    url(r'^papelera/$', 'django_messages.views.trash', name='messages_trash'),
     url(r'^leer/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='messages_detail'),
 )
 '''

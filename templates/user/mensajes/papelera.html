@@ -1,0 +1,95 @@
+{% include "user/base.html" %} 
+{% load i18n %} 
+<!-- Banner -->
+{% include "user/banner.html" %}
+
+    <!-- Umail info -->
+{% include "user/umail_info.html" %}
+{% if loggeado %}
+
+    <!-- Menú -->
+        <div id="menu_wrapper">    
+            <div id="menu">
+                <ul>
+                    {% load menu %}
+                    {{ 'Memos'|menu }}
+                </ul>    	
+            </div> <!-- end of menu -->
+        </div> <!-- end of menu wrapper -->
+
+        <!-- Menú mensajes -->
+    <div id="content">
+
+        {% include "user/mensajes/menu.html" %}
+
+        <div id="content_right">
+        <div class="cleaner">&nbsp;</div>
+
+            <!-- Fin menú mensajes -->
+
+            <div id="content_wrapper">
+            <div id="content">
+                {% block content %}
+                <table class="messages" width=600px>
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="content_header_01" align=center>Memos eliminados</div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                {% if message_list %} 
+                    <table class="messages" width=600px>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="news_title">{% trans "De" %}</div>
+                                </th>
+                                <th>
+                                    <div class="news_title">{% trans "Subject" %}</div>
+                                </th>
+                                <th>
+                                    <div class="news_title">{% trans "Received" %}</div>
+                                </th>
+                                <th>
+                                    <div class="news_title">{% trans "Action" %}</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for message in message_list %} 
+                                <tr align=center>
+                                    <td><div class="news_section">{{ message.sender }}</div></td>
+                                    <td>{{ message.subject }}</td>
+                                    <td>{{ message.sent_at|date:_("DATETIME_FORMAT") }}</td>
+                                    <td><a href="{% url 'messages_undelete' message.id %}">{% trans "undelete" %}</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="error">Sin mensajes</p>
+                {% endif %}
+
+                <br />
+                <p>{% trans "Deleted Messages are removed from the trash at unregular intervals, don't rely on this feature for long-time storage." %}</p>
+
+                {% endblock %}
+
+                <div class="margin_bottom_20"></div>
+                <div class="cleaner"></div>
+                
+            </div>   <!-- FIN DE NOTICIAS -->
+                
+
+        <div class="cleaner">&nbsp;</div>
+
+        </div> <!-- end of content -->
+        </div> <!-- end of content wrapper -->
+        </div> <!-- end of content right -->
+{% endif %}
+
+
+{% include "user/pie.html" %}
+</body>

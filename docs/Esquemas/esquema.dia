@@ -65,16 +65,16 @@
   <dia:layer name="Fondo" visible="true" active="true">
     <dia:object type="Database - Table" version="0" id="O0">
       <dia:attribute name="obj_pos">
-        <dia:point val="14.3,8.6125"/>
+        <dia:point val="31.2,5.2125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="14.3,8.6125;30.23,19.3125"/>
+        <dia:rectangle val="31.2,5.2125;47.13,15.9125"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="14.3,8.6125"/>
+        <dia:point val="31.2,5.2125"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="15.93"/>
@@ -375,19 +375,19 @@
     </dia:object>
     <dia:object type="Database - Reference" version="0" id="O1">
       <dia:attribute name="obj_pos">
-        <dia:point val="34.675,-1.95"/>
+        <dia:point val="28.55,19.6125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="30.23,-2.6;34.675,18.0125"/>
+        <dia:rectangle val="27.55,13.9625;31.2,19.6125"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="34.675,-1.95"/>
-        <dia:point val="32.4525,-1.95"/>
-        <dia:point val="32.4525,18.0125"/>
-        <dia:point val="30.23,18.0125"/>
+        <dia:point val="28.55,19.6125"/>
+        <dia:point val="27.55,19.6125"/>
+        <dia:point val="27.55,14.6125"/>
+        <dia:point val="31.2,14.6125"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="0"/>
@@ -429,22 +429,22 @@
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O16" connection="12"/>
-        <dia:connection handle="1" to="O0" connection="33"/>
+        <dia:connection handle="0" to="O3" connection="12"/>
+        <dia:connection handle="1" to="O0" connection="32"/>
       </dia:connections>
     </dia:object>
     <dia:object type="Database - Table" version="0" id="O2">
       <dia:attribute name="obj_pos">
-        <dia:point val="43.65,20.7625"/>
+        <dia:point val="41.65,18.5125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="43.65,20.7625;49.57,23.4625"/>
+        <dia:rectangle val="41.65,18.5125;47.57,21.2125"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="43.65,20.7625"/>
+        <dia:point val="41.65,18.5125"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="5.9199999999999999"/>
@@ -545,16 +545,16 @@
     </dia:object>
     <dia:object type="Database - Table" version="0" id="O3">
       <dia:attribute name="obj_pos">
-        <dia:point val="32.75,19.1625"/>
+        <dia:point val="28.55,18.2125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="32.75,19.1625;41.75,23.4625"/>
+        <dia:rectangle val="28.55,18.2125;37.55,22.5125"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="32.75,19.1625"/>
+        <dia:point val="28.55,18.2125"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="9"/>
@@ -633,26 +633,6 @@
         </dia:composite>
         <dia:composite type="table_attribute">
           <dia:attribute name="name">
-            <dia:string>#persona_id#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#int#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="primary_key">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="nullable">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="unique">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-        </dia:composite>
-        <dia:composite type="table_attribute">
-          <dia:attribute name="name">
             <dia:string>#tipo_personal#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
@@ -691,80 +671,40 @@
             <dia:boolean val="false"/>
           </dia:attribute>
         </dia:composite>
+        <dia:composite type="table_attribute">
+          <dia:attribute name="name">
+            <dia:string>#cargo#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#int#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="primary_key">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="nullable">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="unique">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+        </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O4">
+    <dia:object type="Database - Table" version="0" id="O4">
       <dia:attribute name="obj_pos">
-        <dia:point val="30.23,10.0125"/>
+        <dia:point val="14.5,10.5625"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="30.23,9.3625;32.75,21.3625"/>
-      </dia:attribute>
-      <dia:attribute name="meta">
-        <dia:composite type="dict"/>
-      </dia:attribute>
-      <dia:attribute name="orth_points">
-        <dia:point val="30.23,10.0125"/>
-        <dia:point val="30.85,10.0125"/>
-        <dia:point val="30.85,21.3625"/>
-        <dia:point val="32.75,21.3625"/>
-      </dia:attribute>
-      <dia:attribute name="orth_orient">
-        <dia:enum val="0"/>
-        <dia:enum val="1"/>
-        <dia:enum val="0"/>
-      </dia:attribute>
-      <dia:attribute name="orth_autoroute">
-        <dia:boolean val="false"/>
-      </dia:attribute>
-      <dia:attribute name="text_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_width">
-        <dia:real val="0.10000000000000001"/>
-      </dia:attribute>
-      <dia:attribute name="line_style">
-        <dia:enum val="0"/>
-        <dia:real val="1"/>
-      </dia:attribute>
-      <dia:attribute name="corner_radius">
-        <dia:real val="0"/>
-      </dia:attribute>
-      <dia:attribute name="end_arrow">
-        <dia:enum val="0"/>
-      </dia:attribute>
-      <dia:attribute name="start_point_desc">
-        <dia:string>#1#</dia:string>
-      </dia:attribute>
-      <dia:attribute name="end_point_desc">
-        <dia:string>#n#</dia:string>
-      </dia:attribute>
-      <dia:attribute name="normal_font">
-        <dia:font family="monospace" style="0" name="Courier"/>
-      </dia:attribute>
-      <dia:attribute name="normal_font_height">
-        <dia:real val="0.59999999999999998"/>
-      </dia:attribute>
-      <dia:connections>
-        <dia:connection handle="0" to="O0" connection="13"/>
-        <dia:connection handle="1" to="O3" connection="14"/>
-      </dia:connections>
-    </dia:object>
-    <dia:object type="Database - Table" version="0" id="O5">
-      <dia:attribute name="obj_pos">
-        <dia:point val="13.9,20.3125"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="13.9,20.3125;23.285,27.0125"/>
+        <dia:rectangle val="14.5,10.5625;23.885,17.2625"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="13.9,20.3125"/>
+        <dia:point val="14.5,10.5625"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="9.3849999999999998"/>
@@ -963,7 +903,7 @@
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O6">
+    <dia:object type="Database - Table" version="0" id="O5">
       <dia:attribute name="obj_pos">
         <dia:point val="26.05,24.1125"/>
       </dia:attribute>
@@ -1093,7 +1033,7 @@
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O7">
+    <dia:object type="Database - Table" version="0" id="O6">
       <dia:attribute name="obj_pos">
         <dia:point val="34.55,24.0125"/>
       </dia:attribute>
@@ -1223,7 +1163,7 @@
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O8">
+    <dia:object type="Database - Reference" version="0" id="O7">
       <dia:attribute name="obj_pos">
         <dia:point val="34.55,25.4125"/>
       </dia:attribute>
@@ -1279,22 +1219,22 @@
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O7" connection="12"/>
-        <dia:connection handle="1" to="O6" connection="17"/>
+        <dia:connection handle="0" to="O6" connection="12"/>
+        <dia:connection handle="1" to="O5" connection="17"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O9">
+    <dia:object type="Database - Table" version="0" id="O8">
       <dia:attribute name="obj_pos">
-        <dia:point val="26.65,28.8625"/>
+        <dia:point val="14.15,19.7125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="26.65,28.8625;32.57,31.5625"/>
+        <dia:rectangle val="14.15,19.7125;20.07,22.4125"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="26.65,28.8625"/>
+        <dia:point val="14.15,19.7125"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="5.9199999999999999"/>
@@ -1393,21 +1333,21 @@
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O10">
+    <dia:object type="Database - Reference" version="0" id="O9">
       <dia:attribute name="obj_pos">
-        <dia:point val="26.65,30.2625"/>
+        <dia:point val="20.07,21.1125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="23.285,22.6625;26.65,30.2625"/>
+        <dia:rectangle val="20.07,12.9125;24.65,21.1125"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="26.65,30.2625"/>
-        <dia:point val="24.035,30.2625"/>
-        <dia:point val="24.035,23.3125"/>
-        <dia:point val="23.285,23.3125"/>
+        <dia:point val="20.07,21.1125"/>
+        <dia:point val="24.65,21.1125"/>
+        <dia:point val="24.65,13.5625"/>
+        <dia:point val="23.885,13.5625"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="0"/>
@@ -1449,11 +1389,11 @@
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O9" connection="12"/>
-        <dia:connection handle="1" to="O5" connection="17"/>
+        <dia:connection handle="0" to="O8" connection="13"/>
+        <dia:connection handle="1" to="O4" connection="17"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O11">
+    <dia:object type="Database - Table" version="0" id="O10">
       <dia:attribute name="obj_pos">
         <dia:point val="41.5625,24.0125"/>
       </dia:attribute>
@@ -1583,7 +1523,7 @@
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O12">
+    <dia:object type="Database - Reference" version="0" id="O11">
       <dia:attribute name="obj_pos">
         <dia:point val="41.5625,25.4125"/>
       </dia:attribute>
@@ -1639,11 +1579,11 @@
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O11" connection="12"/>
-        <dia:connection handle="1" to="O7" connection="17"/>
+        <dia:connection handle="0" to="O10" connection="12"/>
+        <dia:connection handle="1" to="O6" connection="17"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O13">
+    <dia:object type="Database - Table" version="0" id="O12">
       <dia:attribute name="obj_pos">
         <dia:point val="49.125,23.9625"/>
       </dia:attribute>
@@ -1753,7 +1693,7 @@
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O14">
+    <dia:object type="Database - Reference" version="0" id="O13">
       <dia:attribute name="obj_pos">
         <dia:point val="49.125,25.3625"/>
       </dia:attribute>
@@ -1809,25 +1749,25 @@
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O13" connection="12"/>
-        <dia:connection handle="1" to="O11" connection="17"/>
+        <dia:connection handle="0" to="O12" connection="12"/>
+        <dia:connection handle="1" to="O10" connection="17"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O15">
+    <dia:object type="Database - Reference" version="0" id="O14">
       <dia:attribute name="obj_pos">
-        <dia:point val="23.285,21.7125"/>
+        <dia:point val="23.885,11.9625"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="23.285,21.0625;32.75,22.9625"/>
+        <dia:rectangle val="23.885,11.3125;28.55,21.2125"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="23.285,21.7125"/>
-        <dia:point val="26.2,21.7125"/>
-        <dia:point val="26.2,22.9625"/>
-        <dia:point val="32.75,22.9625"/>
+        <dia:point val="23.885,11.9625"/>
+        <dia:point val="26.2,11.9625"/>
+        <dia:point val="26.2,21.2125"/>
+        <dia:point val="28.55,21.2125"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="0"/>
@@ -1869,11 +1809,11 @@
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O5" connection="13"/>
-        <dia:connection handle="1" to="O3" connection="18"/>
+        <dia:connection handle="0" to="O4" connection="13"/>
+        <dia:connection handle="1" to="O3" connection="16"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O16">
+    <dia:object type="Database - Table" version="0" id="O15">
       <dia:attribute name="obj_pos">
         <dia:point val="34.675,-3.35"/>
       </dia:attribute>
@@ -2103,7 +2043,7 @@
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O17">
+    <dia:object type="Database - Reference" version="0" id="O16">
       <dia:attribute name="obj_pos">
         <dia:point val="7.7775,3"/>
       </dia:attribute>
@@ -2159,28 +2099,33 @@
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O27" connection="13"/>
-        <dia:connection handle="1" to="O16" connection="20"/>
+        <dia:connection handle="0" to="O23" connection="13"/>
+        <dia:connection handle="1" to="O15" connection="20"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O18">
+    <dia:object type="Database - Reference" version="0" id="O17">
       <dia:attribute name="obj_pos">
-        <dia:point val="44.2199,9.2125"/>
+        <dia:point val="26.05,25.5125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="44.2199,9.2125;53.9899,16.7125"/>
+        <dia:rectangle val="23.885,12.1125;26.05,25.5125"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
-      <dia:attribute name="elem_corner">
-        <dia:point val="44.2199,9.2125"/>
+      <dia:attribute name="orth_points">
+        <dia:point val="26.05,25.5125"/>
+        <dia:point val="24.9675,25.5125"/>
+        <dia:point val="24.9675,12.7625"/>
+        <dia:point val="23.885,12.7625"/>
       </dia:attribute>
-      <dia:attribute name="elem_width">
-        <dia:real val="9.7699999999999996"/>
+      <dia:attribute name="orth_orient">
+        <dia:enum val="0"/>
+        <dia:enum val="1"/>
+        <dia:enum val="0"/>
       </dia:attribute>
-      <dia:attribute name="elem_height">
-        <dia:real val="7.5"/>
+      <dia:attribute name="orth_autoroute">
+        <dia:boolean val="true"/>
       </dia:attribute>
       <dia:attribute name="text_colour">
         <dia:color val="#000000"/>
@@ -2188,349 +2133,111 @@
       <dia:attribute name="line_colour">
         <dia:color val="#000000"/>
       </dia:attribute>
-      <dia:attribute name="fill_colour">
-        <dia:color val="#ffffff"/>
-      </dia:attribute>
       <dia:attribute name="line_width">
         <dia:real val="0.10000000000000001"/>
       </dia:attribute>
-      <dia:attribute name="name">
-        <dia:string>#memos#</dia:string>
+      <dia:attribute name="line_style">
+        <dia:enum val="0"/>
+        <dia:real val="1"/>
       </dia:attribute>
-      <dia:attribute name="comment">
-        <dia:string>##</dia:string>
+      <dia:attribute name="corner_radius">
+        <dia:real val="0"/>
       </dia:attribute>
-      <dia:attribute name="visible_comment">
-        <dia:boolean val="false"/>
+      <dia:attribute name="end_arrow">
+        <dia:enum val="0"/>
       </dia:attribute>
-      <dia:attribute name="tagging_comment">
-        <dia:boolean val="false"/>
+      <dia:attribute name="start_point_desc">
+        <dia:string>#1#</dia:string>
       </dia:attribute>
-      <dia:attribute name="underline_primary_key">
-        <dia:boolean val="true"/>
-      </dia:attribute>
-      <dia:attribute name="bold_primary_keys">
-        <dia:boolean val="true"/>
+      <dia:attribute name="end_point_desc">
+        <dia:string>#n#</dia:string>
       </dia:attribute>
       <dia:attribute name="normal_font">
         <dia:font family="monospace" style="0" name="Courier"/>
       </dia:attribute>
-      <dia:attribute name="name_font">
-        <dia:font family="sans" style="80" name="Helvetica-Bold"/>
+      <dia:attribute name="normal_font_height">
+        <dia:real val="0.59999999999999998"/>
       </dia:attribute>
-      <dia:attribute name="comment_font">
-        <dia:font family="sans" style="8" name="Helvetica-Oblique"/>
+      <dia:connections>
+        <dia:connection handle="0" to="O5" connection="12"/>
+        <dia:connection handle="1" to="O4" connection="15"/>
+      </dia:connections>
+    </dia:object>
+    <dia:object type="Database - Reference" version="0" id="O18">
+      <dia:attribute name="obj_pos">
+        <dia:point val="46.37,-1.95"/>
+      </dia:attribute>
+      <dia:attribute name="obj_bb">
+        <dia:rectangle val="37.55,-2.6;55.6,22.0125"/>
+      </dia:attribute>
+      <dia:attribute name="meta">
+        <dia:composite type="dict"/>
+      </dia:attribute>
+      <dia:attribute name="orth_points">
+        <dia:point val="46.37,-1.95"/>
+        <dia:point val="55.6,-1.95"/>
+        <dia:point val="55.6,22.0125"/>
+        <dia:point val="37.55,22.0125"/>
+      </dia:attribute>
+      <dia:attribute name="orth_orient">
+        <dia:enum val="0"/>
+        <dia:enum val="1"/>
+        <dia:enum val="0"/>
+      </dia:attribute>
+      <dia:attribute name="orth_autoroute">
+        <dia:boolean val="false"/>
+      </dia:attribute>
+      <dia:attribute name="text_colour">
+        <dia:color val="#000000"/>
+      </dia:attribute>
+      <dia:attribute name="line_colour">
+        <dia:color val="#000000"/>
+      </dia:attribute>
+      <dia:attribute name="line_width">
+        <dia:real val="0.10000000000000001"/>
+      </dia:attribute>
+      <dia:attribute name="line_style">
+        <dia:enum val="0"/>
+        <dia:real val="1"/>
+      </dia:attribute>
+      <dia:attribute name="corner_radius">
+        <dia:real val="0"/>
+      </dia:attribute>
+      <dia:attribute name="end_arrow">
+        <dia:enum val="0"/>
+      </dia:attribute>
+      <dia:attribute name="start_point_desc">
+        <dia:string>#1#</dia:string>
+      </dia:attribute>
+      <dia:attribute name="end_point_desc">
+        <dia:string>#n#</dia:string>
+      </dia:attribute>
+      <dia:attribute name="normal_font">
+        <dia:font family="monospace" style="0" name="Courier"/>
       </dia:attribute>
       <dia:attribute name="normal_font_height">
-        <dia:real val="0.80000000000000004"/>
+        <dia:real val="0.59999999999999998"/>
       </dia:attribute>
-      <dia:attribute name="name_font_height">
-        <dia:real val="0.69999999999999996"/>
-      </dia:attribute>
-      <dia:attribute name="comment_font_height">
-        <dia:real val="0.69999999999999996"/>
-      </dia:attribute>
-      <dia:attribute name="attributes">
-        <dia:composite type="table_attribute">
-          <dia:attribute name="name">
-            <dia:string>#id#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#serial#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="primary_key">
-            <dia:boolean val="true"/>
-          </dia:attribute>
-          <dia:attribute name="nullable">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="unique">
-            <dia:boolean val="true"/>
-          </dia:attribute>
-        </dia:composite>
-        <dia:composite type="table_attribute">
-          <dia:attribute name="name">
-            <dia:string>#destinatario_id#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#int#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="primary_key">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="nullable">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="unique">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-        </dia:composite>
-        <dia:composite type="table_attribute">
-          <dia:attribute name="name">
-            <dia:string>#asunto#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#char#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="primary_key">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="nullable">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="unique">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-        </dia:composite>
-        <dia:composite type="table_attribute">
-          <dia:attribute name="name">
-            <dia:string>#archivos#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#dir#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="primary_key">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="nullable">
-            <dia:boolean val="true"/>
-          </dia:attribute>
-          <dia:attribute name="unique">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-        </dia:composite>
-        <dia:composite type="table_attribute">
-          <dia:attribute name="name">
-            <dia:string>#leido#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#bool#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="primary_key">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="nullable">
-            <dia:boolean val="true"/>
-          </dia:attribute>
-          <dia:attribute name="unique">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-        </dia:composite>
-        <dia:composite type="table_attribute">
-          <dia:attribute name="name">
-            <dia:string>#mensaje#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#text#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="primary_key">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="nullable">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="unique">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-        </dia:composite>
-        <dia:composite type="table_attribute">
-          <dia:attribute name="name">
-            <dia:string>#clasificacion_id#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#int#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="primary_key">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="nullable">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="unique">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-        </dia:composite>
-        <dia:composite type="table_attribute">
-          <dia:attribute name="name">
-            <dia:string>#estado#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#bool#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>#aprobado
-en espera
-rechazado
-anulado#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="primary_key">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="nullable">
-            <dia:boolean val="true"/>
-          </dia:attribute>
-          <dia:attribute name="unique">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-        </dia:composite>
-      </dia:attribute>
+      <dia:connections>
+        <dia:connection handle="0" to="O15" connection="13"/>
+        <dia:connection handle="1" to="O3" connection="19"/>
+      </dia:connections>
     </dia:object>
     <dia:object type="Database - Reference" version="0" id="O19">
       <dia:attribute name="obj_pos">
-        <dia:point val="26.05,25.5125"/>
+        <dia:point val="41.65,19.9125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="23.285,21.8625;26.05,25.5125"/>
+        <dia:rectangle val="37.55,19.2625;41.65,20.4125"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="26.05,25.5125"/>
-        <dia:point val="24.6675,25.5125"/>
-        <dia:point val="24.6675,22.5125"/>
-        <dia:point val="23.285,22.5125"/>
-      </dia:attribute>
-      <dia:attribute name="orth_orient">
-        <dia:enum val="0"/>
-        <dia:enum val="1"/>
-        <dia:enum val="0"/>
-      </dia:attribute>
-      <dia:attribute name="orth_autoroute">
-        <dia:boolean val="true"/>
-      </dia:attribute>
-      <dia:attribute name="text_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_width">
-        <dia:real val="0.10000000000000001"/>
-      </dia:attribute>
-      <dia:attribute name="line_style">
-        <dia:enum val="0"/>
-        <dia:real val="1"/>
-      </dia:attribute>
-      <dia:attribute name="corner_radius">
-        <dia:real val="0"/>
-      </dia:attribute>
-      <dia:attribute name="end_arrow">
-        <dia:enum val="0"/>
-      </dia:attribute>
-      <dia:attribute name="start_point_desc">
-        <dia:string>#1#</dia:string>
-      </dia:attribute>
-      <dia:attribute name="end_point_desc">
-        <dia:string>#n#</dia:string>
-      </dia:attribute>
-      <dia:attribute name="normal_font">
-        <dia:font family="monospace" style="0" name="Courier"/>
-      </dia:attribute>
-      <dia:attribute name="normal_font_height">
-        <dia:real val="0.59999999999999998"/>
-      </dia:attribute>
-      <dia:connections>
-        <dia:connection handle="0" to="O6" connection="12"/>
-        <dia:connection handle="1" to="O5" connection="15"/>
-      </dia:connections>
-    </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O20">
-      <dia:attribute name="obj_pos">
-        <dia:point val="34.675,-1.95"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="30.23,-2.6;34.675,18.8125"/>
-      </dia:attribute>
-      <dia:attribute name="meta">
-        <dia:composite type="dict"/>
-      </dia:attribute>
-      <dia:attribute name="orth_points">
-        <dia:point val="34.675,-1.95"/>
-        <dia:point val="32.4525,-1.95"/>
-        <dia:point val="32.4525,18.8125"/>
-        <dia:point val="30.23,18.8125"/>
-      </dia:attribute>
-      <dia:attribute name="orth_orient">
-        <dia:enum val="0"/>
-        <dia:enum val="1"/>
-        <dia:enum val="0"/>
-      </dia:attribute>
-      <dia:attribute name="orth_autoroute">
-        <dia:boolean val="true"/>
-      </dia:attribute>
-      <dia:attribute name="text_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_width">
-        <dia:real val="0.10000000000000001"/>
-      </dia:attribute>
-      <dia:attribute name="line_style">
-        <dia:enum val="0"/>
-        <dia:real val="1"/>
-      </dia:attribute>
-      <dia:attribute name="corner_radius">
-        <dia:real val="0"/>
-      </dia:attribute>
-      <dia:attribute name="end_arrow">
-        <dia:enum val="0"/>
-      </dia:attribute>
-      <dia:attribute name="start_point_desc">
-        <dia:string>#1#</dia:string>
-      </dia:attribute>
-      <dia:attribute name="end_point_desc">
-        <dia:string>#n#</dia:string>
-      </dia:attribute>
-      <dia:attribute name="normal_font">
-        <dia:font family="monospace" style="0" name="Courier"/>
-      </dia:attribute>
-      <dia:attribute name="normal_font_height">
-        <dia:real val="0.59999999999999998"/>
-      </dia:attribute>
-      <dia:connections>
-        <dia:connection handle="0" to="O16" connection="12"/>
-        <dia:connection handle="1" to="O0" connection="35"/>
-      </dia:connections>
-    </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O21">
-      <dia:attribute name="obj_pos">
-        <dia:point val="43.65,22.1625"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="41.75,21.5125;44.14,22.9125"/>
-      </dia:attribute>
-      <dia:attribute name="meta">
-        <dia:composite type="dict"/>
-      </dia:attribute>
-      <dia:attribute name="orth_points">
-        <dia:point val="43.65,22.1625"/>
-        <dia:point val="43.65,22.1625"/>
-        <dia:point val="41.75,22.1625"/>
-        <dia:point val="41.75,22.1625"/>
+        <dia:point val="41.65,19.9125"/>
+        <dia:point val="39.6,19.9125"/>
+        <dia:point val="39.6,20.4125"/>
+        <dia:point val="37.55,20.4125"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="0"/>
@@ -2573,194 +2280,24 @@ anulado#</dia:string>
       </dia:attribute>
       <dia:connections>
         <dia:connection handle="0" to="O2" connection="12"/>
-        <dia:connection handle="1" to="O3" connection="17"/>
+        <dia:connection handle="1" to="O3" connection="15"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O22">
+    <dia:object type="Database - Reference" version="0" id="O20">
       <dia:attribute name="obj_pos">
-        <dia:point val="43.8625,5.1"/>
+        <dia:point val="14.5,11.9625"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="43.8625,5.1;50.765,7.8"/>
-      </dia:attribute>
-      <dia:attribute name="meta">
-        <dia:composite type="dict"/>
-      </dia:attribute>
-      <dia:attribute name="elem_corner">
-        <dia:point val="43.8625,5.1"/>
-      </dia:attribute>
-      <dia:attribute name="elem_width">
-        <dia:real val="6.9025000000000007"/>
-      </dia:attribute>
-      <dia:attribute name="elem_height">
-        <dia:real val="2.7000000000000002"/>
-      </dia:attribute>
-      <dia:attribute name="text_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="fill_colour">
-        <dia:color val="#ffffff"/>
-      </dia:attribute>
-      <dia:attribute name="line_width">
-        <dia:real val="0.10000000000000001"/>
-      </dia:attribute>
-      <dia:attribute name="name">
-        <dia:string>#clasificacion_memos#</dia:string>
-      </dia:attribute>
-      <dia:attribute name="comment">
-        <dia:string>##</dia:string>
-      </dia:attribute>
-      <dia:attribute name="visible_comment">
-        <dia:boolean val="false"/>
-      </dia:attribute>
-      <dia:attribute name="tagging_comment">
-        <dia:boolean val="false"/>
-      </dia:attribute>
-      <dia:attribute name="underline_primary_key">
-        <dia:boolean val="true"/>
-      </dia:attribute>
-      <dia:attribute name="bold_primary_keys">
-        <dia:boolean val="true"/>
-      </dia:attribute>
-      <dia:attribute name="normal_font">
-        <dia:font family="monospace" style="0" name="Courier"/>
-      </dia:attribute>
-      <dia:attribute name="name_font">
-        <dia:font family="sans" style="80" name="Helvetica-Bold"/>
-      </dia:attribute>
-      <dia:attribute name="comment_font">
-        <dia:font family="sans" style="8" name="Helvetica-Oblique"/>
-      </dia:attribute>
-      <dia:attribute name="normal_font_height">
-        <dia:real val="0.80000000000000004"/>
-      </dia:attribute>
-      <dia:attribute name="name_font_height">
-        <dia:real val="0.69999999999999996"/>
-      </dia:attribute>
-      <dia:attribute name="comment_font_height">
-        <dia:real val="0.69999999999999996"/>
-      </dia:attribute>
-      <dia:attribute name="attributes">
-        <dia:composite type="table_attribute">
-          <dia:attribute name="name">
-            <dia:string>#id#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#serial#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="primary_key">
-            <dia:boolean val="true"/>
-          </dia:attribute>
-          <dia:attribute name="nullable">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="unique">
-            <dia:boolean val="true"/>
-          </dia:attribute>
-        </dia:composite>
-        <dia:composite type="table_attribute">
-          <dia:attribute name="name">
-            <dia:string>#nombre#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#char#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="primary_key">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="nullable">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="unique">
-            <dia:boolean val="true"/>
-          </dia:attribute>
-        </dia:composite>
-      </dia:attribute>
-    </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O23">
-      <dia:attribute name="obj_pos">
-        <dia:point val="50.765,7.3"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="50.765,6.65;54.9899,15.4125"/>
+        <dia:rectangle val="12.5875,11.3125;14.5,16.7625"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="50.765,7.3"/>
-        <dia:point val="54.9899,7.3"/>
-        <dia:point val="54.9899,15.4125"/>
-        <dia:point val="53.9899,15.4125"/>
-      </dia:attribute>
-      <dia:attribute name="orth_orient">
-        <dia:enum val="0"/>
-        <dia:enum val="1"/>
-        <dia:enum val="0"/>
-      </dia:attribute>
-      <dia:attribute name="orth_autoroute">
-        <dia:boolean val="true"/>
-      </dia:attribute>
-      <dia:attribute name="text_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_width">
-        <dia:real val="0.10000000000000001"/>
-      </dia:attribute>
-      <dia:attribute name="line_style">
-        <dia:enum val="0"/>
-        <dia:real val="1"/>
-      </dia:attribute>
-      <dia:attribute name="corner_radius">
-        <dia:real val="0"/>
-      </dia:attribute>
-      <dia:attribute name="end_arrow">
-        <dia:enum val="0"/>
-      </dia:attribute>
-      <dia:attribute name="start_point_desc">
-        <dia:string>#1#</dia:string>
-      </dia:attribute>
-      <dia:attribute name="end_point_desc">
-        <dia:string>#n#</dia:string>
-      </dia:attribute>
-      <dia:attribute name="normal_font">
-        <dia:font family="monospace" style="0" name="Courier"/>
-      </dia:attribute>
-      <dia:attribute name="normal_font_height">
-        <dia:real val="0.59999999999999998"/>
-      </dia:attribute>
-      <dia:connections>
-        <dia:connection handle="0" to="O22" connection="15"/>
-        <dia:connection handle="1" to="O18" connection="25"/>
-      </dia:connections>
-    </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O24">
-      <dia:attribute name="obj_pos">
-        <dia:point val="13.9,21.7125"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="12.5875,21.0625;13.9,26.5125"/>
-      </dia:attribute>
-      <dia:attribute name="meta">
-        <dia:composite type="dict"/>
-      </dia:attribute>
-      <dia:attribute name="orth_points">
-        <dia:point val="13.9,21.7125"/>
-        <dia:point val="12.5875,21.7125"/>
-        <dia:point val="12.5875,26.5125"/>
-        <dia:point val="13.9,26.5125"/>
+        <dia:point val="14.5,11.9625"/>
+        <dia:point val="12.5875,11.9625"/>
+        <dia:point val="12.5875,16.7625"/>
+        <dia:point val="14.5,16.7625"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="0"/>
@@ -2802,11 +2339,11 @@ anulado#</dia:string>
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O5" connection="12"/>
-        <dia:connection handle="1" to="O5" connection="24"/>
+        <dia:connection handle="0" to="O4" connection="12"/>
+        <dia:connection handle="1" to="O4" connection="24"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O25">
+    <dia:object type="Database - Table" version="0" id="O21">
       <dia:attribute name="obj_pos">
         <dia:point val="-1.0125,9.55"/>
       </dia:attribute>
@@ -3196,7 +2733,7 @@ anulado#</dia:string>
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O26">
+    <dia:object type="Database - Reference" version="0" id="O22">
       <dia:attribute name="obj_pos">
         <dia:point val="-1.0125,10.95"/>
       </dia:attribute>
@@ -3252,11 +2789,11 @@ anulado#</dia:string>
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O25" connection="12"/>
-        <dia:connection handle="1" to="O25" connection="20"/>
+        <dia:connection handle="0" to="O21" connection="12"/>
+        <dia:connection handle="1" to="O21" connection="20"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O27">
+    <dia:object type="Database - Table" version="0" id="O23">
       <dia:attribute name="obj_pos">
         <dia:point val="1.0875,1.6"/>
       </dia:attribute>
@@ -3366,20 +2903,20 @@ anulado#</dia:string>
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O28">
+    <dia:object type="Database - Reference" version="0" id="O24">
       <dia:attribute name="obj_pos">
-        <dia:point val="14.3,10.0125"/>
+        <dia:point val="31.2,6.6125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="7.7775,3.15;14.3,10.0125"/>
+        <dia:rectangle val="7.7775,3.15;31.2,6.6125"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="14.3,10.0125"/>
-        <dia:point val="11.0388,10.0125"/>
-        <dia:point val="11.0388,3.8"/>
+        <dia:point val="31.2,6.6125"/>
+        <dia:point val="19.4888,6.6125"/>
+        <dia:point val="19.4888,3.8"/>
         <dia:point val="7.7775,3.8"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
@@ -3423,10 +2960,10 @@ anulado#</dia:string>
       </dia:attribute>
       <dia:connections>
         <dia:connection handle="0" to="O0" connection="12"/>
-        <dia:connection handle="1" to="O27" connection="15"/>
+        <dia:connection handle="1" to="O23" connection="15"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O29">
+    <dia:object type="Database - Reference" version="0" id="O25">
       <dia:attribute name="obj_pos">
         <dia:point val="7.7775,3"/>
       </dia:attribute>
@@ -3482,11 +3019,11 @@ anulado#</dia:string>
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O27" connection="13"/>
-        <dia:connection handle="1" to="O25" connection="25"/>
+        <dia:connection handle="0" to="O23" connection="13"/>
+        <dia:connection handle="1" to="O21" connection="25"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O30">
+    <dia:object type="Database - Reference" version="0" id="O26">
       <dia:attribute name="obj_pos">
         <dia:point val="-1.0125,10.95"/>
       </dia:attribute>
@@ -3542,11 +3079,11 @@ anulado#</dia:string>
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O25" connection="12"/>
-        <dia:connection handle="1" to="O25" connection="18"/>
+        <dia:connection handle="0" to="O21" connection="12"/>
+        <dia:connection handle="1" to="O21" connection="18"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O31">
+    <dia:object type="Database - Reference" version="0" id="O27">
       <dia:attribute name="obj_pos">
         <dia:point val="7.7775,3"/>
       </dia:attribute>
@@ -3602,22 +3139,22 @@ anulado#</dia:string>
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O27" connection="13"/>
-        <dia:connection handle="1" to="O25" connection="33"/>
+        <dia:connection handle="0" to="O23" connection="13"/>
+        <dia:connection handle="1" to="O21" connection="33"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O32">
+    <dia:object type="Database - Table" version="0" id="O28">
       <dia:attribute name="obj_pos">
-        <dia:point val="16.9214,-1.00312"/>
+        <dia:point val="16.5714,-3.20312"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="16.9214,-1.00312;27.0764,4.09688"/>
+        <dia:rectangle val="16.5714,-3.20312;26.7264,1.89688"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="16.9214,-1.00312"/>
+        <dia:point val="16.5714,-3.20312"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="10.154999999999999"/>
@@ -3776,19 +3313,19 @@ anulado#</dia:string>
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O33">
+    <dia:object type="Database - Reference" version="0" id="O29">
       <dia:attribute name="obj_pos">
-        <dia:point val="16.9214,0.396884"/>
+        <dia:point val="16.5714,-1.80312"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="-2.6625,-0.253116;16.9214,22.15"/>
+        <dia:rectangle val="-2.6625,-2.45312;16.5714,22.15"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="16.9214,0.396884"/>
-        <dia:point val="-2.6625,0.396884"/>
+        <dia:point val="16.5714,-1.80312"/>
+        <dia:point val="-2.6625,-1.80312"/>
         <dia:point val="-2.6625,22.15"/>
         <dia:point val="-1.0125,22.15"/>
       </dia:attribute>
@@ -3832,25 +3369,25 @@ anulado#</dia:string>
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O32" connection="12"/>
-        <dia:connection handle="1" to="O25" connection="40"/>
+        <dia:connection handle="0" to="O28" connection="12"/>
+        <dia:connection handle="1" to="O21" connection="40"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O34">
+    <dia:object type="Database - Reference" version="0" id="O30">
       <dia:attribute name="obj_pos">
         <dia:point val="34.675,-1.95"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="27.0764,-2.6;34.675,3.59688"/>
+        <dia:rectangle val="26.7264,-2.6;34.675,1.39688"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
         <dia:point val="34.675,-1.95"/>
-        <dia:point val="30.8757,-1.95"/>
-        <dia:point val="30.8757,3.59688"/>
-        <dia:point val="27.0764,3.59688"/>
+        <dia:point val="30.7007,-1.95"/>
+        <dia:point val="30.7007,1.39688"/>
+        <dia:point val="26.7264,1.39688"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="0"/>
@@ -3892,16 +3429,16 @@ anulado#</dia:string>
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O16" connection="12"/>
-        <dia:connection handle="1" to="O32" connection="21"/>
+        <dia:connection handle="0" to="O15" connection="12"/>
+        <dia:connection handle="1" to="O28" connection="21"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O35">
+    <dia:object type="Database - Reference" version="0" id="O31">
       <dia:attribute name="obj_pos">
         <dia:point val="-1.0125,15.75"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="-2.3625,5.925;-0.295,15.75"/>
+        <dia:rectangle val="-2.3625,5.675;-0.295,15.75"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -3909,8 +3446,8 @@ anulado#</dia:string>
       <dia:attribute name="orth_points">
         <dia:point val="-1.0125,15.75"/>
         <dia:point val="-2.3625,15.75"/>
-        <dia:point val="-2.3625,6.575"/>
-        <dia:point val="-0.295,6.575"/>
+        <dia:point val="-2.3625,6.325"/>
+        <dia:point val="-0.295,6.325"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="0"/>
@@ -3952,22 +3489,22 @@ anulado#</dia:string>
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O25" connection="24"/>
-        <dia:connection handle="1" to="O36" connection="12"/>
+        <dia:connection handle="0" to="O21" connection="24"/>
+        <dia:connection handle="1" to="O32" connection="12"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O36">
+    <dia:object type="Database - Table" version="0" id="O32">
       <dia:attribute name="obj_pos">
-        <dia:point val="-0.295,5.175"/>
+        <dia:point val="-0.295,4.925"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="-0.295,5.175;7.165,8.675"/>
+        <dia:rectangle val="-0.295,4.925;7.165,8.425"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="-0.295,5.175"/>
+        <dia:point val="-0.295,4.925"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="7.4600000000000009"/>
@@ -4086,19 +3623,19 @@ anulado#</dia:string>
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O37">
+    <dia:object type="Database - Reference" version="0" id="O33">
       <dia:attribute name="obj_pos">
-        <dia:point val="7.165,7.375"/>
+        <dia:point val="7.165,7.125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="7.165,2.35;9.6875,7.375"/>
+        <dia:rectangle val="7.165,2.35;9.6875,7.125"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="7.165,7.375"/>
-        <dia:point val="9.6875,7.375"/>
+        <dia:point val="7.165,7.125"/>
+        <dia:point val="9.6875,7.125"/>
         <dia:point val="9.6875,3"/>
         <dia:point val="7.7775,3"/>
       </dia:attribute>
@@ -4142,23 +3679,23 @@ anulado#</dia:string>
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O36" connection="15"/>
-        <dia:connection handle="1" to="O27" connection="13"/>
+        <dia:connection handle="0" to="O32" connection="15"/>
+        <dia:connection handle="1" to="O23" connection="13"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O38">
+    <dia:object type="Database - Reference" version="0" id="O34">
       <dia:attribute name="obj_pos">
-        <dia:point val="7.165,8.175"/>
+        <dia:point val="7.165,7.925"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="7.165,-2.6;34.675,8.175"/>
+        <dia:rectangle val="7.165,-2.6;34.675,7.925"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="7.165,8.175"/>
-        <dia:point val="28.4875,8.175"/>
+        <dia:point val="7.165,7.925"/>
+        <dia:point val="28.4875,7.925"/>
         <dia:point val="28.4875,-1.95"/>
         <dia:point val="34.675,-1.95"/>
       </dia:attribute>
@@ -4202,11 +3739,11 @@ anulado#</dia:string>
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O36" connection="17"/>
-        <dia:connection handle="1" to="O16" connection="12"/>
+        <dia:connection handle="0" to="O32" connection="17"/>
+        <dia:connection handle="1" to="O15" connection="12"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Database - Table" version="0" id="O39">
+    <dia:object type="Database - Table" version="0" id="O35">
       <dia:attribute name="obj_pos">
         <dia:point val="2.7375,24.3125"/>
       </dia:attribute>
@@ -4336,7 +3873,7 @@ anulado#</dia:string>
         </dia:composite>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Database - Reference" version="0" id="O40">
+    <dia:object type="Database - Reference" version="0" id="O36">
       <dia:attribute name="obj_pos">
         <dia:point val="10.2975,10.95"/>
       </dia:attribute>
@@ -4392,8 +3929,68 @@ anulado#</dia:string>
         <dia:real val="0.59999999999999998"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O25" connection="13"/>
-        <dia:connection handle="1" to="O39" connection="13"/>
+        <dia:connection handle="0" to="O21" connection="13"/>
+        <dia:connection handle="1" to="O35" connection="13"/>
+      </dia:connections>
+    </dia:object>
+    <dia:object type="Database - Reference" version="0" id="O37">
+      <dia:attribute name="obj_pos">
+        <dia:point val="28.55,19.6125"/>
+      </dia:attribute>
+      <dia:attribute name="obj_bb">
+        <dia:rectangle val="27.55,14.7625;31.2,19.6125"/>
+      </dia:attribute>
+      <dia:attribute name="meta">
+        <dia:composite type="dict"/>
+      </dia:attribute>
+      <dia:attribute name="orth_points">
+        <dia:point val="28.55,19.6125"/>
+        <dia:point val="27.55,19.6125"/>
+        <dia:point val="27.55,15.4125"/>
+        <dia:point val="31.2,15.4125"/>
+      </dia:attribute>
+      <dia:attribute name="orth_orient">
+        <dia:enum val="0"/>
+        <dia:enum val="1"/>
+        <dia:enum val="0"/>
+      </dia:attribute>
+      <dia:attribute name="orth_autoroute">
+        <dia:boolean val="true"/>
+      </dia:attribute>
+      <dia:attribute name="text_colour">
+        <dia:color val="#000000"/>
+      </dia:attribute>
+      <dia:attribute name="line_colour">
+        <dia:color val="#000000"/>
+      </dia:attribute>
+      <dia:attribute name="line_width">
+        <dia:real val="0.10000000000000001"/>
+      </dia:attribute>
+      <dia:attribute name="line_style">
+        <dia:enum val="0"/>
+        <dia:real val="1"/>
+      </dia:attribute>
+      <dia:attribute name="corner_radius">
+        <dia:real val="0"/>
+      </dia:attribute>
+      <dia:attribute name="end_arrow">
+        <dia:enum val="0"/>
+      </dia:attribute>
+      <dia:attribute name="start_point_desc">
+        <dia:string>#1#</dia:string>
+      </dia:attribute>
+      <dia:attribute name="end_point_desc">
+        <dia:string>#n#</dia:string>
+      </dia:attribute>
+      <dia:attribute name="normal_font">
+        <dia:font family="monospace" style="0" name="Courier"/>
+      </dia:attribute>
+      <dia:attribute name="normal_font_height">
+        <dia:real val="0.59999999999999998"/>
+      </dia:attribute>
+      <dia:connections>
+        <dia:connection handle="0" to="O3" connection="12"/>
+        <dia:connection handle="1" to="O0" connection="34"/>
       </dia:connections>
     </dia:object>
   </dia:layer>

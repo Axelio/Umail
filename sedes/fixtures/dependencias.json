@@ -1,0 +1,67 @@
+[
+{
+    "pk": 1, 
+    "model": "sedes.dependencias", 
+    "fields": {
+        "nivel": 4, 
+        "tipo_sede": 2, 
+        "dependencia": 1, 
+        "departamento": "Secretar\u00eda", 
+        "ubicacion": 1, 
+        "siglas": "S", 
+        "telefono": null
+    }
+},
+{
+    "pk": 2, 
+    "model": "sedes.dependencias", 
+    "fields": {
+        "nivel": 3, 
+        "tipo_sede": 2, 
+        "dependencia": null, 
+        "departamento": "Rectorado", 
+        "ubicacion": 1, 
+        "siglas": "R", 
+        "telefono": null
+    }
+},
+{
+    "pk": 3, 
+    "model": "sedes.dependencias", 
+    "fields": {
+        "nivel": 1, 
+        "tipo_sede": 2, 
+        "dependencia": 1, 
+        "departamento": "Direcci\u00f3n de Admisi\u00f3n, Control y Evaluaci\u00f3n", 
+        "ubicacion": 1, 
+        "siglas": "DACE", 
+        "telefono": null
+    }
+},
+{
+    "pk": 4, 
+    "model": "sedes.dependencias", 
+    "fields": {
+        "nivel": 6, 
+        "tipo_sede": 2, 
+        "dependencia": 2, 
+        "departamento": "Vicerrectorado Acad\u00e9mico", 
+        "ubicacion": 1, 
+        "siglas": "VA", 
+        "telefono": null
+    }
+},
+{
+    "pk": 5, 
+    "model": "sedes.dependencias", 
+    "fields": {
+        "nivel": 5, 
+        "tipo_sede": 2, 
+        "dependencia": 4, 
+        "departamento": "\u00c1rea de Ingenier\u00eda en Sistemas", 
+        "ubicacion": 1, 
+        "siglas": "AIS", 
+        "telefono": null
+    }
+}
+]

@@ -1,0 +1,10 @@
+[
+{
+    "pk": 1, 
+    "model": "sedes.parroquias", 
+    "fields": {
+        "nombre": "San Juan de los Morros", 
+        "municipio": 1
+    }
+}
+]

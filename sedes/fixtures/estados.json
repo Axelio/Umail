@@ -1,0 +1,10 @@
+[
+{
+    "pk": 1, 
+    "model": "sedes.estado", 
+    "fields": {
+        "nombre": "Gu\u00e1rico", 
+        "pais": 1
+    }
+}
+]

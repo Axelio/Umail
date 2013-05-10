@@ -12,7 +12,7 @@
         "primer_nombre": "Alberto", 
         "cargos_autorizados": [], 
         "telefono": null, 
-        "email": "arod.unerg@gmail.com", 
+        "email": "arodriguez@unerg.edu.ve", 
         "tipodoc": "c"
     }
 },
@@ -22,14 +22,14 @@
     "fields": {
         "num_identificacion": "19276008", 
         "genero": 0, 
-        "cargo_principal": 1, 
+        "cargo_principal": 2, 
         "segundo_apellido": "", 
         "segundo_nombre": "", 
         "primer_apellido": "D\u00edaz", 
         "primer_nombre": "Axel", 
         "cargos_autorizados": [], 
-        "telefono": 4264347463, 
-        "email": "diaz.axelio@gmail.com", 
+        "telefono": null, 
+        "email": "correo@correo.com", 
         "tipodoc": "c"
     }
 }

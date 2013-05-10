@@ -1,12 +1,11 @@
 # -*- coding: utf8 -*-
 from django.db import models
-from sedes.models import Niveles
+from sedes.models import Niveles, Dependencias
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
 # Modelo para aplicación de personas
 class Personas(models.Model):
-    from auth.models import Group
     tipodoc                 = models.CharField(choices=(('c','Cédula'),('p','Pasaporte')),default=0,max_length=1, verbose_name=u'Tipo de Identificación')
     num_identificacion      = models.CharField(max_length=50,unique=True,verbose_name=u'Número de Identificación')
     primer_apellido         = models.CharField(max_length=100)
@@ -16,8 +15,8 @@ class Personas(models.Model):
     genero                  = models.IntegerField(choices=((0,'Masculino'),(1,'Femenino')),default=0,verbose_name=u'sexo')
     email                   = models.EmailField()
     telefono                = models.IntegerField(unique=True, null=True, blank=True, help_text='Por favor, incluya el código de telefonía o área.')
-    cargo_principal         = models.ForeignKey(Group,related_name=u'cargo_principal')
-    cargos_autorizados      = models.ManyToManyField(Group, null=True, blank=True, default=None, related_name=u'cargos_autorizados')
+    cargo_principal         = models.ForeignKey('Personal',related_name=u'cargo_principal')
+    cargos_autorizados      = models.ManyToManyField('Personal', null=True, blank=True, default=None, related_name=u'cargos_autorizados')
     class Meta:
         db_table            = u'personas'
         verbose_name_plural = u'personas'
@@ -55,35 +54,18 @@ def save_pers_user(sender, **kwargs):
     usuario.save()
     destinatario = Destinatarios.objects.get_or_create(usuarios=usuario_perfil)
 
-class Cargos(models.Model):
-    nombre                  = models.CharField(max_length=200, unique=True)
-    nivel                   = models.ForeignKey(Niveles)
-    class Meta:
-        db_table            = u'cargos'
-        verbose_name_plural = u'cargos'
-    def __unicode__(self):
-        return u'%s'%(self.nombre)
 
-class Permisos(models.Model):
-    nombre                  = models.CharField(max_length=50)
-    nivel                   = models.IntegerField(help_text=u'De menor a mayor, el nivel de acceso que tiene %s' %(nombre))
-    class Meta:
-        db_table            = u'permisos'
-        verbose_name_plural = u'permisos'
-        verbose_name        = u'permiso'
-    def __unicode__(self):
-        return '%s' (self.nombre)
-
-class Autoridades(models.Model):
-    persona                 = models.ForeignKey('Personas')
+class Personal(models.Model):
+    from auth.models import Group
     tipo_personal           = models.ForeignKey('TipoPersonal')
-    #dependencia             = models.ForeignKey(Dependencias)
+    dependencia             = models.ForeignKey(Dependencias)
+    cargo                   = models.ForeignKey(Group,related_name=u'cargo_principal')
     class Meta:
-        db_table            = u'autoridades'
-        verbose_name_plural = u'autoridades'
-        verbose_name        = u'autoridad'
+        db_table = u'personal'
+        verbose_name_plural = 'personal'
     def __unicode__(self):
-        return '%s - %s' (self.persona, self.dependencia)
+        return u'%s de %s' %(self.cargo, self.dependencia)
+
 
 class TipoPersonal(models.Model):
     nombre                  = models.CharField(max_length=50)

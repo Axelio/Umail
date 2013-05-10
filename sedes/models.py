@@ -5,15 +5,17 @@ from django.db import models
 class Dependencias(models.Model):
     ubicacion               = models.ForeignKey('Parroquias', help_text=u'Escriba y seleccione una parroquia', verbose_name=u'ubicación')
     tipo_sede               = models.ForeignKey('TipoSede')
-    departamento            = models.CharField(max_length=50)
-    telefono                = models.IntegerField(unique=True, blank=True, help_text='Por favor, incluya el código de telefonía o área.', verbose_name=u'teléfono')
+    departamento            = models.CharField(max_length=50, verbose_name='nombre del departamento')
+    siglas                  = models.CharField(max_length=50, verbose_name='iniciales del departamento')
+    telefono                = models.IntegerField(unique=True, null=True, blank=True, help_text='Por favor, incluya el código de telefonía o área.', verbose_name=u'teléfono')
     nivel                   = models.ForeignKey('Niveles')
+    dependencia             = models.ForeignKey('self', null=True, blank=True, verbose_name='dependencia superior')
     class Meta:
         db_table            = u'dependencias'
         verbose_name_plural = u'dependencias'
         verbose_name      = u'dependencia'
     def __unicode__(self):
-        return u'%s' %(self.tipo_sede)
+        return u'(%s) %s' %(self.siglas, self.departamento)
 
 class TipoSede(models.Model):
     nombre                  = models.CharField(max_length=20)
@@ -25,7 +27,7 @@ class TipoSede(models.Model):
         return u'%s' %(self.nombre)
 
 class Niveles(models.Model):
-    numero                  = models.IntegerField(verbose_name = u'número')
+    numero                  = models.IntegerField(verbose_name = u'número', unique=True)
     class Meta:
         db_table            = u'niveles'
         verbose_name_plural = u'niveles'

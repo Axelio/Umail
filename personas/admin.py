@@ -5,17 +5,13 @@ from django.contrib import admin
 from personas.models import *
 
 class PersonasAdmin(admin.ModelAdmin):
-    search_fields   =['num_identificacion','primer_nombre','primer_apellido','email','telefono']
+    search_fields   =['num_identificacion','primer_nombre','primer_apellido','email','telefono', 'cargo_principal','cargos_autorizados']
     list_display    = ['num_identificacion','primer_nombre','segundo_nombre','primer_apellido','segundo_apellido','genero','email','telefono']
-    search_fields   = ['cargo_principal','cargos_autorizados']
 admin.site.register(Personas, PersonasAdmin)
 
-class CargosAdmin(admin.ModelAdmin):
-    list_display    = ['nombre']
-    search_fields   = ['nombre']
-admin.site.register(Cargos, CargosAdmin)
+class PersonalAdmin(admin.ModelAdmin):
+    list_filters    = ['dependencia','tipo_personal']
+    search_fields   = ['cargo']
+admin.site.register(Personal, PersonalAdmin)
 
-class PermisosAdmin(admin.ModelAdmin):
-    list_display    = ['nombre']
-    search_fields   = ['nombre']
-admin.site.register(Permisos, PermisosAdmin)
+admin.site.register(TipoPersonal)

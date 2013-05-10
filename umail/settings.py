@@ -185,7 +185,6 @@ INSTALLED_APPS = (
     'grappelli',
 	'personas',
     'sedes',
-    'memos',
     'noticias',
 )
 

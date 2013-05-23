@@ -9,42 +9,45 @@ def menu(seccion):
 
     titulos = []
     enlace = []
+    clase = []
     vmenu=[]
 
     # Inicio
     titulos.append("Inicio")
     enlace.append("/")
+    clase.append("nav1")
 
     # Memos
     titulos.append("Memos")
     enlace.append("/entrada")
+    clase.append("nav2")
 
-    # Project
-    titulos.append("Project")
-    enlace.append("/#")
-
-    # Partners
-    titulos.append("Partners")
-    enlace.append("/#")
-
-    # Noticias
-    titulos.append("Noticias")
+    # Reportes
+    titulos.append("Reportes")
     enlace.append("/noticias")
+    clase.append("nav4")
 
-    # Contact
-    titulos.append("Contact")
+    # Perfil
+    titulos.append("Perfil")
     enlace.append("/#")
+    clase.append("nav3")
+
+    # Contactos
+    titulos.append("Contactos")
+    enlace.append("/#")
+    clase.append("nav5")
 
     vmenu.append(titulos)
     vmenu.append(enlace)
 
-    clase = ''
+    activo = ''
     for posicion in range(titulos.__len__()):
         if titulos[posicion] == seccion:
-            clase = 'class="current"'
+            activo = 'id="active"'
         else:
-            clase = ''
-        url = '<li><a href='+ enlace[posicion] + " " + clase + '><span></span>' + titulos[posicion] + '</a></li>'
+            activo = ''
+        url = '<li class='+ clase[posicion] +' '+ activo +'><a href='+ enlace[posicion] +'>'+ titulos[posicion] +'</a></li>'
+        #url = '<li><a href='+ enlace[posicion] + " " + clase + '><span></span>' + titulos[posicion] + '</a></li>'
         renderizar = renderizar + url
 
 

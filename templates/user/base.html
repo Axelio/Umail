@@ -10,6 +10,14 @@
     {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
     <!-- STYLESHEETS -->
     {% block stylesheets %}
+
+<link rel="stylesheet" href="{% static "css/reset.css" %}" type="text/css" media="all">
+<link rel="stylesheet" href="{% static "css/layout.css" %}" type="text/css" media="all">
+<link rel="stylesheet" href="{% static "css/style.css" %}" type="text/css" media="all">
+<script type="text/javascript" href="{% static "js/jquery-1.4.2.js" %}" ></script>
+
+
+
         <link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" media="screen" />
         <link href="{% static "css/ajax_select.css" %}" rel="stylesheet" type="text/css" media="screen" />
         <link href="{% static "js/ajax_select.js" %}" rel="stylesheet" type="text/javascript" media="screen" />

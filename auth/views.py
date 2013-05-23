@@ -26,8 +26,10 @@ def index(request):
     diccionario.update({'mensaje':mensaje})
 
     if loggeado:
-        ultimas_noticias = Noticias.objects.all().order_by('-fecha')[:2]
-        diccionario.update({'ult_notic':ultimas_noticias})
+        ultimas_noticias1 = Noticias.objects.all().order_by('-fecha')[:7]
+        ultimas_noticias2 = Noticias.objects.all().order_by('-fecha')[8:]
+        diccionario.update({'ult_notic1':ultimas_noticias1})
+        diccionario.update({'ult_notic2':ultimas_noticias2})
         return login(request,template_name='user/index/index.html', extra_context=diccionario) #extra_context={'mensaje':'mssdensaje'
     else:
         return render_to_response('user/index/index.html', diccionario)

@@ -103,7 +103,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -156,6 +156,7 @@ COMPRESS_JS = {
     },
 }
 
+'''
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
     'debug_toolbar.panels.timer.TimerDebugPanel',
@@ -167,6 +168,7 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.signals.SignalDebugPanel',
     'debug_toolbar.panels.logger.LoggingPanel',
 )
+'''
 
 INSTALLED_APPS = (
     'auth',
@@ -180,7 +182,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_messages',
     'django_extensions',
-    'debug_toolbar',
+    #'debug_toolbar',
     'ajax_select',
     'grappelli',
 	'personas',

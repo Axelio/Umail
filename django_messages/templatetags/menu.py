@@ -19,22 +19,22 @@ def menu(seccion):
 
     # Memos
     titulos.append("Memos")
-    enlace.append("/entrada")
+    enlace.append("/entrada/#Menu")
     clase.append("nav2")
 
     # Reportes
     titulos.append("Reportes")
-    enlace.append("/noticias")
+    enlace.append("/noticias/#Menu")
     clase.append("nav4")
 
     # Perfil
     titulos.append("Perfil")
-    enlace.append("/#")
+    enlace.append("/#Menu")
     clase.append("nav3")
 
     # Contactos
     titulos.append("Contactos")
-    enlace.append("/#")
+    enlace.append("/#Menu")
     clase.append("nav5")
 
     vmenu.append(titulos)

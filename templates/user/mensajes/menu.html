@@ -1,9 +1,2021 @@
 {% load admin_static %}
-<h2>Menú</h2>
-<ul class="list2">
-    <li><a href="#"><img src="{% static "images/icon1.jpg" %}" alt="">Redactar</a></li>
-    <li><a href="#"><img src="{% static "images/icon2.jpg" %}" alt="">Minimización de costos</a></li>
-    <li><a href="#"><img src="{% static "images/icon3.jpg" %}" alt="">Control de datos</a></li>
-    <li><a href="#"><img src="{% static "images/icon4.jpg" %}" alt="">Eficiencia</a></li>
-    <li class="bg_none"><a href="#"><img src="{% static "images/icon5.jpg" %}" alt="">Información segura</a></li>
-</ul>
+
+<link rel="stylesheet" href="{% static "/static/css/menu_memos.css" %}" type="text/css">
+<script type="text/javascript" src="{% static "/static/js/toolbar.min.js" %}"></script>
+<div id="djDebug" style="display:none;" dir="ltr">
+	<div style="display:none;" id="djDebugToolbar">
+		<ul id="djDebugPanelList">
+			
+			<li><a id="djHideToolBarButton" href="#" title="Hide Toolbar">Ocultar &raquo;</a></li>
+			
+			
+				<li class="djDebugPanelButton">
+					
+						<a href="#" title="Versions" class="djDebugVersionPanel">
+					
+					Redactar
+					
+						<br /><small>Django 1.5</small>
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					
+						<a href="#" title="Resource Usage" class="djDebugTimerPanel">
+					
+					Tiempo
+					
+						<br /><small>CPU: 52.00ms (64.17ms)</small>
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					
+						<a href="#" title="Settings from &lt;code&gt;umail.settings&lt;/code&gt;" class="djDebugSettingsVarsPanel">
+					
+					Configuraciones
+					
+						
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					
+						<a href="#" title="HTTP Headers" class="djDebugHeaderPanel">
+					
+					HTTP Headers
+					
+						
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					
+						<a href="#" title="Request Vars" class="djDebugRequestVarsPanel">
+					
+					Request Vars
+					
+						
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					
+						<a href="#" title="Templates (7 rendered)" class="djDebugTemplatePanel">
+					
+					Plantillas
+					
+						
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					
+						<a href="#" title="SQL Queries from 1 connection" class="djDebugSQLPanel">
+					
+					SQL
+					
+						<br /><small>3 queries in 5.82ms</small>
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					
+						<a href="#" title="Señales" class="djDebugSignalsPanel">
+					
+					Señales
+					
+						<br /><small>11 receivers of 12 signals</small>
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					
+						<a href="#" title="Log Messages" class="djDebugLoggingPanel">
+					
+					Registros
+					
+						<br /><small>0 messages</small>
+					
+					
+						</a>
+					
+				</li>
+			
+		</ul>
+	</div>
+	<div style="display:none;" id="djDebugToolbarHandle">
+		<a title="Show Toolbar" id="djShowToolBarButton" href="#">&laquo;</a>
+	</div>
+	
+		
+			<div id="djDebugVersionPanel" class="panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose">Cerrar</a>
+					<h3>Versions</h3>
+				</div>
+				<div class="djDebugPanelContent">
+				    <div class="scroll">
+				        
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Version</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+			<tr class="djDebugOdd">
+				<td>Ajax select</td>
+				<td>1.2</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>Debug toolbar</td>
+				<td>0.9.4</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>Django</td>
+				<td>1.5</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>Django extensions</td>
+				<td>1.1.1.dev</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>Django messages</td>
+				<td>0.5.0.pre</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>Grappelli</td>
+				<td>2.4.5</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>Python</td>
+				<td>2.7.3</td>
+			</tr>
+		
+	</tbody>
+</table>
+
+				    </div>
+				</div>
+			</div>
+		
+	
+		
+			<div id="djDebugTimerPanel" class="panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose">Cerrar</a>
+					<h3>Resource Usage</h3>
+				</div>
+				<div class="djDebugPanelContent">
+				    <div class="scroll">
+				        
+<table>
+	<colgroup>
+		<col style="width:20%"/>
+		<col/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th>Recurso</th>
+			<th>Valor</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+			<tr class="djDebugOdd">
+				<td>User CPU time</td>
+				<td>48.003 msec</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>System CPU time</td>
+				<td>4.000 msec</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>Total CPU time</td>
+				<td>52.003 msec</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>Elapsed time</td>
+				<td>64.167 msec</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>Context switches</td>
+				<td>0 voluntary, 21 involuntary</td>
+			</tr>
+		
+	</tbody>
+</table>
+
+				    </div>
+				</div>
+			</div>
+		
+	
+		
+			<div id="djDebugSettingsVarsPanel" class="panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose">Cerrar</a>
+					<h3>Settings from <code>umail.settings</code></h3>
+				</div>
+				<div class="djDebugPanelContent">
+				    <div class="scroll">
+				        
+<table>
+	<thead>
+		<tr>
+			<th>Configuración</th>
+			<th>Valor</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+			<tr class="djDebugOdd">
+				<td>ABSOLUTE_URL_OVERRIDES</td>
+				<td><code>{}</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>ADMINS</td>
+				<td><code>()</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>ADMIN_FOR</td>
+				<td><code>()</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>AJAX_LOOKUP_CHANNELS</td>
+				<td><code>{&#39;destinatarios&#39;: (&#39;django_messages.autocompletado&#39;, &#39;DestinatariosLookup&#39;),
+ &#39;personas&#39;: (&#39;personas.autocompletado&#39;, &#39;PersonasLookup&#39;),
+ &#39;usuarios&#39;: (&#39;django_messages.autocompletado&#39;, &#39;UserLookup&#39;)}</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>AJAX_SELECT_BOOTSTRAP</td>
+				<td><code>True</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>AJAX_SELECT_INLINES</td>
+				<td><code>&#39;inline&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>ALLOWED_HOSTS</td>
+				<td><code>[]</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>ALLOWED_INCLUDE_ROOTS</td>
+				<td><code>()</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>APPEND_SLASH</td>
+				<td><code>True</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>AUTHENTICATION_BACKENDS</td>
+				<td><code>(&#39;django.contrib.auth.backends.ModelBackend&#39;,)</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>AUTH_USER_MODEL</td>
+				<td><code>&#39;auth.User&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>CACHES</td>
+				<td><code>{&#39;default&#39;: {&#39;BACKEND&#39;: &#39;django.core.cache.backends.locmem.LocMemCache&#39;}}</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>CACHE_MIDDLEWARE_ALIAS</td>
+				<td><code>&#39;default&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>CACHE_MIDDLEWARE_KEY_PREFIX</td>
+				<td><code>u&#39;********************&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>CACHE_MIDDLEWARE_SECONDS</td>
+				<td><code>600</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>COMMENTS_ALLOW_PROFANITIES</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>COMPRESS_CSS</td>
+				<td><code>{&#39;all&#39;: {&#39;extra_context&#39;: {&#39;media&#39;: &#39;screen,projection&#39;},
+         &#39;output_filename&#39;: &#39;css/all_compressed.css&#39;,
+         &#39;source_filenames&#39;: (&#39;shared/js/jqplugins/jquery.autocomplete.css&#39;,)}}</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>COMPRESS_JS</td>
+				<td><code>{&#39;all&#39;: {&#39;output_filename&#39;: &#39;js/all_compressed.js&#39;,
+         &#39;source_filenames&#39;: (&#39;shared/jquery_ui/jquery-1.2.6.js&#39;,
+                              &#39;shared/js/jqplugins/jquery.autocomplete.js&#39;)}}</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>CSRF_COOKIE_DOMAIN</td>
+				<td><code>None</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>CSRF_COOKIE_NAME</td>
+				<td><code>&#39;csrftoken&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>CSRF_COOKIE_PATH</td>
+				<td><code>&#39;/&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>CSRF_COOKIE_SECURE</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>CSRF_FAILURE_VIEW</td>
+				<td><code>&#39;django.views.csrf.csrf_failure&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>DATABASES</td>
+				<td><code>{&#39;default&#39;: {&#39;ENGINE&#39;: &#39;django.db.backends.sqlite3&#39;,
+             &#39;HOST&#39;: &#39;&#39;,
+             &#39;NAME&#39;: &#39;db_umail&#39;,
+             &#39;OPTIONS&#39;: {},
+             &#39;PASSWORD&#39;: u&#39;********************&#39;,
+             &#39;PORT&#39;: &#39;&#39;,
+             &#39;TEST_CHARSET&#39;: None,
+             &#39;TEST_COLLATION&#39;: None,
+             &#39;TEST_MIRROR&#39;: None,
+             &#39;TEST_NAME&#39;: None,
+             &#39;TIME_ZONE&#39;: &#39;UTC&#39;,
+             &#39;USER&#39;: &#39;&#39;}}</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>DATABASE_ROUTERS</td>
+				<td><code>[]</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>DATETIME_FORMAT</td>
+				<td><code>&#39;N j, Y, P&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>DATETIME_INPUT_FORMATS</td>
+				<td><code>(&#39;%Y-%m-%d %H:%M:%S&#39;,
+ &#39;%Y-%m-%d %H:%M:%S.%f&#39;,
+ &#39;%Y-%m-%d %H:%M&#39;,
+ &#39;%Y-%m-%d&#39;,
+ &#39;%m/%d/%Y %H:%M:%S&#39;,
+ &#39;%m/%d/%Y %H:%M:%S.%f&#39;,
+ &#39;%m/%d/%Y %H:%M&#39;,
+ &#39;%m/%d/%Y&#39;,
+ &#39;%m/%d/%y %H:%M:%S&#39;,
+ &#39;%m/%d/%y %H:%M:%S.%f&#39;,
+ &#39;%m/%d/%y %H:%M&#39;,
+ &#39;%m/%d/%y&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>DATE_FORMAT</td>
+				<td><code>&#39;N j, Y&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>DATE_INPUT_FORMATS</td>
+				<td><code>(&#39;%Y-%m-%d&#39;,
+ &#39;%m/%d/%Y&#39;,
+ &#39;%m/%d/%y&#39;,
+ &#39;%b %d %Y&#39;,
+ &#39;%b %d, %Y&#39;,
+ &#39;%d %b %Y&#39;,
+ &#39;%d %b, %Y&#39;,
+ &#39;%B %d %Y&#39;,
+ &#39;%B %d, %Y&#39;,
+ &#39;%d %B %Y&#39;,
+ &#39;%d %B, %Y&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>DEBUG</td>
+				<td><code>True</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>DEBUG_PROPAGATE_EXCEPTIONS</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>DEBUG_TOOLBAR_PANELS</td>
+				<td><code>(&#39;debug_toolbar.panels.version.VersionDebugPanel&#39;,
+ &#39;debug_toolbar.panels.timer.TimerDebugPanel&#39;,
+ &#39;debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel&#39;,
+ &#39;debug_toolbar.panels.headers.HeaderDebugPanel&#39;,
+ &#39;debug_toolbar.panels.request_vars.RequestVarsDebugPanel&#39;,
+ &#39;debug_toolbar.panels.template.TemplateDebugPanel&#39;,
+ &#39;debug_toolbar.panels.sql.SQLDebugPanel&#39;,
+ &#39;debug_toolbar.panels.signals.SignalDebugPanel&#39;,
+ &#39;debug_toolbar.panels.logger.LoggingPanel&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>DECIMAL_SEPARATOR</td>
+				<td><code>&#39;.&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>DEFAULT_CHARSET</td>
+				<td><code>&#39;utf-8&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>DEFAULT_CONTENT_TYPE</td>
+				<td><code>&#39;text/html&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>DEFAULT_EXCEPTION_REPORTER_FILTER</td>
+				<td><code>&#39;django.views.debug.SafeExceptionReporterFilter&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>DEFAULT_FILE_STORAGE</td>
+				<td><code>&#39;django.core.files.storage.FileSystemStorage&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>DEFAULT_FROM_EMAIL</td>
+				<td><code>&#39;webmaster@localhost&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>DEFAULT_INDEX_TABLESPACE</td>
+				<td><code>&#39;&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>DEFAULT_TABLESPACE</td>
+				<td><code>&#39;&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>DISALLOWED_USER_AGENTS</td>
+				<td><code>()</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>EMAIL_BACKEND</td>
+				<td><code>&#39;django.core.mail.backends.smtp.EmailBackend&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>EMAIL_HOST</td>
+				<td><code>&#39;localhost&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>EMAIL_HOST_PASSWORD</td>
+				<td><code>u&#39;********************&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>EMAIL_HOST_USER</td>
+				<td><code>&#39;&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>EMAIL_PORT</td>
+				<td><code>25</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>EMAIL_SUBJECT_PREFIX</td>
+				<td><code>&#39;[Django] &#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>EMAIL_USE_TLS</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>FILE_CHARSET</td>
+				<td><code>&#39;utf-8&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>FILE_UPLOAD_HANDLERS</td>
+				<td><code>(&#39;django.core.files.uploadhandler.MemoryFileUploadHandler&#39;,
+ &#39;django.core.files.uploadhandler.TemporaryFileUploadHandler&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>FILE_UPLOAD_MAX_MEMORY_SIZE</td>
+				<td><code>2621440</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>FILE_UPLOAD_PERMISSIONS</td>
+				<td><code>None</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>FILE_UPLOAD_TEMP_DIR</td>
+				<td><code>None</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>FIRST_DAY_OF_WEEK</td>
+				<td><code>0</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>FIXTURE_DIRS</td>
+				<td><code>()</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>FORCE_SCRIPT_NAME</td>
+				<td><code>None</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>FORMAT_MODULE_PATH</td>
+				<td><code>None</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>IGNORABLE_404_URLS</td>
+				<td><code>()</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>INSTALLED_APPS</td>
+				<td><code>(&#39;auth&#39;,
+ &#39;django.contrib.auth&#39;,
+ &#39;django.contrib.contenttypes&#39;,
+ &#39;django.contrib.sessions&#39;,
+ &#39;django.contrib.sites&#39;,
+ &#39;django.contrib.messages&#39;,
+ &#39;django.contrib.staticfiles&#39;,
+ &#39;django.contrib.admindocs&#39;,
+ &#39;django.contrib.admin&#39;,
+ &#39;django_messages&#39;,
+ &#39;django_extensions&#39;,
+ &#39;debug_toolbar&#39;,
+ &#39;ajax_select&#39;,
+ &#39;grappelli&#39;,
+ &#39;personas&#39;,
+ &#39;sedes&#39;,
+ &#39;noticias&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>INTERCEPT_REDIRECTS</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>INTERNAL_IPS</td>
+				<td><code>(&#39;127.0.0.1&#39;,)</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>LANGUAGES</td>
+				<td><code>((&#39;af&#39;, &#39;Afrikaans&#39;),
+ (&#39;ar&#39;, &#39;Arabic&#39;),
+ (&#39;az&#39;, &#39;Azerbaijani&#39;),
+ (&#39;bg&#39;, &#39;Bulgarian&#39;),
+ (&#39;be&#39;, &#39;Belarusian&#39;),
+ (&#39;bn&#39;, &#39;Bengali&#39;),
+ (&#39;br&#39;, &#39;Breton&#39;),
+ (&#39;bs&#39;, &#39;Bosnian&#39;),
+ (&#39;ca&#39;, &#39;Catalan&#39;),
+ (&#39;cs&#39;, &#39;Czech&#39;),
+ (&#39;cy&#39;, &#39;Welsh&#39;),
+ (&#39;da&#39;, &#39;Danish&#39;),
+ (&#39;de&#39;, &#39;German&#39;),
+ (&#39;el&#39;, &#39;Greek&#39;),
+ (&#39;en&#39;, &#39;English&#39;),
+ (&#39;en-gb&#39;, &#39;British English&#39;),
+ (&#39;eo&#39;, &#39;Esperanto&#39;),
+ (&#39;es&#39;, &#39;Spanish&#39;),
+ (&#39;es-ar&#39;, &#39;Argentinian Spanish&#39;),
+ (&#39;es-mx&#39;, &#39;Mexican Spanish&#39;),
+ (&#39;es-ni&#39;, &#39;Nicaraguan Spanish&#39;),
+ (&#39;es-ve&#39;, &#39;Venezuelan Spanish&#39;),
+ (&#39;et&#39;, &#39;Estonian&#39;),
+ (&#39;eu&#39;, &#39;Basque&#39;),
+ (&#39;fa&#39;, &#39;Persian&#39;),
+ (&#39;fi&#39;, &#39;Finnish&#39;),
+ (&#39;fr&#39;, &#39;French&#39;),
+ (&#39;fy-nl&#39;, &#39;Frisian&#39;),
+ (&#39;ga&#39;, &#39;Irish&#39;),
+ (&#39;gl&#39;, &#39;Galician&#39;),
+ (&#39;he&#39;, &#39;Hebrew&#39;),
+ (&#39;hi&#39;, &#39;Hindi&#39;),
+ (&#39;hr&#39;, &#39;Croatian&#39;),
+ (&#39;hu&#39;, &#39;Hungarian&#39;),
+ (&#39;ia&#39;, &#39;Interlingua&#39;),
+ (&#39;id&#39;, &#39;Indonesian&#39;),
+ (&#39;is&#39;, &#39;Icelandic&#39;),
+ (&#39;it&#39;, &#39;Italian&#39;),
+ (&#39;ja&#39;, &#39;Japanese&#39;),
+ (&#39;ka&#39;, &#39;Georgian&#39;),
+ (&#39;kk&#39;, &#39;Kazakh&#39;),
+ (&#39;km&#39;, &#39;Khmer&#39;),
+ (&#39;kn&#39;, &#39;Kannada&#39;),
+ (&#39;ko&#39;, &#39;Korean&#39;),
+ (&#39;lb&#39;, &#39;Luxembourgish&#39;),
+ (&#39;lt&#39;, &#39;Lithuanian&#39;),
+ (&#39;lv&#39;, &#39;Latvian&#39;),
+ (&#39;mk&#39;, &#39;Macedonian&#39;),
+ (&#39;ml&#39;, &#39;Malayalam&#39;),
+ (&#39;mn&#39;, &#39;Mongolian&#39;),
+ (&#39;nb&#39;, &#39;Norwegian Bokmal&#39;),
+ (&#39;ne&#39;, &#39;Nepali&#39;),
+ (&#39;nl&#39;, &#39;Dutch&#39;),
+ (&#39;nn&#39;, &#39;Norwegian Nynorsk&#39;),
+ (&#39;pa&#39;, &#39;Punjabi&#39;),
+ (&#39;pl&#39;, &#39;Polish&#39;),
+ (&#39;pt&#39;, &#39;Portuguese&#39;),
+ (&#39;pt-br&#39;, &#39;Brazilian Portuguese&#39;),
+ (&#39;ro&#39;, &#39;Romanian&#39;),
+ (&#39;ru&#39;, &#39;Russian&#39;),
+ (&#39;sk&#39;, &#39;Slovak&#39;),
+ (&#39;sl&#39;, &#39;Slovenian&#39;),
+ (&#39;sq&#39;, &#39;Albanian&#39;),
+ (&#39;sr&#39;, &#39;Serbian&#39;),
+ (&#39;sr-latn&#39;, &#39;Serbian Latin&#39;),
+ (&#39;sv&#39;, &#39;Swedish&#39;),
+ (&#39;sw&#39;, &#39;Swahili&#39;),
+ (&#39;ta&#39;, &#39;Tamil&#39;),
+ (&#39;te&#39;, &#39;Telugu&#39;),
+ (&#39;th&#39;, &#39;Thai&#39;),
+ (&#39;tr&#39;, &#39;Turkish&#39;),
+ (&#39;tt&#39;, &#39;Tatar&#39;),
+ (&#39;udm&#39;, &#39;Udmurt&#39;),
+ (&#39;uk&#39;, &#39;Ukrainian&#39;),
+ (&#39;ur&#39;, &#39;Urdu&#39;),
+ (&#39;vi&#39;, &#39;Vietnamese&#39;),
+ (&#39;zh-cn&#39;, &#39;Simplified Chinese&#39;),
+ (&#39;zh-tw&#39;, &#39;Traditional Chinese&#39;))</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>LANGUAGES_BIDI</td>
+				<td><code>(&#39;he&#39;, &#39;ar&#39;, &#39;fa&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>LANGUAGE_CODE</td>
+				<td><code>&#39;es-ve&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>LANGUAGE_COOKIE_NAME</td>
+				<td><code>&#39;django_language&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>LOCALE_PATHS</td>
+				<td><code>()</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>LOGGING</td>
+				<td><code>{&#39;disable_existing_loggers&#39;: False,
+ &#39;filters&#39;: {&#39;require_debug_false&#39;: {&#39;()&#39;: &#39;django.utils.log.RequireDebugFalse&#39;}},
+ &#39;handlers&#39;: {&#39;mail_admins&#39;: {&#39;class&#39;: &#39;django.utils.log.AdminEmailHandler&#39;,
+                              &#39;filters&#39;: [&#39;require_debug_false&#39;],
+                              &#39;level&#39;: &#39;ERROR&#39;}},
+ &#39;loggers&#39;: {&#39;django.request&#39;: {&#39;handlers&#39;: [&#39;mail_admins&#39;],
+                                &#39;level&#39;: &#39;ERROR&#39;,
+                                &#39;propagate&#39;: True}},
+ &#39;version&#39;: 1}</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>LOGGING_CONFIG</td>
+				<td><code>&#39;django.utils.log.dictConfig&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>LOGIN_REDIRECT_URL</td>
+				<td><code>&#39;/accounts/profile/&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>LOGIN_URL</td>
+				<td><code>&#39;/&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>LOGOUT_URL</td>
+				<td><code>&#39;/accounts/logout/&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>MANAGERS</td>
+				<td><code>()</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>MEDIA_ROOT</td>
+				<td><code>&#39;media/&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>MEDIA_URL</td>
+				<td><code>&#39;/media/&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>MESSAGE_STORAGE</td>
+				<td><code>&#39;django.contrib.messages.storage.fallback.FallbackStorage&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>MIDDLEWARE_CLASSES</td>
+				<td><code>(&#39;django.middleware.common.CommonMiddleware&#39;,
+ &#39;django.contrib.sessions.middleware.SessionMiddleware&#39;,
+ &#39;django.middleware.csrf.CsrfViewMiddleware&#39;,
+ &#39;django.contrib.auth.middleware.AuthenticationMiddleware&#39;,
+ &#39;django.contrib.messages.middleware.MessageMiddleware&#39;,
+ &#39;debug_toolbar.middleware.DebugToolbarMiddleware&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>MONTH_DAY_FORMAT</td>
+				<td><code>&#39;F j&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>NUMBER_GROUPING</td>
+				<td><code>0</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>PASSWORD_HASHERS</td>
+				<td><code>u&#39;********************&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>PASSWORD_RESET_TIMEOUT_DAYS</td>
+				<td><code>u&#39;********************&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>PREPEND_WWW</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>PROFANITIES_LIST</td>
+				<td><code>u&#39;********************&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>ROOT_URLCONF</td>
+				<td><code>&#39;umail.urls&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>SECRET_KEY</td>
+				<td><code>u&#39;********************&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SECURE_PROXY_SSL_HEADER</td>
+				<td><code>None</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>SEND_BROKEN_LINK_EMAILS</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SERVER_EMAIL</td>
+				<td><code>&#39;root@localhost&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>SESSION_CACHE_ALIAS</td>
+				<td><code>&#39;default&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SESSION_COOKIE_AGE</td>
+				<td><code>1209600</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>SESSION_COOKIE_DOMAIN</td>
+				<td><code>None</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SESSION_COOKIE_HTTPONLY</td>
+				<td><code>True</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>SESSION_COOKIE_NAME</td>
+				<td><code>&#39;sessionid&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SESSION_COOKIE_PATH</td>
+				<td><code>&#39;/&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>SESSION_COOKIE_SECURE</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SESSION_ENGINE</td>
+				<td><code>&#39;django.contrib.sessions.backends.db&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>SESSION_EXPIRE_AT_BROWSER_CLOSE</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SESSION_FILE_PATH</td>
+				<td><code>None</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>SESSION_SAVE_EVERY_REQUEST</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SETTINGS_MODULE</td>
+				<td><code>&#39;umail.settings&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>SHORT_DATETIME_FORMAT</td>
+				<td><code>&#39;m/d/Y P&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SHORT_DATE_FORMAT</td>
+				<td><code>&#39;m/d/Y&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>SIGNING_BACKEND</td>
+				<td><code>&#39;django.core.signing.TimestampSigner&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SITE_ID</td>
+				<td><code>1</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>STATICFILES_DIRS</td>
+				<td><code>(&#39;/home/axelio/public_html/umail/static/public/&#39;,)</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>STATICFILES_FINDERS</td>
+				<td><code>(&#39;django.contrib.staticfiles.finders.FileSystemFinder&#39;,
+ &#39;django.contrib.staticfiles.finders.AppDirectoriesFinder&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>STATICFILES_STORAGE</td>
+				<td><code>&#39;django.contrib.staticfiles.storage.StaticFilesStorage&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>STATIC_ROOT</td>
+				<td><code>&#39;/home/axelio/public_html/umail/static/&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>STATIC_URL</td>
+				<td><code>&#39;/static/&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>TEMPLATE_CONTEXT_PROCESSORS</td>
+				<td><code>(&#39;django.contrib.auth.context_processors.auth&#39;,
+ &#39;django.core.context_processors.debug&#39;,
+ &#39;django.core.context_processors.i18n&#39;,
+ &#39;django.core.context_processors.media&#39;,
+ &#39;django.core.context_processors.static&#39;,
+ &#39;django.core.context_processors.tz&#39;,
+ &#39;django.contrib.messages.context_processors.messages&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>TEMPLATE_DEBUG</td>
+				<td><code>True</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>TEMPLATE_DIRS</td>
+				<td><code>(&#39;/home/axelio/public_html/umail/umail/templates&#39;,
+ &#39;/home/axelio/public_html/umail/templates&#39;,
+ &#39;/home/axelio/public_html/umail/templates/admin&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>TEMPLATE_LOADERS</td>
+				<td><code>(&#39;django.template.loaders.filesystem.Loader&#39;,
+ &#39;django.template.loaders.app_directories.Loader&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>TEMPLATE_STRING_IF_INVALID</td>
+				<td><code>&#39;&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>TEST_RUNNER</td>
+				<td><code>&#39;django.test.simple.DjangoTestSuiteRunner&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>THOUSAND_SEPARATOR</td>
+				<td><code>&#39;,&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>TIME_FORMAT</td>
+				<td><code>&#39;P&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>TIME_INPUT_FORMATS</td>
+				<td><code>(&#39;%H:%M:%S&#39;, &#39;%H:%M&#39;)</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>TIME_ZONE</td>
+				<td><code>&#39;America/Caracas&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>TRANSACTIONS_MANAGED</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>USE_ETAGS</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>USE_I18N</td>
+				<td><code>True</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>USE_L10N</td>
+				<td><code>True</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>USE_THOUSAND_SEPARATOR</td>
+				<td><code>True</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>USE_TZ</td>
+				<td><code>True</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>USE_X_FORWARDED_HOST</td>
+				<td><code>False</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>WSGI_APPLICATION</td>
+				<td><code>&#39;umail.wsgi.application&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>X_FRAME_OPTIONS</td>
+				<td><code>&#39;SAMEORIGIN&#39;</code></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>YEAR_MONTH_FORMAT</td>
+				<td><code>&#39;F Y&#39;</code></td>
+			</tr>
+		
+	</tbody>
+</table>
+
+				    </div>
+				</div>
+			</div>
+		
+	
+		
+			<div id="djDebugHeaderPanel" class="panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose">Cerrar</a>
+					<h3>HTTP Headers</h3>
+				</div>
+				<div class="djDebugPanelContent">
+				    <div class="scroll">
+				        
+<table>
+	<thead>
+		<tr>
+			<th>Llave</th>
+			<th>Valor</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+			<tr class="djDebugOdd">
+				<td>HTTP_ACCEPT</td>
+				<td>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>HTTP_USER_AGENT</td>
+				<td>Mozilla/5.0 (X11; Linux x86_64; rv:21.0) Gecko/20100101 Firefox/21.0</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>HTTP_CONNECTION</td>
+				<td>keep-alive</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>SERVER_PORT</td>
+				<td>8000</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SERVER_NAME</td>
+				<td>localhost</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>REMOTE_ADDR</td>
+				<td>127.0.0.1</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SERVER_SOFTWARE</td>
+				<td>WSGIServer/0.1 Python/2.7.3</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>HTTP_ACCEPT_LANGUAGE</td>
+				<td>en-US,en;q=0.5</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SCRIPT_NAME</td>
+				<td></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>REQUEST_METHOD</td>
+				<td>GET</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>HTTP_HOST</td>
+				<td>localhost:8000</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>CONTENT_TYPE</td>
+				<td>text/plain</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>SERVER_PROTOCOL</td>
+				<td>HTTP/1.1</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>QUERY_STRING</td>
+				<td></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>REMOTE_HOST</td>
+				<td></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>HTTP_ACCEPT_ENCODING</td>
+				<td>gzip, deflate</td>
+			</tr>
+		
+	</tbody>
+</table>
+
+				    </div>
+				</div>
+			</div>
+		
+	
+		
+			<div id="djDebugRequestVarsPanel" class="panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose">Cerrar</a>
+					<h3>Request Vars</h3>
+				</div>
+				<div class="djDebugPanelContent">
+				    <div class="scroll">
+				        
+
+<h4>View information</h4>
+<table>
+	<thead>
+		<tr>
+			<th>View Function</th>
+			<th>URL Name</th>
+			<th>args</th>
+			<th>kwargs</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>django_messages.views.inbox</td>
+			<td>messages_inbox</td>
+			<td>None</td>
+			<td>
+			
+				None
+			
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<h4>COOKIES Variables</h4>
+
+	<table>
+		<colgroup>
+			<col style="width:20%"/>
+			<col/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th>Variable</th>
+				<th>Valor</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+				<tr class="djDebugOdd">
+					<td>csrftoken</td>
+					<td>e0KTHnrb5D4bChDyqLd15QENjG1Ixtgl</td>
+				</tr>
+			
+				<tr class="djDebugEven">
+					<td>sessionid</td>
+					<td>axqpiy7rsp1pudsmo3f9y15acv6ub6rn</td>
+				</tr>
+			
+		</tbody>
+	</table>
+
+
+<h4>SESSION Variables</h4>
+
+	<table>
+		<colgroup>
+			<col style="width:20%"/>
+			<col/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th>Variable</th>
+				<th>Valor</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+				<tr class="djDebugOdd">
+					<td>testcookie</td>
+					<td>worked</td>
+				</tr>
+			
+				<tr class="djDebugEven">
+					<td>_auth_user_id</td>
+					<td>1</td>
+				</tr>
+			
+				<tr class="djDebugOdd">
+					<td>_auth_user_backend</td>
+					<td>django.contrib.auth.backends.ModelBackend</td>
+				</tr>
+			
+		</tbody>
+	</table>
+
+
+<h4>GET Variables</h4>
+
+	<p>No GET datos</p>
+
+
+<h4>POST Variables</h4>
+
+	<p>No POST datos</p>
+
+
+				    </div>
+				</div>
+			</div>
+		
+	
+		
+			<div id="djDebugTemplatePanel" class="panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose">Cerrar</a>
+					<h3>Templates (7 rendered)</h3>
+				</div>
+				<div class="djDebugPanelContent">
+				    <div class="scroll">
+				        
+<h4>Template paths</h4>
+
+	<ol>
+	
+		<li>/home/axelio/public_html/umail/umail/templates</li>
+	
+		<li>/home/axelio/public_html/umail/templates</li>
+	
+		<li>/home/axelio/public_html/umail/templates/admin</li>
+	
+	</ol>
+
+
+<h4>Templates</h4>
+
+<dl>
+
+	<dt><strong><a class="remoteCall toggleTemplate" href="/__debug__/template_source/?template=user/mensajes/inbox.html">user/mensajes/inbox.html</a></strong></dt>
+	<dd><samp>/home/axelio/public_html/umail/templates/user/mensajes/inbox.html</samp></dd>
+	
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{&#39;False&#39;: False, &#39;None&#39;: None, &#39;True&#39;: True}
+{u&#39;csrf_token&#39;: &lt;django.utils.functional.__proxy__ object at 0x3b5d5d0&gt;}
+{&#39;perms&#39;: &lt;django.contrib.auth.context_processors.PermWrapper object at 0x3b5d450&gt;,
+ &#39;user&#39;: &lt;django.utils.functional.SimpleLazyObject object at 0x3cf7c50&gt;}
+{u&#39;debug&#39;: True, u&#39;sql_queries&#39;: &#39;&lt;&lt;sql_queries&gt;&gt;&#39;}
+{u&#39;LANGUAGES&#39;: &#39;&lt;&lt;languages&gt;&gt;&#39;,
+ u&#39;LANGUAGE_BIDI&#39;: False,
+ u&#39;LANGUAGE_CODE&#39;: &#39;es-ve&#39;}
+{u&#39;MEDIA_URL&#39;: &#39;/media/&#39;}
+{u&#39;STATIC_URL&#39;: &#39;/static/&#39;}
+{u&#39;TIME_ZONE&#39;: &#39;VET&#39;}
+{&#39;messages&#39;: &lt;django.contrib.messages.storage.fallback.FallbackStorage object at 0x3cf7bd0&gt;}
+{&#39;loggeado&#39;: &lt;bound method User.is_authenticated of &lt;User: axelio&gt;&gt;,
+ &#39;mensaje&#39;: &#39;&#39;,
+ &#39;message_list&#39;: u&#39;&lt;&lt;queryset of django_messages.Message&gt;&gt;&#39;,
+ &#39;notify&#39;: False,
+ &#39;request&#39;: &#39;&lt;&lt;request&gt;&gt;&#39;}</code></div>
+	</dd>
+	
+
+	<dt><strong><a class="remoteCall toggleTemplate" href="/__debug__/template_source/?template=user/base.html">user/base.html</a></strong></dt>
+	<dd><samp>/home/axelio/public_html/umail/templates/user/base.html</samp></dd>
+	
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{&#39;False&#39;: False, &#39;None&#39;: None, &#39;True&#39;: True}
+{u&#39;csrf_token&#39;: &lt;django.utils.functional.__proxy__ object at 0x3b5d5d0&gt;}
+{&#39;perms&#39;: &lt;django.contrib.auth.context_processors.PermWrapper object at 0x3b5d450&gt;,
+ &#39;user&#39;: &lt;django.utils.functional.SimpleLazyObject object at 0x3cf7c50&gt;}
+{u&#39;debug&#39;: True, u&#39;sql_queries&#39;: &#39;&lt;&lt;sql_queries&gt;&gt;&#39;}
+{u&#39;LANGUAGES&#39;: &#39;&lt;&lt;languages&gt;&gt;&#39;,
+ u&#39;LANGUAGE_BIDI&#39;: False,
+ u&#39;LANGUAGE_CODE&#39;: &#39;es-ve&#39;}
+{u&#39;MEDIA_URL&#39;: &#39;/media/&#39;}
+{u&#39;STATIC_URL&#39;: &#39;/static/&#39;}
+{u&#39;TIME_ZONE&#39;: &#39;VET&#39;}
+{&#39;messages&#39;: &lt;django.contrib.messages.storage.fallback.FallbackStorage object at 0x3cf7bd0&gt;}
+{&#39;loggeado&#39;: &lt;bound method User.is_authenticated of &lt;User: axelio&gt;&gt;,
+ &#39;mensaje&#39;: &#39;&#39;,
+ &#39;message_list&#39;: u&#39;&lt;&lt;queryset of django_messages.Message&gt;&gt;&#39;,
+ &#39;notify&#39;: False,
+ &#39;request&#39;: &#39;&lt;&lt;request&gt;&gt;&#39;}
+{}</code></div>
+	</dd>
+	
+
+	<dt><strong><a class="remoteCall toggleTemplate" href="/__debug__/template_source/?template=user/banner.html">user/banner.html</a></strong></dt>
+	<dd><samp>/home/axelio/public_html/umail/templates/user/banner.html</samp></dd>
+	
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{&#39;False&#39;: False, &#39;None&#39;: None, &#39;True&#39;: True}
+{u&#39;csrf_token&#39;: &lt;django.utils.functional.__proxy__ object at 0x3b5d5d0&gt;}
+{&#39;perms&#39;: &lt;django.contrib.auth.context_processors.PermWrapper object at 0x3b5d450&gt;,
+ &#39;user&#39;: &lt;django.utils.functional.SimpleLazyObject object at 0x3cf7c50&gt;}
+{u&#39;debug&#39;: True, u&#39;sql_queries&#39;: &#39;&lt;&lt;sql_queries&gt;&gt;&#39;}
+{u&#39;LANGUAGES&#39;: &#39;&lt;&lt;languages&gt;&gt;&#39;,
+ u&#39;LANGUAGE_BIDI&#39;: False,
+ u&#39;LANGUAGE_CODE&#39;: &#39;es-ve&#39;}
+{u&#39;MEDIA_URL&#39;: &#39;/media/&#39;}
+{u&#39;STATIC_URL&#39;: &#39;/static/&#39;}
+{u&#39;TIME_ZONE&#39;: &#39;VET&#39;}
+{&#39;messages&#39;: &lt;django.contrib.messages.storage.fallback.FallbackStorage object at 0x3cf7bd0&gt;}
+{&#39;loggeado&#39;: &lt;bound method User.is_authenticated of &lt;User: axelio&gt;&gt;,
+ &#39;mensaje&#39;: &#39;&#39;,
+ &#39;message_list&#39;: u&#39;&lt;&lt;queryset of django_messages.Message&gt;&gt;&#39;,
+ &#39;notify&#39;: False,
+ &#39;request&#39;: &#39;&lt;&lt;request&gt;&gt;&#39;}
+{}</code></div>
+	</dd>
+	
+
+	<dt><strong><a class="remoteCall toggleTemplate" href="/__debug__/template_source/?template=user/mensajes/menu.html">user/mensajes/menu.html</a></strong></dt>
+	<dd><samp>/home/axelio/public_html/umail/templates/user/mensajes/menu.html</samp></dd>
+	
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{&#39;False&#39;: False, &#39;None&#39;: None, &#39;True&#39;: True}
+{u&#39;csrf_token&#39;: &lt;django.utils.functional.__proxy__ object at 0x3b5d5d0&gt;}
+{&#39;perms&#39;: &lt;django.contrib.auth.context_processors.PermWrapper object at 0x3b5d450&gt;,
+ &#39;user&#39;: &lt;django.utils.functional.SimpleLazyObject object at 0x3cf7c50&gt;}
+{u&#39;debug&#39;: True, u&#39;sql_queries&#39;: &#39;&lt;&lt;sql_queries&gt;&gt;&#39;}
+{u&#39;LANGUAGES&#39;: &#39;&lt;&lt;languages&gt;&gt;&#39;,
+ u&#39;LANGUAGE_BIDI&#39;: False,
+ u&#39;LANGUAGE_CODE&#39;: &#39;es-ve&#39;}
+{u&#39;MEDIA_URL&#39;: &#39;/media/&#39;}
+{u&#39;STATIC_URL&#39;: &#39;/static/&#39;}
+{u&#39;TIME_ZONE&#39;: &#39;VET&#39;}
+{&#39;messages&#39;: &lt;django.contrib.messages.storage.fallback.FallbackStorage object at 0x3cf7bd0&gt;}
+{&#39;loggeado&#39;: &lt;bound method User.is_authenticated of &lt;User: axelio&gt;&gt;,
+ &#39;mensaje&#39;: &#39;&#39;,
+ &#39;message_list&#39;: u&#39;&lt;&lt;queryset of django_messages.Message&gt;&gt;&#39;,
+ &#39;notify&#39;: False,
+ &#39;request&#39;: &#39;&lt;&lt;request&gt;&gt;&#39;}
+{}</code></div>
+	</dd>
+	
+
+	<dt><strong><a class="remoteCall toggleTemplate" href="/__debug__/template_source/?template=user/umail_info.html">user/umail_info.html</a></strong></dt>
+	<dd><samp>/home/axelio/public_html/umail/templates/user/umail_info.html</samp></dd>
+	
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{&#39;False&#39;: False, &#39;None&#39;: None, &#39;True&#39;: True}
+{u&#39;csrf_token&#39;: &lt;django.utils.functional.__proxy__ object at 0x3b5d5d0&gt;}
+{&#39;perms&#39;: &lt;django.contrib.auth.context_processors.PermWrapper object at 0x3b5d450&gt;,
+ &#39;user&#39;: &lt;django.utils.functional.SimpleLazyObject object at 0x3cf7c50&gt;}
+{u&#39;debug&#39;: True, u&#39;sql_queries&#39;: &#39;&lt;&lt;sql_queries&gt;&gt;&#39;}
+{u&#39;LANGUAGES&#39;: &#39;&lt;&lt;languages&gt;&gt;&#39;,
+ u&#39;LANGUAGE_BIDI&#39;: False,
+ u&#39;LANGUAGE_CODE&#39;: &#39;es-ve&#39;}
+{u&#39;MEDIA_URL&#39;: &#39;/media/&#39;}
+{u&#39;STATIC_URL&#39;: &#39;/static/&#39;}
+{u&#39;TIME_ZONE&#39;: &#39;VET&#39;}
+{&#39;messages&#39;: &lt;django.contrib.messages.storage.fallback.FallbackStorage object at 0x3cf7bd0&gt;}
+{&#39;loggeado&#39;: &lt;bound method User.is_authenticated of &lt;User: axelio&gt;&gt;,
+ &#39;mensaje&#39;: &#39;&#39;,
+ &#39;message_list&#39;: u&#39;&lt;&lt;queryset of django_messages.Message&gt;&gt;&#39;,
+ &#39;notify&#39;: False,
+ &#39;request&#39;: &#39;&lt;&lt;request&gt;&gt;&#39;}
+{}</code></div>
+	</dd>
+	
+
+	<dt><strong><a class="remoteCall toggleTemplate" href="/__debug__/template_source/?template=user/mensajes/menu.html">user/mensajes/menu.html</a></strong></dt>
+	<dd><samp>/home/axelio/public_html/umail/templates/user/mensajes/menu.html</samp></dd>
+	
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{&#39;False&#39;: False, &#39;None&#39;: None, &#39;True&#39;: True}
+{u&#39;csrf_token&#39;: &lt;django.utils.functional.__proxy__ object at 0x3b5d5d0&gt;}
+{&#39;perms&#39;: &lt;django.contrib.auth.context_processors.PermWrapper object at 0x3b5d450&gt;,
+ &#39;user&#39;: &lt;django.utils.functional.SimpleLazyObject object at 0x3cf7c50&gt;}
+{u&#39;debug&#39;: True, u&#39;sql_queries&#39;: &#39;&lt;&lt;sql_queries&gt;&gt;&#39;}
+{u&#39;LANGUAGES&#39;: &#39;&lt;&lt;languages&gt;&gt;&#39;,
+ u&#39;LANGUAGE_BIDI&#39;: False,
+ u&#39;LANGUAGE_CODE&#39;: &#39;es-ve&#39;}
+{u&#39;MEDIA_URL&#39;: &#39;/media/&#39;}
+{u&#39;STATIC_URL&#39;: &#39;/static/&#39;}
+{u&#39;TIME_ZONE&#39;: &#39;VET&#39;}
+{&#39;messages&#39;: &lt;django.contrib.messages.storage.fallback.FallbackStorage object at 0x3cf7bd0&gt;}
+{&#39;loggeado&#39;: &lt;bound method User.is_authenticated of &lt;User: axelio&gt;&gt;,
+ &#39;mensaje&#39;: &#39;&#39;,
+ &#39;message_list&#39;: u&#39;&lt;&lt;queryset of django_messages.Message&gt;&gt;&#39;,
+ &#39;notify&#39;: False,
+ &#39;request&#39;: &#39;&lt;&lt;request&gt;&gt;&#39;}
+{}</code></div>
+	</dd>
+	
+
+	<dt><strong><a class="remoteCall toggleTemplate" href="/__debug__/template_source/?template=user/pie.html">user/pie.html</a></strong></dt>
+	<dd><samp>/home/axelio/public_html/umail/templates/user/pie.html</samp></dd>
+	
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{&#39;False&#39;: False, &#39;None&#39;: None, &#39;True&#39;: True}
+{u&#39;csrf_token&#39;: &lt;django.utils.functional.__proxy__ object at 0x3b5d5d0&gt;}
+{&#39;perms&#39;: &lt;django.contrib.auth.context_processors.PermWrapper object at 0x3b5d450&gt;,
+ &#39;user&#39;: &lt;django.utils.functional.SimpleLazyObject object at 0x3cf7c50&gt;}
+{u&#39;debug&#39;: True, u&#39;sql_queries&#39;: &#39;&lt;&lt;sql_queries&gt;&gt;&#39;}
+{u&#39;LANGUAGES&#39;: &#39;&lt;&lt;languages&gt;&gt;&#39;,
+ u&#39;LANGUAGE_BIDI&#39;: False,
+ u&#39;LANGUAGE_CODE&#39;: &#39;es-ve&#39;}
+{u&#39;MEDIA_URL&#39;: &#39;/media/&#39;}
+{u&#39;STATIC_URL&#39;: &#39;/static/&#39;}
+{u&#39;TIME_ZONE&#39;: &#39;VET&#39;}
+{&#39;messages&#39;: &lt;django.contrib.messages.storage.fallback.FallbackStorage object at 0x3cf7bd0&gt;}
+{&#39;loggeado&#39;: &lt;bound method User.is_authenticated of &lt;User: axelio&gt;&gt;,
+ &#39;mensaje&#39;: &#39;&#39;,
+ &#39;message_list&#39;: u&#39;&lt;&lt;queryset of django_messages.Message&gt;&gt;&#39;,
+ &#39;notify&#39;: False,
+ &#39;request&#39;: &#39;&lt;&lt;request&gt;&gt;&#39;}
+{}</code></div>
+	</dd>
+	
+
+</dl>
+
+
+<h4>Context processors</h4>
+
+<dl>
+
+	<dt><strong>django.core.context_processors.i18n</strong></dt>
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{u&#39;LANGUAGES&#39;: ((&#39;af&#39;, &#39;Afrikaans&#39;),
+                (&#39;ar&#39;, &#39;Arabic&#39;),
+                (&#39;az&#39;, &#39;Azerbaijani&#39;),
+                (&#39;bg&#39;, &#39;Bulgarian&#39;),
+                (&#39;be&#39;, &#39;Belarusian&#39;),
+                (&#39;bn&#39;, &#39;Bengali&#39;),
+                (&#39;br&#39;, &#39;Breton&#39;),
+                (&#39;bs&#39;, &#39;Bosnian&#39;),
+                (&#39;ca&#39;, &#39;Catalan&#39;),
+                (&#39;cs&#39;, &#39;Czech&#39;),
+                (&#39;cy&#39;, &#39;Welsh&#39;),
+                (&#39;da&#39;, &#39;Danish&#39;),
+                (&#39;de&#39;, &#39;German&#39;),
+                (&#39;el&#39;, &#39;Greek&#39;),
+                (&#39;en&#39;, &#39;English&#39;),
+                (&#39;en-gb&#39;, &#39;British English&#39;),
+                (&#39;eo&#39;, &#39;Esperanto&#39;),
+                (&#39;es&#39;, &#39;Spanish&#39;),
+                (&#39;es-ar&#39;, &#39;Argentinian Spanish&#39;),
+                (&#39;es-mx&#39;, &#39;Mexican Spanish&#39;),
+                (&#39;es-ni&#39;, &#39;Nicaraguan Spanish&#39;),
+                (&#39;es-ve&#39;, &#39;Venezuelan Spanish&#39;),
+                (&#39;et&#39;, &#39;Estonian&#39;),
+                (&#39;eu&#39;, &#39;Basque&#39;),
+                (&#39;fa&#39;, &#39;Persian&#39;),
+                (&#39;fi&#39;, &#39;Finnish&#39;),
+                (&#39;fr&#39;, &#39;French&#39;),
+                (&#39;fy-nl&#39;, &#39;Frisian&#39;),
+                (&#39;ga&#39;, &#39;Irish&#39;),
+                (&#39;gl&#39;, &#39;Galician&#39;),
+                (&#39;he&#39;, &#39;Hebrew&#39;),
+                (&#39;hi&#39;, &#39;Hindi&#39;),
+                (&#39;hr&#39;, &#39;Croatian&#39;),
+                (&#39;hu&#39;, &#39;Hungarian&#39;),
+                (&#39;ia&#39;, &#39;Interlingua&#39;),
+                (&#39;id&#39;, &#39;Indonesian&#39;),
+                (&#39;is&#39;, &#39;Icelandic&#39;),
+                (&#39;it&#39;, &#39;Italian&#39;),
+                (&#39;ja&#39;, &#39;Japanese&#39;),
+                (&#39;ka&#39;, &#39;Georgian&#39;),
+                (&#39;kk&#39;, &#39;Kazakh&#39;),
+                (&#39;km&#39;, &#39;Khmer&#39;),
+                (&#39;kn&#39;, &#39;Kannada&#39;),
+                (&#39;ko&#39;, &#39;Korean&#39;),
+                (&#39;lb&#39;, &#39;Luxembourgish&#39;),
+                (&#39;lt&#39;, &#39;Lithuanian&#39;),
+                (&#39;lv&#39;, &#39;Latvian&#39;),
+                (&#39;mk&#39;, &#39;Macedonian&#39;),
+                (&#39;ml&#39;, &#39;Malayalam&#39;),
+                (&#39;mn&#39;, &#39;Mongolian&#39;),
+                (&#39;nb&#39;, &#39;Norwegian Bokmal&#39;),
+                (&#39;ne&#39;, &#39;Nepali&#39;),
+                (&#39;nl&#39;, &#39;Dutch&#39;),
+                (&#39;nn&#39;, &#39;Norwegian Nynorsk&#39;),
+                (&#39;pa&#39;, &#39;Punjabi&#39;),
+                (&#39;pl&#39;, &#39;Polish&#39;),
+                (&#39;pt&#39;, &#39;Portuguese&#39;),
+                (&#39;pt-br&#39;, &#39;Brazilian Portuguese&#39;),
+                (&#39;ro&#39;, &#39;Romanian&#39;),
+                (&#39;ru&#39;, &#39;Russian&#39;),
+                (&#39;sk&#39;, &#39;Slovak&#39;),
+                (&#39;sl&#39;, &#39;Slovenian&#39;),
+                (&#39;sq&#39;, &#39;Albanian&#39;),
+                (&#39;sr&#39;, &#39;Serbian&#39;),
+                (&#39;sr-latn&#39;, &#39;Serbian Latin&#39;),
+                (&#39;sv&#39;, &#39;Swedish&#39;),
+                (&#39;sw&#39;, &#39;Swahili&#39;),
+                (&#39;ta&#39;, &#39;Tamil&#39;),
+                (&#39;te&#39;, &#39;Telugu&#39;),
+                (&#39;th&#39;, &#39;Thai&#39;),
+                (&#39;tr&#39;, &#39;Turkish&#39;),
+                (&#39;tt&#39;, &#39;Tatar&#39;),
+                (&#39;udm&#39;, &#39;Udmurt&#39;),
+                (&#39;uk&#39;, &#39;Ukrainian&#39;),
+                (&#39;ur&#39;, &#39;Urdu&#39;),
+                (&#39;vi&#39;, &#39;Vietnamese&#39;),
+                (&#39;zh-cn&#39;, &#39;Simplified Chinese&#39;),
+                (&#39;zh-tw&#39;, &#39;Traditional Chinese&#39;)),
+ u&#39;LANGUAGE_BIDI&#39;: False,
+ u&#39;LANGUAGE_CODE&#39;: &#39;es-ve&#39;}</code></div>
+	</dd>
+
+	<dt><strong>django.core.context_processors.media</strong></dt>
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{u&#39;MEDIA_URL&#39;: &#39;/media/&#39;}</code></div>
+	</dd>
+
+	<dt><strong>django.core.context_processors.static</strong></dt>
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{u&#39;STATIC_URL&#39;: &#39;/static/&#39;}</code></div>
+	</dd>
+
+	<dt><strong>django.contrib.messages.context_processors.messages</strong></dt>
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{&#39;messages&#39;: &lt;django.contrib.messages.storage.fallback.FallbackStorage object at 0x3cf7bd0&gt;}</code></div>
+	</dd>
+
+	<dt><strong>django.contrib.auth.context_processors.auth</strong></dt>
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{&#39;perms&#39;: &lt;django.contrib.auth.context_processors.PermWrapper object at 0x3ea7fd0&gt;,
+ &#39;user&#39;: &lt;django.utils.functional.SimpleLazyObject object at 0x3cf7c50&gt;}</code></div>
+	</dd>
+
+	<dt><strong>django.core.context_processors.tz</strong></dt>
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{u&#39;TIME_ZONE&#39;: &#39;VET&#39;}</code></div>
+	</dd>
+
+	<dt><strong>django.core.context_processors.csrf</strong></dt>
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{u&#39;csrf_token&#39;: &lt;django.utils.functional.__proxy__ object at 0x3ea7fd0&gt;}</code></div>
+	</dd>
+
+	<dt><strong>django.core.context_processors.debug</strong></dt>
+	<dd>
+		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> Toggle Context</a></div>
+		<div class="djTemplateHideContextDiv" style="display:none;"><code>{u&#39;debug&#39;: True,
+ u&#39;sql_queries&#39;: [{u&#39;sql&#39;: u&#39;SELECT &quot;django_session&quot;.&quot;session_key&quot;, &quot;django_session&quot;.&quot;session_data&quot;, &quot;django_session&quot;.&quot;expire_date&quot; FROM &quot;django_session&quot; WHERE (&quot;django_session&quot;.&quot;session_key&quot; = axqpiy7rsp1pudsmo3f9y15acv6ub6rn  AND &quot;django_session&quot;.&quot;expire_date&quot; &gt; 2013-05-23 23:32:43.845843 )&#39;,
+                   u&#39;time&#39;: u&#39;0.004&#39;},
+                  {u&#39;sql&#39;: u&#39;SELECT &quot;auth_user&quot;.&quot;id&quot;, &quot;auth_user&quot;.&quot;password&quot;, &quot;auth_user&quot;.&quot;last_login&quot;, &quot;auth_user&quot;.&quot;is_superuser&quot;, &quot;auth_user&quot;.&quot;username&quot;, &quot;auth_user&quot;.&quot;first_name&quot;, &quot;auth_user&quot;.&quot;last_name&quot;, &quot;auth_user&quot;.&quot;email&quot;, &quot;auth_user&quot;.&quot;is_staff&quot;, &quot;auth_user&quot;.&quot;is_active&quot;, &quot;auth_user&quot;.&quot;date_joined&quot; FROM &quot;auth_user&quot; WHERE &quot;auth_user&quot;.&quot;id&quot; = 1 &#39;,
+                   u&#39;time&#39;: u&#39;0.000&#39;},
+                  {u&#39;sql&#39;: u&#39;SELECT DISTINCT &quot;django_messages_message&quot;.&quot;id&quot;, &quot;django_messages_message&quot;.&quot;subject&quot;, &quot;django_messages_message&quot;.&quot;body&quot;, &quot;django_messages_message&quot;.&quot;sender_id&quot;, &quot;django_messages_message&quot;.&quot;parent_msg_id&quot;, &quot;django_messages_message&quot;.&quot;sent_at&quot;, &quot;django_messages_message&quot;.&quot;read_at&quot;, &quot;django_messages_message&quot;.&quot;replied_at&quot;, &quot;django_messages_message&quot;.&quot;sender_deleted_at&quot;, &quot;django_messages_message&quot;.&quot;recipient_deleted_at&quot;, &quot;django_messages_message&quot;.&quot;status_id&quot;, &quot;django_messages_message&quot;.&quot;tipo&quot; FROM &quot;django_messages_message&quot; LEFT OUTER JOIN &quot;django_messages_message_recipient&quot; ON (&quot;django_messages_message&quot;.&quot;id&quot; = &quot;django_messages_message_recipient&quot;.&quot;message_id&quot;) LEFT OUTER JOIN &quot;django_messages_message_con_copia&quot; ON (&quot;django_messages_message&quot;.&quot;id&quot; = &quot;django_messages_message_con_copia&quot;.&quot;message_id&quot;) WHERE ((&quot;django_messages_message_recipient&quot;.&quot;destinatarios_id&quot; IN (SELECT U0.&quot;id&quot; FROM &quot;destinatarios&quot; U0 LEFT OUTER JOIN &quot;auth_userprofile&quot; U1 ON (U0.&quot;usuarios_id&quot; = U1.&quot;id&quot;) LEFT OUTER JOIN &quot;auth_group&quot; U3 ON (U0.&quot;grupos_id&quot; = U3.&quot;id&quot;) LEFT OUTER JOIN &quot;auth_user_groups&quot; U4 ON (U3.&quot;id&quot; = U4.&quot;group_id&quot;) WHERE (U1.&quot;user_id&quot; = 1  OR U4.&quot;user_id&quot; = 1 )) OR &quot;django_messages_message_con_copia&quot;.&quot;destinatarios_id&quot; IN (SELECT U0.&quot;id&quot; FROM &quot;destinatarios&quot; U0 LEFT OUTER JOIN &quot;auth_userprofile&quot; U1 ON (U0.&quot;usuarios_id&quot; = U1.&quot;id&quot;) LEFT OUTER JOIN &quot;auth_group&quot; U3 ON (U0.&quot;grupos_id&quot; = U3.&quot;id&quot;) LEFT OUTER JOIN &quot;auth_user_groups&quot; U4 ON (U3.&quot;id&quot; = U4.&quot;group_id&quot;) WHERE (U1.&quot;user_id&quot; = 1  OR U4.&quot;user_id&quot; = 1 ))) AND &quot;django_messages_message&quot;.&quot;recipient_deleted_at&quot; IS NULL) ORDER BY &quot;django_messages_message&quot;.&quot;sent_at&quot; DESC&#39;,
+                   u&#39;time&#39;: u&#39;0.000&#39;}]}</code></div>
+	</dd>
+
+</dl>
+
+
+				    </div>
+				</div>
+			</div>
+		
+	
+		
+			<div id="djDebugSQLPanel" class="panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose">Cerrar</a>
+					<h3>SQL Queries from 1 connection</h3>
+				</div>
+				<div class="djDebugPanelContent">
+				    <div class="scroll">
+				        
+
+<div class="clearfix">
+	<ul class="stats">
+		
+			<li>
+				<strong class="label"><span style="background-color: rgb(256, 0, 0)" class="color">&nbsp;</span> default</strong>
+				<span class="info">5,82 ms (3 queries)</span>
+			</li>
+		
+	</ul>
+</div>
+
+
+	<table>
+		<thead>
+			<tr>
+				<th class="color">&nbsp;</th>
+				<th class="query" colspan="2">Query</th>
+				<th class="timeline">Timeline</th>
+				<th class="time">Time (ms)</th>
+				<th class="actions">Acción</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+				<tr class="djDebugHoverable djDebugOdd" id="sqlMain_1">
+					<td class="color"><span style="background-color: rgb(256, 0, 0);">&nbsp;</span></td>
+					<td class="toggle">
+						<a class="djToggleSwitch" data-toggle-name="sqlMain" data-toggle-id="1" data-toggle-open="+" data-toggle-close="-" href="javascript:void(0)">+</a>
+					</td>
+					<td class="query">
+						<div class="djDebugSqlWrap">
+							<div class="djDebugSql"><strong>SELECT</strong> <a class="djDebugUncollapsed djDebugToggle" href="#">&bull;&bull;&bull;</a> <a class="djDebugCollapsed djDebugToggle" href="#">&quot;django_session&quot;.&quot;session_key&quot;, &quot;django_session&quot;.&quot;session_data&quot;, &quot;django_session&quot;.&quot;expire_date&quot;</a> <strong>FROM</strong> &quot;django_session&quot; <strong>WHERE</strong> (&quot;django_session&quot;.&quot;session_key&quot; = &#39;axqpiy7rsp1pudsmo3f9y15acv6ub6rn&#39;  <strong>AND</strong> &quot;django_session&quot;.&quot;expire_date&quot; &gt; &#39;2013-05-23 23:32:43.845843&#39; )</div>
+						</div>
+					</td>
+					<td class="timeline">
+						<div class="djDebugTimeline"><div class="djDebugLineChart" style="left:0.000000%;"><strong style="width:78.260869%;">78,2608695652%</strong></div></div>
+					</td>
+					<td class="time">
+						4,55
+					</td>
+					<td class="actions">
+					
+						
+							<a class="remoteCall" href="/__debug__/sql_select/?sql=SELECT%20%22django_session%22.%22session_key%22%2C%20%22django_session%22.%22session_data%22%2C%20%22django_session%22.%22expire_date%22%20FROM%20%22django_session%22%20WHERE%20%28%22django_session%22.%22session_key%22%20%3D%20%25s%20%20AND%20%22django_session%22.%22expire_date%22%20%3E%20%25s%20%29&amp;params=%5B%22axqpiy7rsp1pudsmo3f9y15acv6ub6rn%22%2C%20%222013-05-23%2023%3A32%3A43.845843%22%5D&amp;duration=4%2C55&amp;hash=b515245717214394b2d957436b3a956376829745&amp;alias=default">Sel</a>
+							<a class="remoteCall" href="/__debug__/sql_explain/?sql=SELECT%20%22django_session%22.%22session_key%22%2C%20%22django_session%22.%22session_data%22%2C%20%22django_session%22.%22expire_date%22%20FROM%20%22django_session%22%20WHERE%20%28%22django_session%22.%22session_key%22%20%3D%20%25s%20%20AND%20%22django_session%22.%22expire_date%22%20%3E%20%25s%20%29&amp;params=%5B%22axqpiy7rsp1pudsmo3f9y15acv6ub6rn%22%2C%20%222013-05-23%2023%3A32%3A43.845843%22%5D&amp;duration=4%2C55&amp;hash=b515245717214394b2d957436b3a956376829745&amp;alias=default">Expl</a>
+							
+						
+					
+					</td>
+				</tr>
+				<tr class="djUnselected djDebugHoverable djDebugOdd djToggleDetails_1" id="sqlDetails_1">
+					<td colspan="2"></td>
+					<td colspan="4">
+						<div class="djSQLDetailsDiv">
+							<p><strong>Connection:</strong> default</p>
+							
+							
+							
+								<pre class="stack"><span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/staticfiles/</span><span class="file">handlers.py</span> in <span class="func">__call__</span>(<span class="lineno">72</span>)
+  <span class="code">return self.application(environ, start_response)</span>
+<span class="path">/home/axelio/public_html/umail/django_messages/</span><span class="file">views.py</span> in <span class="func">inbox</span>(<span class="lineno">32</span>)
+  <span class="code">if request.user.is_authenticated():</span>
+<span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/auth/</span><span class="file">middleware.py</span> in <span class="func">&lt;lambda&gt;</span>(<span class="lineno">18</span>)
+  <span class="code">request.user = SimpleLazyObject(lambda: get_user(request))</span>
+<span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/auth/</span><span class="file">middleware.py</span> in <span class="func">get_user</span>(<span class="lineno">10</span>)
+  <span class="code">request._cached_user = auth.get_user(request)</span>
+<span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/auth/</span><span class="file">__init__.py</span> in <span class="func">get_user</span>(<span class="lineno">134</span>)
+  <span class="code">user_id = request.session[SESSION_KEY]</span>
+<span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/sessions/backends/</span><span class="file">base.py</span> in <span class="func">__getitem__</span>(<span class="lineno">46</span>)
+  <span class="code">return self._session[key]</span>
+<span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/sessions/backends/</span><span class="file">base.py</span> in <span class="func">_get_session</span>(<span class="lineno">168</span>)
+  <span class="code">self._session_cache = self.load()</span>
+<span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/sessions/backends/</span><span class="file">db.py</span> in <span class="func">load</span>(<span class="lineno">18</span>)
+  <span class="code">expire_date__gt=timezone.now()</span>
+<span class="path">/home/axelio/public_html/umail/debug_toolbar/utils/tracking/</span><span class="file">db.py</span> in <span class="func">execute</span>(<span class="lineno">118</span>)
+  <span class="code">stacktrace = tidy_stacktrace(reversed(get_stack()))</span></pre>
+							
+							
+						</div>
+					</td>
+				</tr>
+			
+				<tr class="djDebugHoverable djDebugEven" id="sqlMain_2">
+					<td class="color"><span style="background-color: rgb(256, 0, 0);">&nbsp;</span></td>
+					<td class="toggle">
+						<a class="djToggleSwitch" data-toggle-name="sqlMain" data-toggle-id="2" data-toggle-open="+" data-toggle-close="-" href="javascript:void(0)">+</a>
+					</td>
+					<td class="query">
+						<div class="djDebugSqlWrap">
+							<div class="djDebugSql"><strong>SELECT</strong> <a class="djDebugUncollapsed djDebugToggle" href="#">&bull;&bull;&bull;</a> <a class="djDebugCollapsed djDebugToggle" href="#">&quot;auth_user&quot;.&quot;id&quot;, &quot;auth_user&quot;.&quot;password&quot;, &quot;auth_user&quot;.&quot;last_login&quot;, &quot;auth_user&quot;.&quot;is_superuser&quot;, &quot;auth_user&quot;.&quot;username&quot;, &quot;auth_user&quot;.&quot;first_name&quot;, &quot;auth_user&quot;.&quot;last_name&quot;, &quot;auth_user&quot;.&quot;email&quot;, &quot;auth_user&quot;.&quot;is_staff&quot;, &quot;auth_user&quot;.&quot;is_active&quot;, &quot;auth_user&quot;.&quot;date_joined&quot;</a> <strong>FROM</strong> &quot;auth_user&quot; <strong>WHERE</strong> &quot;auth_user&quot;.&quot;id&quot; = 1</div>
+						</div>
+					</td>
+					<td class="timeline">
+						<div class="djDebugTimeline"><div class="djDebugLineChart" style="left:78.260869%;"><strong style="width:43.003952%;">9,34868534112%</strong></div></div>
+					</td>
+					<td class="time">
+						0,54
+					</td>
+					<td class="actions">
+					
+						
+							<a class="remoteCall" href="/__debug__/sql_select/?sql=SELECT%20%22auth_user%22.%22id%22%2C%20%22auth_user%22.%22password%22%2C%20%22auth_user%22.%22last_login%22%2C%20%22auth_user%22.%22is_superuser%22%2C%20%22auth_user%22.%22username%22%2C%20%22auth_user%22.%22first_name%22%2C%20%22auth_user%22.%22last_name%22%2C%20%22auth_user%22.%22email%22%2C%20%22auth_user%22.%22is_staff%22%2C%20%22auth_user%22.%22is_active%22%2C%20%22auth_user%22.%22date_joined%22%20FROM%20%22auth_user%22%20WHERE%20%22auth_user%22.%22id%22%20%3D%20%25s%20&amp;params=%5B1%5D&amp;duration=0%2C54&amp;hash=78675675ddd2f3ed427b4cd3f071d7672526703b&amp;alias=default">Sel</a>
+							<a class="remoteCall" href="/__debug__/sql_explain/?sql=SELECT%20%22auth_user%22.%22id%22%2C%20%22auth_user%22.%22password%22%2C%20%22auth_user%22.%22last_login%22%2C%20%22auth_user%22.%22is_superuser%22%2C%20%22auth_user%22.%22username%22%2C%20%22auth_user%22.%22first_name%22%2C%20%22auth_user%22.%22last_name%22%2C%20%22auth_user%22.%22email%22%2C%20%22auth_user%22.%22is_staff%22%2C%20%22auth_user%22.%22is_active%22%2C%20%22auth_user%22.%22date_joined%22%20FROM%20%22auth_user%22%20WHERE%20%22auth_user%22.%22id%22%20%3D%20%25s%20&amp;params=%5B1%5D&amp;duration=0%2C54&amp;hash=78675675ddd2f3ed427b4cd3f071d7672526703b&amp;alias=default">Expl</a>
+							
+						
+					
+					</td>
+				</tr>
+				<tr class="djUnselected djDebugHoverable djDebugEven djToggleDetails_2" id="sqlDetails_2">
+					<td colspan="2"></td>
+					<td colspan="4">
+						<div class="djSQLDetailsDiv">
+							<p><strong>Connection:</strong> default</p>
+							
+							
+							
+								<pre class="stack"><span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/staticfiles/</span><span class="file">handlers.py</span> in <span class="func">__call__</span>(<span class="lineno">72</span>)
+  <span class="code">return self.application(environ, start_response)</span>
+<span class="path">/home/axelio/public_html/umail/django_messages/</span><span class="file">views.py</span> in <span class="func">inbox</span>(<span class="lineno">32</span>)
+  <span class="code">if request.user.is_authenticated():</span>
+<span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/auth/</span><span class="file">middleware.py</span> in <span class="func">&lt;lambda&gt;</span>(<span class="lineno">18</span>)
+  <span class="code">request.user = SimpleLazyObject(lambda: get_user(request))</span>
+<span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/auth/</span><span class="file">middleware.py</span> in <span class="func">get_user</span>(<span class="lineno">10</span>)
+  <span class="code">request._cached_user = auth.get_user(request)</span>
+<span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/auth/</span><span class="file">__init__.py</span> in <span class="func">get_user</span>(<span class="lineno">137</span>)
+  <span class="code">user = backend.get_user(user_id) or AnonymousUser()</span>
+<span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/auth/</span><span class="file">backends.py</span> in <span class="func">get_user</span>(<span class="lineno">67</span>)
+  <span class="code">return UserModel._default_manager.get(pk=user_id)</span>
+<span class="path">/home/axelio/public_html/umail/debug_toolbar/utils/tracking/</span><span class="file">db.py</span> in <span class="func">execute</span>(<span class="lineno">118</span>)
+  <span class="code">stacktrace = tidy_stacktrace(reversed(get_stack()))</span></pre>
+							
+							
+						</div>
+					</td>
+				</tr>
+			
+				<tr class="djDebugHoverable djDebugOdd" id="sqlMain_3">
+					<td class="color"><span style="background-color: rgb(256, 0, 0);">&nbsp;</span></td>
+					<td class="toggle">
+						<a class="djToggleSwitch" data-toggle-name="sqlMain" data-toggle-id="3" data-toggle-open="+" data-toggle-close="-" href="javascript:void(0)">+</a>
+					</td>
+					<td class="query">
+						<div class="djDebugSqlWrap">
+							<div class="djDebugSql"><strong>SELECT</strong> <a class="djDebugUncollapsed djDebugToggle" href="#">&bull;&bull;&bull;</a> <a class="djDebugCollapsed djDebugToggle" href="#"><strong>DISTINCT</strong> &quot;django_messages_message&quot;.&quot;id&quot;, &quot;django_messages_message&quot;.&quot;subject&quot;, &quot;django_messages_message&quot;.&quot;body&quot;, &quot;django_messages_message&quot;.&quot;sender_id&quot;, &quot;django_messages_message&quot;.&quot;parent_msg_id&quot;, &quot;django_messages_message&quot;.&quot;sent_at&quot;, &quot;django_messages_message&quot;.&quot;read_at&quot;, &quot;django_messages_message&quot;.&quot;replied_at&quot;, &quot;django_messages_message&quot;.&quot;sender_deleted_at&quot;, &quot;django_messages_message&quot;.&quot;recipient_deleted_at&quot;, &quot;django_messages_message&quot;.&quot;status_id&quot;, &quot;django_messages_message&quot;.&quot;tipo&quot;</a> <strong>FROM</strong> &quot;django_messages_message&quot; <strong>LEFT OUTER JOIN</strong> &quot;django_messages_message_recipient&quot; <strong>ON</strong> (&quot;django_messages_message&quot;.&quot;id&quot; = &quot;django_messages_message_recipient&quot;.&quot;message_id&quot;) <strong>LEFT OUTER JOIN</strong> &quot;django_messages_message_con_copia&quot; <strong>ON</strong> (&quot;django_messages_message&quot;.&quot;id&quot; = &quot;django_messages_message_con_copia&quot;.&quot;message_id&quot;) <strong>WHERE</strong> ((&quot;django_messages_message_recipient&quot;.&quot;destinatarios_id&quot; <strong>IN</strong> (<strong>SELECT</strong> <a class="djDebugUncollapsed djDebugToggle" href="#">&bull;&bull;&bull;</a> <a class="djDebugCollapsed djDebugToggle" href="#">U0.&quot;id&quot;</a> <strong>FROM</strong> &quot;destinatarios&quot; U0 <strong>LEFT OUTER JOIN</strong> &quot;auth_userprofile&quot; U1 <strong>ON</strong> (U0.&quot;usuarios_id&quot; = U1.&quot;id&quot;) <strong>LEFT OUTER JOIN</strong> &quot;auth_group&quot; U3 <strong>ON</strong> (U0.&quot;grupos_id&quot; = U3.&quot;id&quot;) <strong>LEFT OUTER JOIN</strong> &quot;auth_user_groups&quot; U4 <strong>ON</strong> (U3.&quot;id&quot; = U4.&quot;group_id&quot;) <strong>WHERE</strong> (U1.&quot;user_id&quot; = 1  <strong>OR</strong> U4.&quot;user_id&quot; = 1 )) <strong>OR</strong> &quot;django_messages_message_con_copia&quot;.&quot;destinatarios_id&quot; <strong>IN</strong> (<strong>SELECT</strong> <a class="djDebugUncollapsed djDebugToggle" href="#">&bull;&bull;&bull;</a> <a class="djDebugCollapsed djDebugToggle" href="#">U0.&quot;id&quot;</a> <strong>FROM</strong> &quot;destinatarios&quot; U0 <strong>LEFT OUTER JOIN</strong> &quot;auth_userprofile&quot; U1 <strong>ON</strong> (U0.&quot;usuarios_id&quot; = U1.&quot;id&quot;) <strong>LEFT OUTER JOIN</strong> &quot;auth_group&quot; U3 <strong>ON</strong> (U0.&quot;grupos_id&quot; = U3.&quot;id&quot;) <strong>LEFT OUTER JOIN</strong> &quot;auth_user_groups&quot; U4 <strong>ON</strong> (U3.&quot;id&quot; = U4.&quot;group_id&quot;) <strong>WHERE</strong> (U1.&quot;user_id&quot; = 1  <strong>OR</strong> U4.&quot;user_id&quot; = 1 ))) <strong>AND</strong> &quot;django_messages_message&quot;.&quot;recipient_deleted_at&quot; <strong>IS</strong> <strong>NULL</strong>) <strong>ORDER</strong> <strong>BY</strong> &quot;django_messages_message&quot;.&quot;sent_at&quot; <strong>DESC</strong></div>
+						</div>
+					</td>
+					<td class="timeline">
+						<div class="djDebugTimeline"><div class="djDebugLineChart" style="left:87.609554%;"><strong style="width:100.000000%;">12,3904450937%</strong></div></div>
+					</td>
+					<td class="time">
+						0,72
+					</td>
+					<td class="actions">
+					
+						
+							<a class="remoteCall" href="/__debug__/sql_select/?sql=SELECT%20DISTINCT%20%22django_messages_message%22.%22id%22%2C%20%22django_messages_message%22.%22subject%22%2C%20%22django_messages_message%22.%22body%22%2C%20%22django_messages_message%22.%22sender_id%22%2C%20%22django_messages_message%22.%22parent_msg_id%22%2C%20%22django_messages_message%22.%22sent_at%22%2C%20%22django_messages_message%22.%22read_at%22%2C%20%22django_messages_message%22.%22replied_at%22%2C%20%22django_messages_message%22.%22sender_deleted_at%22%2C%20%22django_messages_message%22.%22recipient_deleted_at%22%2C%20%22django_messages_message%22.%22status_id%22%2C%20%22django_messages_message%22.%22tipo%22%20FROM%20%22django_messages_message%22%20LEFT%20OUTER%20JOIN%20%22django_messages_message_recipient%22%20ON%20%28%22django_messages_message%22.%22id%22%20%3D%20%22django_messages_message_recipient%22.%22message_id%22%29%20LEFT%20OUTER%20JOIN%20%22django_messages_message_con_copia%22%20ON%20%28%22django_messages_message%22.%22id%22%20%3D%20%22django_messages_message_con_copia%22.%22message_id%22%29%20WHERE%20%28%28%22django_messages_message_recipient%22.%22destinatarios_id%22%20IN%20%28SELECT%20U0.%22id%22%20FROM%20%22destinatarios%22%20U0%20LEFT%20OUTER%20JOIN%20%22auth_userprofile%22%20U1%20ON%20%28U0.%22usuarios_id%22%20%3D%20U1.%22id%22%29%20LEFT%20OUTER%20JOIN%20%22auth_group%22%20U3%20ON%20%28U0.%22grupos_id%22%20%3D%20U3.%22id%22%29%20LEFT%20OUTER%20JOIN%20%22auth_user_groups%22%20U4%20ON%20%28U3.%22id%22%20%3D%20U4.%22group_id%22%29%20WHERE%20%28U1.%22user_id%22%20%3D%20%25s%20%20OR%20U4.%22user_id%22%20%3D%20%25s%20%29%29%20OR%20%22django_messages_message_con_copia%22.%22destinatarios_id%22%20IN%20%28SELECT%20U0.%22id%22%20FROM%20%22destinatarios%22%20U0%20LEFT%20OUTER%20JOIN%20%22auth_userprofile%22%20U1%20ON%20%28U0.%22usuarios_id%22%20%3D%20U1.%22id%22%29%20LEFT%20OUTER%20JOIN%20%22auth_group%22%20U3%20ON%20%28U0.%22grupos_id%22%20%3D%20U3.%22id%22%29%20LEFT%20OUTER%20JOIN%20%22auth_user_groups%22%20U4%20ON%20%28U3.%22id%22%20%3D%20U4.%22group_id%22%29%20WHERE%20%28U1.%22user_id%22%20%3D%20%25s%20%20OR%20U4.%22user_id%22%20%3D%20%25s%20%29%29%29%20AND%20%22django_messages_message%22.%22recipient_deleted_at%22%20IS%20NULL%29%20ORDER%20BY%20%22django_messages_message%22.%22sent_at%22%20DESC&amp;params=%5B1%2C%201%2C%201%2C%201%5D&amp;duration=0%2C72&amp;hash=d7602e4ffcaa62b29793e2f6d2978914cf36c171&amp;alias=default">Sel</a>
+							<a class="remoteCall" href="/__debug__/sql_explain/?sql=SELECT%20DISTINCT%20%22django_messages_message%22.%22id%22%2C%20%22django_messages_message%22.%22subject%22%2C%20%22django_messages_message%22.%22body%22%2C%20%22django_messages_message%22.%22sender_id%22%2C%20%22django_messages_message%22.%22parent_msg_id%22%2C%20%22django_messages_message%22.%22sent_at%22%2C%20%22django_messages_message%22.%22read_at%22%2C%20%22django_messages_message%22.%22replied_at%22%2C%20%22django_messages_message%22.%22sender_deleted_at%22%2C%20%22django_messages_message%22.%22recipient_deleted_at%22%2C%20%22django_messages_message%22.%22status_id%22%2C%20%22django_messages_message%22.%22tipo%22%20FROM%20%22django_messages_message%22%20LEFT%20OUTER%20JOIN%20%22django_messages_message_recipient%22%20ON%20%28%22django_messages_message%22.%22id%22%20%3D%20%22django_messages_message_recipient%22.%22message_id%22%29%20LEFT%20OUTER%20JOIN%20%22django_messages_message_con_copia%22%20ON%20%28%22django_messages_message%22.%22id%22%20%3D%20%22django_messages_message_con_copia%22.%22message_id%22%29%20WHERE%20%28%28%22django_messages_message_recipient%22.%22destinatarios_id%22%20IN%20%28SELECT%20U0.%22id%22%20FROM%20%22destinatarios%22%20U0%20LEFT%20OUTER%20JOIN%20%22auth_userprofile%22%20U1%20ON%20%28U0.%22usuarios_id%22%20%3D%20U1.%22id%22%29%20LEFT%20OUTER%20JOIN%20%22auth_group%22%20U3%20ON%20%28U0.%22grupos_id%22%20%3D%20U3.%22id%22%29%20LEFT%20OUTER%20JOIN%20%22auth_user_groups%22%20U4%20ON%20%28U3.%22id%22%20%3D%20U4.%22group_id%22%29%20WHERE%20%28U1.%22user_id%22%20%3D%20%25s%20%20OR%20U4.%22user_id%22%20%3D%20%25s%20%29%29%20OR%20%22django_messages_message_con_copia%22.%22destinatarios_id%22%20IN%20%28SELECT%20U0.%22id%22%20FROM%20%22destinatarios%22%20U0%20LEFT%20OUTER%20JOIN%20%22auth_userprofile%22%20U1%20ON%20%28U0.%22usuarios_id%22%20%3D%20U1.%22id%22%29%20LEFT%20OUTER%20JOIN%20%22auth_group%22%20U3%20ON%20%28U0.%22grupos_id%22%20%3D%20U3.%22id%22%29%20LEFT%20OUTER%20JOIN%20%22auth_user_groups%22%20U4%20ON%20%28U3.%22id%22%20%3D%20U4.%22group_id%22%29%20WHERE%20%28U1.%22user_id%22%20%3D%20%25s%20%20OR%20U4.%22user_id%22%20%3D%20%25s%20%29%29%29%20AND%20%22django_messages_message%22.%22recipient_deleted_at%22%20IS%20NULL%29%20ORDER%20BY%20%22django_messages_message%22.%22sent_at%22%20DESC&amp;params=%5B1%2C%201%2C%201%2C%201%5D&amp;duration=0%2C72&amp;hash=d7602e4ffcaa62b29793e2f6d2978914cf36c171&amp;alias=default">Expl</a>
+							
+						
+					
+					</td>
+				</tr>
+				<tr class="djUnselected djDebugHoverable djDebugOdd djToggleDetails_3" id="sqlDetails_3">
+					<td colspan="2"></td>
+					<td colspan="4">
+						<div class="djSQLDetailsDiv">
+							<p><strong>Connection:</strong> default</p>
+							
+							
+							
+								<pre class="stack"><span class="path">/home/axelio/public_html/umail/virtualenv/local/lib/python2.7/site-packages/django/contrib/staticfiles/</span><span class="file">handlers.py</span> in <span class="func">__call__</span>(<span class="lineno">72</span>)
+  <span class="code">return self.application(environ, start_response)</span>
+<span class="path">/home/axelio/public_html/umail/django_messages/</span><span class="file">views.py</span> in <span class="func">inbox</span>(<span class="lineno">40</span>)
+  <span class="code">}, context_instance=RequestContext(request))</span>
+<span class="path">/home/axelio/public_html/umail/debug_toolbar/utils/tracking/</span><span class="file">db.py</span> in <span class="func">execute</span>(<span class="lineno">118</span>)
+  <span class="code">stacktrace = tidy_stacktrace(reversed(get_stack()))</span></pre>
+							
+							
+								<table>
+									
+									<tr>
+										<td>220</td>
+										<td><code style="font-family: monospace;">                    &lt;/thead&gt;
+</code></td>
+									</tr>
+									
+									<tr>
+										<td>221</td>
+										<td><code style="font-family: monospace;">                &lt;/table&gt;
+</code></td>
+									</tr>
+									
+									<tr>
+										<td>222</td>
+										<td><code style="font-family: monospace;">
+</code></td>
+									</tr>
+									
+									<tr>
+										<td>223</td>
+										<td><code style="font-family: monospace;background-color: lightgrey">                </code></td>
+									</tr>
+									
+									<tr>
+										<td>224</td>
+										<td><code style="font-family: monospace;">                &lt;table class=&quot;messages&quot; width=600px&gt;
+</code></td>
+									</tr>
+									
+									<tr>
+										<td>225</td>
+										<td><code style="font-family: monospace;">                    &lt;thead&gt;
+</code></td>
+									</tr>
+									
+									<tr>
+										<td>226</td>
+										<td><code style="font-family: monospace;">                        &lt;tr&gt;
+</code></td>
+									</tr>
+									
+								</table>
+								<p><strong>/home/axelio/public_html/umail/templates/user/mensajes/inbox.html</strong></p>
+							
+						</div>
+					</td>
+				</tr>
+			
+		</tbody>
+	</table>
+
+
+				    </div>
+				</div>
+			</div>
+		
+	
+		
+			<div id="djDebugSignalsPanel" class="panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose">Cerrar</a>
+					<h3>Señales</h3>
+				</div>
+				<div class="djDebugPanelContent">
+				    <div class="scroll">
+				        
+<table>
+	<thead>
+		<tr>
+			<th>Señal</th>
+			<th>Providing Args</th>
+			<th>Receivers</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+			<tr class="djDebugOdd">
+				<td>class_prepared</td>
+				<td>class</td>
+				<td>setup_join_cache, ensure_default_manager, do_pending_lookups</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>connection_created</td>
+				<td>connection</td>
+				<td></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>got_request_exception</td>
+				<td>request</td>
+				<td>_rollback_on_exception</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>post_delete</td>
+				<td>instance, using</td>
+				<td></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>post_init</td>
+				<td>instance</td>
+				<td></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>post_save</td>
+				<td>update_fields, instance, created, using, raw</td>
+				<td>save_pers_user, save_group_dest, save_user_dest, new_message_email</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>post_syncdb</td>
+				<td>app, verbosity, interactive, class, created_models</td>
+				<td></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>pre_delete</td>
+				<td>instance, using</td>
+				<td></td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>pre_init</td>
+				<td>instance, args, kwargs</td>
+				<td></td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>pre_save</td>
+				<td>update_fields, instance, using, raw</td>
+				<td>save_message</td>
+			</tr>
+		
+			<tr class="djDebugOdd">
+				<td>request_finished</td>
+				<td></td>
+				<td>close_connection</td>
+			</tr>
+		
+			<tr class="djDebugEven">
+				<td>request_started</td>
+				<td></td>
+				<td>reset_queries</td>
+			</tr>
+		
+	</tbody>
+</table>
+
+				    </div>
+				</div>
+			</div>
+		
+	
+		
+			<div id="djDebugLoggingPanel" class="panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose">Cerrar</a>
+					<h3>Log Messages</h3>
+				</div>
+				<div class="djDebugPanelContent">
+				    <div class="scroll">
+				        
+
+	<p>No hay mensajes registrados.</p>
+
+
+
+				    </div>
+				</div>
+			</div>
+		
+	
+	<div id="djDebugWindow" class="panelContent"></div>
+</div>
+</body>

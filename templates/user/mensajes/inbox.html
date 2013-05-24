@@ -10,6 +10,55 @@
 
 
 
+                        <style type="text/css">
+                        @media print { #djDebug {display:none;}}
+                        </style>
+                        <link rel="stylesheet" href="{{ STATIC_URL }}css/toolbar.css" type="text/css">
+                        <script type="text/javascript" src="{{ STATIC_URL }}js/toolbar.min.js"></script>
+                        <div id="djDebug" style="display:none;" dir="ltr">
+                            <div style="display:none;" id="djDebugToolbar">
+                                <ul id="djDebugPanelList">
+                                    <li id="djDebugButton">Memorándums</li>
+                                    <li>
+                                        <a id="djHideToolBarButton" href="#" title="Ocultar barra">
+                                            Ocultar &raquo;
+                                        </a>
+                                    </li>
+                                    <li class="djDebugPanelButton">
+                                        <a href="/redactar/" title="Redactar">
+                                            Redactar
+                                        </a>
+                                        <br />
+                                        <small>
+                                            Nuevo memorándum
+                                        </small>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div style="display:none;" id="djDebugToolbarHandle">
+                                <a title="{% trans "Show Toolbar" %}" id="djShowToolBarButton" href="#">&laquo;</a>
+                            </div>
+
+                            {% for panel in panels %}
+                                {% if panel.has_content %}
+                                    <div id="{{ panel.dom_id }}" class="panelContent">
+                                        <div class="djDebugPanelTitle">
+                                            <a href="" class="djDebugClose">{% trans "Close" %}</a>
+                                            <h3>{{ panel.title|safe }}</h3>
+                                        </div>
+                                        <div class="djDebugPanelContent">
+                                            <div class="scroll">
+                                                {{ panel.content|safe }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div id="djDebugWindow" class="panelContent"></div>
+                        </div>
+
+
+
 
 
 
@@ -76,57 +125,6 @@
 
 
 
-
-
-
-                    <div class="col1">
-                        <style type="text/css">
-                        @media print { #djDebug {display:none;}}
-                        </style>
-                        <link rel="stylesheet" href="{{ STATIC_URL }}css/toolbar.css" type="text/css">
-                        <script type="text/javascript" src="{{ STATIC_URL }}js/toolbar.min.js"></script>
-                        <div id="djDebug" style="display:none;" dir="ltr">
-                            <div style="display:none;" id="djDebugToolbar">
-                                <ul id="djDebugPanelList">
-                                    <li id="djDebugButton">Memorándums</li>
-                                    <li>
-                                        <a id="djHideToolBarButton" href="#" title="Ocultar barra">
-                                            &laquo; Ocultar
-                                        </a>
-                                    </li>
-                                    <li class="djDebugPanelButton">
-                                        <a href="/redactar/" title="Redactar">
-                                            Redactar
-                                        </a>
-                                        <br />
-                                        <small>
-                                            Nuevo memorándum
-                                        </small>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div style="display:none;" id="djDebugToolbarHandle">
-                                <a title="{% trans "Show Toolbar" %}" id="djShowToolBarButton" href="#">&laquo;</a>
-                            </div>
-
-                            {% for panel in panels %}
-                                {% if panel.has_content %}
-                                    <div id="{{ panel.dom_id }}" class="panelContent">
-                                        <div class="djDebugPanelTitle">
-                                            <a href="" class="djDebugClose">{% trans "Close" %}</a>
-                                            <h3>{{ panel.title|safe }}</h3>
-                                        </div>
-                                        <div class="djDebugPanelContent">
-                                            <div class="scroll">
-                                                {{ panel.content|safe }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                            <div id="djDebugWindow" class="panelContent"></div>
-                        </div>
-                    </div>
 
 
 

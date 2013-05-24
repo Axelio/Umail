@@ -40,9 +40,9 @@
 	background-color:#111;
 	width:200px;
 	z-index:100000000;
-	position:relative;
-	top:0;
-	bottom:0;
+	position:absolute;
+	top:415px;
+	/*bottom:0;*/
 	right:0;
 	opacity:0.9;
 }
@@ -105,11 +105,11 @@
 }
 
 #djDebug #djDebugToolbarHandle {
-	position:fixed;
+	position:absolute;
 	background-color:#fff;
 	border:1px solid #111;
-	top:30px;
-	left:0;
+	top:415px;
+	right:0;
 	z-index:100000000;
 	opacity:0.75;
 }

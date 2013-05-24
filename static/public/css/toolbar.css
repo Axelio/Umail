@@ -40,7 +40,7 @@
 	background-color:#111;
 	width:200px;
 	z-index:100000000;
-	position:fixed;
+	position:relative;
 	top:0;
 	bottom:0;
 	left:0;

@@ -2,16 +2,64 @@
     <h1><a href="index.html" id="logo">Umail</a></h1>
     <div class="right">
         <nav>
+        <table>
+        <tbody>
             <ul id="top_nav">
                 <li><a href="/admin">Admin área</a></li>
                 <li><a href="#">Sitemap</a></li>
             </ul>
-            <form id="search" method="post">
-                <div>
-                    <input type="submit" class="submit" value="">
-                    <input type="text" class="input">
-                </div>
-            </form>
+            {% if loggeado %}
+                <form id="search" method="post">
+                    <div>
+                        <input type="submit" class="submit" value="">
+                        <input type="text" class="input">
+                    </div>
+                </form>
+            {% else %}
+                <form id="search" method="post">
+                    <div>
+                        <p class="error">{{ form.errors }}</p>
+                        <table>
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        <input type="text" placeholder="Usuario" name="username">
+                                    </td>
+
+                                    <td>
+                                        <input type="password" placeholder="Contraseña" name="password">
+                                        <input type="submit" class="submit" value="Entrar">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            {% endif %}
         </nav>
+        </tbody>
+        </table>
     </div>
 </div>
+<!--
+                            <div>
+                                <table cellspacing=100%>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="text" value="Usuario" name=password>
+                                            </td>
+
+                                            <td>
+                                                <input type="password" value="Contraseña" name=password>
+                                            </td>
+
+                                            <td>
+                                                <input type="submit" class="submit" value="">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            -->

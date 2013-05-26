@@ -2,25 +2,29 @@
     <h1><a href="index.html" id="logo">Umail</a></h1>
     <div class="right">
         <nav>
-        <table>
-        <tbody>
             <ul id="top_nav">
-                <li><a href="/admin">Admin área</a></li>
-                <li><a href="#">Sitemap</a></li>
+            <li><a href="#">User Area</a></li>
+            <li><a href="#">Sitemap</a></li>
+
+            {% if request.user.is_authenticated %}
+                <li><a href='/logout'>Cerrar sesión</a></li>
             </ul>
-            {% if loggeado %}
                 <form id="search" method="post">
-                    <div>
-                        <input type="submit" class="submit" value="">
-                        <input type="text" class="input">
-                    </div>
+                <div>
+                <input type="submit" class="submit" value="">
+                <input type="text" class="input">
+                </div>
                 </form>
-            {% else %}
-                <form id="search" method="post">
+            {% endif %}
+        </nav>
+        <p class="error">{{ form.errors }}</p>
+        <p class="error">{{ mensaje }}</p>
+            {% if not request.user.is_authenticated %}
+                <form method="post" action="/">
+                    {% csrf_token %}
                     <div>
-                        <p class="error">{{ form.errors }}</p>
-                        <table>
-                            <tbody>
+                        <nav>
+                        <ul>
 
                                 <tr>
                                     <td>
@@ -32,34 +36,10 @@
                                         <input type="submit" class="submit" value="Entrar">
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                        </ul>
+                        </nav>
                     </div>
                 </form>
             {% endif %}
-        </nav>
-        </tbody>
-        </table>
     </div>
 </div>
-<!--
-                            <div>
-                                <table cellspacing=100%>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <input type="text" value="Usuario" name=password>
-                                            </td>
-
-                                            <td>
-                                                <input type="password" value="Contraseña" name=password>
-                                            </td>
-
-                                            <td>
-                                                <input type="submit" class="submit" value="">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            -->

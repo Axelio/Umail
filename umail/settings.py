@@ -23,6 +23,7 @@ DATABASES = {
 }
 
 LOGIN_URL = '/'
+LOGIN_REDIRECT_URL = '/'
 
 CACHES={
         'default':{

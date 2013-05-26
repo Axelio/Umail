@@ -38,7 +38,6 @@ header .right{padding-right:59px;width:500px}
 #search {background:url(/static/images/search.jpg) no-repeat;width:191px;height:26px;float:right;margin-top:3px}
 #search .submit {float:right;background:none;height:26px;width:28px;cursor:pointer}
 #search .input {float:right;width:153px;height:16px;padding:5px 0 5px 10px;font:14px Arial, Helvetica, sans-serif;color:#000;background:none}
-#search .error {color:#6d0019;text-decoration:underline;outline:none}
 #menu {background:url(/static/images/menu_border.gif) top left no-repeat;margin-top:30px}
 #menu ul {background:url(/static/images/menu_border.gif) top right no-repeat;width:100%;overflow:hidden}
 #menu li {float:left;padding-left:2px}

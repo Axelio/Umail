@@ -19,6 +19,7 @@ body {background:#001527;border:0;font:14px Arial, Helvetica, sans-serif;color:#
 .body7 {background:#eeeeee}
 .body8 {background:url(/static/images/bg_bot_repeat.jpg) top repeat-x}
 .body9 {background:url(/static/images/bg_bot.jpg) top center no-repeat;height:230px}
+.body10 {background:url(/static/images/bg_top2.jpg) top center no-repeat;height:50px}
 /* main layout */
 a {color:#006abb;text-decoration:underline;outline:none}
 a:hover {text-decoration:none}

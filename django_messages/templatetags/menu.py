@@ -47,7 +47,6 @@ def menu(seccion):
         else:
             activo = ''
         url = '<li class='+ clase[posicion] +' '+ activo +'><a href='+ enlace[posicion] +'>'+ titulos[posicion] +'</a></li>'
-        #url = '<li><a href='+ enlace[posicion] + " " + clase + '><span></span>' + titulos[posicion] + '</a></li>'
         renderizar = renderizar + url
 
 

@@ -146,28 +146,13 @@
 	</div>
 	<div class="body7">
 
+        <!-- Menú azul superior -->
+        <div class="body10">
+            <div class="main">
+            </div>
+        </div>
+        <!-- Fin menú azul superior -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <div class="body10">
-                                <div class="main">
-                                </div>
-                            </div>
 		<div class="main">
 			<section id="content">
                 <div class="wrapper">
@@ -178,23 +163,44 @@
                             <table width=100%>
                                 <tbody>
                         {% load disminuir %}
+                        {% load inbox %}
                         {% for message in message_list %} 
-                            {% if message.new %}<strong>{% endif %}
-                                <!-- !Importante: Filtrar id con templatetag para determinar negrillas en todo el mensaje -->
                                 <tr align=center>
+                                    <!-- Si el usuario no lo ha leído -->
+                                    {% ifequal request|negrillas:message.id True %}
 
-                                    <td align=left width=25%>
-                                        <li> {{ message.sender }} <br> {{ message.sender.usuarios.user.email }}</li>
-                                    </td>
+                                        <td align=left width=25%>
+                                                <li><strong><a href="{{message.get_absolute_url }}"> {{ message.sender }} <br> {{ message.sender.usuarios.user.email }}</a></strong></li>
+                                        </td>
 
-                                    <td align=left>
-                                            <li><a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}<br />
-                                            {{ message.body|disminuir:50 }}
-                                            </a></li>
-                                    <td align=right width=25%><li>{{ message.sent_at|date:"D d M P" }}</li></td>
+                                        <td align=left>
+                                                <li><strong><a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}<br />
+                                                {{ message.body|disminuir:50 }}</strong>
+                                                </a></li>
+                                        </td>
 
+                                        <td align=right width=25%>
+                                            <li><strong><a href="{{message.get_absolute_url }}">{{ message.sent_at|date:"D d M P" }}</a><br />-</strong></li>
+                                        </td>
+
+                                    {% else %}
+
+                                        <td align=left width=25%>
+                                                <li> {{ message.sender }} <br> {{ message.sender.usuarios.user.email }}</li>
+                                        </td>
+
+                                        <td align=left>
+                                                <li><a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}<br />
+                                                {{ message.body|disminuir:50 }}
+                                                </a></li>
+                                        </td>
+
+                                        <td align=right width=25%>
+                                            <li><a href="{{message.get_absolute_url }}">{{ message.sent_at|date:"D d M P" }}</a><br />-</li>
+                                        </td>
+
+                                    {% endifequal %}
                                 </tr>
-                            {% if message.new %}</strong>{% endif %}</td>
                         {% endfor %}
                                 </tbody>
                             </table>

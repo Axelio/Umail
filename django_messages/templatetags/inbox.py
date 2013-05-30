@@ -43,3 +43,17 @@ def do_print_inbox_count(parser, token):
 
 register = Library()     
 register.tag('inbox_count', do_print_inbox_count)
+
+register = Library()
+@register.filter(name="negrillas", is_safe=True)
+def negrillas(request,id_message):
+    from django_messages.models import Message, Destinatarios
+    mensaje = Message.objects.get(id=id_message)
+    destinatario = Destinatarios.objects.get(usuarios__user=request.user)
+    if destinatario in mensaje.leido_por.get_query_set():
+        return False
+    else:
+        return True
+    
+register.filter(negrillas)
+

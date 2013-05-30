@@ -71,7 +71,7 @@ header .right{padding-right:59px;width:500px}
 .nivo-prevNav:hover {background:url(/static/images/marker_left_active.jpg) no-repeat}
 .nivo-nextNav:hover {background:url(/static/images/marker_right_active.jpg) no-repeat}
 /* content */
-#content {width:100%;overflow:hidden;padding:33px 0 48px 53px}
+#content {width:100%;overflow:hidden;padding:33px 0 48px 0}
 .body6 figure {padding-left:58px}
 #page2 .body6 figure {padding-left:53px}
 #page2 #content, #page3 #content, #page4 #content, #page5 #content {padding-top:0}
@@ -120,6 +120,12 @@ header .right{padding-right:59px;width:500px}
 .list3 li {line-height:25px}
 .list3 li a {text-decoration:none;padding-left:14px;background:url(/static/images/marker_2.gif) 0 5px no-repeat}
 .list3 li a:hover {text-decoration:underline}
+.list4 {margin-top:-8px;padding-bottom:24px}
+.list4 li {line-height:37px;background:url(/static/images/line_hor1.gif) bottom repeat-x}
+.list4 .bg_none {background:none}
+.list4 li a {color:#363636;text-decoration:none}
+.list4 li a:hover {color:#006abb}
+.list4 li img {margin-right:10px}
 /* footer */
 footer {padding:0 0 0 60px;color:#fff}
 footer a {color:#a2b8c8}

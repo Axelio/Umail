@@ -161,53 +161,71 @@
 
 
 
-	<div class="body10">
-		<div class="main">
-            <div class="col_1" align=center>
-                <h3>Menu_1</h3>
-            </div>
-            <div class="col_2" align=center>
-                <h3>Menu_2</h3>
-            </div>
-            <div class="col_3" align=center>
-                <h3>Menu_3</h3>
-            </div>
-        </div>
-    </div>
 
 
+
+                            <div class="body10">
+                                <div class="main">
+                                </div>
+                            </div>
 		<div class="main">
 			<section id="content">
-				<div class="wrapper">
+                <div class="wrapper">
+					<article >
+						<ul class="list4">
 
 
-					<article class="col2">
-						<div class="pad1">
-							<h2>Noticias</h2>
-							<p class="pad_bot1">La sección de noticias busca la manera más rápida de enterarte de los sucesos más importantes en relación a los comunicados, resoluciones o comunicaciones de la <a href="http://www.unerg.edu.ve/" target="_blank">UNERG</a>.</p>
-                            <!--
-							<p class="pad_bot2">
-									Descripción.</p>-->
-							<div class="wrapper line1 marg_bot1">
-								<ul class="col1 list1">
-                                    {% load disminuir %}
-                                    {% for noticia in ult_notic1 %}
-									<li><a href="/noticias/{{ noticia.id }}">{{ noticia.texto|disminuir:100 }}</a></li>
-                                    {% endfor %}
-								</ul>
-								<ul class="list1 pad_left1 left">
-                                    {% load disminuir %}
-                                    {% for noticia in ult_notic2 %}
-									<li><a href="/noticias/{{ noticia.id }}">{{ noticia.texto|disminuir:100 }}</a></li>
-                                    {% endfor %}
-								</ul>
-							</div>
-							<a href="/noticias" class="button"><span><span>Leer más</span></span></a>
-						</div>
+                            <table width=100%>
+                                <tbody>
+                        {% load disminuir %}
+                        {% for message in message_list %} 
+                            {% if message.new %}<strong>{% endif %}
+                                <!-- !Importante: Filtrar id con templatetag para determinar negrillas en todo el mensaje -->
+                                <tr align=center>
+
+                                    <td align=left width=25%>
+                                        <li> {{ message.sender }} <br> {{ message.sender.usuarios.user.email }}</li>
+                                    </td>
+
+                                    <td align=left>
+                                            <li><a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}<br />
+                                            {{ message.body|disminuir:50 }}
+                                            </a></li>
+                                    <td align=right width=25%><li>{{ message.sent_at|date:"D d M P" }}</li></td>
+
+                                </tr>
+                            {% if message.new %}</strong>{% endif %}</td>
+                        {% endfor %}
+                                </tbody>
+                            </table>
+
+<!--
+                            {% for mensj in message_list %}
+                                    <tr>
+                                        <td>
+                                            <li><input type="checkbox"><a>{{ mensj }}</a></input></li>
+                                        </td>
+                                        <td>
+                                            <li><a>{{ mensj }}</a></li>
+                                        </td>
+                                        <td>
+                                            <li><a>{{ mensj }}</a></li>
+                                        </td>
+                                        <td>
+                                            <li><a>{{ mensj.send_at }}</a></li>
+                                        </td>
+                                    </tr>
+                            {% endfor %}
+                            -->
+						</ul>
 					</article>
-					<article class="col1 pad_left1">
-                        <!--{% include "user/mensajes/menu.html" %}-->
-					</article>
+                    <!--
+							<li><a>Minimización de recursos</a></li>
+							<li><a>Control de datos</a></li>
+							<li><a>Eficiencia</a></li>
+							<li><a>Información segura</a></li>
+                    -->
+
 				</div>
 			</section>
 		</div>

@@ -7,8 +7,10 @@ register = template.Library()
 
 @register.filter(name="disminuir", is_safe=True)
 def disminuir(texto, arg):
-    import pdb
-    #pdb.set_trace()
-    #print texto.split()[:arg]
     return texto.rstrip()[:arg] + '... '
 register.filter(disminuir)
+
+@register.filter(name="disminuir_t", is_safe=True)
+def disminuir_t(texto, arg):
+    return texto.rstrip()[:arg]
+register.filter(disminuir_t)

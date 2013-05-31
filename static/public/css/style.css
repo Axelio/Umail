@@ -120,8 +120,8 @@ header .right{padding-right:59px;width:500px}
 .list3 li {line-height:25px}
 .list3 li a {text-decoration:none;padding-left:14px;background:url(/static/images/marker_2.gif) 0 5px no-repeat}
 .list3 li a:hover {text-decoration:underline}
-.list4 {margin-top:-8px;padding-bottom:24px}
-.list4 li {line-height:37px;background:url(/static/images/line_hor1.gif) bottom repeat-x}
+.list4 {margin-top:5px;padding-bottom:24px}
+.list4 li {line-height:20px;background:url(/static/images/line_hor1.gif) bottom repeat-x}
 .list4 .bg_none {background:none}
 .list4 li a {color:#363636;text-decoration:none}
 .list4 li a:hover {color:#006abb}

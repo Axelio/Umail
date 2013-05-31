@@ -153,18 +153,38 @@
                                 <tbody>
                                     <tr align=center>
                                         <td align=left width=25%>
-                                            <p style="font-family:Arial, Helvetica;color:white;font-size:20px;">Emisor/Correo</p>
                                         </td>
                                         <td align=left>
-                                            <p style="font-family:Arial, Helvetica;color:white;font-size:20px;">Asunto/MEMOS</p>
                                         </td>
                                         <td align=right width=25% valign="middle">
-                                            <p style="font-family:arial;color:white;font-size:20px;">Fecha</p>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
             </div>
+        </div>
+        <div class="main">
+            <table width=100%>
+                <tbody>
+                    <tr align=center>
+                        <td align=left width=25%>
+                            <h2 color=white>
+                                Emisor/Correo
+                            </h2>
+                        </td>
+                        <td align=left>
+                            <h2 color=white>
+                                Asunto/Texto
+                            </h2>
+                        </td>
+                        <td align=right width=25% valign="middle">
+                            <h2 class="right" color=white>
+                                Fecha y hora
+                            </h2>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <!-- Fin menú azul superior -->
 
@@ -185,12 +205,27 @@
                                     {% ifequal request|negrillas:message.id True %}
 
                                         <td align=left width=25%>
-                                                <li><strong><a href="{{message.get_absolute_url }}"> {{ message.sender }} <br> {{ message.sender.usuarios.user.email }}</a></strong></li>
+                                                <li>
+                                                    <strong>
+                                                        <a href="{{message.get_absolute_url }}"> {{ message.sender }} 
+                                                    </strong>
+                                                    <br>
+                                                    <small>
+                                                        {{ message.sender.usuarios.user.email }}
+                                                    </small>
+                                                    </a>
+                                                </li>
                                         </td>
 
                                         <td align=left>
-                                                <li><strong><a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}<br />
-                                                {{ message.body|disminuir:50 }}</strong>
+                                                <li>
+                                                    <strong>
+                                                        <a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}
+                                                    </strong>
+                                                <br />
+                                                <small>
+                                                    {{ message.body|disminuir:50 }}
+                                                </small>
                                                 </a></li>
                                         </td>
 

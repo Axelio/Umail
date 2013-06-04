@@ -85,64 +85,64 @@
 			<section id="content">
                 <div class="wrapper">
                     <h2>Redactar memorándum</h2>
-                    <form id="ContactForm" method="post">
                         <div>
                             <div  class="wrapper">
-                        <table>
-                            <tbody>
-                                <!-- recipient -->
-                                <tr>
-                                    <td height=25%>
-                                        <b>{{ form.recipient.label }}</b>
-                                    </td>
-                                    <td height=25%>
-                                        {{ form.recipient }} 
-                                    </td>
-                                    <td height=25%>
-                                        <b>{{ form.con_copia.label }}</b>
-                                    </td>
-                                    <td height=25%>
-                                        {{ form.con_copia }} 
-                                    </td>
-                                <tr>
-                                <tr>
-                                    <td height=25%>
-                                    </td>
-                                    <td height=25%>
-                                        Por favor, ingrese al menos 4 caracteres para  <br />
-                                        autocompletar. Puede agregar múltiples contactos. 
-                                    </td>
-                                    <td height=25%>
-                                    </td>
-                                    <td height=25%>
-                                        Por favor, ingrese al menos 4 caracteres para  <br />
-                                        autocompletar. Puede agregar múltiples contactos. 
-                                    </td>
-                                <tr>
-                                <tr>
-                                    <td height=25%>
-                                        <b>{{ form.subject.label }}</b>
-                                    </td>
-                                    <td height=75%>
-                                        {{ form.subject }} 
-                                    </td>
-                                <tr>
-                                    <td height=25%>
-                                        <b>{{ form.body.label }}: </b>
-                                    </td>
-                                    <td height=75%>
-                                        {{ form.body }} 
-                                    </td>
-                                <tr>
-                                <tr>
-                            </body>
-                        </table>
-                            <a href="#" class="button" onClick="document.getElementById('ContactForm').submit()"><span><span>Send</span></span></a>
-                            <a href="#" class="button" onClick="document.getElementById('ContactForm').reset()"><span><span>Clear</span></span></a>
+                            <form action="" method="post">
+                            {% csrf_token %} 
+
+                                <table>
+                                    <tbody>
+                                        <!-- recipient -->
+                                        <tr>
+                                            <td height=25%>
+                                                <b>{{ form.recipient.label }}</b>
+                                            </td>
+                                            <td height=25%>
+                                                {{ form.recipient }} 
+                                            </td>
+                                            <td height=25%>
+                                                <b>{{ form.con_copia.label }}</b>
+                                            </td>
+                                            <td height=25%>
+                                                {{ form.con_copia }} 
+                                            </td>
+                                        <tr>
+                                        <tr>
+                                            <td height=25%>
+                                            </td>
+                                            <td height=25%>
+                                                Por favor, ingrese al menos 4 caracteres para  <br />
+                                                autocompletar. Puede agregar múltiples contactos. 
+                                            </td>
+                                            <td height=25%>
+                                            </td>
+                                            <td height=25%>
+                                                Por favor, ingrese al menos 4 caracteres para  <br />
+                                                autocompletar. Puede agregar múltiples contactos. 
+                                            </td>
+                                        <tr>
+                                        <tr>
+                                            <td height=25%>
+                                                <b>{{ form.subject.label }}</b>
+                                            </td>
+                                            <td height=75%>
+                                                {{ form.subject }} 
+                                            </td>
+                                        <tr>
+                                            <td height=25%>
+                                                <b>{{ form.body.label }}: </b>
+                                            </td>
+                                            <td height=100% colspan="2">
+                                                {{ form.body }} 
+                                            </td>
+                                        <tr>
+                                        <tr>
+                                    </body>
+                                </table>
+                                <input type="submit" value="Enviar" class="button"/>
+                                <a href="#" class="button">Limpiar</a>
+                            </form>
                         </div>
-
-
-                    </form>
 				</div>
 			</section>
 		</div>

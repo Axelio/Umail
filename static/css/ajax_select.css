@@ -1,10 +1,11 @@
 
 .results_on_deck .ui-icon-trash {
-	float: left;
+	float: right;
 	cursor: pointer;
 }
 .results_on_deck {
 	padding: 0.25em 0;
+    text-align: right;
 }
 .results_on_deck > div {
 	margin-bottom: 0.5em;

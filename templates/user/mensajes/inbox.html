@@ -140,6 +140,9 @@
 					<figure class="left"><img src="{% static "images/letter1.png" %}" alt=""></figure>
 					<h2><span>Memorándums</span></h2>
                     Sección en la que puedes redactar, revisar la bandeja de entrada, bandeja de salida, memorándums aprobados, memorándums archivados, entre otros.
+                    {% if mensaje %}
+                        <span class="tooltip">{{ mensaje }}</span>s
+                    {% endif %}
 				</div>
 			</div>
 		</div>
@@ -149,18 +152,18 @@
         <!-- Menú azul superior -->
         <div class="body10">
             <div class="main">
-                            <table width=100%>
-                                <tbody>
-                                    <tr align=center>
-                                        <td align=left width=25%>
-                                        </td>
-                                        <td align=left>
-                                        </td>
-                                        <td align=right width=25% valign="middle">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <table width=100%>
+                    <tbody>
+                        <tr align=center>
+                            <td align=left width=25%>
+                            </td>
+                            <td align=left>
+                            </td>
+                            <td align=right width=25% valign="middle">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="main">

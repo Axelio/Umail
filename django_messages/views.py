@@ -107,7 +107,7 @@ def compose(request, recipient=None,
                     mensaje.recipient.add(sender[0])
             #messages.info(request, _(u"Message successfully sent."))
             mensaje = u'Mensaje enviado satisfactoriamente'
-            return inbox(mensaje)
+            return inbox(request, mensaje)
             if success_url is None:
                 success_url = reverse('messages_inbox')
             if request.GET.has_key('next'):
@@ -184,8 +184,6 @@ def delete(request, message_id, success_url=None):
     if message.sender.usuarios.user == user:
         message.sender_deleted_at = now
         deleted = True
-    import pdb
-    #pdb.set_trace()
     for destinatario in message.recipient.get_query_set():
         if destinatario.grupos == None:
             if destinatario.usuarios.user.username == user.username:

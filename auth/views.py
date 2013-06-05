@@ -33,12 +33,12 @@ def index(request):
                 #"User is not valid, active and authenticated"
                 if not user.is_active:
                     mensaje = "La contraseña es válida pero la cuenta ha sido desactivada"
-                    diccionario.update({'mensaje':mensaje})
+                    diccionario.update({'m_error':mensaje})
                 return render_to_response('user/index/index.html', diccionario)
         else:
             # El usuario o contraseña eran incorrectos
             mensaje = "El usuario y/o la contraseña son incorrectos"
-            diccionario.update({'mensaje':mensaje})
+            diccionario.update({'m_error':mensaje})
         return render_to_response('user/index/index.html', diccionario)
 
     else:

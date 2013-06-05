@@ -18,7 +18,7 @@
             {% endif %}
         </nav>
         <p class="error">{{ form.errors }}</p>
-        <p class="error">{{ mensaje }}</p>
+        <p class="error">{{ m_error }}</p>
             {% if not request.user.is_authenticated %}
                 <form method="post" action="/">
                     {% csrf_token %}

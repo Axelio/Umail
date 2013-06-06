@@ -193,108 +193,113 @@
 
 		<div class="main">
 			<section id="content">
-                <div class="wrapper">
-					<article >
-						<ul class="list4">
+				<div class="col_1">
+                    {% include "user/mensajes/menu.html" %}
+				</div>
+				<div class="col_4">
+                    <div class="wrapper">
+                        <article >
+                            <ul class="list4">
 
 
-                            <table width=100%>
-                                <tbody>
-                        {% load disminuir %}
-                        {% load inbox %}
-                        {% for message in message_list %} 
-                                <tr align=center>
-                                    <!-- Si el usuario no lo ha leído -->
-                                    {% ifequal request|negrillas:message.id True %}
+                                <table width=100%>
+                                    <tbody>
+                            {% load disminuir %}
+                            {% load inbox %}
+                            {% for message in message_list %} 
+                                    <tr align=center>
+                                        <!-- Si el usuario no lo ha leído -->
+                                        {% ifequal request|negrillas:message.id True %}
 
-                                        <td align=left width=25%>
+                                            <td align=left width=25%>
+                                                    <li>
+                                                        <strong>
+                                                            <a href="{{message.get_absolute_url }}"> {{ message.sender }} </a>
+                                                        </strong>
+                                                        <br>
+                                                        <small>
+                                                            {{ message.sender.usuarios.user.email }}
+                                                        </small>
+                                                    </li>
+                                            </td>
+
+                                            <td align=left>
+                                                    <li>
+                                                        <strong>
+                                                            <a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}</a>
+                                                        </strong>
+                                                    <br />
+                                                    <small>
+                                                        {{ message.body|disminuir:50 }}
+                                                    </small>
+                                                    </li>
+                                            </td>
+
+                                            <td align=right width=25%>
                                                 <li>
                                                     <strong>
-                                                        <a href="{{message.get_absolute_url }}"> {{ message.sender }} </a>
+                                                        <a href="{{message.get_absolute_url }}">
+                                                            {{ message.sent_at|date:"D d M P" }}
+                                                        </a>
                                                     </strong>
-                                                    <br>
+                                                    <br />
                                                     <small>
-                                                        {{ message.sender.usuarios.user.email }}
+                                                        -
                                                     </small>
                                                 </li>
-                                        </td>
+                                            </td>
 
-                                        <td align=left>
-                                                <li>
-                                                    <strong>
-                                                        <a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}</a>
-                                                    </strong>
-                                                <br />
-                                                <small>
+                                        {% else %}
+
+                                            <td align=left width=25%>
+                                                    <li> {{ message.sender }} <br> {{ message.sender.usuarios.user.email }}</li>
+                                            </td>
+
+                                            <td align=left>
+                                                    <li><a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}<br />
                                                     {{ message.body|disminuir:50 }}
-                                                </small>
-                                                </li>
-                                        </td>
+                                                    </a></li>
+                                            </td>
 
-                                        <td align=right width=25%>
-                                            <li>
-                                                <strong>
-                                                    <a href="{{message.get_absolute_url }}">
-                                                        {{ message.sent_at|date:"D d M P" }}
-                                                    </a>
-                                                </strong>
-                                                <br />
-                                                <small>
-                                                    -
-                                                </small>
-                                            </li>
-                                        </td>
+                                            <td align=right width=25%>
+                                                <li><a href="{{message.get_absolute_url }}">{{ message.sent_at|date:"D d M P" }}</a><br />-</li>
+                                            </td>
 
-                                    {% else %}
-
-                                        <td align=left width=25%>
-                                                <li> {{ message.sender }} <br> {{ message.sender.usuarios.user.email }}</li>
-                                        </td>
-
-                                        <td align=left>
-                                                <li><a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}<br />
-                                                {{ message.body|disminuir:50 }}
-                                                </a></li>
-                                        </td>
-
-                                        <td align=right width=25%>
-                                            <li><a href="{{message.get_absolute_url }}">{{ message.sent_at|date:"D d M P" }}</a><br />-</li>
-                                        </td>
-
-                                    {% endifequal %}
-                                </tr>
-                        {% endfor %}
-                                </tbody>
-                            </table>
-
-<!--
-                            {% for mensj in message_list %}
-                                    <tr>
-                                        <td>
-                                            <li><input type="checkbox"><a>{{ mensj }}</a></input></li>
-                                        </td>
-                                        <td>
-                                            <li><a>{{ mensj }}</a></li>
-                                        </td>
-                                        <td>
-                                            <li><a>{{ mensj }}</a></li>
-                                        </td>
-                                        <td>
-                                            <li><a>{{ mensj.send_at }}</a></li>
-                                        </td>
+                                        {% endifequal %}
                                     </tr>
                             {% endfor %}
-                            -->
-						</ul>
-					</article>
-                    <!--
-							<li><a>Minimización de recursos</a></li>
-							<li><a>Control de datos</a></li>
-							<li><a>Eficiencia</a></li>
-							<li><a>Información segura</a></li>
-                    -->
+                                    </tbody>
+                                </table>
 
-				</div>
+    <!--
+                                {% for mensj in message_list %}
+                                        <tr>
+                                            <td>
+                                                <li><input type="checkbox"><a>{{ mensj }}</a></input></li>
+                                            </td>
+                                            <td>
+                                                <li><a>{{ mensj }}</a></li>
+                                            </td>
+                                            <td>
+                                                <li><a>{{ mensj }}</a></li>
+                                            </td>
+                                            <td>
+                                                <li><a>{{ mensj.send_at }}</a></li>
+                                            </td>
+                                        </tr>
+                                {% endfor %}
+                                -->
+                            </ul>
+                        </article>
+                        <!--
+                                <li><a>Minimización de recursos</a></li>
+                                <li><a>Control de datos</a></li>
+                                <li><a>Eficiencia</a></li>
+                                <li><a>Información segura</a></li>
+                        -->
+
+                    </div>
+                </div>
 			</section>
 		</div>
 	</div>

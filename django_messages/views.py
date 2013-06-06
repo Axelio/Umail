@@ -115,6 +115,7 @@ def compose(request, recipient=None,
             return HttpResponseRedirect(success_url)
     else:
         form = ComposeForm()
+        form.fields['body'].initial = "\n\n\n\n\n\n\n\nCordialmente, \n%s %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo)
         if recipient is not None:
             recipients = [u for u in User.objects.filter(username__in=[r.strip() for r in recipient.split('+')])]
             form.fields['recipient'].initial = recipients

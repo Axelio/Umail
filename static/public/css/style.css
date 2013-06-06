@@ -133,6 +133,7 @@ footer p {padding-bottom:15px}
 .col_1 {width:190px;float:left}
 .col_2 {width:413px;float:left}
 .col_3 {width:230px;float:left;padding-left:8px}
+.col_4 {width:800px;float:left}
 #footer_logo {display:block;margin:15px 0 36px 64px;background:url(/static/images/footer_logo.gif) no-repeat;width:98px;height:39px;text-indent:-9999px}
 /* forms */
 #ContactForm {margin-top:-4px;line-height:26px}

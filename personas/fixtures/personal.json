@@ -3,7 +3,7 @@
     "pk": 1, 
     "model": "personas.personal", 
     "fields": {
-        "cargo": 1, 
+        "cargo": 8, 
         "dependencia": 5, 
         "tipo_personal": 1
     }
@@ -12,7 +12,16 @@
     "pk": 2, 
     "model": "personas.personal", 
     "fields": {
-        "cargo": 4, 
+        "cargo": 9, 
+        "dependencia": 3, 
+        "tipo_personal": 1
+    }
+},
+{
+    "pk": 3, 
+    "model": "personas.personal", 
+    "fields": {
+        "cargo": 5, 
         "dependencia": 3, 
         "tipo_personal": 1
     }

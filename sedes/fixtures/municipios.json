@@ -1,2 +1,10 @@
 [
+{
+    "pk": 1, 
+    "model": "sedes.municipio", 
+    "fields": {
+        "nombre": "Juan Germ\u00e1n Roscio", 
+        "estado": 1
+    }
+}
 ]

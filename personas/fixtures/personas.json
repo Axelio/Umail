@@ -3,26 +3,9 @@
     "pk": 1, 
     "model": "personas.personas", 
     "fields": {
-        "num_identificacion": "16407820", 
-        "genero": 0, 
-        "cargo_principal": 1, 
-        "segundo_apellido": "Urrutia", 
-        "segundo_nombre": "Gabriel", 
-        "primer_apellido": "Rodriguez", 
-        "primer_nombre": "Alberto", 
-        "cargos_autorizados": [], 
-        "telefono": null, 
-        "email": "arodriguez@unerg.edu.ve", 
-        "tipodoc": "c"
-    }
-},
-{
-    "pk": 2, 
-    "model": "personas.personas", 
-    "fields": {
         "num_identificacion": "19276008", 
         "genero": 0, 
-        "cargo_principal": 2, 
+        "cargo_principal": 1, 
         "segundo_apellido": "", 
         "segundo_nombre": "", 
         "primer_apellido": "D\u00edaz", 
@@ -30,6 +13,23 @@
         "cargos_autorizados": [], 
         "telefono": null, 
         "email": "correo@correo.com", 
+        "tipodoc": "c"
+    }
+},
+{
+    "pk": 2, 
+    "model": "personas.personas", 
+    "fields": {
+        "num_identificacion": "16407820", 
+        "genero": 0, 
+        "cargo_principal": 3, 
+        "segundo_apellido": "Urrutia", 
+        "segundo_nombre": "Gabriel", 
+        "primer_apellido": "Rodriguez", 
+        "primer_nombre": "Alberto", 
+        "cargos_autorizados": [], 
+        "telefono": null, 
+        "email": "arodriguez@unerg.edu.ve", 
         "tipodoc": "c"
     }
 }

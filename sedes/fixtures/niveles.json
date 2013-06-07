@@ -40,5 +40,19 @@
     "fields": {
         "numero": 30
     }
+},
+{
+    "pk": 7, 
+    "model": "sedes.niveles", 
+    "fields": {
+        "numero": 40
+    }
+},
+{
+    "pk": 8, 
+    "model": "sedes.niveles", 
+    "fields": {
+        "numero": 20
+    }
 }
 ]

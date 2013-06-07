@@ -6,10 +6,8 @@ Module where grappelli dashboard modules classes are defined.
 
 # DJANGO IMPORTS
 from django.utils.text import capfirst
-from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
-from django.utils.itercompat import is_iterable
 
 # GRAPPELLI IMPORTS
 from grappelli.dashboard.utils import AppListElementMixin
@@ -244,11 +242,11 @@ class AppList(DashboardModule, AppListElementMixin):
                 model_dict['add_url'] = self._get_admin_add_url(model, context)
             apps[app_label]['models'].append(model_dict)
         
-        apps_sorted = apps.keys()
+        apps_sorted = list(apps.keys())
         apps_sorted.sort()
         for app in apps_sorted:
             # sort model list alphabetically
-            apps[app]['models'].sort(lambda x, y: cmp(x['title'], y['title']))
+            apps[app]['models'].sort(key=lambda i: i['title'])
             self.children.append(apps[app])
         self._initialized = True
 

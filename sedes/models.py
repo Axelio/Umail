@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from auth.models import Group
 
 # Modelo para la aplicación de sedes
 class Dependencias(models.Model):
@@ -10,6 +11,7 @@ class Dependencias(models.Model):
     telefono                = models.IntegerField(unique=True, null=True, blank=True, help_text='Por favor, incluya el código de telefonía o área.', verbose_name=u'teléfono')
     nivel                   = models.ForeignKey('Niveles')
     dependencia             = models.ForeignKey('self', null=True, blank=True, verbose_name='dependencia superior')
+    cargo_max               = models.ForeignKey(Group, help_text=u'Superior máximo de la dependencia. Firmante de los memorándums', null=True, blank=True)
     class Meta:
         db_table            = u'dependencias'
         verbose_name_plural = u'dependencias'

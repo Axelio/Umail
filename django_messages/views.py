@@ -31,6 +31,8 @@ def inbox(request, mensaje=''):
         notify = True
     if request.user.is_authenticated():
         message_list = Message.objects.inbox_for(request.user).distinct()
+        if not message_list.exists():
+            mensaje = u'No tiene ningún mensaje hasta ahora'
         return render_to_response('user/mensajes/inbox.html', {
             'message_list': message_list,
             'loggeado': request.user.is_authenticated,

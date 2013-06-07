@@ -24,6 +24,7 @@ class MessageManager(models.Manager):
             models.Q(recipient__in=destinatarios)|
             models.Q(con_copia__in=destinatarios),
             models.Q(recipient_deleted_at__isnull=True),
+            models.Q(status__nombre__iexact='Aprobado'),
         )
 
     def outbox_for(self, user):

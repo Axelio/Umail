@@ -21,6 +21,19 @@ if "notification" in settings.INSTALLED_APPS:
 else:
     notification = None
 
+def anular(request, message_id):
+    if request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
+        from django_messages.models import EstadoMemo
+        mensaje = Message.objects.get(id=message_id)
+        estado = EstadoMemo.objects.get(nombre='Anulado')
+        mensaje.status = estado
+        mensaje.save()
+        return por_aprobar(request, mensaje=u'Memorándum anulado exitosamente')
+    else:
+        raise Http404
+anular = login_required(anular)
+
+
 def aprobar(request, message_id):
     if request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
         from django_messages.models import EstadoMemo
@@ -28,10 +41,10 @@ def aprobar(request, message_id):
         estado = EstadoMemo.objects.get(nombre='Aprobado')
         mensaje.status = estado
         mensaje.save()
-        return por_aprobar(request, mensaje='Memorándum aprobado exitosamente')
+        return por_aprobar(request, mensaje=u'Memorándum aprobado exitosamente')
     else:
         raise Http404
-aprobar= login_required(aprobar)
+aprobar = login_required(aprobar)
 
 def por_aprobar(request, mensaje=''):
     """

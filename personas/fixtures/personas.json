@@ -32,5 +32,22 @@
         "email": "arodriguez@unerg.edu.ve", 
         "tipodoc": "c"
     }
+},
+{
+    "pk": 3, 
+    "model": "personas.personas", 
+    "fields": {
+        "num_identificacion": "123456789", 
+        "genero": 0, 
+        "cargo_principal": 4, 
+        "segundo_apellido": "", 
+        "segundo_nombre": "", 
+        "primer_apellido": "Palomares", 
+        "primer_nombre": "Edgar", 
+        "cargos_autorizados": [], 
+        "telefono": null, 
+        "email": "edgar@correo.com", 
+        "tipodoc": "c"
+    }
 }
 ]

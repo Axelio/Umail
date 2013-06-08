@@ -10,6 +10,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_noop
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.db import models
 
 from django_messages.models import Message
 from django_messages.forms import ComposeForm
@@ -19,6 +20,77 @@ if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
 else:
     notification = None
+
+def aprobar(request, message_id):
+    if request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
+        from django_messages.models import EstadoMemo
+        mensaje = Message.objects.get(id=message_id)
+        estado = EstadoMemo.objects.get(nombre='Aprobado')
+        mensaje.status = estado
+        mensaje.save()
+        return por_aprobar(request, mensaje='Memorándum aprobado exitosamente')
+    else:
+        raise Http404
+aprobar= login_required(aprobar)
+
+def por_aprobar(request, mensaje=''):
+    """
+    Displays a list of received messages for the current user.
+    Optional Arguments:
+        ``template_name``: name of the template to use.
+    """
+    notify = False
+    if not mensaje == '':
+        notify = True
+    if request.user.is_authenticated():
+        dependencia = request.user.profile.persona.cargo_principal.dependencia
+        # Lista de mensajes en espera escritos por la dependencia del jefe de dependencia
+        message_list = Message.objects.filter(
+                                              models.Q( status__nombre__iexact='En espera', 
+                                                        sender__usuarios__persona__cargo_principal__dependencia=dependencia)| 
+                                              models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=dependencia))
+        if not message_list.exists():
+            mensaje = u'No tiene ningún mensaje por aprobar hasta ahora'
+        return render_to_response('user/mensajes/por_aprobar.html', {
+            'message_list': message_list,
+            'loggeado': request.user.is_authenticated,
+            'request':request,
+            'mensaje':mensaje,
+            'notify':notify,
+        }, context_instance=RequestContext(request))
+    else:
+        return HttpResponseRedirect('/')
+
+def ver_por_aprobar(request, message_id, template_name='user/mensajes/leer_aprobado.html'):
+    """
+    Shows a single message.``message_id`` argument is required.
+    The user is only allowed to see the message, if he is either 
+    the sender or the recipient. If the user is not allowed a 404
+    is raised. 
+    If the user is the recipient and the message is unread 
+    ``read_at`` is set to the current datetime.
+    """
+    user = request.user
+    if user.profile.persona.cargo_principal.cargo == user.profile.persona.cargo_principal.dependencia.cargo_max:
+        now = datetime.datetime.now()
+        message = get_object_or_404(Message, id=message_id)
+        esta_destinatario = False
+        
+        message_list = Message.objects.filter(
+                                              models.Q( status__nombre__iexact='En espera', 
+                                                        sender__usuarios__persona__cargo_principal__dependencia=request.user.profile.persona.cargo_principal.dependencia)| 
+                                              models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=request.user.profile.persona.cargo_principal.dependencia))
+
+    else:
+        raise Http404
+
+    return render_to_response(template_name, {
+        'loggeado': request.user.is_authenticated,
+        'request':request,
+        'message': message,
+        'message_list': message_list,
+    }, context_instance=RequestContext(request))
+ver_por_aprobar = login_required(ver_por_aprobar)
 
 def inbox(request, mensaje=''):
     """
@@ -106,7 +178,8 @@ def compose(request, recipient=None,
                     continue
                 else:
                     sender = Destinatarios.objects.filter(id=destin)
-                    mensaje.recipient.add(sender[0])
+                    if sender.exists():
+                        mensaje.recipient.add(sender[0])
             #messages.info(request, _(u"Message successfully sent."))
             mensaje = u'Mensaje enviado satisfactoriamente'
             return inbox(request, mensaje)

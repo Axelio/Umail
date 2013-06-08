@@ -20,6 +20,8 @@ class MessageManager(models.Manager):
         marked as deleted.
         """
         destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
+        # Si el cargo de la persona es igual al cargo maximo de la dependencia, leerá todos los memos
+        #if user.profile.persona.cargo_principal.cargo == user.profile.persona.cargo_principal.dependencia.cargo_max:
         return self.filter(
             models.Q(recipient__in=destinatarios)|
             models.Q(con_copia__in=destinatarios),
@@ -97,7 +99,7 @@ class Message(models.Model):
     replied_at = models.DateTimeField(_("replied at"), null=True, blank=True)
     sender_deleted_at = models.DateTimeField(_("Sender deleted at"), null=True, blank=True)
     recipient_deleted_at = models.DateTimeField(_("Recipient deleted at"), null=True, blank=True)
-    status = models.ForeignKey('EstadoMemo', null=True, blank=True)
+    status = models.ForeignKey('EstadoMemo', null=True, blank=True, verbose_name='Estado')
     tipo = models.CharField(max_length=10, blank=True, null=True)
     leido_por = models.ManyToManyField('Destinatarios', related_name='leido_por', null=True, blank=True, verbose_name=("leido por: "))
 
@@ -125,6 +127,10 @@ class Message(models.Model):
     
     def __unicode__(self):
         return self.subject
+    
+    def get_por_aprobar_url(self):
+        return ('ver_por_aprobar', [self.id])
+    get_por_aprobar_url = models.permalink(get_por_aprobar_url)
     
     def get_absolute_url(self):
         return ('messages_detail', [self.id])

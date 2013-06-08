@@ -1,7 +1,15 @@
 <h2>Menú</h2>
 <ul class="list3">
-    <li><a href="/redactar/#Menu">Redactar</a></li>
-    <li><a href="/entrada/#Menu">Recibidos</a></li>
+    {% load menu %}
+    {% if request|jefe_departamento %}
+        <li><a href="/por_aprobar/#Menu">Por aprobar <strong>({{ message_list.count }})</strong></a></li>
+    {% endif %}
+    <li><a href="/redactar/#menu">Redactar</a></li>
+    {% ifequal request|num_entrada 0 %}
+        <li><a href="/entrada/#Menu">Recibidos</a></li>
+    {% else %}
+        <li><a href="/entrada/#Menu">Recibidos <strong>({{ request|num_entrada }})</strong></a></li>
+    {% endifequal %}
     <li><a href="#">Enviados</a></li>
     <li><a href="#">Archivados</a></li>
 </ul>

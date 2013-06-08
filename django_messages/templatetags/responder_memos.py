@@ -9,8 +9,10 @@ register = template.Library()
 def responder_memo(memo,arg):
     memo = Message.objects.get(id=memo)
     user = User.objects.get(id=arg)
-    con_copia = False
+    respondercon_copia = False
 
+    import pdb
+    pdb.set_trace()
     for dest in memo.con_copia.get_query_set():
         if dest.usuarios.user.pk == user.pk:
             tabla = '<table></td><td width=100% align="left"><div class="rc_btn_02"><a href="/eliminar/' + str(memo.id) + '">Eliminar</a></div></td></tr></table>'
@@ -25,7 +27,6 @@ def responder_memo(memo,arg):
             if user in destinatario.grupos.user_set.get_query_set():
                 tabla = '<table><tr><td width=50%><a href="/responder/' + str(memo.id) + '" class="button"><span><span>Responder</span></span></a></div></td><td width=50% align="left"><a href="/eliminar/' + str(memo.id) + '" class="button"><span><span>Eliminar</span></span></a></div></td><td width=50% align="left"></td></tr></table>'
                 #tabla = '<table><tr><td width=50%><div class="rc_btn_02"><a href="/responder/' + str(memo.id) + '">Responder</a></div></td><td width=50% align="left"><div class="rc_btn_02"><a href="/eliminar/' + str(memo.id) + '">Eliminar</a></div></td></tr></table>'
-
     return format_html(tabla)
 responder_memo.is_safe = True 
 register.filter(responder_memo)

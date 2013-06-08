@@ -147,7 +147,7 @@ class MessageAdmin(admin.ModelAdmin):
             'classes': ('collapse', 'wide'),
         }),
     )
-    list_display = ('subject', 'sender', 'sent_at', 'read_at')
+    list_display = ('subject', 'sender', 'sent_at', 'read_at', 'status')
     list_filter = ('sent_at', 'sender', 'tipo')
     search_fields = ('subject', 'body')
 

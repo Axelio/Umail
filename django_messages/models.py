@@ -20,8 +20,6 @@ class MessageManager(models.Manager):
         marked as deleted.
         """
         destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
-        # Si el cargo de la persona es igual al cargo maximo de la dependencia, leerá todos los memos
-        #if user.profile.persona.cargo_principal.cargo == user.profile.persona.cargo_principal.dependencia.cargo_max:
         return self.filter(
             models.Q(recipient__in=destinatarios)|
             models.Q(con_copia__in=destinatarios),
@@ -34,10 +32,20 @@ class MessageManager(models.Manager):
         Returns all messages that were sent by the given user and are not
         marked as deleted.
         """
-        return self.filter(
-            sender=user,
-            sender_deleted_at__isnull=True,
-        )
+        destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
+        import pdb
+        #pdb.set_trace()
+
+        # Si es el jefe maximo, deben aparecer todos los memos de esa dependencia
+        if user.profile.persona.cargo_principal.cargo == user.profile.persona.cargo_principal.dependencia.cargo_max:
+            return self.filter(
+                sender__usuarios__persona__cargo_principal__dependencia=user.profile.persona.cargo_principal.dependencia,
+                status__nombre__iexact='Aprobado',
+            )
+        else:
+            return self.filter(
+                sender__in=destinatarios,
+            )
 
     def trash_for(self, user):
         """

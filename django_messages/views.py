@@ -89,10 +89,7 @@ def ver_por_aprobar(request, message_id, template_name='user/mensajes/leer_aprob
         message = get_object_or_404(Message, id=message_id)
         esta_destinatario = False
         
-        message_list = Message.objects.filter(
-                                              models.Q( status__nombre__iexact='En espera', 
-                                                        sender__usuarios__persona__cargo_principal__dependencia=request.user.profile.persona.cargo_principal.dependencia)| 
-                                              models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=request.user.profile.persona.cargo_principal.dependencia))
+        message_list = Message.objects.filter(models.Q(status__nombre__iexact='En espera', sender__usuarios__persona__cargo_principal__dependencia=request.user.profile.persona.cargo_principal.dependencia)| models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=request.user.profile.persona.cargo_principal.dependencia))
 
     else:
         raise Http404
@@ -128,7 +125,7 @@ def inbox(request, mensaje=''):
     else:
         return HttpResponseRedirect('/')
 
-def outbox(request, template_name='django_messages/outbox.html'):
+def outbox(request, mensaje='', template_name='user/mensajes/enviados.html'):
     """
     Displays a list of sent messages by the current user.
     Optional arguments:
@@ -136,6 +133,8 @@ def outbox(request, template_name='django_messages/outbox.html'):
     """
     message_list = Message.objects.outbox_for(request.user)
     return render_to_response(template_name, {
+        'request':request,
+        'mensaje':mensaje,
         'message_list': message_list,
     }, context_instance=RequestContext(request))
 outbox = login_required(outbox)
@@ -184,15 +183,15 @@ def compose(request, recipient=None,
                             tipo = '',
                         )
             mensaje.save()
-            for destin in request.POST['recipient']:
-                try:
-                    sender = Destinatarios.objects.filter(id=destin)
-                except:
-                    continue
-                else:
-                    sender = Destinatarios.objects.filter(id=destin)
-                    if sender.exists():
-                        mensaje.recipient.add(sender[0])
+            dest = []
+            for i in request.POST['recipient'].split('|'):
+                if not i == '':
+                    dest.append(int(i))
+            for destin in dest:
+                sender = Destinatarios.objects.filter(id=destin)
+                if sender.exists():
+                    mensaje.recipient.add(sender[0])
+            mensaje.save()
             #messages.info(request, _(u"Message successfully sent."))
             mensaje = u'Mensaje enviado satisfactoriamente'
             return inbox(request, mensaje)

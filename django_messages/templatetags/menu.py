@@ -83,3 +83,4 @@ def num_por_aprobar(request):
     return por_aprobar(request).count() 
 num_por_aprobar.is_safe = True 
 register.filter(num_por_aprobar)
+

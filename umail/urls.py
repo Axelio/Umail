@@ -21,14 +21,11 @@ urlpatterns = patterns('',
     url(r'logout$',logout,{'next_page':'/'},),
     url(r'^$','auth.views.index'),
     url(r'^entrada/$', 'django_messages.views.inbox', name='messages_inbox'),
+    url(r'^por_aprobar/$', 'django_messages.views.por_aprobar', name='por_aprobar'),
+    url(r'^por_aprobar/(?P<message_id>[\d]+)/$', 'django_messages.views.ver_por_aprobar', name='ver_por_aprobar'),
+    url(r'^aprobar/(?P<message_id>[\d]+)/$', 'django_messages.views.aprobar', name='aprobar'),
     url(r'^redactar/$', 'django_messages.views.compose'),
     url(r'^eliminar/(?P<message_id>[\d]+)/$', 'django_messages.views.delete', name='messages_delete'),
     url(r'^papelera/$', 'django_messages.views.trash', name='messages_trash'),
     url(r'^leer/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='messages_detail'),
 )
-'''
-if not settings.DEBUG:
-    urlpatterns += patterns('',
-        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-    )
-'''

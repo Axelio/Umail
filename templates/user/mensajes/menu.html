@@ -2,7 +2,7 @@
 <ul class="list3">
     {% load menu %}
     {% if request|jefe_departamento %}
-        <li><a href="/por_aprobar/#Menu">Por aprobar <strong>({{ message_list.count }})</strong></a></li>
+        <li><a href="/por_aprobar/#Menu">Por aprobar <strong>({{ request|num_por_aprobar }})</strong></a></li>
     {% endif %}
     <li><a href="/redactar/#menu">Redactar</a></li>
     {% ifequal request|num_entrada 0 %}

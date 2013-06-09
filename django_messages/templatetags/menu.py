@@ -71,8 +71,6 @@ jefe_departamento.is_safe = True
 register.filter(jefe_departamento)
 
 def por_aprobar(request):
-    import pdb
-    #pdb.set_trace()
     from django_messages.models import Message
     message_list = Message.objects.filter(status__nombre__iexact='En espera')
     return message_list 

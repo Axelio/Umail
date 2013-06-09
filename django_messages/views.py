@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_noop
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db import models
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django_messages.models import Message
 from django_messages.forms import ComposeForm
 from django_messages.utils import format_quote
@@ -113,7 +113,18 @@ def inbox(request, mensaje=''):
         notify = True
     if request.user.is_authenticated():
         message_list = Message.objects.inbox_for(request.user).distinct()
-        if not message_list.exists():
+        mensajes = message_list
+        paginador = Paginator(message_list, 2)
+        page = request.GET.get('page')
+        try:
+            message_list = paginador.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            message_list = paginador.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            message_list = paginador.page(paginator.num_pages)
+        if not mensajes.exists():
             mensaje = u'No tiene ningún mensaje hasta ahora'
         return render_to_response('user/mensajes/inbox.html', {
             'message_list': message_list,
@@ -132,6 +143,19 @@ def outbox(request, mensaje='', template_name='user/mensajes/enviados.html'):
         ``template_name``: name of the template to use.
     """
     message_list = Message.objects.outbox_for(request.user)
+    mensajes = message_list
+    paginador = Paginator(message_list, 2)
+    page = request.GET.get('page')
+    try:
+        message_list = paginador.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        message_list = paginador.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        message_list = paginador.page(paginator.num_pages)
+    if not mensajes.exists():
+        mensaje = u'No tiene ningún mensaje hasta ahora'
     return render_to_response(template_name, {
         'request':request,
         'mensaje':mensaje,

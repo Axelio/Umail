@@ -82,3 +82,20 @@ def num_por_aprobar(request):
 num_por_aprobar.is_safe = True 
 register.filter(num_por_aprobar)
 
+def estado(mensaje):
+    from django_messages.models import Message
+    from noticias.templatetags.disminuir import disminuir_t 
+    mensaje = Message.objects.get(id=mensaje.id)
+    # Color del fondo:
+    color = ''
+    if mensaje.status.nombre == 'En espera':
+        color = "#69BAF4" # Azul
+    elif mensaje.status.nombre == 'Aprobado':
+        color = "#81F26A" # Verde
+    elif mensaje.status.nombre == 'Anulado':
+        color = "#EA4444" # Rojo
+
+    estado_memo = '<div class="col_5" style="background-color:%s" align="center">%s</div> <div>%s</div>' %(color, mensaje.status.nombre, disminuir_t(mensaje.subject, 50))
+    return format_html(estado_memo)
+estado.is_safe = True 
+register.filter(estado)

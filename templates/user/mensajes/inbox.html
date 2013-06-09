@@ -160,6 +160,21 @@
                             <td align=left>
                             </td>
                             <td align=right width=25% valign="middle">
+                                <div class="pagination">  
+                                        <span class="step-links">
+                                        {% if message_list.has_previous %}
+                                            <a href="?page={{ message_list.previous_page_number }}">Anterior</a>
+                                        {% endif %}
+
+                                        <span class="current" style="color:white">
+                                            Página {{ message_list.number }} de {{ message_list.paginator.num_pages }}.
+                                        </span>
+
+                                        {% if message_list.has_next %}
+                                            <a href="?page={{ message_list.next_page_number }}">Siguiente</a>
+                                        {% endif %}
+                                    </span>
+                                </div>	
                             </td>
                         </tr>
                     </tbody>

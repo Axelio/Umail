@@ -213,13 +213,13 @@
                                                 </td>
 
                                                 <td align=left>
-                                                    <strong><li><a href="{{message.get_absolute_url }}">{{ message|estado }}</strong>
+                                                    <strong><li><a href="{{message.get_absolute_url }}">{{ message|estado }}</a></strong>
                                                     {{ message.body|disminuir:50 }}
-                                                    </a></li>
+                                                    </li>
                                                 </td>
 
                                                 <td align=right width=25%>
-                                                    <li><strong><a href="{{message.get_absolute_url }}">{{ message.sent_at|date:"D d M P" }}</a></strong><br />-</li>
+                                                    <li><strong>>{{ message.sent_at|date:"D d M P" }}</strong><br />-</li>
                                                 </td>
                                         </tr>
                                         {% endfor %}

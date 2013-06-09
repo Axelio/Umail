@@ -114,7 +114,7 @@ def inbox(request, mensaje=''):
     if request.user.is_authenticated():
         message_list = Message.objects.inbox_for(request.user).distinct()
         mensajes = message_list
-        paginador = Paginator(message_list, 2)
+        paginador = Paginator(message_list, 5)
         page = request.GET.get('page')
         try:
             message_list = paginador.page(page)
@@ -144,7 +144,7 @@ def outbox(request, mensaje='', template_name='user/mensajes/enviados.html'):
     """
     message_list = Message.objects.outbox_for(request.user)
     mensajes = message_list
-    paginador = Paginator(message_list, 2)
+    paginador = Paginator(message_list, 5)
     page = request.GET.get('page')
     try:
         message_list = paginador.page(page)

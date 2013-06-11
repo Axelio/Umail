@@ -117,7 +117,6 @@ class Message(models.Model):
     def clean(self):
         for destin in self.recipient.get_query_set():
             if destin in self.con_copia.get_query_set():
-                print "asñdsdbcbsdvc"
                 raise ValidationError(u'%s está como destinatario y con copia a la vez. Debe estar sólo en una de ambas listas.'%(destin))
     '''
 

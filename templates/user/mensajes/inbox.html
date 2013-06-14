@@ -271,9 +271,9 @@
                                             </td>
 
                                             <td align=left>
-                                                    <li><a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}<br />
+                                                    <li><a href="{{message.get_absolute_url }}">{{ message.subject|disminuir_t:50 }}</a><br />
                                                     {{ message.body|disminuir:50 }}
-                                                    </a></li>
+                                                    </li>
                                             </td>
 
                                             <td align=right width=25%>
@@ -286,32 +286,8 @@
                                     </tbody>
                                 </table>
 
-    <!--
-                                {% for mensj in message_list %}
-                                        <tr>
-                                            <td>
-                                                <li><input type="checkbox"><a>{{ mensj }}</a></input></li>
-                                            </td>
-                                            <td>
-                                                <li><a>{{ mensj }}</a></li>
-                                            </td>
-                                            <td>
-                                                <li><a>{{ mensj }}</a></li>
-                                            </td>
-                                            <td>
-                                                <li><a>{{ mensj.send_at }}</a></li>
-                                            </td>
-                                        </tr>
-                                {% endfor %}
-                                -->
                             </ul>
                         </article>
-                        <!--
-                                <li><a>Minimización de recursos</a></li>
-                                <li><a>Control de datos</a></li>
-                                <li><a>Eficiencia</a></li>
-                                <li><a>Información segura</a></li>
-                        -->
 
                     </div>
                 </div>

@@ -33,8 +33,6 @@ class MessageManager(models.Manager):
         marked as deleted.
         """
         destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
-        import pdb
-        #pdb.set_trace()
 
         # Si es el jefe maximo, deben aparecer todos los memos de esa dependencia
         if user.profile.persona.cargo_principal.cargo == user.profile.persona.cargo_principal.dependencia.cargo_max:

@@ -216,29 +216,28 @@ def compose(request, recipient=None,
                 if sender.exists():
                     mensaje.recipient.add(sender[0])
             mensaje.save()
-            #messages.info(request, _(u"Message successfully sent."))
-            mensaje = u'Mensaje enviado satisfactoriamente'
-            return inbox(request, mensaje)
+            mensaje = u'Mensaje enviado exitosamente'
             if success_url is None:
                 success_url = reverse('messages_inbox')
             if request.GET.has_key('next'):
                 success_url = request.GET['next']
-            return HttpResponseRedirect(success_url)
+            return inbox(request, mensaje)
     else:
         form = ComposeForm()
-        form.fields['body'].initial = "\n\n\n\n\n\n\n\nCordialmente, \n%s %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo)
+        cuerpo = form.fields['body'].initial = u"\n\nCordialmente, \n%s. %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
         if recipient is not None:
             recipients = [u for u in User.objects.filter(username__in=[r.strip() for r in recipient.split('+')])]
             form.fields['recipient'].initial = recipients
     return render_to_response(template_name, {
-        'loggeado': request.user.is_authenticated,
-        'request':request,
+        'cuerpo': cuerpo,
+        'tipo': 'Redactar',
+        'request': request,
         'form': form,
     }, context_instance=RequestContext(request))
 compose = login_required(compose)
 
 def reply(request, message_id, form_class=ComposeForm,
-        template_name='django_messages/compose.html', success_url=None, 
+    template_name='user/mensajes/redactar.html', success_url=None, 
         recipient_filter=None, quote_helper=format_quote):
     """
     Prepares the ``form_class`` form for writing a reply to a given message
@@ -249,25 +248,73 @@ def reply(request, message_id, form_class=ComposeForm,
     """
     parent = get_object_or_404(Message, id=message_id)
     
-    if parent.sender != request.user and parent.recipient != request.user:
+    user = request.user
+    now = datetime.datetime.now()
+    esta_destinatario = False
+
+    for destinatario in parent.con_copia.get_query_set():
+        if destinatario.grupos == None:
+            if destinatario.usuarios.user == user:
+                esta_destinatario = True
+                continue
+        elif destinatario.usuarios == None:
+            if user in destinatario.grupos.user_set.get_query_set():
+                esta_destinatario = True
+                continue
+
+    for destinatario in parent.recipient.get_query_set():
+        if destinatario.grupos == None:
+            if destinatario.usuarios.user == user:
+                esta_destinatario = True
+                continue
+        elif destinatario.usuarios == None:
+            if user in destinatario.grupos.user_set.get_query_set():
+                esta_destinatario = True
+                continue
+
+    if (parent.sender != user) and (esta_destinatario == False):
         raise Http404
     
     if request.method == "POST":
         sender = request.user
-        form = form_class(request.POST, recipient_filter=recipient_filter)
+        form = form_class(request.POST)
         if form.is_valid():
-            form.save(sender=request.user, parent_msg=parent)
-            messages.info(request, _(u"Message successfully sent."))
-            if success_url is None:
-                success_url = reverse('messages_inbox')
-            return HttpResponseRedirect(success_url)
+            from django_messages.models import Destinatarios, EstadoMemo
+            estado_memo = EstadoMemo.objects.get(nombre='En espera')
+            mensaje = Message(
+                            sender = Destinatarios.objects.get(usuarios__user=request.user),
+                            subject = request.POST['subject'],
+                            body = request.POST['body'],
+                            status = estado_memo,
+                            parent_msg = parent,
+                        )
+            mensaje.save()
+            dest = []
+            for i in request.POST['recipient'].split('|'):
+                if not i == '':
+                    dest.append(int(i))
+            for destin in dest:
+                sender = Destinatarios.objects.filter(id=destin)
+                if sender.exists():
+                    mensaje.recipient.add(sender[0])
+            mensaje.save()
+                    
+            mensaje = u"Mensaje enviado exitosamente."
+            return inbox(request, mensaje)
     else:
+        cuerpo = u"\n\n%s escribió:\n%s" %(parent.sender, parent.body)
+        recipient = parent.recipient.add(parent.sender)
+        destins = []
+        for recip in parent.recipient.get_query_set():
+            destins.append(recip.id)
         form = form_class(initial={
-            'body': quote_helper(parent.sender, parent.body),
             'subject': _(u"Re: %(subject)s") % {'subject': parent.subject},
-            'recipient': [parent.sender,]
+            'body': cuerpo,
+            'recipient': destins
             })
     return render_to_response(template_name, {
+        'tipo': 'Responder',
+        'request': request,
         'form': form,
     }, context_instance=RequestContext(request))
 reply = login_required(reply)
@@ -308,7 +355,6 @@ def delete(request, message_id, success_url=None):
     if deleted:
         message.save()
         notify = True
-        #messages.info(request, _(u"Message successfully deleted."))
         if notification:
             notification.send([user], "messages_deleted", {'message': message,})
         mensaje = u'¡Mensaje eliminado satisfactoriamente!'

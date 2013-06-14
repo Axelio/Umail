@@ -22,6 +22,9 @@ class ComposeForm(forms.ModelForm):
     class Meta:
         model = Message
         exclude = ('sender','parent_msg','sent_at','read_at','replied_at','sender_deleted_at','recipient_deleted_at','status','tipo','leido_por')
+        widgets = {
+                  'body': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
+                  }
     '''
 
     def save(self, sender, parent_msg=None):

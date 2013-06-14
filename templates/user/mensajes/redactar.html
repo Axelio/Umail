@@ -88,7 +88,7 @@
 				</div>
 				<div class="col_4">
                     <div class="wrapper">
-                        <h2>Redactar memorándum</h2>
+                        <h2>{{ tipo }} memorándum</h2>
                             <div>
                                 <div  class="wrapper">
                                 <form action="" method="post">
@@ -98,33 +98,37 @@
                                         <tbody>
                                             <!-- recipient -->
                                             <tr>
-                                                <td width=15%>
+                                                <td>
                                                     <b>{{ form.recipient.label }}</b>
                                                 </td>
-                                                <td width=35%>
-                                                    {{ form.recipient }} 
+                                                <td>
+                                                {% for destin in form.recipient %}
+                                                    {{ destin }}
+                                                {% endfor %}
                                                 </td>
-                                                <td width="15%">
+                                            <tr>
+                                            </tr>
+                                                <td>
+                                                </td>
+                                                <td colspan=3>
+                                                    {{ form.recipient.help_text }} 
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
                                                     <b>{{ form.con_copia.label }}</b>
                                                 </td>
-                                                <td height=35%>
+                                                <td>
                                                     {{ form.con_copia }} 
                                                 </td>
-                                            <tr>
-                                            <tr>
-                                                <td height=25%>
+                                            </tr>
+                                            </tr>
+                                                <td>
                                                 </td>
-                                                <td height=25%>
-                                                    Por favor, ingrese al menos 4 caracteres para
-                                                    autocompletar. Puede agregar múltiples contactos. 
+                                                <td colspan=3>
+                                                    {{ form.recipient.help_text }} 
                                                 </td>
-                                                <td height=25%>
-                                                </td>
-                                                <td height=25%>
-                                                    Por favor, ingrese al menos 4 caracteres para 
-                                                    autocompletar. Puede agregar múltiples contactos. 
-                                                </td>
-                                            <tr>
+                                            </tr>
                                             <tr>
                                                 <td width=15%>
                                                     <b>{{ form.subject.label }}</b>
@@ -133,12 +137,11 @@
                                                     {{ form.subject }} 
                                                 </td>
                                             <tr>
-                                                <td width=25%>
+                                                <td>
                                                     <b>{{ form.body.label }}: </b>
                                                 </td>
                                                 <td width=100% colspan="4">
-                                                    <textarea name="body" cols=70%> 
-                                                    </textarea>
+                                                    {{ form.body }}
                                                 </td>
                                             <tr>
                                             <tr>

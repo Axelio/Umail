@@ -10,9 +10,8 @@ def responder_memo(memo,arg):
     memo = Message.objects.get(id=memo)
     user = User.objects.get(id=arg)
     respondercon_copia = False
+    con_copia = False
 
-    import pdb
-    pdb.set_trace()
     for dest in memo.con_copia.get_query_set():
         if dest.usuarios.user.pk == user.pk:
             tabla = '<table></td><td width=100% align="left"><div class="rc_btn_02"><a href="/eliminar/' + str(memo.id) + '">Eliminar</a></div></td></tr></table>'

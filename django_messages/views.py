@@ -36,7 +36,7 @@ anular = login_required(anular)
 
 def aprobar(request, message_id):
     if request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
-        from django_messages.models import EstadoMemo
+        from django_messages.models import EstadoMemo, Destinatarios
         mensaje = Message.objects.get(id=message_id)
         estado = EstadoMemo.objects.get(nombre='Aprobado')
         mensaje.status = estado
@@ -423,18 +423,27 @@ def view(request, message_id, template_name='user/mensajes/leer.html'):
                 esta_destinatario = True
                 continue
 
-    if (message.sender != user) and (esta_destinatario == False):
+    from django_messages.models import Destinatarios
+    destin = Destinatarios.objects.get(usuarios__user=user)
+    jefe = Destinatarios.objects.get(usuarios__user__userprofile__persona__cargo_principal__dependencia = message.sender.usuarios.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = message.sender.usuarios.user.profile.persona.cargo_principal.dependencia.cargo_max)
+
+    # Si el usuario no esta entre los destinatarios, y el mensaje no lo envia el usuario y el usuario no es el jefe del que redacto el mensaje
+    if not message.sender == destin and not esta_destinatario and not user == jefe.usuarios.user:
         raise Http404
 
-    if message.read_at is None and esta_destinatario == True:
-        message.read_at = now
-        from django_messages.models import Destinatarios
-        
-        message.leido_por.add(Destinatarios.objects.get(usuarios__user=user))
-        message.save()
+    else:
+        if message.status.nombre == 'Aprobado':
+            message.read_at = now
+            
+            if message.sender != destin and not user == jefe.usuarios.user: 
+                message.leido_por.add(destin)
+            if message.sender in message.leido_por.get_query_set():
+                message.leido_por.remove(destin)
+
     return render_to_response(template_name, {
         'loggeado': request.user.is_authenticated,
         'request':request,
+        'jefe':jefe,
         'message': message,
     }, context_instance=RequestContext(request))
 view = login_required(view)

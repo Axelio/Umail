@@ -11,6 +11,7 @@ def responder_memo(memo,arg):
     user = User.objects.get(id=arg)
     respondercon_copia = False
     con_copia = False
+    tabla = ''
 
     for dest in memo.con_copia.get_query_set():
         if dest.usuarios.user.pk == user.pk:

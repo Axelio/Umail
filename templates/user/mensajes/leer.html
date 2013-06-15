@@ -93,81 +93,83 @@
 
                                 {% block content %}
                                 <table width=100%>
-                                <tr>
-                                <td rowspan="3" align=center>
-                                     <img width=150px src="{% static "images/logo_unerg.png" %}" alt="">
-                                </td>
-                                    <td align=center>
-                                        REPÚBLICA BOLIVARIANA DE VENEZUELA
+                                    <tr>
+                                    <td rowspan="3" align=center>
+                                         <img width=150px src="{% static "images/logo_unerg.png" %}" alt="">
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td align=center>
-                                        MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN SUPERIOR
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align=center>
-                                        UNIVERSIDAD "RÓMULO GALLEGOS"
-                                    </td>
-                                </tr>
-                                    <table width=100%>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan=2>
-                                                    {{ message.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.siglas }} - {{ message.id }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th align=left width=25%>
-                                                    <div class="news_title">Para:</div>
-                                                </th>
-                                                <td width=75%>
-                                                    {% for destin in message.recipient.get_query_set %}
-                                                        {{ destin }},
+                                        <td align=center>
+                                            REPÚBLICA BOLIVARIANA DE VENEZUELA
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align=center>
+                                            MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN SUPERIOR
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align=center>
+                                            UNIVERSIDAD "RÓMULO GALLEGOS"
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table width=100%>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan=2>
+                                                {{ message.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.siglas }} - {{ message.id }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align=left width=15%>
+                                                <strong>Para:</strong>
+                                            </td>
+                                            <td align=left>
+                                                {% for destin in message.recipient.get_query_set %}
+                                                    {{ destin }},
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align=left width=15%>
+                                                <strong>De:</strong>
+                                            </td>
+                                            <td align=left>
+                                                {{ jefe }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align=left width=15%>
+                                                <strong>Fecha:</strong>
+                                            </td>
+                                            <td align=left width=75%>
+                                                {{ message.sent_at|date:_("DATETIME_FORMAT")}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align=left width=15%>
+                                            </td>
+                                            <td align=left width=25%>
+                                                {{ message.body }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width=15%>
+                                                <strong>Leido por:</strong>
+                                            </td>
+                                            <td width=75%>
+                                                {% ifequal message.leido_por.get_query_set.count 0 %}
+                                                    <div class=error>Nadie</div>
+                                                {% else %}
+                                                    {% for leido in message.leido_por.get_query_set %}
+                                                        {{ leido }}, 
                                                     {% endfor %}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th align=left width=25%>
-                                                    <div class="news_title">De:</div>
-                                                </th>
-                                                <td width=75%>
-                                                    {{ message.sender }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th align=left width=25%>
-                                                    <div class="news_title">{% trans "Date" %}:</div>
-                                                </th>
-                                                <td width=75>
-                                                    {{ message.sent_at|date:_("DATETIME_FORMAT")}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width=100% colspan=2>
-                                                    {{ message.body.labels }}
-                                                    {{ message.body|linebreaksbr }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th align=left width=25%>
-                                                    <div class="news_title">Leído por:</div>
-                                                </th>
-                                                <td width=75%>
-                                                    {% ifequal message.leido_por.get_query_set.count 0 %}
-                                                        <div class=error>Nadie</div>
-                                                    {% else %}
-                                                        {% for leido in message.leido_por.get_query_set %}
-                                                            {{ leido }}, 
-                                                        {% endfor %}
-                                                    {% endifequal %}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    {% load responder_memos %}
-                                    {{ message.id|responder_memo:user.id }}
+                                                {% endifequal %}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                {% load responder_memos %}
+                                {{ message.id|responder_memo:user.id }}
                                 {% endblock %}
 
 

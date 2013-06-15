@@ -20,15 +20,40 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'logout$',logout,{'next_page':'/'},),
     url(r'^$','auth.views.index'),
+
+
+    # Memos
+    ## Entrada
     url(r'^entrada/$', 'django_messages.views.inbox', name='messages_inbox'),
+
+    ## Enviados
     url(r'^enviados/$', 'django_messages.views.outbox', name='messages_outbox'),
+
+    ## Memos por aprobar
     url(r'^por_aprobar/$', 'django_messages.views.por_aprobar', name='por_aprobar'),
     url(r'^por_aprobar/(?P<message_id>[\d]+)/$', 'django_messages.views.ver_por_aprobar', name='ver_por_aprobar'),
+
+    ## Memo para aprobar
     url(r'^aprobar/(?P<message_id>[\d]+)/$', 'django_messages.views.aprobar', name='aprobar'),
+
+    ## Memo para anular
     url(r'^anular/(?P<message_id>[\d]+)/$', 'django_messages.views.anular', name='anular'),
+
+    ## Redactar memo
     url(r'^redactar/$', 'django_messages.views.compose'),
+    ## Responder memo
     url(r'^responder/(?P<message_id>[\d]+)/$', 'django_messages.views.reply', name='messages_reply'),
+    ## Archivar memo
     url(r'^eliminar/(?P<message_id>[\d]+)/$', 'django_messages.views.delete', name='messages_delete'),
+
+    ## Memos archivados
     url(r'^papelera/$', 'django_messages.views.trash', name='messages_trash'),
+
+    ## Leer memo
     url(r'^leer/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='messages_detail'),
+
+
+    # Personas
+    ## Perfil
+    url(r'^personas/', include('personas.urls')),
 )

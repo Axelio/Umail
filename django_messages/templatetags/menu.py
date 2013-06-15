@@ -29,7 +29,7 @@ def menu(seccion):
 
     # Perfil
     titulos.append("Perfil")
-    enlace.append("/#Menu")
+    enlace.append("/personas/#Menu")
     clase.append("nav3")
 
     # Contactos

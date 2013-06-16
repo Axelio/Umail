@@ -189,8 +189,6 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.admin',
     'django_messages',
-    #'django_extensions',
-    #'debug_toolbar',
     'ajax_select',
     'grappelli',
 	'personas',

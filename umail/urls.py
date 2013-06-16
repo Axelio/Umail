@@ -55,5 +55,5 @@ urlpatterns = patterns('',
 
     # Personas
     ## Perfil
-    url(r'^personas/', include('personas.urls')),
+    url(r'^perfil/', include('personas.urls')),
 )

@@ -56,4 +56,9 @@ urlpatterns = patterns('',
     # Personas
     ## Perfil
     url(r'^perfil/', include('personas.urls')),
+
+
+    # Reportes
+    ## Perfil
+    url(r'^descargas/memo/(?P<message_id>[\d]+)/$', 'reportes.views.memo'),
 )

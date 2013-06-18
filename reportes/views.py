@@ -19,6 +19,8 @@ from reportlab.lib.units import cm, mm
 from django.utils import formats
 from django.utils.translation import ugettext as _
 from reportlab.graphics.barcode import createBarcodeDrawing
+from django.utils.text import normalize_newlines
+from django.utils.safestring import mark_safe
 #from reportlab.graphics.barcode import code128, code93, createBarcodeDrawing, getCodeNames
 
 PAGE_HEIGHT=29.7*cm
@@ -39,6 +41,7 @@ def memo(request, message_id):
     fechas = datetime.datetime.today()
     mes = fecha.NormalDate().monthName()
     dia = fecha.NormalDate().dayOfWeekName()
+    salto = '<br />'
 
     txtFecha = '%s, %s DE %s DE %s'%(dia.upper(), fechas.day, mes.upper(), fechas.year)
     styleF = styleFecha['Normal']
@@ -55,7 +58,7 @@ def memo(request, message_id):
     from django_messages.models import Message
     memo = Message.objects.get(id=message_id)
 
-    txtTitulo = u'MEMORÁNDUM'
+    txtTitulo = u'MEMORÁNDUM%s' %(salto)
     if memo.tipo == 'Circular':
         txtTitulo = 'MEMORÁNDUM CIRCULAR'
     titulo = style['Heading1']
@@ -66,9 +69,6 @@ def memo(request, message_id):
     elementos.append(tituloV)
     elementos.append(Spacer(1,5))
 
-    tablaLapso = []
-    tablaEstudiantes = []
-    tablaCarrera = []
     x = [
     ('BOX', (0,0), (-1,-1), 0.50, colors.black),
     ('ALIGN', (0,0), (-1,-1), 'LEFT'),
@@ -79,14 +79,9 @@ def memo(request, message_id):
     ('FONT', (0,0), (-1,-1), "Helvetica", 6),
     ]
 
-    TEXTO = 'Texto'
-
-    salto = '<br />'
-    identificador = '%s.%s.%s - %d %s' %(memo.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.siglas, memo.id, salto*4)
+    identificador = '%s.%s.%s - %d %s' %(memo.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.siglas, memo.id, salto)
 
     para = '' 
-    if memo.recipient.get_query_set().count() > 1:
-        print "asd"
     for destin in  memo.recipient.get_query_set()[0:memo.recipient.get_query_set().count()-1]:
         para = u'%s, %s' %(destin, para)
     para = u'%s %s' %(para, memo.recipient.get_query_set()[memo.recipient.get_query_set().count()-1])
@@ -95,57 +90,61 @@ def memo(request, message_id):
 
     de = u'<b>De: </b> %s %s' %(memo.sender, salto)
 
-    enviado = _(str(memo.sent_at.__format__("%d, %B de %Y a las %T")))
-    enviado = u'%s %s' %(enviado, salto)
+    memo_mes = fecha.NormalDate(memo.sent_at).monthName()
+    memo_dia = fecha.NormalDate(memo.sent_at).dayOfWeekName()
+    enviado = '<b>Fecha:</b> %s, %s de %s de %s a las %s:%s:%s'%(memo_dia, memo.sent_at.day, memo_mes, memo.sent_at.year, memo.sent_at.time().hour, memo.sent_at.time().minute, memo.sent_at.time().second)
+    enviado = u'<b>Fecha:</b> %s %s' %(enviado, salto)
 
-    texto = memo.body
-
-    #txtInfo = u'C.I.: %s'%(TEXTO)+u' - %s' %(TEXTO)+\
-    #u'<br />CARRERA: %s'%(TEXTO)+u'<br />COHORTE: %s'%(TEXTO)+u'<br />STATUS: %s'%(TEXTO)+'<br />'
     txtInfo = '%s %s %s %s' %(identificador, para, de, enviado)
     # Estilo txtInfo
-    info = style2['Normal']
-    info.fontSize = 8
+    info = style['Normal']
+    info.fontSize = 12
     info.alignment = TA_LEFT
     info.fontName = 'Helvetica'
     infoV = Paragraph(txtInfo, info)
     elementos.append(infoV)
     elementos.append(Spacer(1,10))
 
+    autoescape = None
+    autoescape = autoescape and not isinstance(memo.body, SafeData)
+    memo.body = normalize_newlines(memo.body)
+
+    texto = salto + mark_safe(memo.body.replace('\n', '<br />'))
+
     #---> Estilo de la variable texto
-    styleSheet = getSampleStyleSheet()
-    parrafo =  styleSheet['Normal']
+    parrafo = style2['Normal']
     parrafo.fontsize = 12
     parrafo.fontName = 'Helvetica'
     parrafo.alignment = TA_JUSTIFY
     parrafo.spaceBefore = 5
     parrafo.firstLineIndent = 20
 
-    Parrafo1 = Paragraph(texto, parrafo)
+    Parrafo1 = Paragraph(u'%s'%(texto), parrafo)
     elementos.append(Parrafo1)
     elementos.append(Spacer(3,30))
 
     # Inicio código de barras
     codigoBarra_style = getSampleStyleSheet()
     codigoBarra = codigoBarra_style['Normal']
-    codigoBarra.fontSize = 11
+    codigoBarra.fontSize = 12
     codigoBarra.fontName = 'Courier'
     codigoBarra.alignment = TA_RIGHT
 
-    st = createBarcodeDrawing('Code128',value = str(memo.codigo), barWidth= 0.022*cm, barHeight=0.345*cm, lquiet=11.550*cm)
+    st = createBarcodeDrawing('Code128',value = str(memo.codigo), barWidth= 0.040*cm, barHeight=0.500*cm, lquiet=11.500*cm)
     elementos.append(st)
     txtCodigoBarra = Paragraph(str(memo.codigo), codigoBarra)
     elementos.append(txtCodigoBarra)
     # Fin código de barras
 
-    doc.build(elementos, canvasmaker=NumeroDePagina, onFirstPage=encabezado_constancia)
+    #doc.build(elementos, canvasmaker=NumeroDePagina, onFirstPage=encabezado_constancia)
+    doc.build(elementos, canvasmaker=pieDePaginaConstancias, onFirstPage=encabezado_constancia)
     return response  
 memo = login_required(memo)
 
 def encabezado_constancia(canvas, doc):
     canvas.saveState()
     canvas.drawImage(settings.STATIC_ROOT+'images/unerg.jpg', 2.6*cm, PAGE_HEIGHT-4.5*cm, width = 100, height = 38)
-    canvas.setFont("Helvetica-Bold",9)
+    canvas.setFont("Helvetica-Bold",10)
     canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-3.6*cm, u'REPÚBLICA BOLIVARIANA DE VENEZUELA')
     canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.0*cm, u'UNIVERSIDAD NACIONAL EXPERIMENTAL RÓMULO GALLEGOS')
     canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.4*cm, u'DIRECCIÓN DE ADMISIÓN, CONTROL Y EVALUACIÓN')
@@ -174,5 +173,27 @@ class NumeroDePagina(canvas.Canvas):
         fechas = datetime.datetime.today()
         self.setFont("Helvetica-Bold", 6)
         self.drawRightString(129*mm, 6*mm,
-            u"D.A.C.E     %02d/%02d/%d   %02d:%02d:%02d    Página %d de %d" % (fechas.day,fechas.month,fechas.year, fechas.hour, fechas.minute, fechas.second, self._pageNumber, page_count))
+            u"%02d/%02d/%d   %02d:%02d:%02d    Página %d de %d" % (fechas.day,fechas.month,fechas.year, fechas.hour, fechas.minute, fechas.second, self._pageNumber, page_count))
 
+class pieDePaginaConstancias(canvas.Canvas):
+    def __init__(self, *args, **kwargs):
+        canvas.Canvas.__init__(self, *args, **kwargs)
+        self._saved_page_states = []
+
+    def showPage(self):
+        self._saved_page_states.append(dict(self.__dict__))
+        self._startPage()
+
+    def save(self):
+        """add page info to each page (page x of y)"""
+        num_pages = len(self._saved_page_states)
+        for state in self._saved_page_states:
+            self.__dict__.update(state)
+            self.draw_page_number(num_pages)
+            canvas.Canvas.showPage(self)
+        canvas.Canvas.save(self)
+    def draw_page_number(self, page_count):
+        fechas = datetime.datetime.today()
+        self.setFont("Helvetica-Bold", 6)
+        self.drawRightString(129*mm, 6*mm,
+            u"%02d/%02d/%d   %02d:%02d:%02d    Página %d de %d" % (fechas.day,fechas.month,fechas.year, fechas.hour, fechas.minute, fechas.second, self._pageNumber, page_count))

@@ -16,6 +16,10 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm, mm
+from django.utils import formats
+from django.utils.translation import ugettext as _
+from reportlab.graphics.barcode import createBarcodeDrawing
+#from reportlab.graphics.barcode import code128, code93, createBarcodeDrawing, getCodeNames
 
 PAGE_HEIGHT=29.7*cm
 PAGE_WIDTH=21*cm
@@ -25,7 +29,6 @@ def memo(request, message_id):
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = u'attachment; filename=Memorándum.pdf; pagesize=A4'
 
-    #elementos es la lista donde almaceno todos lo que voy a incluir al documento pdf
     elementos = []
     doc = SimpleDocTemplate(response)    
     style = getSampleStyleSheet() 
@@ -49,7 +52,12 @@ def memo(request, message_id):
     #-- Espacio para poner el encabezado con la clase Canvas
     elementos.append(Spacer(1,75))
 
-    txtTitulo = u'LISTADO DE MEMORÁNDUM'
+    from django_messages.models import Message
+    memo = Message.objects.get(id=message_id)
+
+    txtTitulo = u'MEMORÁNDUM'
+    if memo.tipo == 'Circular':
+        txtTitulo = 'MEMORÁNDUM CIRCULAR'
     titulo = style['Heading1']
     titulo.fontSize = 12
     titulo.fontName = 'Helvetica-Bold'
@@ -73,38 +81,62 @@ def memo(request, message_id):
 
     TEXTO = 'Texto'
 
+    salto = '<br />'
+    identificador = '%s.%s.%s - %d %s' %(memo.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.siglas, memo.id, salto*4)
 
-    tablaCarrera.append([u'ÁREA: %s'%(TEXTO), 'CARRERA: %s'%(TEXTO)])
-    t3 = Table(tablaCarrera, colWidths=(7.5*cm, 7.5*cm))
-    t3.setStyle(TableStyle(x))
-    elementos.append(t3)
-    elementos.append(Spacer(1,0.5))
+    para = '' 
+    if memo.recipient.get_query_set().count() > 1:
+        print "asd"
+    for destin in  memo.recipient.get_query_set()[0:memo.recipient.get_query_set().count()-1]:
+        para = u'%s, %s' %(destin, para)
+    para = u'%s %s' %(para, memo.recipient.get_query_set()[memo.recipient.get_query_set().count()-1])
 
-    tablaLapso.append(['ASIGNATURA: %s'%(TEXTO), 'SEM.: %s'%(TEXTO), 'LAPSO: %s'%(TEXTO)])
-    tablaLapso.append(['PROFESOR: %s '%(TEXTO)])
+    para = u'<b>Para: </b> %s %s' %(para, salto)
 
-    t = Table(tablaLapso, colWidths=(8.2*cm, 1.8*cm, 5.0*cm))
-    t.setStyle(TableStyle(x)) 
-    elementos.append(t)
+    de = u'<b>De: </b> %s %s' %(memo.sender, salto)
+
+    enviado = _(str(memo.sent_at.__format__("%d, %B de %Y a las %T")))
+    enviado = u'%s %s' %(enviado, salto)
+
+    texto = memo.body
+
+    #txtInfo = u'C.I.: %s'%(TEXTO)+u' - %s' %(TEXTO)+\
+    #u'<br />CARRERA: %s'%(TEXTO)+u'<br />COHORTE: %s'%(TEXTO)+u'<br />STATUS: %s'%(TEXTO)+'<br />'
+    txtInfo = '%s %s %s %s' %(identificador, para, de, enviado)
+    # Estilo txtInfo
+    info = style2['Normal']
+    info.fontSize = 8
+    info.alignment = TA_LEFT
+    info.fontName = 'Helvetica'
+    infoV = Paragraph(txtInfo, info)
+    elementos.append(infoV)
     elementos.append(Spacer(1,10))
 
-    y = [
-    ('ALIGN', (0,0), (-1,-1), 'CENTER'),
-    ('FONT', (0,0), (-1,-1), "Helvetica", 6),
-    ('GRID', (0,0), (-1,-1), 0.60, colors.black),
-    ('BOTTOMPADDING', (0,0), (3,0), 5),
-    ('FONT', (0,0), (3,0), "Helvetica-Bold", 6),
-    ('ALIGN', (1,1), (-1,-1), 'LEFT'),
-    ]
+    #---> Estilo de la variable texto
+    styleSheet = getSampleStyleSheet()
+    parrafo =  styleSheet['Normal']
+    parrafo.fontsize = 12
+    parrafo.fontName = 'Helvetica'
+    parrafo.alignment = TA_JUSTIFY
+    parrafo.spaceBefore = 5
+    parrafo.firstLineIndent = 20
 
-    tablaEstudiantes.append(['NRO','CI', 'NOMBRES Y APELLIDOS', 'FIRMA'])
-    # Empieza la tabla de los alumos.
-    num = 0
-    tablaEstudiantes.append(['%d'%(num),'%s'%(TEXTO), u'%s'%(TEXTO), ''])
-    
-    t2 = Table(tablaEstudiantes, colWidths=('',1.8*cm, 8.8*cm, 3.5*cm))
-    t2.setStyle(TableStyle(y))
-    elementos.append(t2)
+    Parrafo1 = Paragraph(texto, parrafo)
+    elementos.append(Parrafo1)
+    elementos.append(Spacer(3,30))
+
+    # Inicio código de barras
+    codigoBarra_style = getSampleStyleSheet()
+    codigoBarra = codigoBarra_style['Normal']
+    codigoBarra.fontSize = 11
+    codigoBarra.fontName = 'Courier'
+    codigoBarra.alignment = TA_RIGHT
+
+    st = createBarcodeDrawing('Code128',value = str(memo.codigo), barWidth= 0.022*cm, barHeight=0.345*cm, lquiet=11.550*cm)
+    elementos.append(st)
+    txtCodigoBarra = Paragraph(str(memo.codigo), codigoBarra)
+    elementos.append(txtCodigoBarra)
+    # Fin código de barras
 
     doc.build(elementos, canvasmaker=NumeroDePagina, onFirstPage=encabezado_constancia)
     return response  

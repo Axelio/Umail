@@ -25,5 +25,14 @@
         "dependencia": 3, 
         "tipo_personal": 1
     }
+},
+{
+    "pk": 4, 
+    "model": "personas.personal", 
+    "fields": {
+        "cargo": 7, 
+        "dependencia": 5, 
+        "tipo_personal": 1
+    }
 }
 ]

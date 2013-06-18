@@ -108,6 +108,8 @@ class Message(models.Model):
     status = models.ForeignKey('EstadoMemo', null=True, blank=True, verbose_name='Estado')
     tipo = models.CharField(max_length=10, blank=True, null=True)
     leido_por = models.ManyToManyField('Destinatarios', related_name='leido_por', null=True, blank=True, verbose_name=("leido por: "))
+    codigo = models.IntegerField(blank=True, null=True, verbose_name=u'código', unique=True)
+    num_ident= models.IntegerField(blank=True, null=True, verbose_name=u'número identificador')
 
     objects = MessageManager()
 
@@ -160,6 +162,32 @@ def save_message(sender, **kwargs):
     if memo.status == None:
         estado = EstadoMemo.objects.get(nombre='En espera')
         memo.status=estado
+
+@receiver(post_save, sender=Message)
+def codigo(sender, **kwargs):
+    memo = kwargs['instance']
+    redactor = memo.sender
+    fecha_actual = datetime.date.today()
+    hora_actual = datetime.datetime.now()
+    dependencia = memo.sender.usuarios.user.profile.persona.cargo_principal.dependencia
+
+    if memo.num_ident == None:
+
+        # Se filtra el numero de memos en esa dependencia, en ese año, en ese mes y el número se incrementa un valor
+        mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
+        memo.num_ident = mensajes.count() + 1
+
+    jefe = Destinatarios.objects.get(usuarios__user__userprofile__persona__cargo_principal__dependencia = memo.sender.usuarios.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = memo.sender.usuarios.user.profile.persona.cargo_principal.dependencia.cargo_max)
+
+    # El identificador se genera a partir del id del memo, del jefe de departamento y del minuto, segundo y microsegundo actual
+    identificador = '%s%s%s%s%s' %(memo.id, jefe.id, hora_actual.minute, hora_actual.second, hora_actual.microsecond)
+
+    codigo = ''
+    if memo.codigo == None:
+        for ident in identificador:
+            codigo = codigo + str(ord(ident))
+        memo.codigo = codigo
+
 
 def inbox_count_for(user):
     """

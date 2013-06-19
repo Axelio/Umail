@@ -24,7 +24,7 @@ def menu(seccion):
 
     # Reportes
     titulos.append("Reportes")
-    enlace.append("/noticias/#Menu")
+    enlace.append("/reportes/#Menu")
     clase.append("nav4")
 
     # Perfil

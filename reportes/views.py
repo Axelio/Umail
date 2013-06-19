@@ -21,7 +21,24 @@ from django.utils.translation import ugettext as _
 from reportlab.graphics.barcode import createBarcodeDrawing
 from django.utils.text import normalize_newlines
 from django.utils.safestring import mark_safe
-#from reportlab.graphics.barcode import code128, code93, createBarcodeDrawing, getCodeNames
+from reportes.forms import LibroMemoForm
+
+def index(request, template_name='user/reportes/reportes.html'):
+    c = {}
+    c.update(csrf(request))
+    c.update({'request':request})
+    c.update(csrf(request))
+  
+    libro_memo = LibroMemoForm(request.POST)
+    if request.method == 'POST':
+        if libro_memo.is_valid():
+            # Para editar los datos se le pasa el modelform  y se instancia con el request.profile.persona para guardar los cambios realizados
+            libro_memo = LibroMemoForm(request.POST, instance=request.user.profile.persona)
+            libro_memo.save()
+
+    c.update({'libro_memo':libro_memo})
+    return render_to_response(template_name, c)
+index = login_required(index)
 
 PAGE_HEIGHT=29.7*cm
 PAGE_WIDTH=21*cm

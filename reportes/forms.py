@@ -12,7 +12,7 @@ class LibroMemoForm(forms.Form):
 
         widgets = {
 	    'fecha_inicio': DateInput(attrs={'type':'date', 'class':'w8em format-d-m-y', 'autofocus':'autofocus', 'required':'required', 'value':'','name':'fecha_inicio', 'placeholder':'fecha de inicio'}),
-	    'fecha_fin': DateInput(attrs={'type':'date', 'class':'w8em format-d-m-y', 'autofocus':'autofocus', 'required':'required', 'value':'','name':'fecha_fin', 'placeholder':'fecha fin'}),
+	    'fecha_fin': DateInput(attrs={'type':'date', 'class':'w8em format-d-m-y', 'required':'required', 'value':'','name':'fecha_fin', 'placeholder':'fecha fin'}),
         }
 
     def __init__(self, *args, **kwargs):

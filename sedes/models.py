@@ -8,7 +8,7 @@ class Dependencias(models.Model):
     tipo_sede               = models.ForeignKey('TipoSede')
     departamento            = models.CharField(max_length=50, verbose_name='nombre del departamento')
     siglas                  = models.CharField(max_length=50, verbose_name='iniciales del departamento')
-    telefono                = models.IntegerField(unique=True, null=True, blank=True, help_text='Por favor, incluya el código de telefonía o área.', verbose_name=u'teléfono')
+    telefono                = models.IntegerField(unique=True, null=True, blank=True, help_text=u'Por favor, incluya el código de telefonía o área.', verbose_name=u'teléfono')
     nivel                   = models.ForeignKey('Niveles')
     dependencia             = models.ForeignKey('self', null=True, blank=True, verbose_name='dependencia superior')
     cargo_max               = models.ForeignKey(Group, help_text=u'Superior máximo de la dependencia. Firmante de los memorándums', null=True, blank=True)

@@ -96,7 +96,7 @@ class Message(models.Model):
     """
     recipient = models.ManyToManyField('Destinatarios', related_name='received_messages', null=True, blank=True, verbose_name=_("Destinatario"))
     con_copia = models.ManyToManyField('Destinatarios', related_name='con_copia', null=True, blank=True, verbose_name=("con copia a:"))
-    subject = models.CharField(_("Subject"), max_length=120)
+    subject = models.CharField(_("Subject"), max_length=255)
     body = models.TextField(verbose_name="Texto")
     sender = models.ForeignKey('Destinatarios', related_name='sent_messages', verbose_name=_("Sender"))
     parent_msg = models.ForeignKey('self', related_name='next_messages', null=True, blank=True, verbose_name=_("Parent message"))
@@ -143,10 +143,6 @@ class Message(models.Model):
         return ('messages_detail', [self.id])
     get_absolute_url = models.permalink(get_absolute_url)
     
-    def save(self, **kwargs):
-        if not self.id:
-            self.sent_at = datetime.datetime.now()
-        super(Message, self).save(**kwargs) 
     
     class Meta:
         ordering = ['-sent_at']
@@ -172,6 +168,7 @@ def codigo(sender, **kwargs):
     dependencia = memo.sender.usuarios.user.profile.persona.cargo_principal.dependencia
 
     if memo.num_ident == None:
+        memo.sent_at = datetime.datetime.now()
 
         # Se filtra el numero de memos en esa dependencia, en ese año, en ese mes y el número se incrementa un valor
         mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)

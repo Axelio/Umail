@@ -160,7 +160,6 @@ class MessageAdmin(admin.ModelAdmin):
         When changing an existing message and choosing optional recipients,
         the message is effectively resent to those users.
         """
-        obj.save()
         
         #@TODO: Revisar la funcionalidad del envío de mensajes por correo electrónico
         if notification:
@@ -179,27 +178,29 @@ class MessageAdmin(admin.ModelAdmin):
         dest_grupos = Destinatarios.objects.filter(grupos__in=form.cleaned_data['recipient'])
         revisar_usuarios = True
         destinatarios = form.cleaned_data['recipient']
-        if dest_grupos.exists():
-            if dest_grupos.filter(grupos__name__iexact='Todos').exists():
-                destin = Destinatarios.objects.get(grupos__name__iexact='Todos')
-                revisar_usuarios = False
-                destinatarios = obj.recipient
-                destinatarios_2 = form.cleaned_data['recipient']
-                for dest in destinatarios.get_query_set():
-                    if not dest.id == destin.id:
-                        obj.recipient.remove(dest)
-                    else:
-                        obj.recipient.add(dest)
 
-                recipientes = [str(r[0]) for r in obj.recipient.get_query_set().values_list('id')]
-                destinatarios = form.cleaned_data['recipient']
-                request.POST['recipient'] = '|'.join(recipientes)
-                obj.save()
+        if dest_grupos.filter(grupos__name__iexact='Todos').exists():
+            destin = Destinatarios.objects.get(grupos__name__iexact='Todos')
+            revisar_usuarios = False
+            destinatarios = obj.recipient
+            for dest in destinatarios.get_query_set():
+                # Cualquier grupo que no sea 'Todos' debe eliminarse de los destinatarios
+                if not dest.id == destin.id:
+                    obj.recipient.remove(dest)
+                else:
+                    obj.recipient.add(dest)
+
+            recipientes = [str(r[0]) for r in obj.recipient.get_query_set().values_list('id')]
+            destinatarios = form.cleaned_data['recipient']
+            request.POST['recipient'] = '|'.join(recipientes)
+            obj.save()
 
         if revisar_usuarios:
             dest_user = Destinatarios.objects.filter(grupos__in=form.cleaned_data['recipient'])
-
+            for dest in dest_user :
+                obj.recipient.add(dest)
         obj.save()
+
         '''
         if form.cleaned_data['group'] == 'all':
             # send to all users

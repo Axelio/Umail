@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+{% include "user/base.html" %} 
+{% load admin_static %}
+<html lang="es">
+<head>
+<title>Inicio</title>
+<meta charset="utf-8">
+<script type="text/javascript" src="{% static "js/cufon-yui.js" %}"></script>
+<script type="text/javascript" src="{% static "js/cufon-replace.js" %}"></script>  
+<script type="text/javascript" src="{% static "js/Copse_400.font.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.nivo.slider.pack.js" %}"></script>
+<script type="text/javascript" src="{% static "js/imagepreloader.js" %}"></script>
+<link href="{% static "css/jquery-ui.css" %}" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+<script type="text/javascript">
+	preloadImages([
+	'/static/images/menu1_active.gif',
+	'/static/images/menu2_active.gif',
+	'/static/images/menu3_active.gif',
+	'/static/images/menu4_active.gif',
+	'/static/images/marker_right_active.jpg',
+	'/static/images/marker_left_active.jpg',
+	'/static/images/menu5_active.gif']);
+</script>
+
+<script>
+$(document).ready(function() {
+    $("#datepicker").datepicker();
+});
+
+$(document).ready(function() {
+    $("#datepicker2").datepicker();
+});
+</script>
+
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="http://info.template-help.com/files/ie6_warning/ie6_script_other.js"></script>
+	<script type="text/javascript" src="js/html5.js"></script>
+<![endif]-->
+</head>
+<body id="page1">
+<div class="body1">
+	<div class="body2">
+		<div class="main">
+<!-- header -->
+			<header>
+                <!--
+                {% include "user/banner.html" %}
+				<nav id="menu">
+					<ul>
+                        {% load menu %}
+                        {{ 'Inicio'|menu }}
+					</ul>
+				</nav>
+                -->
+                {% include "user/banner.html" %}
+<nav id="menu">
+<ul>
+                        {% load menu %}
+                        {{ 'Reportes'|menu }}
+</ul>
+
+</nav>
+			</header>
+        </div>
+	</div>
+<!-- / header -->
+<!-- content -->
+	<div class="body5">
+		<div class="body6">
+			<div class="main">
+				<div class="wrapper">
+					<figure class="left"><img src="{% static "images/letter1.png" %}" alt=""></figure>
+					<h2>¡Bienvenido a <span>Umail</span>!</h2>
+                    Primer sistema que busca la interoperabilidad entre las dependencias de la <a href="http://www.unerg.edu.ve/" target="_blank">UNERG</a> para lograr la agilización, facilidad, eficacia y eficiencia de la elaboración, envío y recepción en los memorándums.
+                    {% if mensaje %}
+                        <span class="tooltip">{{ mensaje }}</span>
+                    {% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="body7">
+		<div class="main">
+			<section id="content">
+				<div class="wrapper">
+				<article class="col1">
+					<div class="box1"><div class="box1_bot"><div class="box1_top">
+                        <div class="pad">
+                            <h2>Consulta un memo</h2>
+                            Ahora puedes verificar la autenticidad de un memorándum. Introduce aquí número del código de barras:
+                            <form id="sign_up" method="post">{% csrf_token %}
+                                <div>
+                                    <input type="text" class="input">
+                                    <input type="submit" class="submit" value="Consultar">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+        		</article>
+				<article class="col1 pad_left1">
+					<div class="box1"><div class="box1_bot"><div class="box1_top">
+                        <div class="pad">
+                            <h2>Libro de memos</h2>
+                            ¿Necesitas un libro con el resumen de los memorándums? Ingresa desde cuándo hasta cuándo te gustaría tener este libro:
+                            <form id="sign_up" method="post" style="height:100px">{% csrf_token %}
+                                {{ libro_memo.fecha_inicio }}
+                                {{ libro_memo.fecha_fin }}
+                                <!--<input type=date name="fecha_inicio"/>
+                                <input type=date name="fecha_fin"/>
+                                -->
+                                <!--
+                                <input type=date id="datepicker" name="fecha_inicio" placeholder="Fecha de inicio" />
+                                <input type=date id="datepicker2" name="fecha_fin" placeholder="Fecha final" />
+                                -->
+                                <input type="submit" class="submit" value="Descargar libro">
+                            </form>
+                        </div>
+                    </div>
+        		</article>
+                <article class="col1 pad_left1">
+                    <h2>Historial</h2>
+                    {% if log_user %}
+                        <ul class="list1">
+                            {% for log in log_user %}
+                                <li><span class="font1"><strong>{{ log.action_time }}</strong>  <a>{{ log }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <h3><a>Sin acciones registradas</h3>
+                    {% endif %}
+                </article>
+				</div>
+				<div class="wrapper">
+					<article class="col2">
+						<div class="pad1">
+							<h2>Noticias</h2>
+							<p class="pad_bot1">La sección de noticias busca la manera más rápida de enterarte de los sucesos más importantes en relación a los comunicados, resoluciones o comunicaciones de la <a href="http://www.unerg.edu.ve/" target="_blank">UNERG</a>.</p>
+                            <!--
+							<p class="pad_bot2">
+									Descripción.</p>-->
+							<div class="wrapper line1 marg_bot1">
+								<ul class="col1 list1">
+                                    {% load disminuir %}
+                                    {% for noticia in ult_notic1 %}
+									<li><a href="/noticias/{{ noticia.id }}">{{ noticia.texto|disminuir:100 }}</a></li>
+                                    {% endfor %}
+								</ul>
+								<ul class="list1 pad_left1 left">
+                                    {% load disminuir %}
+                                    {% for noticia in ult_notic2 %}
+									<li><a href="/noticias/{{ noticia.id }}">{{ noticia.texto|disminuir:100 }}</a></li>
+                                    {% endfor %}
+								</ul>
+							</div>
+							<a href="/noticias" class="button"><span><span>Leer más</span></span></a>
+						</div>
+					</article>
+				</div>
+			</section>
+		</div>
+	</div>
+			<!-- / content -->
+            {% include "user/pie.html" %}
+	</div>
+</div>
+<script type="text/javascript"> Cufon.now(); </script>
+<script type="text/javascript">
+	$(window).load(function() {
+	$('#slider').nivoSlider({
+        effect:'sliceDown', //Specify sets like: 'fold,fade,sliceDown, sliceDownLeft, sliceUp, sliceUpLeft, sliceUpDown, sliceUpDownLeft'    
+        slices:20,
+        animSpeed:300,
+        pauseTime:9999999999,
+        startSlide:0, //Set starting Slide (0 index)
+        directionNav:true, //Next & Prev
+        directionNavHide:false, //Only show on hover
+        controlNav:false, //1,2,3...
+        controlNavThumbs:false, //Use thumbnails for Control Nav
+        controlNavThumbsFromRel:false, //Use image rel for thumbs
+        controlNavThumbsSearch: '.jpg', //Replace this with...
+        controlNavThumbsReplace: '_thumb.jpg', //...this in thumb Image src
+        keyboardNav:true, //Use left & right arrows
+        pauseOnHover:true, //Stop animation while hovering
+        manualAdvance:false, //Force manual transitions
+        captionOpacity:1, //Universal caption opacity
+        beforeChange: function(){},
+        afterChange: function(){},
+        slideshowEnd: function(){} //Triggers after all slides have been shown
+    });
+    });
+</script>
+</body>
+</html>

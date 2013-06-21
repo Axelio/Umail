@@ -26,7 +26,7 @@
 
 <script>
 $(document).ready(function() {
-    $("#datepicker").datepicker();
+    $("#datepicker1").datepicker();
 });
 
 $(document).ready(function() {
@@ -107,6 +107,7 @@ $(document).ready(function() {
                             <form id="sign_up" method="post" style="height:100px">{% csrf_token %}
                                 {{ libro_memo.fecha_inicio }}
                                 {{ libro_memo.fecha_fin }}
+                                {{ libro_memo.hora}}
                                 <!--<input type=date name="fecha_inicio"/>
                                 <input type=date name="fecha_fin"/>
                                 -->

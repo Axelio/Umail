@@ -40,12 +40,9 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
     fecha_actual = datetime.datetime.today()
     c.update({'fecha_actual':fecha_actual})
     from django.contrib.admin.models import LogEntry, ADDITION
-    print request.user.pk
     log_user = LogEntry.objects.filter(
         user_id         = request.user.pk, 
         )
-    import pdb
-    #pdb.set_trace()
   
     c.update({'log_user':log_user})
     
@@ -54,8 +51,14 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
     if request.method == 'POST':
         from django_messages.models import Message
         if libro_memo.is_valid():
-            fecha_inicio = request.POST['fecha_inicio']
-            fecha_fin = request.POST['fecha_fin']
+            hora_inicio = datetime.time(0,00)
+            hora_fin = datetime.time(23,59)
+
+            # Se convierte el string a fecha + hora
+            fecha_inicio = request.POST['fecha_inicio'] + ' '+ str(hora_inicio)
+            fecha_inicio = datetime.datetime.strptime(fecha_inicio, '%m/%d/%Y %H:%M:%S')
+            fecha_fin = request.POST['fecha_fin'] + ' ' + str(hora_fin)
+            fecha_fin= datetime.datetime.strptime(fecha_fin, '%m/%d/%Y %H:%M:%S')
 
             # La fecha de inicio no puede ser mayor a la final
             (valido, mensaje) = revisar_fechas(fecha_inicio, fecha_fin)
@@ -65,11 +68,11 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
                 return render_to_response(template_name, c)
 
             lista_mensajes = Message.objects.filter(sent_at__range=(fecha_inicio, fecha_fin))
+            print lista_mensajes
 
             # Si no hay ningún mensaje en ese rango de fechas
             if not lista_mensajes.exists():
                 mensaje = u'No existe ningún memorándum entre las fechas seleccionadas.'
-            print lista_mensajes
 
 
     c.update({'mensaje':mensaje})

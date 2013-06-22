@@ -55,13 +55,12 @@ $(document).ready(function() {
 				</nav>
                 -->
                 {% include "user/banner.html" %}
-<nav id="menu">
-<ul>
-                        {% load menu %}
-                        {{ 'Reportes'|menu }}
-</ul>
-
-</nav>
+                    <nav id="menu">
+                        <ul>
+                            {% load menu %}
+                            {{ 'Reportes'|menu }}
+                        </ul>
+                    </nav>
 			</header>
         </div>
 	</div>
@@ -72,8 +71,8 @@ $(document).ready(function() {
 			<div class="main">
 				<div class="wrapper">
 					<figure class="left"><img src="{% static "images/letter1.png" %}" alt=""></figure>
-					<h2>¡Bienvenido a <span>Umail</span>!</h2>
-                    Primer sistema que busca la interoperabilidad entre las dependencias de la <a href="http://www.unerg.edu.ve/" target="_blank">UNERG</a> para lograr la agilización, facilidad, eficacia y eficiencia de la elaboración, envío y recepción en los memorándums.
+					<h2>Reportes</h2>
+                    En esta sección podrás verificar la autenticidad de los memorándum, así como ver tu historial de acciones o descargar el libro de memorándum de tu dependencia a sólo unos clicks.
                     {% if mensaje %}
                         <span class="tooltip">{{ mensaje }}</span>
                     {% endif %}
@@ -92,7 +91,7 @@ $(document).ready(function() {
                             Ahora puedes verificar la autenticidad de un memorándum. Introduce aquí número del código de barras:
                             <form id="sign_up" method="post">{% csrf_token %}
                                 <div>
-                                    <input type="text" class="input">
+                                    {{ consulta_memo.codigo }}
                                     <input type="submit" class="submit" value="Consultar">
                                 </div>
                             </form>
@@ -103,25 +102,18 @@ $(document).ready(function() {
 					<div class="box1"><div class="box1_bot"><div class="box1_top">
                         <div class="pad">
                             <h2>Libro de memos</h2>
-                            ¿Necesitas un libro con el resumen de los memorándums? Ingresa desde cuándo hasta cuándo te gustaría tener este libro:
+                            ¿Necesitas un libro con el resumen de los memorándum? Ingresa desde cuándo hasta cuándo te gustaría tener este libro:
                             <form id="sign_up" method="post" style="height:100px">{% csrf_token %}
                                 {{ libro_memo.fecha_inicio }}
                                 {{ libro_memo.fecha_fin }}
                                 {{ libro_memo.hora}}
-                                <!--<input type=date name="fecha_inicio"/>
-                                <input type=date name="fecha_fin"/>
-                                -->
-                                <!--
-                                <input type=date id="datepicker" name="fecha_inicio" placeholder="Fecha de inicio" />
-                                <input type=date id="datepicker2" name="fecha_fin" placeholder="Fecha final" />
-                                -->
                                 <input type="submit" class="submit" value="Descargar libro">
                             </form>
                         </div>
                     </div>
         		</article>
                 <article class="col1 pad_left1">
-                    <h2>Historial</h2>
+                    <h2 style="padding:0 0 0 0">Historial</h2>
                     {% if log_user %}
                         <ul class="list1">
                             {% for log in log_user %}
@@ -135,28 +127,49 @@ $(document).ready(function() {
 				</div>
 				<div class="wrapper">
 					<article class="col2">
-						<div class="pad1">
-							<h2>Noticias</h2>
-							<p class="pad_bot1">La sección de noticias busca la manera más rápida de enterarte de los sucesos más importantes en relación a los comunicados, resoluciones o comunicaciones de la <a href="http://www.unerg.edu.ve/" target="_blank">UNERG</a>.</p>
-                            <!--
-							<p class="pad_bot2">
-									Descripción.</p>-->
-							<div class="wrapper line1 marg_bot1">
-								<ul class="col1 list1">
-                                    {% load disminuir %}
-                                    {% for noticia in ult_notic1 %}
-									<li><a href="/noticias/{{ noticia.id }}">{{ noticia.texto|disminuir:100 }}</a></li>
-                                    {% endfor %}
-								</ul>
-								<ul class="list1 pad_left1 left">
-                                    {% load disminuir %}
-                                    {% for noticia in ult_notic2 %}
-									<li><a href="/noticias/{{ noticia.id }}">{{ noticia.texto|disminuir:100 }}</a></li>
-                                    {% endfor %}
-								</ul>
-							</div>
-							<a href="/noticias" class="button"><span><span>Leer más</span></span></a>
-						</div>
+                        {% if consulto %}
+                            {% if memo_result.exists %}
+                                <h2 style="padding:0 0 0 0">¡Memo encontrado!</h2>
+                                <div class="box2">
+                                    <div class="box2_top">	
+                                        <div class="box2_bot">	
+                                            <div class="pad">
+                                                <div class="wrapper">
+                                                    <figure class="left"><img src="{% static "images/marker_1.gif"%}" alt=""></figure>
+                                                    <div class="cols">
+                                                        <a>
+                                                        {% if aprobado %}
+                                                            ¡Este memo es auténtico! Es un memorándum de {{ jefe }} enviado a las {{ hora }} para {{ destinos }} tiene como asunto: {{ asunto }}
+                                                        {% else %}
+                                                            ¡Este memo es auténtico! A pesar que el memorándum es verídico no podemos mostrarte su contenido porque aún no está aprobado. Revisa más tarde cuando se defina el estado del memorándum.
+                                                        {% endif %}
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <h2 style="padding:0 0 0 0">Memo no encontrado</h2>
+                                <div class="box2">
+                                    <div class="box2_top">	
+                                        <div class="box2_bot">	
+                                            <div class="pad">
+                                                <div class="wrapper">
+                                                    <figure class="left"><img src="{% static "images/marker_1.gif"%}" alt=""></figure>
+                                                    <div class="cols">
+                                                        <a>
+                                                        <strong>¡Este memo no es auténtico!</strong> No existe ningún memorándum generado con ese número de código de barras, por lo tanto, es falso. Revise el código de barras y vuelva a intentarlo.
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
 					</article>
 				</div>
 			</section>

@@ -149,7 +149,7 @@ class MessageAdmin(admin.ModelAdmin):
     )
     list_display = ('subject', 'sender', 'sent_at', 'read_at', 'status')
     list_filter = ('sent_at', 'sender', 'tipo')
-    search_fields = ('subject', 'body')
+    search_fields = ('subject', 'body', 'codigo')
 
     def save_model(self, request, obj, form, change):
         """

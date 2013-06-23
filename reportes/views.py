@@ -22,6 +22,7 @@ from django.utils.translation import ugettext as _
 from reportlab.graphics.barcode import createBarcodeDrawing
 from django.utils.text import normalize_newlines
 from django.utils.safestring import mark_safe
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from reportes.forms import LibroMemoForm, ConsultaMemoForm
 from django_messages.models import Message, Destinatarios
 
@@ -145,25 +146,54 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
                     lista_mensajes = lista_mensajes.filter(models.Q(sender = usuario)|models.Q(recipient__id__exact=usuario.id))
 
             # Si no hay ningún mensaje en ese rango de fechas
+            memos = lista_mensajes
             if not lista_mensajes.exists():
                 mensaje = u'No existe ningún memorándum entre las fechas seleccionadas.'
                 c.update({'mensaje':mensaje})
                 c.update({'libro_memo':libro_memo})
             else:
-                memos = lista_mensajes
+                paginador = Paginator(memos, 3)
+                page = request.GET.get('page')
+                try:
+                    memos = paginador.page(page)
+                except PageNotAnInteger:
+                    # If page is not an integer, deliver first page.
+                    memos = paginador.page(1)
+                except EmptyPage:
+                    # If page is out of range (e.g. 9999), deliver last page of results.
+                    memos = paginador.page(paginator.num_pages)
                 c.update({'memos':memos})
+                c.update({'opcion':opcion})
+                lista_mensajes = ''
+                for memo in memos:
+                    lista_mensajes = str(memo.id) + ',' + lista_mensajes
+                c.update({'lista_mensajes':lista_mensajes}) # pasamos la misma variable de memos pero para traernosla de vuelta en el hidden para sacar el PDF
             return render_to_response(template_name, c)
-            #libro_memos(request, lista_mensajes)
-            #memo(request, lista_mensajes[0].id)
+        if request.POST['lista_mensajes']:
+            memos = request.POST['lista_mensajes']
+            opcion = request.POST['opcion']
+            memos = memos.split(',')
+            lista_mensaje = []
+            if opcion == 'salida':
+                opcion = 'enviados'
+            elif opcion == 'entrada':
+                opcion = 'recibidos'
+            for memo in memos:
+                if memo:
+                    lista_mensaje.append(memo)
+            memos = Message.objects.filter(id__in=lista_mensaje)
+            fecha_inicio = request.POST['fecha_inicio']
+            fecha_fin = request.POST['fecha_fin']
+            salto = '<br />'
 
-
-
-
-            # --------------- REPORTE DE LISTADO EN PDF ---------------------#
-
+            #Libro_Memos_PDF(request, lista_mensajes)
+            #def Libro_Memos_PDF(request, memos):
             response = HttpResponse(mimetype='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename=Acta_Recuperacion_Integrales.pdf; pagesize=A4;'
-            texto = 'texto'
+            if opcion == 'ambos':
+                response['Content-Disposition'] = 'attachment; filename=Libro_memorandum_enviados_recibidos.pdf; pagesize=A4;'
+                opcion = 'enviados y recibidos'
+            else:
+                response['Content-Disposition'] = 'attachment; filename=Libro_memorandum_'+ opcion +'.pdf; pagesize=A4;'
 
             #elementos es la lista donde almaceno todos lo que voy a incluir al documento pdf
             elementos = []
@@ -194,108 +224,72 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
             ('ALIGN', (1,1), (2,-1), 'LEFT'),
             ]
 
-            #Declaración de variables para el for
-            memorandum = ''
+            elementos = []
+            doc = SimpleDocTemplate(response)    
+            style = getSampleStyleSheet() 
+            style2 = getSampleStyleSheet()
+            styleFecha = getSampleStyleSheet()
+            styleEncabezado = getSampleStyleSheet()
+
+            fechas = datetime.datetime.today()
+            mes = fecha.NormalDate().monthName()
+            dia = fecha.NormalDate().dayOfWeekName()
+            salto = '<br />'
+
+            txtFecha = '%s, %s DE %s DE %s'%(dia.upper(), fechas.day, mes.upper(), fechas.year)
+            styleF = styleFecha['Normal']
+            styleF.fontSize = 8
+            styleF.fontName = 'Helvetica'
+            styleF.alignment = TA_RIGHT
+            fechaV = Paragraph(txtFecha, styleF)
+            elementos.append(fechaV)
+            elementos.append(Spacer(1,5))
+
+            #-- Espacio para poner el encabezado con la clase Canvas
+            elementos.append(Spacer(1,75))
+
+            #Titulo del reporte
+            txtTitulo = u'LIBRO DE MEMORÁNDUM %s%s' %(opcion.upper(), str(salto)*2)
+            titulo = style['Heading1']
+            titulo.fontSize = 9
+            titulo.fontName = 'Helvetica-Bold'
+            titulo.alignment = TA_CENTER
+            tituloV = Paragraph(txtTitulo, titulo)
+            elementos.append(tituloV)
+
+            #Periodo
+            elementos.append(Spacer(1,-15))# Quitandole espacio al periodo para subirlo un poco mas
+            #txtPeriodo = u'%s hasta %s'%(memos[0].sent_at, memos[memos.count()-1].sent_at)
+            txtPeriodo = u'Memorándum desde %s/%s/%s hasta %s/%s/%s'%(memos[0].sent_at.day, memos[0].sent_at.month, memos[0].sent_at.year, memos[memos.count()-1].sent_at.day, memos[memos.count()-1].sent_at.month, memos[memos.count()-1].sent_at.year)
+            periodo = Paragraph(txtPeriodo, styleF)
+            elementos.append(periodo)
+
             num = 0
-
+            tabla = []
+            tabla.append(['NUM', 'REDACTADO', 'APROBADO POR', 'PARA', 'FECHA', 'ASUNTO']) # Encabezado de la Tabla.
             for memo in memos:
-                if memo != memorandum:
-                    #tabla.append([i[1], i[2]])
-                    memorandum = memo
-                    if num != 0: #Si es la primera vuelta, no se carga el salto de página
-                        # Salto de página
-                        elementos.append(t1)# Se van cargado las tablas antes del salto de página
-                        salto = style['Heading3']
-                        txt = ''
-                        salto.pageBreakBefore = 1
-                        saltoV = Paragraph(txt, salto)
-                        elementos.append(saltoV)
+                num += 1
 
-                    # Datos del encabezado
-                    logo = Image(settings.STATIC_ROOT+'images/unerg.jpg', width = 100, height = 38)
-                    logo.hAlign = 'LEFT'
-                    elementos.append(logo)
-                    elementos.append(Spacer(1,-25))
-                    txtEncabezado = u'REPÚBLICA BOLIVARIANA DE VENEZUELA'
-                    txtEncabezado += u'<br />UNIVERSIDAD NACIONAL EXPERIMENTAL RÓMULO GALLEGOS'
-                    txtEncabezado += u'<br />DIRECCIÓN DE ADMISIÓN, CONTROL Y EVALUACIÓN'
-                    txtEncabezado += u'<br />ÁREA: %s'%(texto)
-                    txtEncabezado += u'<br />CARRERA: %s'%(texto)
-                    styleEncabezado = getSampleStyleSheet()
-                    areaSedeCarrera = styleEncabezado['Normal']
-                    areaSedeCarrera.fontSize = 9
-                    areaSedeCarrera.fontName = 'Helvetica-Bold'
-                    areaSedeCarrera.alignment = TA_CENTER
-                    unirElementos = Paragraph(txtEncabezado, areaSedeCarrera)
-                    elementos.append(unirElementos)
+                dest= ''
+                if memo.recipient.get_query_set().count() == 1:
+                    dest = memo.recipient.get_query_set()[0]
+                else:
+                    for destin in memo.recipient.get_query_set()[:memo.recipient.get_query_set()-2]:
+                        dest+= str(destin) + ', '
+                    dest = dest + memo.recipient.get_query_set()[memo.recipient.get_query_set()-1]
+                tabla.append([num, memo.sender, jefe_dep(request), dest, u'%s/%s/%s' %(memo.sent_at.day, memo.sent_at.month, memo.sent_at.year), memo.subject])
 
-                    #Fecha del reporte
-                    txtFecha = '%s, %s DE %s DE %s <br />'%(dia.upper(), fechas.day, mes.upper(), fechas.year)
-                    # txtFecha += 'Generado por: %s %s'%(perfil_user.persona.primer_apellido, perfil_user.persona.primer_nombre)
-                    styleF = styleFecha['Normal']
-                    styleF.fontSize = 8
-                    styleF.fontName = 'Helvetica-Bold'
-                    styleF.alignment = TA_RIGHT
-                    fechaV = Paragraph(txtFecha, styleF)
-                    elementos.append(fechaV)
-
-                    #Titulo del reporte
-                    num_integral = str(texto)
-                    txtTitulo = u'Resumen de memorándum de %s' %(texto)
-                    titulo = style['Heading1']
-                    titulo.fontSize = 9
-                    titulo.fontName = 'Helvetica-Bold'
-                    titulo.alignment = TA_CENTER
-                    tituloV = Paragraph(txtTitulo, titulo)
-                    elementos.append(tituloV)
-
-                    #Periodo
-                    elementos.append(Spacer(1,-15))# Quitandole espacio al periodo para subirlo un poco mas
-                    txtPeriodo = u'Período: %s'%(texto)
-                    periodo = Paragraph(txtPeriodo, styleF)
-                    elementos.append(periodo)
-
-                    #Materia del integral
-                    if texto == '0':
-                        txtAsignatura = u'MATERIA: %s  -  Nivel: Todos' %(texto)
-                    else:
-                        txtAsignatura = u'MATERIA: %s  -   Nivel: %s' %(texto, texto)
-
-                    asignatura = style['Heading2']
-                    asignatura.fontSize = 9
-                    asignatura.fontName = 'Helvetica-Bold'
-                    asignatura.alignment = TA_CENTER
-                    asignaturaV = Paragraph(txtAsignatura, asignatura)
-                    elementos.append(asignaturaV)
-
-                    '''
-                    periodo = i[0]
-                    cedula = i[1]
-                    primer_apellido = i[2]
-                    segundo_apellido = i[3]
-                    primer_nombre = i[4]
-                    segundo_nombre = i[5]
-                    materia_cod = i[6]
-                    materia_id = i[7]
-                    materia_nombre = i[8]
-                    '''
-                    #t1.setStyle(TableStyle(x))
-                    #elementos.append(t1)
-
-                    num = 0
-                    tabla = []
-                    tabla.append(['NUM', 'CÉDULA', 'NOMBRE Y APELLIDO', 'NOTA', 'NOTA (LETRAS)']) # Encabezado de la Tabla.
-                #tabla.append(Spacer(1,+60))# Añadiéndole espacio al bajarlo un poco mas
-
-                tabla.append([texto, texto, texto + " " +  texto + " " + texto  + " " + texto  , '', ''])
-
-                t1 = Table(tabla, colWidths=('', '', 8.0*cm, '', ''))
-                num = num + 1
+                t1 = Table(tabla, colWidths=('', '', '', '', '', ''))
                 t1.setStyle(TableStyle(x))
             elementos.append(t1)#--> Para cargar la ultima tabla del reporte
+            doc.build(elementos, canvasmaker=NumeroDePagina, onFirstPage=encabezado_constancia)
+            return response  
 
-            doc.build(elementos, onFirstPage=firma_actasIntegrales, onLaterPages=firma_actasIntegrales)
-            return response
+            #libro_memos(request, lista_mensajes)
+            #memo(request, lista_mensajes[0].id)
+
+
+
 
     c.update({'mensaje':mensaje})
     return render_to_response(template_name, c)
@@ -361,7 +355,7 @@ def libro_memos(request, memos):
     doc.build(elementos, canvasmaker=pieDePaginaConstancias, onFirstPage=encabezado_constancia)
     return response  
 
-def Libro_Memos(request, memos):
+def Libro_Memos_PDF(request, memos):
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=Acta_Recuperacion_Integrales.pdf; pagesize=A4;'
     texto = 'texto'

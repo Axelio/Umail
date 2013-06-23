@@ -66,7 +66,7 @@ $(document).ready(function() {
 	</div>
 <!-- / header -->
 <!-- content -->
-	<div class="body5">
+	<div class="body5" id=Menu>
 		<div class="body6">
 			<div class="main">
 				<div class="wrapper">
@@ -128,6 +128,29 @@ $(document).ready(function() {
                             </div>
                         {% endif %}
                     {% elif memos %}
+                            <table width=100%>
+                                <tbody>
+                                    <tr align=center>
+                                        <td align=centervalign="middle">
+                                            <div class="pagination">  
+                                                    <span class="step-links">
+                                                    {% if memos.has_previous %}
+                                                        <a href="?page={{ memos.previous_page_number }}">Anterior</a>
+                                                    {% endif %}
+
+                                                    <span class="current">
+                                                        <h3 style="color:black">Página {{ memos.number }} de {{ memos.paginator.num_pages }}.</h3>
+                                                    </span>
+
+                                                    {% if memos.has_next %}
+                                                        <a href="?page={{ memos.next_page_number }}">Siguiente</a>
+                                                    {% endif %}
+                                                    
+                                                </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             {% for memo in memos %} 
 
                             <div class="box2">
@@ -139,26 +162,11 @@ $(document).ready(function() {
                                                 <div class="cols">
                                                     <table width=100%>
                                                         <tbody>
-                                                        <a>
-                                                            <tr align=center>
-                                                                <td><a><b>De</b></a></td>
-                                                                <td><a><b>Para</b></a></td>
-                                                                <td><a><b>Fecha</b></a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>{{ memo.sender }}</td>
-                                                                <td>
-                                                                {% for destin in memo.recipient.get_query_set %}
-                                                                    {{ destin }}, 
-                                                                {% endfor %}
-                                                                </td>
-                                                                <td>{{ memo.sent_at|date:_("DATETIME_FORMAT")}}</td>
-                                                            </tr>
-                                                            <tr><td><br /></td></tr>
-                                                            <tr>
-                                                                <td colspan=3>{{ memo.subject }}</td>
-                                                            </tr>
-                                                        </a>
+                                                            <strong style="color:#006abb">De:</strong> {{ memo.sender }}<br />
+                                                            <strong style="color:#006abb">Para:</strong>{% for destin in memo.recipient.get_query_set %} {{ destin }},{% endfor %}<br />
+                                                            <strong style="color:#006abb">Fecha:</strong> {{ memo.sent_at|date:_("DATETIME_FORMAT")}}<br />
+                                                            <strong style="color:#006abb">Asunto:</strong> {{ memo.subject }}<br />
+                                                            <tr><td align=center><a href=/leer/{{ memo.id }}/>Ver memo</a></tr></td>
                                                         <tbody>
                                                     </table>
                                                 </div>
@@ -167,7 +175,19 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                             </div>
+                            </ul>
                             {% endfor %}
+                            <form id="sign_up" method="post" height=150px>{% csrf_token %}
+                                <table width=100%>
+                                    <tbody>
+                                        <tr><td><input type="hidden" name="lista_mensajes" value="{{ lista_mensajes }}"></td></tr>
+                                        <tr><td><input type="hidden" name="opcion" value="{{ opcion }}"></td></tr>
+                                        <tr><td><input type="hidden" name="fecha_inicio" value="{{ fecha_inicio }}"></td></tr>
+                                        <tr><td><input type="hidden" name="fecha_fin" value="{{ fecha_fin }}"></td></tr>
+                                        <tr><td align=center><input type="submit" class="submit" value="Descargar libro"></td></tr>
+                                    <tbody>
+                                </table>
+                            </form>
 
                     {% else %}
                         <h2 style="padding:0 0 0 0">Historial</h2>
@@ -192,7 +212,6 @@ $(document).ready(function() {
                                         </div>
                                     </div>
                                 {% endfor %}
-                            </ul>
                         {% else %}
                             <h3><a>Sin acciones registradas</h3>
                         {% endif %}
@@ -214,7 +233,7 @@ $(document).ready(function() {
 					<div class="box1"><div class="box1_bot"><div class="box1_top">
                         <div class="pad">
                             <h2>Libro de memos</h2>
-                            ¿Necesitas un libro con el resumen de los memorándum? Ingresa desde cuándo hasta cuándo te gustaría tener este libro:
+                            ¿Necesitas un libro con el resumen de los memorándum? Ingresa desde cuándo, hasta cuándo y de cuál bandeja te gustaría tener este libro:
                             <form id="sign_up" method="post" style="height:100px">{% csrf_token %}
                                 <table>
                                     <thead>
@@ -231,7 +250,7 @@ $(document).ready(function() {
                                             <td>{{ libro_memo.fecha_fin }}</td>
                                         </tr>
                                         <tr>
-                                            <td><input type="submit" class="submit" value="Descargar libro"></td>
+                                            <td><input type="submit" class="submit" value="Consultar"></td>
                                         </tr>
                                     </tbody>
                                     <tfoot>

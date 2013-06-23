@@ -112,6 +112,7 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <br /><br />
                                 <table width=100%>
                                     <tbody>
                                         <tr>
@@ -119,6 +120,7 @@
                                                 {{ message.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.siglas }} - {{ message.id }}
                                             </td>
                                         </tr>
+                                        <tr><td><br /></td></tr>
                                         <tr>
                                             <td align=left width=15%>
                                                 <strong>Para:</strong>
@@ -147,6 +149,15 @@
                                         </tr>
                                         <tr>
                                             <td align=left width=15%>
+                                                <strong>Asunto:</strong>
+                                            </td>
+                                            <td align=left width=75%>
+                                                {{ message.subject }}
+                                            </td>
+                                        </tr>
+                                        <tr><td><br /></td></tr>
+                                        <tr>
+                                            <td align=left width=15%>
                                             </td>
                                             <td align=justify width=25%>
                                                 {{ message.body|linebreaksbr }}
@@ -154,7 +165,7 @@
                                         </tr>
                                         <tr>
                                             <td width=15%>
-                                                <strong>Leido por:</strong>
+                                                <strong>Leído por:</strong>
                                             </td>
                                             <td width=75%>
                                                 {% ifequal message.leido_por.get_query_set.count 0 %}

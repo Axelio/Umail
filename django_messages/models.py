@@ -148,7 +148,8 @@ class Message(models.Model):
             self.sent_at = datetime.datetime.now()
 
         if self.num_ident == None:
-            mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
+            fecha_actual = datetime.datetime.today()
+            mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=self.sender.usuarios.user.profile.persona.cargo_principal.dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
             self.num_ident = mensajes.count() + 1
 
         if self.codigo == None:

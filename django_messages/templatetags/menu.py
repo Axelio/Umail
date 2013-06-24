@@ -34,7 +34,7 @@ def menu(seccion):
 
     # Contactos
     titulos.append("Contactos")
-    enlace.append("/#Menu")
+    enlace.append("/contactos/#Menu")
     clase.append("nav5")
 
     vmenu.append(titulos)

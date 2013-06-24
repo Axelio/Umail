@@ -9,6 +9,29 @@ from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
 
 @csrf_protect
+def contactos(request, template_name='user/contactos/index.html', mensaje=''):
+    c = {}
+    c.update(csrf(request))
+    c.update({'request':request})
+    '''
+  
+    persona = PerfilForm(instance=request.user.profile.persona)
+    if request.method == 'POST':
+        form = PerfilForm(request.POST)
+        if form.is_valid():
+            # Para editar los datos se le pasa el modelform  y se instancia con el request.profile.persona para guardar los cambios realizados
+            form = PerfilForm(request.POST, instance=request.user.profile.persona)
+            form.save()
+            mensaje = 'Datos guardados exitosamente'
+    c.update({
+        'mensaje':mensaje,
+        'persona':persona,
+        })
+    '''
+    return render_to_response(template_name, c)
+contactos = login_required(contactos)
+
+@csrf_protect
 def perfil(request, template_name='user/personas/perfil.html', mensaje=''):
     c = {}
     c.update(csrf(request))

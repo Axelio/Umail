@@ -1,6 +1,8 @@
 # Django settings for umail project.
 import os
 import glob
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

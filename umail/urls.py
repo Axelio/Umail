@@ -57,6 +57,7 @@ urlpatterns = patterns('',
     ## Perfil
     url(r'^perfil/', include('personas.urls')),
 
+    url(r'^contactos/', 'personas.views.contactos'),
 
     # Reportes
     ## Perfil

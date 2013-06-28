@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% include "user/base.html" %} 
+{% load admin_static %}
+{% load i18n %}
+<title>Inicio</title>
+<meta charset="utf-8">
+
+
+
+
+                        <style type="text/css">
+                        @media print { #djDebug {display:none;}}
+                        </style>
+                        <link rel="stylesheet" href="{{ STATIC_URL }}css/toolbar.css" type="text/css">
+                        <script type="text/javascript" src="{{ STATIC_URL }}js/toolbar.min.js"></script>
+                        <div id="djDebug" style="display:none;" dir="ltr">
+                            <div style="display:none;" id="djDebugToolbar">
+                                <ul id="djDebugPanelList">
+                                    <li id="djDebugButton">Memorándums</li>
+                                    <li>
+                                        <a id="djHideToolBarButton" href="#" title="Ocultar barra">
+                                            &raquo;
+                                        </a>
+                                    </li>
+
+                                    <li class="djDebugPanelButton">
+                                        <a href="{{Entrada|default:"#"}}" title="Entrada">
+                                            Entrada
+                                        </a>
+                                    </li>
+
+                                    <li class="djDebugPanelButton">
+                                        <a href="/admin" title="Enviados">
+                                            Enviados
+                                        </a>
+                                    </li>
+
+                                    <li class="djDebugPanelButton">
+                                        <a href="#" title="Borradores">
+                                            Borradores
+                                        </a>
+                                    </li>
+
+                                    <li class="djDebugPanelButton">
+                                        <a href="#" title="Archivos">
+                                            Archivos
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div style="display:none;" id="djDebugToolbarHandle">
+                                <a title="{% trans "Show Toolbar" %}" id="djShowToolBarButton" href="#">Abrir menú&laquo;</a>
+                            </div>
+
+                                <div id="Entrada" class="panelContent">
+                                    <div class="djDebugPanelTitle">
+                                        <a href="" class="djDebugClose">Cerrar</a>
+                                        <h3>Entrada</h3>
+                                    </div>
+                                    <div class="djDebugPanelContent">
+                                        <div class="scroll">
+                                            Prueba
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--
+                                <div id="{{ panel.dom_id }}" class="panelContent">
+                                    <div class="djDebugPanelTitle">
+                                        <a href="" class="djDebugClose">{% trans "Close" %}</a>
+                                        <h3>{{ panel.title|safe }}</h3>
+                                    </div>
+                                    <div class="djDebugPanelContent">
+                                        <div class="scroll">
+                                            {{ panel.content|safe }}
+                                        </div>
+                                    </div>
+                                </div>
+                                -->
+                            <div id="djDebugWindow" class="panelContent"></div>
+                        </div>
+
+
+
+<script type="text/javascript" src="{% static "js/cufon-yui.js" %}"></script>
+<script type="text/javascript" src="{% static "js/cufon-replace.js" %}"></script>  
+<script type="text/javascript" src="{% static "js/Copse_400.font.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.nivo.slider.pack.js" %}"></script>
+<script type="text/javascript" src="{% static "js/imagepreloader.js" %}"></script>
+<script type="text/javascript">
+    preloadImages([
+    '/static/images/menu1_active.gif',
+    '/static/images/menu2_active.gif',
+    '/static/images/menu3_active.gif',
+    '/static/images/menu4_active.gif',
+    '/static/images/marker_right_active.jpg',
+    '/static/images/marker_left_active.jpg',
+    '/static/images/menu5_active.gif']);
+</script>
+<!--[if lt IE 9]>
+    <script type="text/javascript" src="http://info.template-help.com/files/ie6_warning/ie6_script_other.js"></script>
+    <script type="text/javascript" src="js/html5.js"></script>
+<![endif]-->
+</head>
+<body id="page1">
+<div class="body1">
+    <div class="body2">
+        <div class="main">
+<!-- header -->
+            <header>
+                {% include "user/banner.html" %}
+                <nav id="menu">
+                    <ul>
+                        {% load menu %}
+                        {{ 'Contactos'|menu }}
+                    </ul>
+                </nav>
+            </header>
+        </div>
+    </div>
+<!-- / header -->
+<!-- content -->
+    <div class="body5" id="Menu">
+        <div class="body6" id="Menu">
+            <div class="main">
+                <div class="wrapper">
+                    <figure class="left"><img src="{% static "images/letter1.png" %}" alt=""></figure>
+                    <h2><span>Contactos</span></h2>
+                    Sección en la que puedes redactar, revisar la bandeja de entrada, bandeja de salida, memorándums aprobados, memorándums archivados, entre otros.
+                    {% if mensaje %}
+                        <span class="tooltip">{{ mensaje }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="body7">
+        <div class="main">
+            <section id="content">
+                <div class="wrapper">
+                
+                <article class="col2">
+                    <table width=100% align=center>
+                        <tbody>
+                            <tr align=center>
+                                <td align=centervalign="middle">
+                                    <div class="pagination">  
+                                            <span class="step-links">
+                                            {% if lista_destinatarios.has_previous %}
+                                                <h3 style="padding:0 0 0 0">{{ opcion }}</h3> - <a href="?page={{ lista_destinatarios.previous_page_number }}">Anterior</a>
+                                            {% endif %}
+
+                                            {% if lista_destinatarios %}
+                                                <span class="current" width=100% align=center>
+                                                    <h3 style="color:black">{{ opcion }} - Página {{ lista_destinatarios.number }} de {{ lista_destinatarios.paginator.num_pages }}.</h3>
+                                                </span>
+                                            {% else %}
+                                                <span class="current" width=100% align=center>
+                                                    <h3 style="color:black">No se encontró ningún contacto con esas características.</h3>
+                                                </span>
+                                            {% endif %}
+
+                                            {% if lista_destinatarios.has_next %}
+                                                <h3 style="padding:0 0 0 0">{{ opcion }}</h3> - <a href="?page={{ lista_destinatarios.next_page_number }}">Siguiente</a>
+                                            {% endif %}
+                                            
+                                        </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align=center>
+                                    <form method="post"> {% csrf_token %}
+                                        <div>
+                                            <input type="submit" class="submit" value="Filtrar">
+                                            {{ form.filtro }}
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ul class="list1">
+                        {% load accion %}
+                        {% load contactos %}
+                        {% for usuario in lista_destinatarios %} 
+                            <div class="box2">
+                                <div class="box2_top">  
+                                    <div class="box2_bot">  
+                                        <div class="pad">
+                                            <div class="wrapper">
+                                                <figure class="left"><img src="{% static "images/marker_1.gif"%}" alt=""></figure>
+                                                <div class="cols">
+                                                    <a>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <a><b>{{ usuario }}</b>
+                                                                    </td>
+                                                                </tr>
+                                                    </a>
+                                                                <tr>
+                                                                    <td>
+                                                                        <p style="color:black">
+                                                                        <b>Teléfono</b>: {{ usuario.usuarios.user.profile.persona.telefono|telefono }}
+                                                                        <br />
+                                                                        <b>Cargo</b>: {{ usuario.usuarios.user.profile.persona.cargo_principal.cargo }}
+                                                                        <br />
+                                                                        <b>Dependencia</b>: {{ usuario.usuarios.user.profile.persona.cargo_principal.dependencia }}
+                                                                        <br />
+                                                                        <b>Correo</b>: {{ usuario.usuarios.user.profile.persona.email }}
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </ul>
+                </article>
+                </div>
+            </section>
+        </div>
+    </div>
+            <!-- / content -->
+            {% include "user/pie.html" %}
+            <>
+    </div>
+</div>
+<script type="text/javascript"> Cufon.now(); </script>
+<script type="text/javascript">
+    $(window).load(function() {
+    $('#slider').nivoSlider({
+        effect:'sliceDown', //Specify sets like: 'fold,fade,sliceDown, sliceDownLeft, sliceUp, sliceUpLeft, sliceUpDown, sliceUpDownLeft'    
+        slices:20,
+        animSpeed:300,
+        pauseTime:9999999999,
+        startSlide:0, //Set starting Slide (0 index)
+        directionNav:true, //Next & Prev
+        directionNavHide:false, //Only show on hover
+        controlNav:false, //1,2,3...
+        controlNavThumbs:false, //Use thumbnails for Control Nav
+        controlNavThumbsFromRel:false, //Use image rel for thumbs
+        controlNavThumbsSearch: '.jpg', //Replace this with...
+        controlNavThumbsReplace: '_thumb.jpg', //...this in thumb Image src
+        keyboardNav:true, //Use left & right arrows
+        pauseOnHover:true, //Stop animation while hovering
+        manualAdvance:false, //Force manual transitions
+        captionOpacity:1, //Universal caption opacity
+        beforeChange: function(){},
+        afterChange: function(){},
+        slideshowEnd: function(){} //Triggers after all slides have been shown
+    });
+    });
+</script>
+</body>
+</html>
+

@@ -22,7 +22,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-DATABASES['default'] =  dj_database_url.config()
+#DATABASES['default'] =  dj_database_url.config()
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'

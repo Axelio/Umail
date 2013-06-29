@@ -126,7 +126,7 @@
         <div class="body6" id="Menu">
             <div class="main">
                 <div class="wrapper">
-                    <figure class="left"><img src="{% static "images/letter1.png" %}" alt=""></figure>
+                    <figure class="left"><img src="{% static "images/letter5.png" %}" alt=""></figure>
                     <h2><span>Contactos</span></h2>
                     Sección en la que puedes redactar, revisar la bandeja de entrada, bandeja de salida, memorándums aprobados, memorándums archivados, entre otros.
                     {% if mensaje %}
@@ -150,16 +150,16 @@
 
                                     <div class="pagination">
                                         <span class="step-links">
-                                            {% if lista_destinatarios.has_previous %}
-                                                <a href="?page={{ lista_destinatarios.previous_page_number }}">previous</a>
-                                            {% endif %}
-
                                             <span class="current">
-                                                Page {{ lista_destinatarios.number }} of {{ lista_destinatarios.paginator.num_pages }}.
+                                                <h2>{{opcion}}. Página {{ lista_destinatarios.number }} de {{ lista_destinatarios.paginator.num_pages }}.</h2>
                                             </span>
 
+                                            {% if lista_destinatarios.has_previous %}
+                                                <a href="?page={{ lista_destinatarios.previous_page_number }}">ANterior</a>
+                                            {% endif %}
+
                                             {% if lista_destinatarios.has_next %}
-                                                <a href="?page={{ lista_destinatarios.next_page_number }}">next</a>
+                                                <a href="?page={{ lista_destinatarios.next_page_number }}">Siguiente</a>
                                             {% endif %}
                                         </span>
                                     </div>

@@ -9,7 +9,6 @@ from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
-from lib.slugifi import slughifi
 
 @csrf_protect
 def contactos(request, template_name='user/contactos/index.html', mensaje=''):
@@ -19,6 +18,7 @@ def contactos(request, template_name='user/contactos/index.html', mensaje=''):
     from django_messages.models import Destinatarios
     from auth.models import Group
     lista_destinatarios = Destinatarios.objects.exclude(grupos__in=Group.objects.all())
+    paginador = Paginator(lista_destinatarios, 2)
     page = request.GET.get('page')
     opcion = 'Listado de contactos'
     form = FiltroForm
@@ -26,34 +26,33 @@ def contactos(request, template_name='user/contactos/index.html', mensaje=''):
     if request.method == "POST":
         form = FiltroForm(request.POST)
         if form.is_valid():
-            q = slughifi(request.POST['filtro'])
-            lista_destinatarios = lista_destinatarios.filter(models.Q(usuarios__user__userprofile__persona__primer_nombre__icontains=q)| # Primer nombre
+            q = request.POST['filtro']
+            lista = lista_destinatarios.filter(models.Q(usuarios__user__userprofile__persona__primer_nombre__icontains=q)| # Primer nombre
                                                             models.Q(usuarios__user__userprofile__persona__primer_apellido__icontains=q)| # Primer apellido
                                                             models.Q(usuarios__user__userprofile__persona__segundo_nombre__icontains=q)| # Primer apellido
                                                             models.Q(usuarios__user__userprofile__persona__segundo_apellido__icontains=q)| # Primer apellido
                                                             models.Q(usuarios__user__userprofile__persona__email__icontains=q)| # Correo
-                                                            models.Q(usuarios__user__userprofile__persona__telefono__icontains=q)| # Correo
+                                                            models.Q(usuarios__user__userprofile__persona__telefono__icontains=q)| # Telefono
                                                             models.Q(usuarios__user__userprofile__persona__cargo_principal__cargo__name__icontains=q)| # Cargo
                                                             models.Q(usuarios__user__userprofile__persona__cargo_principal__dependencia__departamento__icontains=q)| # Dependencia
                                                             models.Q(usuarios__user__userprofile__persona__cargo_principal__dependencia__siglas__icontains=q) # Dependencia (siglas)
 
                                                             ).distinct()
-            paginador = Paginator(lista_destinatarios, 20)
-            c.update({'form':form})
-            c.update({'opcion':opcion})
-            c.update({'lista_destinatarios':lista_destinatarios})
+            paginador = Paginator(lista, 2)
             try:
-                lista_destinatarios = paginador.page(lista_destinatarios)
+                lista = paginador.page(lista)
             except PageNotAnInteger:
                 # If page is not an integer, deliver first page.
-                lista_destinatarios = paginador.page(1)
+                lista = paginador.page(1)
             except EmptyPage:
                 # If page is out of range (e.g. 9999), deliver last page of results.
-                lista_destinatarios = paginador.page(paginator.num_pages)
+                lista = paginador.page(paginator.num_pages)
+            c.update({'form':form})
+            c.update({'opcion':opcion})
+            c.update({'lista_destinatarios':lista})
 
             return render_to_response(template_name, c)
 
-    paginador = Paginator(lista_destinatarios, 20)
     try:
         lista_destinatarios = paginador.page(lista_destinatarios)
     except PageNotAnInteger:

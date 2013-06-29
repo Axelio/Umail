@@ -149,9 +149,6 @@
                                 <td align=centervalign="middle">
                                     <div class="pagination">  
                                             <span class="step-links">
-                                            {% if lista_destinatarios.has_previous %}
-                                                <h3 style="padding:0 0 0 0">{{ opcion }}</h3> - <a href="?page={{ lista_destinatarios.previous_page_number }}">Anterior</a>
-                                            {% endif %}
 
                                             {% if lista_destinatarios %}
                                                 <span class="current" width=100% align=center>
@@ -163,8 +160,11 @@
                                                 </span>
                                             {% endif %}
 
+                                            {% if lista_destinatarios.has_previous %}
+                                                <a href="?page={{ lista_destinatarios.previous_page_number }}"><figure class="left"><img src="{% static "images/marker_left_active.jpg" %}" alt=""></figure></a>
+                                            {% endif %}
                                             {% if lista_destinatarios.has_next %}
-                                                <h3 style="padding:0 0 0 0">{{ opcion }}</h3> - <a href="?page={{ lista_destinatarios.next_page_number }}">Siguiente</a>
+                                                <a href="?page={{ lista_destinatarios.next_page_number }}"><figure class="left"><img src="{% static "images/marker_right_active.jpg" %}" alt=""></figure></a>
                                             {% endif %}
                                             
                                         </span>
@@ -174,8 +174,8 @@
                                 <td align=center>
                                     <form method="post"> {% csrf_token %}
                                         <div>
-                                            <input type="submit" class="submit" value="Filtrar">
                                             {{ form.filtro }}
+                                            <input type="submit" class="submit" value="Buscar">
                                         </div>
                                     </form>
                                 </td>

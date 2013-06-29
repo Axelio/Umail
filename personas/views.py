@@ -18,8 +18,6 @@ def contactos(request, template_name='user/contactos/index.html', mensaje=''):
     from django_messages.models import Destinatarios
     from auth.models import Group
     lista_destinatarios = Destinatarios.objects.exclude(grupos__in=Group.objects.all())
-    paginador = Paginator(lista_destinatarios, 2)
-    page = request.GET.get('page')
     opcion = 'Listado de contactos'
     form = FiltroForm
 
@@ -27,7 +25,7 @@ def contactos(request, template_name='user/contactos/index.html', mensaje=''):
         form = FiltroForm(request.POST)
         if form.is_valid():
             q = request.POST['filtro']
-            lista = lista_destinatarios.filter(models.Q(usuarios__user__userprofile__persona__primer_nombre__icontains=q)| # Primer nombre
+            lista_destinatarios = lista_destinatarios.filter(models.Q(usuarios__user__userprofile__persona__primer_nombre__icontains=q)| # Primer nombre
                                                             models.Q(usuarios__user__userprofile__persona__primer_apellido__icontains=q)| # Primer apellido
                                                             models.Q(usuarios__user__userprofile__persona__segundo_nombre__icontains=q)| # Primer apellido
                                                             models.Q(usuarios__user__userprofile__persona__segundo_apellido__icontains=q)| # Primer apellido
@@ -38,33 +36,36 @@ def contactos(request, template_name='user/contactos/index.html', mensaje=''):
                                                             models.Q(usuarios__user__userprofile__persona__cargo_principal__dependencia__siglas__icontains=q) # Dependencia (siglas)
 
                                                             ).distinct()
-            paginador = Paginator(lista, 2)
+            paginador = Paginator(lista_destinatarios, 20)
+            pagina = request.GET.get('page')
             try:
-                lista = paginador.page(lista)
+                lista_destinatarios = paginador.page(pagina)
             except PageNotAnInteger:
                 # If page is not an integer, deliver first page.
-                lista = paginador.page(1)
+                lista_destinatarios = paginador.page(1)
             except EmptyPage:
                 # If page is out of range (e.g. 9999), deliver last page of results.
-                lista = paginador.page(paginator.num_pages)
+                lista_destinatarios = paginador.page(paginador.num_pages)
             c.update({'form':form})
             c.update({'opcion':opcion})
-            c.update({'lista_destinatarios':lista})
+            c.update({'lista_destinatarios':lista_destinatarios})
+            print lista_destinatarios.object_list
 
             return render_to_response(template_name, c)
-
+    paginador = Paginator(lista_destinatarios, 20)
+    pagina = request.GET.get('page')
     try:
-        lista_destinatarios = paginador.page(lista_destinatarios)
+        lista_destinatarios = paginador.page(pagina)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
         lista_destinatarios = paginador.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        lista_destinatarios = paginador.page(paginator.num_pages)
-        
+        lista_destinatarios = paginador.page(paginador.num_pages)
     c.update({'form':form})
     c.update({'opcion':opcion})
     c.update({'lista_destinatarios':lista_destinatarios})
+
     return render_to_response(template_name, c)
 contactos = login_required(contactos)
 

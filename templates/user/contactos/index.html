@@ -147,27 +147,23 @@
                         <tbody>
                             <tr align=center>
                                 <td align=centervalign="middle">
-                                    <div class="pagination">  
-                                            <span class="step-links">
 
-                                            {% if lista_destinatarios %}
-                                                <span class="current" width=100% align=center>
-                                                    <h3 style="color:black">{{ opcion }} - Página {{ lista_destinatarios.number }} de {{ lista_destinatarios.paginator.num_pages }}.</h3>
-                                                </span>
-                                            {% else %}
-                                                <span class="current" width=100% align=center>
-                                                    <h3 style="color:black">No se encontró ningún contacto con esas características.</h3>
-                                                </span>
-                                            {% endif %}
-
+                                    <div class="pagination">
+                                        <span class="step-links">
                                             {% if lista_destinatarios.has_previous %}
-                                                <a href="?page={{ lista_destinatarios.previous_page_number }}"><figure class="left"><img src="{% static "images/marker_left_active.jpg" %}" alt=""></figure></a>
+                                                <a href="?page={{ lista_destinatarios.previous_page_number }}">previous</a>
                                             {% endif %}
+
+                                            <span class="current">
+                                                Page {{ lista_destinatarios.number }} of {{ lista_destinatarios.paginator.num_pages }}.
+                                            </span>
+
                                             {% if lista_destinatarios.has_next %}
-                                                <a href="?page={{ lista_destinatarios.next_page_number }}"><figure class="left"><img src="{% static "images/marker_right_active.jpg" %}" alt=""></figure></a>
+                                                <a href="?page={{ lista_destinatarios.next_page_number }}">next</a>
                                             {% endif %}
-                                            
                                         </span>
+                                    </div>
+
                                 </td>
                             </tr>
                             <tr>

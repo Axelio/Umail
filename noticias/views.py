@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 # Create your views here.
 from noticias.models import *
 from django.contrib.auth.decorators import login_required

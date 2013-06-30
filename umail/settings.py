@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 # Django settings for umail project.
 import os
 import glob
@@ -6,6 +7,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
+    (u'Axel Díaz','diaz.axelio@gmail.com')
     # ('Your Name', 'your_email@example.com'),
 )
 

@@ -95,7 +95,7 @@ def estado(mensaje):
     elif mensaje.status.nombre == 'Anulado':
         color = "#EA4444" # Rojo
 
-    estado_memo = '<div class="col_5" style="background-color:%s" align="center">%s</div> <div>%s...</div>' %(color, mensaje.status.nombre, disminuir_t(mensaje.subject, 45))
+    estado_memo = '<div class="col_5" style="background-color:%s" align="center">%s</div> <div>%s...</div>' %(color, mensaje.status.nombre, disminuir_t(mensaje.subject, 40))
     return format_html(estado_memo)
 estado.is_safe = True 
 register.filter(estado)

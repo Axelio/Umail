@@ -126,17 +126,17 @@ def inbox(request, mensaje=''):
             message_list = paginador.page(paginator.num_pages)
         if not mensajes.exists():
             mensaje = u'No tiene ningún mensaje hasta ahora'
-        return render_to_response('user/mensajes/inbox.html', {
+        return render_to_response('user/mensajes/bandeja.html', {
             'message_list': message_list,
-            'loggeado': request.user.is_authenticated,
             'request':request,
             'mensaje':mensaje,
             'notify':notify,
+            'tipo_bandeja':'entrada',
         }, context_instance=RequestContext(request))
     else:
         return HttpResponseRedirect('/')
 
-def outbox(request, mensaje='', template_name='user/mensajes/enviados.html'):
+def outbox(request, mensaje='', template_name='user/mensajes/bandeja.html'):
     """
     Displays a list of sent messages by the current user.
     Optional arguments:
@@ -163,7 +163,7 @@ def outbox(request, mensaje='', template_name='user/mensajes/enviados.html'):
     }, context_instance=RequestContext(request))
 outbox = login_required(outbox)
 
-def trash(request, template_name='user/mensajes/papelera.html'):
+def trash(request, template_name='user/mensajes/bandeja.html', mensaje=''):
     """
     Displays a list of deleted messages. 
     Optional arguments:
@@ -172,9 +172,22 @@ def trash(request, template_name='user/mensajes/papelera.html'):
     by sender and recipient.
     """
     message_list = Message.objects.trash_for(request.user)
+    mensajes = message_list
+    paginador = Paginator(message_list, 5)
+    page = request.GET.get('page')
+    try:
+        message_list = paginador.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        message_list = paginador.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        message_list = paginador.page(paginator.num_pages)
+    if not mensajes.exists():
+        mensaje = u'No tiene ningún mensaje hasta ahora'
     return render_to_response(template_name, {
         'message_list': message_list,
-        'loggeado': request.user.is_authenticated,
+        'mensaje':mensaje,
         'request':request,
     }, context_instance=RequestContext(request))
 trash = login_required(trash)
@@ -357,7 +370,7 @@ def delete(request, message_id, success_url=None):
         notify = True
         if notification:
             notification.send([user], "messages_deleted", {'message': message,})
-        mensaje = u'¡Mensaje eliminado satisfactoriamente!'
+        mensaje = u'¡Mensaje archivado satisfactoriamente!'
         return inbox(request, mensaje)
     raise Http404
 delete = login_required(delete)

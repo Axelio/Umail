@@ -44,10 +44,10 @@ urlpatterns = patterns('',
     ## Responder memo
     url(r'^responder/(?P<message_id>[\d]+)/$', 'django_messages.views.reply', name='messages_reply'),
     ## Archivar memo
-    url(r'^eliminar/(?P<message_id>[\d]+)/$', 'django_messages.views.delete', name='messages_delete'),
+    url(r'^archivar/(?P<message_id>[\d]+)/$', 'django_messages.views.delete', name='messages_delete'),
 
     ## Memos archivados
-    url(r'^papelera/$', 'django_messages.views.trash', name='messages_trash'),
+    url(r'^archivados/$', 'django_messages.views.trash', name='messages_trash'),
 
     ## Leer memo
     url(r'^leer/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='messages_detail'),

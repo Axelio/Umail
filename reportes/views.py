@@ -54,7 +54,7 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
     from django.contrib.admin.models import LogEntry
     log_user = LogEntry.objects.filter(
         user_id         = request.user.pk, 
-        ).order_by('action_time')[:4]
+        ).order_by('-action_time')[:4]
   
     libro_memo = LibroMemoForm(request.POST)
     consulta_memo = ConsultaMemoForm(request.POST)

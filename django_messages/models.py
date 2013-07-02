@@ -20,6 +20,7 @@ class MessageManager(models.Manager):
         marked as deleted.
         """
         destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
+        print destinatarios
         return self.filter(
             models.Q(recipient__in=destinatarios)|
             models.Q(con_copia__in=destinatarios),
@@ -161,6 +162,7 @@ class Message(models.Model):
             self.codigo = ''
             for ident in identificador:
                 self.codigo = self.codigo + str(ord(ident))
+            self.codigo = self.codigo + str(datetime.datetime.today().microsecond)
         super(Message,self).save(*args,**kwargs)
     
     class Meta:

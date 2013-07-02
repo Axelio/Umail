@@ -15,6 +15,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django_messages.models import Message
 from django_messages.forms import ComposeForm
 from django_messages.utils import format_quote
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.admin.models import LogEntry, ADDITION, DELETION, CHANGE
 
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
@@ -229,7 +231,19 @@ def compose(request, recipient=None,
                 if sender.exists():
                     mensaje.recipient.add(sender[0])
             mensaje.save()
-            mensaje = u'Mensaje enviado exitosamente'
+            mensaje_txt = u'Mensaje enviado exitosamente'
+
+            # Guardar log de envío de memo
+            LogEntry.objects.create(
+            user_id         = request.user.pk, 
+            content_type_id = ContentType.objects.get_for_model(Message).id,
+            object_id       = mensaje.id,
+            object_repr     = repr(mensaje), 
+            change_message  = mensaje_txt,
+            action_flag     = ADDITION
+            )
+            mensaje = mensaje_txt
+
             if success_url is None:
                 success_url = reverse('messages_inbox')
             if request.GET.has_key('next'):
@@ -311,8 +325,20 @@ def reply(request, message_id, form_class=ComposeForm,
                 if sender.exists():
                     mensaje.recipient.add(sender[0])
             mensaje.save()
+            mensaje_txt = u"Mensaje enviado exitosamente."
+
+            # Guardar log de envío de memo
+            LogEntry.objects.create(
+            user_id         = request.user.pk, 
+            content_type_id = ContentType.objects.get_for_model(Message).id,
+            object_id       = mensaje.id,
+            object_repr     = repr(mensaje), 
+            change_message  = mensaje_txt,
+            action_flag     = ADDITION
+            )
+            mensaje = mensaje_txt
+
                     
-            mensaje = u"Mensaje enviado exitosamente."
             return inbox(request, mensaje)
     else:
         cuerpo = u"\n\n%s escribió:\n%s" %(parent.sender, parent.body)
@@ -366,16 +392,30 @@ def delete(request, message_id, success_url=None):
                 message.recipient_deleted_at = now
                 deleted = True
     if deleted:
-        message.save()
+        if message.status == 'En espera':
+            message.save()
+            mensaje_txt = u"Mensaje archivado exitosamente."
+
+            # Guardar log de memo archivado
+            LogEntry.objects.create(
+            user_id         = request.user.pk, 
+            content_type_id = ContentType.objects.get_for_model(Message).id,
+            object_id       = message.id,
+            object_repr     = repr(message), 
+            change_message  = mensaje_txt,
+            action_flag     = DELETION
+            )
+            mensaje = mensaje_txt
+        else:
+            mensaje = u'Un mensaje que está en espera de ser aprobado no puede ser archivado aún.'
         notify = True
         if notification:
             notification.send([user], "messages_deleted", {'message': message,})
-        mensaje = u'¡Mensaje archivado satisfactoriamente!'
         return inbox(request, mensaje)
     raise Http404
 delete = login_required(delete)
 
-def undelete(request, message_id, success_url=None):
+def undelete(request, success_url=None):
     """
     Recovers a message from trash. This is achieved by removing the
     ``(sender|recipient)_deleted_at`` from the model.
@@ -402,7 +442,7 @@ def undelete(request, message_id, success_url=None):
     raise Http404
 undelete = login_required(undelete)
 
-def view(request, message_id, template_name='user/mensajes/leer.html'):
+def view(request, message_id, template_name='user/mensajes/leer.html', mensaje=''):
     """
     Shows a single message.``message_id`` argument is required.
     The user is only allowed to see the message, if he is either 
@@ -452,6 +492,19 @@ def view(request, message_id, template_name='user/mensajes/leer.html'):
                 message.leido_por.add(destin)
             if message.sender in message.leido_por.get_query_set():
                 message.leido_por.remove(destin)
+            mensaje=message
+            mensaje.save()
+            mensaje_txt = u"Mensaje nuevo leído."
+
+            # Guardar log de memo archivado
+            LogEntry.objects.create(
+            user_id         = request.user.pk, 
+            content_type_id = ContentType.objects.get_for_model(Message).id,
+            object_id       = mensaje.id,
+            object_repr     = repr(mensaje), 
+            change_message  = mensaje_txt,
+            action_flag     = CHANGE
+            )
 
     return render_to_response(template_name, {
         'loggeado': request.user.is_authenticated,

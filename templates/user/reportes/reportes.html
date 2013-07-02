@@ -203,7 +203,7 @@ $(document).ready(function() {
                                                         <figure class="left"><img src="{% static "images/marker_1.gif"%}" alt=""></figure>
                                                         <div class="cols">
                                                             <a>
-                                                                <a><b>{{ log.action_time }}</b> - {{ log.id|accion }}</a><br>{{ log }}
+                                                                <a><b>{{ log.action_time }}</b> - {{ log.id|accion }}</a><br>{{ log.change_message }}
                                                             </a>
                                                         </div>
                                                     </div>

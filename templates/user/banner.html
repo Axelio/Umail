@@ -9,12 +9,6 @@
             {% if request.user.is_authenticated %}
                 <li><a href='/logout'>Cerrar sesión</a></li>
             </ul>
-                <form id="search" method="post">
-                <div>
-                <input type="submit" class="submit" value="">
-                <input type="text" class="input">
-                </div>
-                </form>
             {% endif %}
         </nav>
         <p class="error">{{ form.errors }}</p>

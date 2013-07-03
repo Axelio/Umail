@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            /* Estilos del div que se tendrá la función de ocultar el contenido del sitio para dejar mostrarse a la ventana emergente */
+            .bloquer {width: 100%; height: 100%; left: 0px; top: 0px; background-color: #000; position: fixed;}
+            /* Estilo de la ventana emergente. La misma podés editarla, pero no quites el atributo position: fixed. */
+            .ventana_emergente {position: fixed; width: 300px; height: 300px; border: solid 1px #c1cdc1; background-color: #fff;}
+            /* Tanto la ventana emrgente como el bloqer estarán ocultos hasta que se dispare la función que los visualice */
+            .bloquer, .ventana_emergente {display: none;}
+        </style>
+       
+        <!-- Importación de la librería de jquery. -->
+        <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+       
+        <script type="text/javascript">
+           
+            //Esta función será la encargada de mostrar la ventana emergente. Recibirá como parámetro el id ("#nombre_del_id") de la ventana emergente.
+            function abrirVentanaPopUp(identificacion){
+                $(".bloquer").css('z-index', '998');
+                $(".bloquer").css('opacity', '0.5');                
+                $(".bloquer").fadeIn(500);
+                var w = $(window).width();
+                var h = $(window).height();
+                var divW = $(identificacion).width();
+                var divH = $(identificacion).height();
+                $(identificacion).css('left', (w/2)-(divW / 2)+"px");
+                $(identificacion).css('top', (h/2)-(divH / 2)+"px");
+                $(identificacion).css('z-index', '999');
+                $(identificacion).css('opacity', '1.0');
+                $(identificacion).fadeIn(500);
+                $(".cerrar_emergente").click(function(){
+                    $(identificacion).css('display', 'none');
+                    $(".bloquer").css('display', 'none'); 
+                });
+            }
+           
+            $(document).ready(function(){
+                $("#abrir_ventana").click(function(){
+                    // Acá se llama a la función nombrada anteriormente.
+                    abrirVentanaPopUp("#ventana_emergente");
+                });
+            });
+           
+        </script>
+        
+    </head>
+        <body>
+       
+        <!-- Este div no tendría contenido ya que su única función será ocultar la página para dejarse ver a la ventana emergente. -->
+        <div class="bloquer"></div>
+       
+        <!-- Ventana emergente. -->
+        <div id="ventana_emergente" class="ventana_emergente">
+            <p> Hola soy una ventana popup! </p>
+            <!-- Al presionarse este link se cerrará la ventana emergente. -->
+            <a class="cerrar_emergente" href="javascript:void(0);"> Cerrar </a>
+        </div>
+           
+    </body>
+</html>

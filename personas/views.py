@@ -7,12 +7,27 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.views.decorators.csrf import csrf_protect
 from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @csrf_protect
 def contactos(request, template_name='user/contactos/index.html', mensaje=''):
     c = {}
     c.update(csrf(request))
     c.update({'request':request})
+    from django_messages.models import Destinatarios
+    from auth.models import Group
+    lista_destinatarios = Destinatarios.objects.all().exclude(grupos__in=Group.objects.all())
+    paginador = Paginator(lista_destinatarios, 3)
+    page = request.GET.get('page')
+    opcion = 'Listado de contactos'
+    try:
+        lista_destinatarios = paginador.page(lista_destinatarios)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        lista_destinatarios = paginador.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        lista_destinatarios = paginador.page(paginator.num_pages)
     '''
   
     persona = PerfilForm(instance=request.user.profile.persona)
@@ -28,6 +43,8 @@ def contactos(request, template_name='user/contactos/index.html', mensaje=''):
         'persona':persona,
         })
     '''
+    c.update({'opcion':opcion})
+    c.update({'lista_destinatarios':lista_destinatarios})
     return render_to_response(template_name, c)
 contactos = login_required(contactos)
 

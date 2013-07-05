@@ -91,6 +91,7 @@ header .right{padding-right:59px;width:500px}
 .box1_top {background:url(/static/images/box_top.jpg) center top no-repeat;width:100%}
 .box1 .pad {padding:0 26px;padding-bottom:23px}
 .box1 .pad2 {padding:0 100px;padding-bottom:23px}
+.box1 .pad3 {padding:0 100px;padding-bottom:100%}
 .box1 h2 {font-size:24px;line-height:1.2em;color:#fff;padding:10px 0 22px 0}
 .box1 h2.center {font-size:30px;line-height:1.2em;padding:4px 0 26px 0;letter-spacing:-1px}
 .box1 .button {background:url(/static/images/button2_bg.gif) top repeat-x}

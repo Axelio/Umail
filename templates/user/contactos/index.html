@@ -126,7 +126,7 @@
         <div class="body6" id="Menu">
             <div class="main">
                 <div class="wrapper">
-                    <figure class="left"><img src="{% static "images/letter1.png" %}" alt=""></figure>
+                    <figure class="left"><img src="{% static "images/letter5.png" %}" alt=""></figure>
                     <h2><span>Contactos</span></h2>
                     Sección en la que puedes redactar, revisar la bandeja de entrada, bandeja de salida, memorándums aprobados, memorándums archivados, entre otros.
                     {% if mensaje %}
@@ -136,53 +136,52 @@
             </div>
         </div>
     </div>
-    
+    <center>
     <div class="body7">
         <div class="main">
             <section id="content">
-                <div class="wrapper">
+                <div class="wrapper"     style="margin-left: 25%;">
                 
-                <article class="col1 pad_left1">
-                    <div class="box1"><div class="box1_bot"><div class="box1_top">
-                        <div class="pad">
-                            <h2>Consulta un memo</h2>
-                            Ahora puedes verificar la autenticidad de un memorándum. Introduce aquí número del código de barras:
-                            <form id="sign_up" method="post" height=150px>{% csrf_token %}
-                                <div>
-                                    {{ consulta_memo.codigo }}
-                                    <input type="submit" class="submit" value="Consultar">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </article>
                 <article class="col2">
-                    <table width=100%>
+                    <table width=100% align=center>
                         <tbody>
                             <tr align=center>
                                 <td align=centervalign="middle">
-                                    <div class="pagination">  
-                                            <span class="step-links">
-                                            {% if listado_destiantarios.has_previous %}
-                                                <h3 style="padding:0 0 0 0">{{ opcion }}</h3> - <a href="?page={{ lista_destiantarios.previous_page_number }}">Anterior</a>
-                                            {% endif %}
 
+                                    <div class="pagination">
+                                        <span class="step-links">
                                             <span class="current">
-                                                <h3 style="color:black">{{ opcion }} - Página {{ lista_destiantarios.number }} de {{ lista_destiantarios.paginator.num_pages }}.</h3>
+                                                <h2>{{opcion}}. Página {{ lista_destinatarios.number }} de {{ lista_destinatarios.paginator.num_pages }}.</h2>
                                             </span>
 
-                                            {% if listado_destiantarios.has_next %}
-                                                <h3 style="padding:0 0 0 0">{{ opcion }}</h3> - <a href="?page={{ lista_destiantarios.next_page_number }}">Siguiente</a>
+                                            {% if lista_destinatarios.has_previous %}
+                                                <a href="?page={{ lista_destinatarios.previous_page_number }}">ANterior</a>
                                             {% endif %}
-                                            
+
+                                            {% if lista_destinatarios.has_next %}
+                                                <a href="?page={{ lista_destinatarios.next_page_number }}">Siguiente</a>
+                                            {% endif %}
                                         </span>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align=center>
+                                    <form method="post"> {% csrf_token %}
+                                        <div>
+                                            {{ form.filtro }}
+                                            <input type="submit" class="submit" value="Buscar">
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <ul class="list1">
                         {% load accion %}
-                        {% for log in log_user %} 
+                        {% load contactos %}
+                        {% for usuario in lista_destinatarios %} 
                             <div class="box2">
                                 <div class="box2_top">  
                                     <div class="box2_bot">  
@@ -191,8 +190,29 @@
                                                 <figure class="left"><img src="{% static "images/marker_1.gif"%}" alt=""></figure>
                                                 <div class="cols">
                                                     <a>
-                                                        <a><b>{{ log.action_time }}</b> - {{ log.id|accion }}</a><br>{{ log }}
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <a><b>{{ usuario }}</b>
+                                                                    </td>
+                                                                </tr>
                                                     </a>
+                                                                <tr>
+                                                                    <td>
+                                                                        <p style="color:black">
+                                                                        <b>Teléfono</b>: {{ usuario.usuarios.user.profile.persona.telefono|telefono }}
+                                                                        <br />
+                                                                        <b>Cargo</b>: {{ usuario.usuarios.user.profile.persona.cargo_principal.cargo }}
+                                                                        <br />
+                                                                        <b>Dependencia</b>: {{ usuario.usuarios.user.profile.persona.cargo_principal.dependencia }}
+                                                                        <br />
+                                                                        <b>Correo</b>: {{ usuario.usuarios.user.profile.persona.email }}
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                 </div>
                                             </div>
                                         </div>
@@ -206,7 +226,9 @@
             </section>
         </div>
     </div>
+    </center>        
             <!-- / content -->
+            
             {% include "user/pie.html" %}
             <>
     </div>

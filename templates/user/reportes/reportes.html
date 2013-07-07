@@ -177,14 +177,14 @@ $(document).ready(function() {
                             </div>
                             </ul>
                             {% endfor %}
-                            <form id="sign_up" method="post" height=150px>{% csrf_token %}
+                            <form id="sign_up" method="post" height=350px>{% csrf_token %}
                                 <table width=100%>
                                     <tbody>
                                         <tr><td><input type="hidden" name="lista_mensajes" value="{{ lista_mensajes }}"></td></tr>
                                         <tr><td><input type="hidden" name="opcion" value="{{ opcion }}"></td></tr>
                                         <tr><td><input type="hidden" name="fecha_inicio" value="{{ fecha_inicio }}"></td></tr>
                                         <tr><td><input type="hidden" name="fecha_fin" value="{{ fecha_fin }}"></td></tr>
-                                        <tr><td align=center><input type="submit" class="submit" value="Descargar libro"></td></tr>
+                                        <tr><td align=center><input type="submit" class="boton btn" value="Descargar libro"></td></tr>
                                     <tbody>
                                 </table>
                             </form>
@@ -219,14 +219,18 @@ $(document).ready(function() {
                 </article>
 				<article class="col1 pad_left1">
 					<div class="box1"><div class="box1_bot"><div class="box1_top">
-                        <div class="pad">
+                        <div class="pad" style="paddgin: 0 0 0 500">
                             <h2>Consulta un memo</h2>
                             Ahora puedes verificar la autenticidad de un memorándum. Introduce aquí número del código de barras:
-                            <form id="sign_up" method="post" height=150px>{% csrf_token %}
-                                <div>
-                                    {{ consulta_memo.codigo }}
-                                    <input type="submit" class="submit" value="Consultar">
-                                </div>
+                            <form id="sign_up" method="post" height=150px width=100px>{% csrf_token %}
+                                <table>
+                                    </table>
+                                        <tr>
+                                            <td>{{ consulta_memo.codigo }}</td>
+                                            <td><input type="submit" class="boton" value="Consultar"></td>
+                                        </td>
+                                    </table>
+                                </table>
                             </form>
                         </div>
                     </div>
@@ -234,7 +238,7 @@ $(document).ready(function() {
                         <div class="pad">
                             <h2>Libro de memos</h2>
                             ¿Necesitas un libro con el resumen de los memorándum? Ingresa desde cuándo, hasta cuándo y de cuál bandeja te gustaría tener este libro:
-                            <form id="sign_up" method="post" style="height:100px">{% csrf_token %}
+                            <form id="sign_up" method="post" style="height:150px">{% csrf_token %}
                                 <table>
                                     <thead>
                                         {{ libro_memo.hora}}
@@ -250,7 +254,7 @@ $(document).ready(function() {
                                             <td>{{ libro_memo.fecha_fin }}</td>
                                         </tr>
                                         <tr>
-                                            <td><input type="submit" class="submit" value="Consultar"></td>
+                                            <td><input type="submit" class="boton" value="Consultar"></td>
                                         </tr>
                                     </tbody>
                                     <tfoot>

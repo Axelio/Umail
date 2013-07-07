@@ -46,7 +46,7 @@ def menu(seccion):
             activo = 'id="active"'
         else:
             activo = ''
-        url = '<li class='+ clase[posicion] +' '+ activo +'><a href='+ enlace[posicion] +'>'+ titulos[posicion] +'</a></li>'
+        url = '<li class='+ clase[posicion] +' '+ activo +'><a href='+ enlace[posicion] +'>'+ '<cufon class="cufon cufon-canvas" alt="' + titulos[posicion] + '" style="width: 80px; height: 24px;"><canvas width="88" height="29" style="width: 88px; height: 29px; top: -4px; left: -1px;"/><cufontext>' + titulos[posicion] + '</cufontext></cufon>' +'</a></li>'
         renderizar = renderizar + url
 
 

@@ -10,9 +10,8 @@
                 <li><a href='/logout'>Cerrar sesión</a></li>
             </ul>
             {% endif %}
+            <li><p class="error">{{ m_error }}</p></li>
         </nav>
-        <p class="error">{{ form.errors }}</p>
-        <p class="error">{{ m_error }}</p>
             {% if not request.user.is_authenticated %}
                 <form method="post" action="/">
                     {% csrf_token %}

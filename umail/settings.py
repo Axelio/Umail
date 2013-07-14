@@ -1,6 +1,5 @@
 # -*- coding: utf8 -*-
 # Django settings for umail project.
-
 import os
 import glob
 

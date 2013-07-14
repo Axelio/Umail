@@ -23,8 +23,8 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+import dj_database_url # Configuración sólo para heroku
+DATABASES['default'] =  dj_database_url.config() #Configuración sólo para heroku
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'

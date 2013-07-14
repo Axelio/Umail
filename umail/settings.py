@@ -173,13 +173,12 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.admin',
     'django_messages',
-    'django_extensions',
     'ajax_select',
     'grappelli',
 	'personas',
     'sedes',
-    'memos',
     'noticias',
+    'reportes',
 )
 
 # A sample logging configuration. The only tangible logging

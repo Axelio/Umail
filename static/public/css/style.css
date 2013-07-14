@@ -618,8 +618,11 @@ input[type="color"],
           border-radius: 4px;
 }
 
-input,
 textarea,
+.uneditable-input {
+  width: 600px;
+}
+input,
 .uneditable-input {
   width: 206px;
 }

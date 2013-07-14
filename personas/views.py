@@ -67,6 +67,7 @@ def contactos(request, template_name='user/contactos/index.html', mensaje=''):
     c.update({'lista_destinatarios':lista_destinatarios})
 
     return render_to_response(template_name, c)
+contactos = login_required(contactos)
 
 @csrf_protect
 def perfil(request, template_name='user/personas/perfil.html', mensaje=''):

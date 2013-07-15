@@ -157,7 +157,7 @@ footer p {padding-bottom:15px}
 #entrada {background:url(/static/images/search.jpg) no-repeat;width:191px;height:26px;margin-top:3px}
 #entrada .submit {background:none;height:26px;width:28px;cursor:pointer}
 #entrada .input {width:153px;height:16px;padding:5px 0 5px 10px;font:14px Arial, Helvetica, sans-serif;color:#000;background:none}
-span.tooltip {right: 6px;top: 270px;position:fixed;  height: 20px;vertical-align:middle;display:block;position:fixed;padding:5px 15px;bottom:25px;color:#fff;border:2px solid rgba(34,34,34,0.9);background:rgba(51,51,51,0.9);text-align:center;border-radius:3px;opacity:70%;box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3);font-size:14px;}  
+span.tooltip {right: 6px;top: 270px;position:static;  height: 20px;vertical-align:middle;display:block;padding:5px 15px;bottom:25px;color:#fff;border:2px solid rgba(34,34,34,0.9);background:rgba(51,51,51,0.9);text-align:center;border-radius:3px;opacity:70%;box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3);font-size:14px;}  
 
 
 

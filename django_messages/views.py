@@ -207,14 +207,14 @@ def compose(request, recipient=None,
         ``template_name``: the template to use
         ``success_url``: where to redirect after successfull submission
     """
-    mensaje = ''
+    form_errors = ''
     if request.method == "POST":
         form = ComposeForm(request.POST)
         cuerpo = ''
         valido = form.is_valid()
         from django_messages.models import Destinatarios
         if not Destinatarios.objects.filter(usuarios__user__userprofile__persona__cargo_principal__dependencia = request.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = request.user.profile.persona.cargo_principal.dependencia.cargo_max).exists():
-            mensaje = 'No hay jefe de departamento en %s' %(request.user.profile.persona.cargo_principal.dependencia)
+            mensaje = u'Este memo no puede ser enviado ni aprobado porque no existe un jefe de departamento en %s' %(request.user.profile.persona.cargo_principal.dependencia)
             form_errors = mensaje
             valido = False
         if valido:
@@ -264,6 +264,14 @@ def compose(request, recipient=None,
         if recipient is not None:
             recipients = [u for u in User.objects.filter(username__in=[r.strip() for r in recipient.split('+')])]
             form.fields['recipient'].initial = recipients
+    if form.errors:
+        if form.errors.keys()[0] == 'subject':
+            label = "Asunto"
+        elif form.errors.keys()[0] == 'recipient':
+            label = "Destinatarios"
+        elif form.errors.keys()[0] == 'body':
+            label = "Texto"
+        form_errors =  label + ': ' + form.errors.values()[0][0]
     return render_to_response(template_name, {
         'cuerpo': cuerpo,
         'tipo': 'Redactar',

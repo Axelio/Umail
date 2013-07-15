@@ -128,7 +128,7 @@ class MessageAdmin(admin.ModelAdmin):
         (_('Message'), {
             'fields': (
                 'parent_msg',
-                'subject', 'body',
+                'subject', 'archivo', 'body',
             ),
             'classes': ('monospace' ),
         }),

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.template import Library, Node, TemplateSyntaxError
 
 class InboxOutput(Node):
@@ -50,6 +51,7 @@ def negrillas(request,id_message):
     from django_messages.models import Message, Destinatarios
     mensaje = Message.objects.get(id=id_message)
     destinatario = Destinatarios.objects.get(usuarios__user=request.user)
+    # Si esta entre los leídos, retornar False para que NO renderice negrillas
     if destinatario in mensaje.leido_por.get_query_set():
         return False
     else:

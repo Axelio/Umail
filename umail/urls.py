@@ -21,6 +21,13 @@ urlpatterns = patterns('',
     url(r'logout$',logout,{'next_page':'/'},),
     url(r'^$','auth.views.index'),
 
+   (r'^media/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.MEDIA_ROOT}),
+
+    # Manual de usuario 
+    url(r'^ayuda/(?P<seccion>\w+)/$', 'manual_usuario.views.manual', name='manual_usuario'),
+
+    url(r'^ayuda/$', 'manual_usuario.views.manual', name='manual_usuario'),
 
     # Memos
     ## Entrada
@@ -44,10 +51,10 @@ urlpatterns = patterns('',
     ## Responder memo
     url(r'^responder/(?P<message_id>[\d]+)/$', 'django_messages.views.reply', name='messages_reply'),
     ## Archivar memo
-    url(r'^eliminar/(?P<message_id>[\d]+)/$', 'django_messages.views.delete', name='messages_delete'),
+    url(r'^archivar/(?P<message_id>[\d]+)/$', 'django_messages.views.delete', name='messages_delete'),
 
     ## Memos archivados
-    url(r'^papelera/$', 'django_messages.views.trash', name='messages_trash'),
+    url(r'^archivados/$', 'django_messages.views.trash', name='messages_trash'),
 
     ## Leer memo
     url(r'^leer/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='messages_detail'),

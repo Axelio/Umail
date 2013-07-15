@@ -74,6 +74,9 @@
                                     <h3 color=white style="padding: 15px 0 10px; line-height: 0; vertical-align: middle">
                                         Redactar memorándum
                                     </h3>
+                                    {% if form_errors %}
+                                        <span class="tooltip">{{ form_errors }}</span>
+                                    {% endif %}
                                 </td>
                             </tr>
                         </tbody>

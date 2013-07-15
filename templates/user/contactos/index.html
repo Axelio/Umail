@@ -74,15 +74,19 @@
                                     <div class="pagination">
                                         <span class="step-links">
                                             <span class="current">
-                                                <h2>{{opcion}}. </h2><strong>Página {{ lista_destinatarios.number }} de {{ lista_destinatarios.paginator.num_pages }}.</strong>
+                                                <h2>{{opcion}}. </h2>
                                             </span>
 
+                                            <strong>
                                             {% if lista_destinatarios.has_previous %}
-                                                <strong><a href="?page={{ lista_destinatarios.previous_page_number }}">ANterior</a></strong>
+                                                <a href="?page={{ lista_destinatarios.previous_page_number }}">ANterior</a></strong>
                                             {% endif %}
 
+                                            Página {{ lista_destinatarios.number }} de {{ lista_destinatarios.paginator.num_pages }}.
+
                                             {% if lista_destinatarios.has_next %}
-                                                <strong><a href="?page={{ lista_destinatarios.next_page_number }}">Siguiente</a></strong>
+                                                <a href="?page={{ lista_destinatarios.next_page_number }}">Siguiente</a>
+                                            </strong>
                                             {% endif %}
                                         </span>
                                     </div>

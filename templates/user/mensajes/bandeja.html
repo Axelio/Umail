@@ -49,9 +49,6 @@
 					<figure class="left"><img src="{% static "images/letter2.png" %}" alt=""></figure>
 					<h2><span>Memorándums</span></h2>
                     Sección en la que puedes redactar, revisar la bandeja de entrada, bandeja de salida, memorándums aprobados, memorándums archivados, entre otros.
-                    {% if mensaje %}
-                        <span class="tooltip">{{ mensaje }}</span>
-                    {% endif %}
 				</div>
 			</div>
 		</div>
@@ -119,12 +116,15 @@
 				<div class="col_1">
                     {% include "user/mensajes/menu.html" %}
 				</div>
-				<div class="col_4">
+                {% if message_list.exists %}
+                    <div class="col_4">
+                {% else %}
+                    <div class="col_4" height=100px style="padding: 60px 0 60px 0; vertical-align: 50%; ">
+                    {{ mensaje }}
+                {% endif %}
                     <div class="wrapper">
                         <article >
                             <ul class="list4">
-
-
                                 <table width=100%>
                                     <tbody>
                                         {% load disminuir %}

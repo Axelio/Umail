@@ -207,9 +207,17 @@ def compose(request, recipient=None,
         ``template_name``: the template to use
         ``success_url``: where to redirect after successfull submission
     """
+    mensaje = ''
     if request.method == "POST":
         form = ComposeForm(request.POST)
-        if form.is_valid():
+        cuerpo = ''
+        valido = form.is_valid()
+        from django_messages.models import Destinatarios
+        if not Destinatarios.objects.filter(usuarios__user__userprofile__persona__cargo_principal__dependencia = request.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = request.user.profile.persona.cargo_principal.dependencia.cargo_max).exists():
+            mensaje = 'No hay jefe de departamento en %s' %(request.user.profile.persona.cargo_principal.dependencia)
+            form_errors = mensaje
+            valido = False
+        if valido:
             from django_messages.models import Destinatarios, EstadoMemo
             estado_memo = EstadoMemo.objects.get(nombre='En espera')
             #form = form_class(request.POST)
@@ -221,6 +229,7 @@ def compose(request, recipient=None,
                             status = estado_memo,
                             tipo = '',
                         )
+
             mensaje.save()
             dest = []
             for i in request.POST['recipient'].split('|'):
@@ -258,6 +267,7 @@ def compose(request, recipient=None,
     return render_to_response(template_name, {
         'cuerpo': cuerpo,
         'tipo': 'Redactar',
+        'form_errors':form_errors,
         'request': request,
         'form': form,
     }, context_instance=RequestContext(request))

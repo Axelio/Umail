@@ -63,20 +63,36 @@
 
 		<div class="main">
 			<section id="content">
-                <div class="wrapper">
+                <div class="wrapper" style="margin-left: 25%;">
                     <article>
                         <form action="" method="POST">
                             {% csrf_token %}
-                            <table>
+                            <table align=center>
                                 <tbody>
                                     <tr>
-                                        </td>
-                                            {{ form }}
+                                        <td><strong>{{ form.old_password.label }}</strong></td>
+                                        <td>{{ form.old_password }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ form.new_password1.label }}</strong></td>
+                                        <td>{{ form.new_password1 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ form.new_password2.label }}</strong></td>
+                                        <td>{{ form.new_password2 }}</td>
+                                    </tr>
+                                    <tr>
                                         <td>
+                                            <br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align=center colspan=2>
+                                            <input type="submit" value="Enviar" class="boton"/>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        <input type="submit" value="Enviar" class="boton"/>
                         </form>
                     </article>
                 </div>

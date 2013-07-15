@@ -63,11 +63,11 @@
 
 		<div class="main">
 			<section id="content">
-                <div class="wrapper">
+                <div class="wrapper" style="margin-left: 25%;">
                     <article>
                         <form action="" method="POST">
                             {% csrf_token %}
-                            <table align=center width=100%>
+                            <table align=center>
                                 <tbody>
                                     <tr>
                                         <td><strong>{{ persona.primer_nombre.label }}</strong></td>
@@ -95,13 +95,11 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                        </td>
-                                        <td>
-                                            {{ persona.telefono.help_text }}
+                                            <br />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align=center>
+                                        <td align=center colspan=2>
                                             <input type="submit" value="Enviar" class="boton"/>
                                         </td>
                                     </tr>
@@ -109,8 +107,8 @@
                             </table>
                         </form>
                     </article>
-                </div>
                 Si deseas cambiar tu contraseña, por favor ingresa <a href="/perfil/cambiar_clave">aquí</a>
+                </div>
                 <br />
 
 			</section>

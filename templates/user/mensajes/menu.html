@@ -6,7 +6,7 @@
             {% if request|jefe_departamento %}
                 <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/por_aprobar/#Menu" alt="" style="color:#000">Por aprobar <strong>({{ request|num_por_aprobar }})</strong></a></li>
             {% endif %}
-            <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/redactar/#menu" style="color:#000;">Redactar</a></li>
+            <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/redactar/#Menu" style="color:#000;">Redactar</a></li>
             {% ifequal request|num_entrada 0 %}
                 <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/recibidos.png" %}"><a href="/entrada/#Menu" style="color:#000">Recibidos</a></li>
             {% else %}

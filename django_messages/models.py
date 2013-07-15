@@ -94,7 +94,7 @@ class Message(models.Model):
     """
     A private message from user to multiple users
     """
-    recipient = models.ManyToManyField('Destinatarios', related_name='received_messages', null=True, blank=True, verbose_name=_("Destinatario"))
+    recipient = models.ManyToManyField('Destinatarios', related_name='received_messages', verbose_name=_("Destinatario"))
     con_copia = models.ManyToManyField('Destinatarios', related_name='con_copia', null=True, blank=True, verbose_name=("con copia a:"))
     subject = models.CharField(_("Subject"), max_length=255)
     archivo = models.FileField(upload_to='media/adjuntos/',null=True, blank=True)

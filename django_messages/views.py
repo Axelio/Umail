@@ -60,13 +60,12 @@ def por_aprobar(request, mensaje=''):
     if request.user.is_authenticated():
         dependencia = request.user.profile.persona.cargo_principal.dependencia
         # Lista de mensajes en espera escritos por la dependencia del jefe de dependencia
-        message_list = Message.objects.filter(
-                                              models.Q( status__nombre__iexact='En espera', 
+        message_list = Message.objects.filter(models.Q( status__nombre__iexact='En espera', 
                                                         sender__usuarios__persona__cargo_principal__dependencia=dependencia)| 
                                               models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=dependencia))
         if not message_list.exists():
             mensaje = u'No tiene ningún mensaje por aprobar hasta ahora'
-        return render_to_response('user/mensajes/por_aprobar.html', {
+        return render_to_response('user/mensajes/bandeja.html', {
             'message_list': message_list,
             'loggeado': request.user.is_authenticated,
             'request':request,

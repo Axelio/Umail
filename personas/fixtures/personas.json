@@ -49,5 +49,22 @@
         "email": "edgar@correo.com", 
         "tipodoc": "c"
     }
+},
+{
+    "pk": 4, 
+    "model": "personas.personas", 
+    "fields": {
+        "num_identificacion": "7281158", 
+        "genero": 1, 
+        "cargo_principal": 5, 
+        "segundo_apellido": "", 
+        "segundo_nombre": "", 
+        "primer_apellido": "Cordero", 
+        "primer_nombre": "Elizabeth", 
+        "cargos_autorizados": [], 
+        "telefono": "", 
+        "email": "eli.corcar@gmail.com", 
+        "tipodoc": "c"
+    }
 }
 ]

@@ -68,5 +68,19 @@
         "siglas": "DACE", 
         "telefono": null
     }
+},
+{
+    "pk": 6, 
+    "model": "sedes.dependencias", 
+    "fields": {
+        "nivel": 9, 
+        "tipo_sede": 2, 
+        "cargo_max": 5, 
+        "dependencia": 2, 
+        "departamento": "\u00c1rea de Odontologia", 
+        "ubicacion": 1, 
+        "siglas": "ADO", 
+        "telefono": null
+    }
 }
 ]

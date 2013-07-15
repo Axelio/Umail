@@ -21,8 +21,8 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+#import dj_database_url
+#DATABASES['default'] =  dj_database_url.config()
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
@@ -179,6 +179,7 @@ INSTALLED_APPS = (
     'sedes',
     'noticias',
     'reportes',
+    'manual_usuario',
 )
 
 # A sample logging configuration. The only tangible logging

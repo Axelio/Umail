@@ -41,15 +41,15 @@
 				</nav>
                 -->
                 {% include "user/banner.html" %}
-{% if request.user.is_authenticated %}
-    <nav id="menu">
-{% else %}
-    <nav id="menu" style='margin-top:0px'>
-{% endif %}
-<ul>
+                    {% if request.user.is_authenticated %}
+                        <nav id="menu">
+                    {% else %}
+                        <nav id="menu" style='margin-top:0px'>
+                    {% endif %}
+                    <ul>
                         {% load menu %}
                         {{ 'Inicio'|menu }}
-</ul>
+                    </ul>
 
 </nav>
 			</header>

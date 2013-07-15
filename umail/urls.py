@@ -21,6 +21,13 @@ urlpatterns = patterns('',
     url(r'logout$',logout,{'next_page':'/'},),
     url(r'^$','auth.views.index'),
 
+   (r'^media/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.MEDIA_ROOT}),
+
+    # Manual de usuario 
+    url(r'^ayuda/(?P<seccion>\w+)/$', 'manual_usuario.views.manual', name='manual_usuario'),
+
+    url(r'^ayuda/$', 'manual_usuario.views.manual', name='manual_usuario'),
 
     # Memos
     ## Entrada

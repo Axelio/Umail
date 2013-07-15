@@ -1,20 +1,19 @@
-<h2>Menú</h2>
-<ul class="list3">
     {% load admin_static %}
     {% load menu %}
-    <article class="col1">
+<div class="wrapper">
+    <article class="col1 pad_left1">
         <ul class="list2">
             {% if request|jefe_departamento %}
-                <li><a href="/por_aprobar/#Menu" alt="">Por aprobar <strong>({{ request|num_por_aprobar }})</strong></a></li>
+                <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/por_aprobar/#Menu" alt="" style="color:#000">Por aprobar <strong>({{ request|num_por_aprobar }})</strong></a></li>
             {% endif %}
-            <li><a href="/redactar/#menu">Redactar</a></li>
+            <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/redactar/#menu" style="color:#000;">Redactar</a></li>
             {% ifequal request|num_entrada 0 %}
-                <li><a href="/entrada/#Menu">Recibidos</a></li>
+                <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/entrada/#Menu" style="color:#000">Recibidos</a></li>
             {% else %}
-                <li><a href="/entrada/#Menu">Recibidos <strong>({{ request|num_entrada }})</strong></a></li>
+                <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/entrada/#Menu" style="color:#000">Recibidos <strong>({{ request|num_entrada }})</strong></a></li>
             {% endifequal %}
-            <li><a href="/enviados/#Menu">Enviados</a></li>
-            <li><a href="/archivados/#Menu">Archivados</a></li>
+            <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/enviados/#Menu" style="color:#000">Enviados</a></li>
+            <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/archivados/#Menu" style="color:#000">Archivados</a></li>
         </ul>
     </article>
-</ul>
+</div>

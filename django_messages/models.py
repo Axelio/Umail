@@ -20,7 +20,6 @@ class MessageManager(models.Manager):
         marked as deleted.
         """
         destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
-        print destinatarios
         return self.filter(
             models.Q(recipient__in=destinatarios)|
             models.Q(con_copia__in=destinatarios),

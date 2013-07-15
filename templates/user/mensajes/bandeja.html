@@ -61,26 +61,50 @@
         <!-- Menú azul superior -->
         <div class="body10">
             <div class="main">
+                <div class="col_4" style="margin-left: 20%">
+                    <table width=100%>
+                        <tbody>
+                            <tr align=center>
+                                <td align=left width=25%>
+                                    <h3 color=white style="padding: 15px 0 10px; line-height: 0; vertical-align: middle">
+                                        Emisor/Correo
+                                    </h3>
+                                </td>
+                                <td align=left>
+                                    <h3 color=white style="padding: 15px 0 10px; line-height: 0; vertical-align: middle">
+                                        Asunto/Texto
+                                    </h3>
+                                </td>
+                                <td align=right width=25% valign="middle">
+                                    <h3 class="right" color=white style="padding: 15px 0 10px; line-height: 0; vertical-align: middle">
+                                        Fecha y hora
+                                    </h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Fin menú azul superior -->
+        <div>
+            <div style="margin-right: 13%">
                 <table width=100%>
                     <tbody>
                         <tr align=center>
-                            <td align=left width=25%>
-                            </td>
-                            <td align=left>
-                            </td>
                             <td align=right width=25% valign="middle">
                                 <div class="pagination">  
                                         <span class="step-links">
                                         {% if message_list.has_previous %}
-                                            <a href="?page={{ message_list.previous_page_number }}">Anterior</a>
+                                            <strong><a href="?page={{ message_list.previous_page_number }}">Anterior</a></strong>
                                         {% endif %}
 
-                                        <span class="current" style="color:white">
-                                            Página {{ message_list.number }} de {{ message_list.paginator.num_pages }}.
+                                        <span class="current" style="font-size=20px">
+                                            <strong>Página {{ message_list.number }} de {{ message_list.paginator.num_pages }}.<strong>
                                         </span>
 
                                         {% if message_list.has_next %}
-                                            <a href="?page={{ message_list.next_page_number }}">Siguiente</a>
+                                            <strong><a href="?page={{ message_list.next_page_number }}">Siguiente</a></strong>
                                         {% endif %}
                                     </span>
                             </td>
@@ -89,30 +113,6 @@
                 </table>
             </div>
         </div>
-        <div class="main">
-            <table width=100%>
-                <tbody>
-                    <tr align=center>
-                        <td align=left width=25%>
-                            <h2 color=white>
-                                Emisor/Correo
-                            </h2>
-                        </td>
-                        <td align=left>
-                            <h2 color=white>
-                                Asunto/Texto
-                            </h2>
-                        </td>
-                        <td align=right width=25% valign="middle">
-                            <h2 class="right" color=white>
-                                Fecha y hora
-                            </h2>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- Fin menú azul superior -->
 
 		<div class="main">
 			<section id="content">

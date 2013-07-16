@@ -41,11 +41,15 @@
 				</nav>
                 -->
                 {% include "user/banner.html" %}
-<nav id="menu">
-<ul>
+                    {% if request.user.is_authenticated %}
+                        <nav id="menu">
+                    {% else %}
+                        <nav id="menu" style='margin-top:0px'>
+                    {% endif %}
+                    <ul>
                         {% load menu %}
                         {{ 'Inicio'|menu }}
-</ul>
+                    </ul>
 
 </nav>
 			</header>
@@ -56,9 +60,11 @@
 			<div class="main">
 				<div class="slogan">
 					<div id="slider">
+                        <!--
 						<img src="{% static "images/text1.jpg" %}" alt="">	
 						<img src="{% static "images/text2.jpg" %}" alt="">	
 						<img src="{% static "images/text3.jpg" %}" alt="">				
+                        -->
 					</div>
 				</div>
 			</div>
@@ -85,10 +91,7 @@
 					<div class="box1"><div class="box1_bot"><div class="box1_top">
 						<div class="pad"><div class="pad1">
 							<h2 class="center">Misión</h2>
-							<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore.</p>
-							<div class="wrapper center">
-								<a href="#" class="button"><span><span>Más</span></span></a>
-							</div>
+                            <p>Umail es un sistema comunicacional de banguardia dentro de las intituciones universitarias del país, atendiendo tanto las necesidades presentes como las tendencias y cambios de la tecnologia que confiere los memorándum del futuro.</p>
 						</div></div>
 					</div></div></div>
         		</article>
@@ -97,10 +100,7 @@
 						<div class="pad">
 								<div class="pad1">
 							<h2 class="center">Visión</h2>
-							<p>Veritatis quasi architecto beatae bitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia.</p>
-							<div class="wrapper center">
-								<a href="#" class="button"><span><span>Más</span></span></a>
-							</div>
+                            <p>Ser un sistema con alta tecnología y altamente productiva, con vocación de servicio comunicacional, formada constantemente por profesionales comprometidos que satisfagan sus necesidades en materia de comunicación mediante memorándum recurriendo al uso de las más diversas tecnologíasas de generación.</p>
 						</div></div>
 					</div></div></div>
         		</article>
@@ -108,11 +108,8 @@
 					<div class="box1"><div class="box1_bot"><div class="box1_top">
 						<div class="pad">
 								<div class="pad1">
-							<h2 class="center">Objetivos</h2>
-							<p>Quuntur magni dolores eos qui ratione voluptatem sequi nesciunt neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur.</p>
-							<div class="wrapper center">
-								<a href="#" class="button"><span><span>Más</span></span></a>
-							</div>
+							<h2 class="center">Objetivo</h2>
+                            <p>Umail, integra la Universidad Rómulo Gallegos a través de documentos oficiales dirigidas a establecer indicaciones, recomendaciones, intrucciones o disposiciones entre departamentos, siempre comprometiendo la eficiencia, excelencia y responsabilidad de los datos.</p>
 						</div></div>
 					</div></div></div>
         		</article>
@@ -132,7 +129,7 @@
 									<li><a href="/noticias/{{ noticia.id }}">{{ noticia.texto|disminuir:100 }}</a></li>
                                     {% endfor %}
 								</ul>
-								<ul class="list1 pad_left1 left">
+								<ul class="col1 list1">
                                     {% load disminuir %}
                                     {% for noticia in ult_notic2 %}
 									<li><a href="/noticias/{{ noticia.id }}">{{ noticia.texto|disminuir:100 }}</a></li>
@@ -145,11 +142,10 @@
 					<article class="col1 pad_left1">
 						<h2>Ventajas</h2>
 						<ul class="list2">
-							<li><a><img src="{% static "images/icon1.jpg" %}" alt="">------</a></li>
 							<li><a><img src="{% static "images/icon2.jpg" %}" alt="">Minimización de recursos</a></li>
 							<li><a><img src="{% static "images/icon3.jpg" %}" alt="">Control de datos</a></li>
 							<li><a><img src="{% static "images/icon4.jpg" %}" alt="">Eficiencia</a></li>
-							<li class="bg_none"><a href="#"><img src="{% static "images/icon5.jpg" %}" alt="">Información segura</a></li>
+							<li><a><img src="{% static "images/icon5.jpg" %}" alt="">Información segura</a></li>
 						</ul>
                         <!--
 						<div class="box1"><div class="box1_bot"><div class="box1_top">

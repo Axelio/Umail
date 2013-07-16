@@ -75,9 +75,8 @@ $(document).ready(function() {
 			<div class="main">
 				<div class="wrapper">
 					<figure class="left"><img src="{% static "images/letter2.png" %}" alt=""></figure>
-					<h2>Noticias</h2>
-                    Entérate de las noticias oficiales más importantes dentro de la universidad.
-                    
+					<h2>Manual de usuario</h2>
+                    ¿Necesitas algo de ayuda? Acá encontrarás un poco más de información acerca de los primeros pasos en el sistema, cómo se utilizan los módulos del sistema o un poco más sobre las normas.
                     {% if mensaje %}
                         <span class="tooltip">{{ mensaje }}</span>
                     {% endif %}
@@ -88,27 +87,32 @@ $(document).ready(function() {
 	<div class="body7">
 		<div class="main">
 			<section id="content">
-                <div class="wrapper" style="margin-left: 25%;">
+				<div class="wrapper">
                 <article class="col2">
-                    <h2 style="padding:0 0 0 0"><span>¡Lee esta noticia!</span></h2>
-                    {% if noticia_exists %}
-                        <ul class="list1">
-                            <div class="box2">
-                                <div class="box2_top">	
-                                    <div class="box2_bot">	
-                                        <div class="pad">
-                                            <div class="wrapper">
-                                                <figure class="left"><img src="{% static "images/marker_1.gif"%}" alt=""></figure>
-                                                <div class="cols">
-                                                    <a><strong>{{ noticia.titulo }}</strong> - {{ noticia.fecha }}</a>
-                                                    {{ noticia.texto }}
+                    <h2 style="padding:0 0 0 0"><span>{{ titulo }}</span></h2>
+                    {% if manuales.exists %}
+                        {% for manual in manuales %}
+                            <ul class="list1">
+                                <div class="box2">
+                                    <div class="box2_top">	
+                                        <div class="box2_bot">	
+                                            <div class="pad">
+                                                <div class="wrapper">
+                                                    <figure class="left"><img src="{% static "images/marker_1.gif"%}" alt=""></figure>
+                                                    <div class="cols">
+                                                        <strong><a>{{ manual.titulo }}</a></strong>
+                                                        {% for detalle in manual.manual_detalles_set.get_query_set %}
+                                                            {{ detalle.texto }}
+                                                            <img src="{{ detalle.imagen.url }}" />
+                                                        {% endfor %}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </ul>
+                            </ul>
+                        {% endfor %}
                     {% else %}
                         <ul class="list1">
                             <div class="box2">
@@ -118,7 +122,25 @@ $(document).ready(function() {
                                             <div class="wrapper">
                                                 <figure class="left"><img src="{% static "images/marker_1.gif"%}" alt=""></figure>
                                                 <div class="cols">
-                                                    <a><strong>Noticia no encontrada</strong>
+                                                    <a href=/ayuda/primeros_pasos/><b>¿Cómo empezar a utilizar Umail?</b></a>
+                                                    ¿Ya te asignaron una cuenta? ¡Genial! En esta sección podrás conocer sobre tus primeros pasos en Umail.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                        <ul class="list1">
+                            <div class="box2">
+                                <div class="box2_top">	
+                                    <div class="box2_bot">	
+                                        <div class="pad">
+                                            <div class="wrapper">
+                                                <figure class="left"><img src="{% static "images/marker_1.gif"%}" alt=""></figure>
+                                                <div class="cols">
+                                                    <a href='/ayuda/general/'><b>Conociendo el sitio...</b></a>
+                                                    ¿Ya has estado por aquí algunas veces pero aún necesitas más ayuda? Revisa toda la ayuda que hay para manejar a la perfección la sección de memos, reportes, noticias, contactos, y más.....
                                                 </div>
                                             </div>
                                         </div>
@@ -128,6 +150,7 @@ $(document).ready(function() {
                         </ul>
                     {% endif %}
                 </article>
+                {% include 'user/manual_usuario/menu.html' %}
 				</div>
 			</section>
 		</div>

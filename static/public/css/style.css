@@ -37,8 +37,134 @@ header .right{padding-right:59px;width:500px}
 #top_nav li a {font-size:10px;color:#fff;text-transform:uppercase;text-decoration:none}
 #top_nav li a:hover {text-decoration:underline}
 #search {background:url(/static/images/search.jpg) no-repeat;width:191px;height:26px;float:right;margin-top:3px}
-/*#search .submit {float:right;background:none;height:26px;width:28px;cursor:pointer}
-#search .input {float:right;width:153px;height:16px;padding:5px 0 5px 10px;font:14px Arial, Helvetica, sans-serif;color:#000;background:none}*/
+#search .submit {float:right;background:none;height:26px;width:28px;cursor:pointer}
+#search .input {float:right;width:153px;height:16px;padding:5px 0 5px 10px;font:14px Arial, Helvetica, sans-serif;color:#000;background:none}
+#menu {background:url(/static/images/menu_border.gif) top left no-repeat;margin-top:30px}
+#menu ul {background:url(/static/images/menu_border.gif) top right no-repeat;width:100%;overflow:hidden}
+#menu li {float:left;padding-left:2px}
+#menu li a {display:block;height:66px;width:198px;font-size:24px;padding-top:90px;text-align:center;text-decoration:none;text-transform:uppercase}
+#menu li a:hover, #menu #menu_active a{}
+.nav1 {background:url(/static/images/menu1.gif) center 35px no-repeat}
+.nav2 {background:url(/static/images/menu2.gif) center 35px no-repeat}
+.nav3 {background:url(/static/images/menu3.gif) center 35px no-repeat}
+.nav4 {background:url(/static/images/menu4.gif) center 35px no-repeat}
+.nav5 {background:url(/static/images/menu5.gif) center 35px no-repeat}
+.nav1:hover, .nav1#active {background:url(/static/images/menu1_active.gif) center 31px no-repeat #001527}
+.nav2:hover, .nav2#active {background:url(/static/images/menu2_active.gif) center 31px no-repeat #001527}
+.nav3:hover, .nav3#active {background:url(/static/images/menu3_active.gif) center 31px no-repeat #001527}
+.nav4:hover, .nav4#active {background:url(/static/images/menu4_active.gif) center 31px no-repeat #001527}
+.nav5:hover, .nav5#active {background:url(/static/images/menu5_active.gif) center 31px no-repeat #001527}
+.slogan {background:url(/static/images/texto.png) center 108px no-repeat;height:141px;overflow:hidden;position:relative;padding-top:108px}
+.slogan a {margin-top:64px}
+/* The Nivo Slider styles */
+#slider {height:141px;position:absolute !important;top:0;width:981px;left:82px;top:108px}
+.nivoSlider {position:absolute}
+.nivoSlider img {top:0px;left:0px}
+/* If an image is wrapped in a link */
+.nivoSlider a.nivo-imageLink {position:absolute;top:0px;left:0px;width:100%;height:100%;border:0;padding:0;margin:0;z-index:60;display:none}
+/* The slices in the Slider */
+.nivo-slice {display:block;position:absolute;z-index:50;height:100%}
+/* Direction nav styles (e.g. Next & Prev) */
+.nivo-directionNav a {position:absolute;margin-top:63px;z-index:99;cursor:pointer;text-indent:-9999px;width:21px;height:33px}
+.nivo-prevNav {left:-22px; display:block;background:url(/static/images/marker_left.jpg) no-repeat}
+.nivo-nextNav {right:123px;background:url(/static/images/marker_right.jpg) no-repeat}
+.nivo-prevNav:hover {background:url(/static/images/marker_left_active.jpg) no-repeat}
+.nivo-nextNav:hover {background:url(/static/images/marker_right_active.jpg) no-repeat}
+/* content */
+#content {width:100%;overflow:hidden;padding:33px 0 48px 0}
+.body6 figure {padding-left:58px}
+#page2 .body6 figure {padding-left:53px}
+#page2 #content, #page3 #content, #page4 #content, #page5 #content {padding-top:0}
+#page3 #content {padding-bottom:37px}
+#page2 .col2 figure {margin-right:10px}
+#page4 .body6 {padding-bottom:25px}
+#page4 .marg_bot1 {margin-bottom:14px}
+#page4 #content {padding-bottom:44px}
+.body6 h2 {padding:0 0 14px 0;margin-top:-1px;letter-spacing:-1px;float:left;width:820px}
+.pad_left1 {padding-left:33px}
+.pad1 {padding:0 5px}
+.pad_bot1 {padding-bottom:10px}
+.pad_bot2 {padding-bottom:15px}
+.marg_bot1 {margin-bottom:20px}
+.box1 {background:url(/static/images/box_repeat.gif) center repeat-y} 
+.box1_bot {background:url(/static/images/box_bot.gif) center bottom no-repeat}
+.box1_top {background:url(/static/images/box_top.jpg) center top no-repeat;width:100%}
+.box1 .pad {padding:0 26px;padding-bottom:23px}
+.box1 .pad2 {padding:0 100px;padding-bottom:23px}
+.box1 h2 {font-size:24px;line-height:1.2em;color:#fff;padding:10px 0 22px 0}
+.box1 h2.center {font-size:30px;line-height:1.2em;padding:4px 0 26px 0;letter-spacing:-1px}
+.box1 .button {background:url(/static/images/button2_bg.gif) top repeat-x}
+.box1 .button span {background:url(/static/images/button2_left.gif) top left no-repeat}
+.box1 .button span span {background:url(/static/images/button2_right.gif) top right no-repeat}
+.box2 {background:url(/static/images/box2_repeat.gif) left repeat-y;margin-bottom:11px} 
+.box2_top {background:url(/static/images/box2_top.gif) left top no-repeat}
+.box2_bot {background:url(/static/images/box2_bot.gif) left bottom no-repeat;width:100%}
+.box2 .pad {padding:15px 25px 13px}
+.box2 figure {margin-right:10px}
+.box2 a {display:block;margin-bottom:5px;text-decoration:none;margin-top:-2px}
+.box2 a:hover {text-decoration:underline}
+.box2 .cols {width:490px}
+.button {background:url(/static/images/button1_bg.gif) top repeat-x;display:inline-block;font-size:20px;color:#363636;line-height:34px;text-decoration:none}
+.button span {display:block;background:url(/static/images/button1_left.gif) top left no-repeat}
+.button span span {padding:0 40px;background:url(/static/images/button1_right.gif) top right no-repeat;height:39px}
+.button:hover {color:#006abb} 
+.font1 {font-size:12px;display:block;padding-bottom:5px;margin-top:-2px}
+.line1 {background:url(/static/images/line_ver1.gif) 285px 0 repeat-y}
+.list1 li {line-height:30px}
+.list1 li a {padding-left:25px;background:url(/static/images/marker_1.gif) 0 8px no-repeat;display:inline-block}
+.list2 {margin-top:-8px;padding-bottom:24px}
+.list2 li {line-height:37px;background:url(/static/images/line_hor1.gif) bottom repeat-x}
+.list2 .bg_none {background:none}
+.list2 li a {font-size:18px;color:#363636;text-decoration:none}
+.list2 li a:hover {color:#006abb}
+.list2 li img {margin-right:10px}
+.list3 li {line-height:25px}
+.list3 li a {text-decoration:none;padding-left:14px;background:url(/static/images/marker_2.gif) 0 5px no-repeat}
+.list3 li a:hover {text-decoration:underline}
+.list4 {margin-top:5px;padding-bottom:24px}
+.list4 li {line-height:20px;background:url(/static/images/line_hor1.gif) bottom repeat-x}
+.list4 .bg_none {background:none}
+.list4 li a {color:#363636;text-decoration:none}
+.list4 li a:hover {color:#006abb}
+.list4 li img {margin-right:10px}
+/* footer */
+footer {padding:0 0 0 60px;color:#fff}
+footer a {color:#a2b8c8}
+footer p {padding-bottom:15px}
+.col_1 {width:190px;float:left}
+.col_2 {width:413px;float:left}
+.col_3 {width:230px;float:left;padding-left:8px}
+.col_4 {width:800px;float:left}
+.col_5 {width:83px;float:left}
+#footer_logo {display:block;margin:15px 0 36px 64px;background:url(/static/images/footer_logo.gif) no-repeat;width:98px;height:39px;text-indent:-9999px}
+/* forms */
+#ContactForm {margin-top:-4px;line-height:26px}
+#ContactForm strong {float:left;width:70px;font-weight:normal}
+#ContactForm .wrapper {min-height:30px}
+#ContactForm .bg {background:url(/static/images/input2.gif) no-repeat;float:left}
+#ContactForm .textarea_box {min-height:260px}
+#ContactForm .textarea_box .bg {background:url(/static/images/textarea.gif) no-repeat;float:left}
+#ContactForm a span span {padding:0}
+#ContactForm a {margin-right:20px;float:right;width:110px;text-align:center}
+#ContactForm .input {width:277px;height:17px;background:none;padding:6px 10px;color:#000;font:14px Arial, Helvetica, sans-serif}
+#ContactForm textarea {overflow:auto;width:464px;height:228px;background:none;padding:6px 10px;color:#000;font:14px Arial, Helvetica, sans-serif;margin:0}
+#sign_up {width:100%;height:29px;overflow:hidden;padding-top:7px}
+#sign_up .input {float:left;background:url(/static/images/input.gif) no-repeat;width:120px;height:17px;padding:6px 10px;font:14px Arial, Helvetica, sans-serif;color:#000;margin-right:7px}
+#sign_up a {font-size:16px;float:left;background:url(/static/images/sign_up.gif) no-repeat;width:77px;text-align:center;line-height:24px;height:29px;color:#363636;text-decoration:none}
+#sign_up a:hover {color:#006abb}
+#sign_up{}
+.error {font-size: 12px !important; display: block; padding: 4px 5px 4px 25px; margin: 0 0 3px 0; color: red; font-weight: bold; }
+#entrada {background:url(/static/images/search.jpg) no-repeat;width:191px;height:26px;margin-top:3px}
+#entrada .submit {background:none;height:26px;width:28px;cursor:pointer}
+#entrada .input {width:153px;height:16px;padding:5px 0 5px 10px;font:14px Arial, Helvetica, sans-serif;color:#000;background:none}
+span.tooltip {right: 6px;top: 270px;position:static;  height: 20px;vertical-align:middle;display:block;padding:5px 15px;bottom:25px;color:#fff;border:2px solid rgba(34,34,34,0.9);background:rgba(51,51,51,0.9);text-align:center;border-radius:3px;opacity:70%;box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3);font-size:14px;}  
+
+
+
+
+
+
+
 
 form {
   margin: 0 0 20px;
@@ -84,11 +210,6 @@ textarea {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
 select,
 textarea,
 input[type="text"],
@@ -109,7 +230,8 @@ input[type="color"],
   display: inline-block;
   height: 20px;
   padding: 4px 6px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  margin-bottom-right: 0px;
   font-size: 14px;
   line-height: 20px;
   color: #555555;
@@ -119,8 +241,11 @@ input[type="color"],
           border-radius: 4px;
 }
 
-input,
 textarea,
+.uneditable-input {
+  width: 600px;
+}
+input,
 .uneditable-input {
   width: 206px;
 }
@@ -129,6 +254,7 @@ textarea {
   height: auto;
 }
 
+/*
 textarea,
 input[type="text"],
 input[type="password"],
@@ -175,13 +301,12 @@ input[type="color"]:focus,
   border-color: rgba(82, 168, 236, 0.8);
   outline: 0;
   outline: thin dotted \9;
-  /* IE6-9 */
 
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
      -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 }
-
+*/
 input[type="radio"],
 input[type="checkbox"] {
   margin: 4px 0 0;
@@ -203,10 +328,8 @@ input[type="checkbox"] {
 select,
 input[type="file"] {
   height: 30px;
-  /* In IE7, the height of the select element cannot be changed by height, only font-size */
 
   *margin-top: 4px;
-  /* For IE7, add top margin to align select with labels */
 
   line-height: 30px;
 }
@@ -296,73 +419,7 @@ textarea::-webkit-input-placeholder {
 .checkbox.inline + .checkbox.inline {
   margin-left: 10px;
 }
-/*  */
 
-#menu {background:url(/static/images/menu_border.gif) top left no-repeat;margin-top:30px}
-#menu ul {background:url(/static/images/menu_border.gif) top right no-repeat;width:100%;overflow:hidden}
-#menu li {float:left;padding-left:2px}
-#menu li a {display:block;height:66px;width:198px;font-size:24px;padding-top:90px;text-align:center;text-decoration:none;text-transform:uppercase}
-#menu li a:hover, #menu #menu_active a{}
-.nav1 {background:url(/static/images/menu1.gif) center 35px no-repeat}
-.nav2 {background:url(/static/images/menu2.gif) center 35px no-repeat}
-.nav3 {background:url(/static/images/menu3.gif) center 35px no-repeat}
-.nav4 {background:url(/static/images/menu4.gif) center 35px no-repeat}
-.nav5 {background:url(/static/images/menu5.gif) center 35px no-repeat}
-.nav1:hover, .nav1#active {background:url(/static/images/menu1_active.gif) center 31px no-repeat #001527}
-.nav2:hover, .nav2#active {background:url(/static/images/menu2_active.gif) center 31px no-repeat #001527}
-.nav3:hover, .nav3#active {background:url(/static/images/menu3_active.gif) center 31px no-repeat #001527}
-.nav4:hover, .nav4#active {background:url(/static/images/menu4_active.gif) center 31px no-repeat #001527}
-.nav5:hover, .nav5#active {background:url(/static/images/menu5_active.gif) center 31px no-repeat #001527}
-.slogan {background:url(/static/images/text.gif) center 108px no-repeat;height:141px;overflow:hidden;position:relative;padding-top:108px}
-.slogan a {margin-top:64px}
-/* The Nivo Slider styles */
-#slider {height:141px;position:absolute !important;top:0;width:981px;left:82px;top:108px}
-.nivoSlider {position:absolute}
-.nivoSlider img {top:0px;left:0px}
-/* If an image is wrapped in a link */
-.nivoSlider a.nivo-imageLink {position:absolute;top:0px;left:0px;width:100%;height:100%;border:0;padding:0;margin:0;z-index:60;display:none}
-/* The slices in the Slider */
-.nivo-slice {display:block;position:absolute;z-index:50;height:100%}
-/* Direction nav styles (e.g. Next & Prev) */
-.nivo-directionNav a {position:absolute;margin-top:63px;z-index:99;cursor:pointer;text-indent:-9999px;width:21px;height:33px}
-.nivo-prevNav {left:-22px; display:block;background:url(/static/images/marker_left.jpg) no-repeat}
-.nivo-nextNav {right:123px;background:url(/static/images/marker_right.jpg) no-repeat}
-.nivo-prevNav:hover {background:url(/static/images/marker_left_active.jpg) no-repeat}
-.nivo-nextNav:hover {background:url(/static/images/marker_right_active.jpg) no-repeat}
-/* content */
-#content {width:100%;overflow:hidden;padding:33px 0 48px 0}
-.body6 figure {padding-left:58px}
-#page2 .body6 figure {padding-left:53px}
-#page2 #content, #page3 #content, #page4 #content, #page5 #content {padding-top:0}
-#page3 #content {padding-bottom:37px}
-#page2 .col2 figure {margin-right:10px}
-#page4 .body6 {padding-bottom:25px}
-#page4 .marg_bot1 {margin-bottom:14px}
-#page4 #content {padding-bottom:44px}
-.body6 h2 {padding:0 0 14px 0;margin-top:-1px;letter-spacing:-1px;float:left;width:820px}
-.pad_left1 {padding-left:33px}
-.pad1 {padding:0 5px}
-.pad_bot1 {padding-bottom:10px}
-.pad_bot2 {padding-bottom:15px}
-.marg_bot1 {margin-bottom:20px}
-.box1 {background:url(/static/images/box_repeat.gif) center repeat-y} 
-.box1_bot {background:url(/static/images/box_bot.gif) center bottom no-repeat}
-.box1_top {background:url(/static/images/box_top.jpg) center top no-repeat;width:100%}
-.box1 .pad {padding:0 26px;padding-bottom:23px}
-.box1 .pad2 {padding:0 100px;padding-bottom:23px}
-.box1 h2 {font-size:24px;line-height:1.2em;color:#fff;padding:10px 0 22px 0}
-.box1 h2.center {font-size:30px;line-height:1.2em;padding:4px 0 26px 0;letter-spacing:-1px}
-.box1 .button {background:url(/static/images/button2_bg.gif) top repeat-x}
-.box1 .button span {background:url(/static/images/button2_left.gif) top left no-repeat}
-.box1 .button span span {background:url(/static/images/button2_right.gif) top right no-repeat}
-.box2 {background:url(/static/images/box2_repeat.gif) left repeat-y;margin-bottom:11px} 
-.box2_top {background:url(/static/images/box2_top.gif) left top no-repeat}
-.box2_bot {background:url(/static/images/box2_bot.gif) left bottom no-repeat;width:100%}
-.box2 .pad {padding:15px 25px 13px}
-.box2 figure {margin-right:10px}
-.box2 a {display:block;margin-bottom:5px;text-decoration:none;margin-top:-2px}
-.box2 a:hover {text-decoration:underline}
-.box2 .cols {width:490px}
 
 .btn {
   display: inline-block;
@@ -370,7 +427,7 @@ textarea::-webkit-input-placeholder {
   padding: 4px 12px;
   margin-bottom: 0;
   *margin-left: .3em;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
   color: #333333;
   text-align: center;
@@ -390,9 +447,9 @@ textarea::-webkit-input-placeholder {
   border-color: #e6e6e6 #e6e6e6 #bfbfbf;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   border-bottom-color: #b3b3b3;
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
+  -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+          border-radius: 2px;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
   *zoom: 1;
@@ -412,41 +469,6 @@ textarea::-webkit-input-placeholder {
   *background-color: #d9d9d9;
 }
 
-.btn:active,
-.btn.active {
-  background-color: #cccccc \9;
-}
-
-.btn:first-child {
-  *margin-left: 0;
-}
-
-.btn:hover,
-.btn:focus {
-  color: #333333;
-  text-decoration: none;
-  background-position: 0 -15px;
-  -webkit-transition: background-position 0.1s linear;
-     -moz-transition: background-position 0.1s linear;
-       -o-transition: background-position 0.1s linear;
-          transition: background-position 0.1s linear;
-}
-
-.btn:focus {
-  outline: thin dotted #333;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-
-.btn.active,
-.btn:active {
-  background-image: none;
-  outline: 0;
-  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-     -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
 .btn.disabled,
 .btn[disabled] {
   cursor: default;
@@ -458,16 +480,16 @@ textarea::-webkit-input-placeholder {
           box-shadow: none;
 }
 
-.button {
+.boton {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #49afcd;
   *background-color: #2f96b4;
-  background-image: -moz-linear-gradient(top, #5bc0de, #2f96b4);
+  background-image: -moz-linear-gradient(top, #015ba0, #002441);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5bc0de), to(#2f96b4));
-  background-image: -webkit-linear-gradient(top, #5bc0de, #2f96b4);
-  background-image: -o-linear-gradient(top, #5bc0de, #2f96b4);
-  background-image: linear-gradient(to bottom, #5bc0de, #2f96b4);
+  background-image: -webkit-linear-gradient(top, #015ba0, #002441);
+  background-image: -o-linear-gradient(top, #015ba0, #002441);
+  background-image: linear-gradient(to bottom, #015ba0, #002441);
   background-repeat: repeat-x;
   border-color: #2f96b4 #2f96b4 #1f6377;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -476,58 +498,5 @@ textarea::-webkit-input-placeholder {
   
   
 }
-button.btn, input[type="submit"].btn {
+boton.btn, input[type="submit"].btn {
 }
-/*.button span {display:block;background:url(/static/images/button1_left.gif) top left no-repeat}
-.button span span {padding:0 40px;background:url(/static/images/button1_right.gif) top right no-repeat;height:39px}
-.button:hover {color:#006abb} */
-.font1 {font-size:12px;display:block;padding-bottom:5px;margin-top:-2px}
-.line1 {background:url(/static/images/line_ver1.gif) 285px 0 repeat-y}
-.list1 li {line-height:30px}
-.list1 li a {padding-left:25px;background:url(/static/images/marker_1.gif) 0 8px no-repeat;display:inline-block}
-.list2 {margin-top:-8px;padding-bottom:24px}
-.list2 li {line-height:37px;background:url(/static/images/line_hor1.gif) bottom repeat-x}
-.list2 .bg_none {background:none}
-.list2 li a {font-size:18px;color:#363636;text-decoration:none}
-.list2 li a:hover {color:#006abb}
-.list2 li img {margin-right:10px}
-.list3 li {line-height:25px}
-.list3 li a {text-decoration:none;padding-left:14px;background:url(/static/images/marker_2.gif) 0 5px no-repeat}
-.list3 li a:hover {text-decoration:underline}
-.list4 {margin-top:5px;padding-bottom:24px}
-.list4 li {line-height:20px;background:url(/static/images/line_hor1.gif) bottom repeat-x}
-.list4 .bg_none {background:none}
-.list4 li a {color:#363636;text-decoration:none}
-.list4 li a:hover {color:#006abb}
-.list4 li img {margin-right:10px}
-/* footer */
-footer {padding:0 0 0 60px;color:#fff}
-footer a {color:#a2b8c8}
-footer p {padding-bottom:15px}
-.col_1 {width:190px;float:left}
-.col_2 {width:413px;float:left}
-.col_3 {width:230px;float:left;padding-left:8px}
-.col_4 {width:800px;float:left}
-.col_5 {width:83px;float:left}
-#footer_logo {display:block;margin:15px 0 36px 64px;background:url(/static/images/footer_logo.gif) no-repeat;width:98px;height:39px;text-indent:-9999px}
-/* forms */
-#ContactForm {margin-top:-4px;line-height:26px}
-#ContactForm strong {float:left;width:70px;font-weight:normal}
-#ContactForm .wrapper {min-height:30px}
-#ContactForm .bg {background:url(/static/images/input2.gif) no-repeat;float:left}
-#ContactForm .textarea_box {min-height:260px}
-#ContactForm .textarea_box .bg {background:url(/static/images/textarea.gif) no-repeat;float:left}
-#ContactForm a span span {padding:0}
-#ContactForm a {margin-right:20px;float:right;width:110px;text-align:center}
-#ContactForm .input {width:277px;height:17px;background:none;padding:6px 10px;color:#000;font:14px Arial, Helvetica, sans-serif}
-#ContactForm textarea {overflow:auto;width:464px;height:228px;background:none;padding:6px 10px;color:#000;font:14px Arial, Helvetica, sans-serif;margin:0}
-#sign_up {width:100%;height:29px;overflow:hidden;padding-top:7px}
-#sign_up .input {float:left;background:url(/static/images/input.gif) no-repeat;width:120px;height:17px;padding:6px 10px;font:14px Arial, Helvetica, sans-serif;color:#000;margin-right:7px}
-#sign_up a {font-size:16px;float:left;background:url(/static/images/sign_up.gif) no-repeat;width:77px;text-align:center;line-height:24px;height:29px;color:#363636;text-decoration:none}
-#sign_up a:hover {color:#006abb}
-#sign_up{}
-.error {font-size: 12px !important; display: block; padding: 4px 5px 4px 25px; margin: 0 0 3px 0; color: red; font-weight: bold; }
-#entrada {background:url(/static/images/search.jpg) no-repeat;width:191px;height:26px;margin-top:3px}
-#entrada .submit {background:none;height:26px;width:28px;cursor:pointer}
-#entrada .input {width:153px;height:16px;padding:5px 0 5px 10px;font:14px Arial, Helvetica, sans-serif;color:#000;background:none}
-span.tooltip {right: 6px;top: 270px;position:fixed;  height: 20px;vertical-align:middle;display:block;position:fixed;padding:5px 15px;bottom:25px;color:#fff;border:2px solid rgba(34,34,34,0.9);background:rgba(51,51,51,0.9);text-align:center;border-radius:3px;opacity:70%;box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3);font-size:14px;}  

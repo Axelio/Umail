@@ -3,16 +3,15 @@
     <div class="right">
         <nav>
             <ul id="top_nav">
-            <li><a href="/admin">Admin Área</a></li>
-            <li><a href="#">Sitemap</a></li>
+            <li><a href="/admin/">Admin Área</a></li>
+            <li><a href="/ayuda/#Menu">Ayuda</a></li>
 
             {% if request.user.is_authenticated %}
                 <li><a href='/logout'>Cerrar sesión</a></li>
             </ul>
             {% endif %}
+            <li><p class="error">{{ m_error }}</p></li>
         </nav>
-        <p class="error">{{ form.errors }}</p>
-        <p class="error">{{ m_error }}</p>
             {% if not request.user.is_authenticated %}
                 <form method="post" action="/">
                     {% csrf_token %}
@@ -26,7 +25,7 @@
 
                                 <td>
                                     <input type="password" placeholder="Contraseña" name="password">
-                                    <input type="submit" class="submit" value="Entrar">
+                                    <input type="submit" class="boton" value="Entrar">
                                 </td>
                             </tr>
                         </ul>

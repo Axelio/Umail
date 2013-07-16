@@ -20,7 +20,6 @@ class MessageManager(models.Manager):
         marked as deleted.
         """
         destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
-        print destinatarios
         return self.filter(
             models.Q(recipient__in=destinatarios)|
             models.Q(con_copia__in=destinatarios),
@@ -95,9 +94,10 @@ class Message(models.Model):
     """
     A private message from user to multiple users
     """
-    recipient = models.ManyToManyField('Destinatarios', related_name='received_messages', null=True, blank=True, verbose_name=_("Destinatario"))
+    recipient = models.ManyToManyField('Destinatarios', related_name='received_messages', verbose_name=_("Destinatario"))
     con_copia = models.ManyToManyField('Destinatarios', related_name='con_copia', null=True, blank=True, verbose_name=("con copia a:"))
     subject = models.CharField(_("Subject"), max_length=255)
+    archivo = models.FileField(upload_to='media/adjuntos/',null=True, blank=True)
     body = models.TextField(verbose_name="Texto")
     sender = models.ForeignKey('Destinatarios', related_name='sent_messages', verbose_name=_("Sender"))
     parent_msg = models.ForeignKey('self', related_name='next_messages', null=True, blank=True, verbose_name=_("Parent message"))

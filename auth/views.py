@@ -14,8 +14,8 @@ def index(request):
     diccionario.update(csrf(request))
     diccionario.update({'request':request})
     diccionario.update({'form':AuthenticationForm()})
-    ultimas_noticias1 = Noticias.objects.all().order_by('-fecha')[:7]
-    ultimas_noticias2 = Noticias.objects.all().order_by('-fecha')[8:]
+    ultimas_noticias1 = Noticias.objects.all().order_by('-fecha')[:2]
+    ultimas_noticias2 = Noticias.objects.all().order_by('-fecha')[3:5]
     diccionario.update({'ult_notic1':ultimas_noticias1})
     diccionario.update({'ult_notic2':ultimas_noticias2})
     mensaje = '' 

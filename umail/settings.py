@@ -1,4 +1,3 @@
-# -*- coding: utf8 -*-
 # Django settings for umail project.
 import os
 import glob
@@ -7,7 +6,6 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    (u'Axel Díaz','diaz.axelio@gmail.com')
     # ('Your Name', 'your_email@example.com'),
 )
 
@@ -15,16 +13,16 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE' : 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle.'
-        'NAME': 'db_umail.sql',
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'ENGINE' : 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle.'
+        'NAME': 'db_umail',
+        'USER': 'umail',                      # Not used with sqlite3.
+        'PASSWORD': 'umail86245',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-#import dj_database_url
-#DATABASES['default'] =  dj_database_url.config()
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
@@ -115,13 +113,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-
-INTERCEPT_REDIRECTS = False
-INTERNAL_IPS = ('127.0.0.1',)
 
 ROOT_URLCONF = 'umail.urls'
 
@@ -168,20 +162,6 @@ COMPRESS_JS = {
     },
 }
 
-'''
-DEBUG_TOOLBAR_PANELS = (
-    'debug_toolbar.panels.version.VersionDebugPanel',
-    'debug_toolbar.panels.timer.TimerDebugPanel',
-    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
-    'debug_toolbar.panels.headers.HeaderDebugPanel',
-    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
-    'debug_toolbar.panels.template.TemplateDebugPanel',
-    'debug_toolbar.panels.sql.SQLDebugPanel',
-    'debug_toolbar.panels.signals.SignalDebugPanel',
-    'debug_toolbar.panels.logger.LoggingPanel',
-)
-'''
-
 INSTALLED_APPS = (
     'auth',
     'django.contrib.auth',
@@ -199,6 +179,7 @@ INSTALLED_APPS = (
     'sedes',
     'noticias',
     'reportes',
+    'manual_usuario',
 )
 
 # A sample logging configuration. The only tangible logging

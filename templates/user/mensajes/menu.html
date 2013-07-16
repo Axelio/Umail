@@ -4,7 +4,12 @@
     <article class="col1 pad_left1">
         <ul class="list2">
             {% if request|jefe_departamento %}
-                <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/por_aprobar/#Menu" alt="" style="color:#000">Por aprobar <strong>({{ request|num_por_aprobar }})</strong></a></li>
+                <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/por_aprobar/#Menu" alt="" style="color:#000">Por aprobar <strong>
+                {% ifequal request|num_por_aprobar 0 %}
+                    </strong></a></li>
+                {% else %}
+                    ({{ request|num_por_aprobar }})</strong></a></li>
+                {% endifequal %}
             {% endif %}
             <li style="line-height: 40px"><img style="vertical-align: middle" src="{% static "images/redactar.png" %}"><a href="/redactar/#Menu" style="color:#000;">Redactar</a></li>
             {% ifequal request|num_entrada 0 %}

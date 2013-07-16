@@ -60,13 +60,12 @@ def por_aprobar(request, mensaje=''):
     if request.user.is_authenticated():
         dependencia = request.user.profile.persona.cargo_principal.dependencia
         # Lista de mensajes en espera escritos por la dependencia del jefe de dependencia
-        message_list = Message.objects.filter(
-                                              models.Q( status__nombre__iexact='En espera', 
+        message_list = Message.objects.filter(models.Q( status__nombre__iexact='En espera', 
                                                         sender__usuarios__persona__cargo_principal__dependencia=dependencia)| 
                                               models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=dependencia))
         if not message_list.exists():
             mensaje = u'No tiene ningún mensaje por aprobar hasta ahora'
-        return render_to_response('user/mensajes/por_aprobar.html', {
+        return render_to_response('user/mensajes/bandeja.html', {
             'message_list': message_list,
             'loggeado': request.user.is_authenticated,
             'request':request,
@@ -207,14 +206,14 @@ def compose(request, recipient=None,
         ``template_name``: the template to use
         ``success_url``: where to redirect after successfull submission
     """
-    mensaje = ''
+    form_errors = ''
     if request.method == "POST":
         form = ComposeForm(request.POST)
         cuerpo = ''
         valido = form.is_valid()
         from django_messages.models import Destinatarios
         if not Destinatarios.objects.filter(usuarios__user__userprofile__persona__cargo_principal__dependencia = request.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = request.user.profile.persona.cargo_principal.dependencia.cargo_max).exists():
-            mensaje = 'No hay jefe de departamento en %s' %(request.user.profile.persona.cargo_principal.dependencia)
+            mensaje = u'Este memo no puede ser enviado ni aprobado porque no existe un jefe de departamento en %s' %(request.user.profile.persona.cargo_principal.dependencia)
             form_errors = mensaje
             valido = False
         if valido:
@@ -264,6 +263,14 @@ def compose(request, recipient=None,
         if recipient is not None:
             recipients = [u for u in User.objects.filter(username__in=[r.strip() for r in recipient.split('+')])]
             form.fields['recipient'].initial = recipients
+    if form.errors:
+        if form.errors.keys()[0] == 'subject':
+            label = "Asunto"
+        elif form.errors.keys()[0] == 'recipient':
+            label = "Destinatarios"
+        elif form.errors.keys()[0] == 'body':
+            label = "Texto"
+        form_errors =  label + ': ' + form.errors.values()[0][0]
     return render_to_response(template_name, {
         'cuerpo': cuerpo,
         'tipo': 'Redactar',

@@ -71,8 +71,12 @@ jefe_departamento.is_safe = True
 register.filter(jefe_departamento)
 
 def por_aprobar(request):
+    from django.db import models
     from django_messages.models import Message
-    message_list = Message.objects.filter(status__nombre__iexact='En espera')
+    dependencia = request.user.profile.persona.cargo_principal.dependencia
+    message_list = Message.objects.filter(models.Q( status__nombre__iexact='En espera', 
+                                                    sender__usuarios__persona__cargo_principal__dependencia=dependencia)| 
+                                          models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=dependencia))
     return message_list 
 por_aprobar.is_safe = True 
 register.filter(por_aprobar)

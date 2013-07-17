@@ -14,8 +14,8 @@ def index(request):
     diccionario.update(csrf(request))
     diccionario.update({'request':request})
     diccionario.update({'form':AuthenticationForm()})
-    ultimas_noticias1 = Noticias.objects.all().order_by('-fecha')[:2]
-    ultimas_noticias2 = Noticias.objects.all().order_by('-fecha')[3:5]
+    ultimas_noticias1 = Noticias.objects.all().order_by('-fecha')[:3]
+    ultimas_noticias2 = Noticias.objects.all().order_by('-fecha')[3:6]
     diccionario.update({'ult_notic1':ultimas_noticias1})
     diccionario.update({'ult_notic2':ultimas_noticias2})
     mensaje = '' 
@@ -39,7 +39,7 @@ def index(request):
             # El usuario o contraseña eran incorrectos
             mensaje = "El usuario y/o la contraseña son incorrectos"
             diccionario.update({'m_error':mensaje})
-        return render_to_response('user/index/index.html', diccionario)
+        return render_to_response('usuario/index/index.html', diccionario)
 
     else:
-        return render_to_response('user/index/index.html', diccionario)
+        return render_to_response('usuario/index/index.html', diccionario)

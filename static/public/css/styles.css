@@ -1,0 +1,16 @@
+#logo {
+  float: left;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background:/static/images/logo.png;
+  width: 139px;
+  height: 51px;
+}
+#logo:hover {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  -o-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="{{ LANGUAGE_CODE|default:"es-ve" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+    
+<head>
+<meta charset="utf-8">
+    
+    {% load admin_static %}{% load url from future %}{% load i18n grp_tags %}
+        
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <!-- STYLESHEETS -->
+    {% block stylesheets %}
+        <link href="{% static "bootstrap/js/bootstrap.js" %}" rel="stylesheet" type="text/javascript" media="screen" />
+        
+        <link href="{% static "css/ajax_select.css" %}" rel="stylesheet" type="text/css" media="screen" />
+        <link href="{% static "js/ajax_select.js" %}" rel="stylesheet" type="text/javascript" media="screen" />
+        <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+        
+    <script src="{% static "bootstrap/js/jquery.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-transition.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-alert.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-modal.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-dropdown.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-scrollspy.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-tab.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-tooltip.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-popover.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-button.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-collapse.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-carousel.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-typeahead.js" %}"></script>
+
+    <link href="{% static "bootstrap/css/bootstrap-responsive.css" %}" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 60px;
+      }
+
+      /* Custom container */
+      .container {
+        margin: 0 auto;
+        max-width: 1000px;
+      }
+      .container > hr {
+        margin: 60px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 80px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 100px;
+        line-height: 1;
+      }
+      .jumbotron .lead {
+        font-size: 24px;
+        line-height: 1.25;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+
+    </style>
+    
+    {% endblock %}
+    
+    <!-- EXTRASTYLES -->
+    {% block extrastyle %}{% endblock %}
+    
+    <!-- EXTRAHEAD -->
+    {% block extrahead %}{% endblock %}
+    
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+    
+
+    <title>{% block title %}Umail{% endblock %}</title>
+    
+</head>

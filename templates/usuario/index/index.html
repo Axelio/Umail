@@ -1,0 +1,96 @@
+{% include "usuario/base.html" %}
+{% load admin_static %} 
+
+
+<body>
+    <div class="container-narrow">
+        {% include "usuario/banner.html" %}
+        
+    </div>
+    
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="{% static "images/4.png" %}" alt="">
+            </div>
+            <div class="item">
+                <img src="{% static "images/4.png" %}" alt="">
+            </div>
+            <div class="item">
+                <img src="{% static "images/4.png" %}" alt="">
+            </div>
+        </div>
+        
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div><!-- /.carousel -->
+        
+    <div class="container">
+        {% load disminuir %}
+        <table width=100%  cellpadding="10">
+            <tbody>
+                <tr>
+                    {% for noticia in ult_notic1 %}
+                    
+                    <td>
+                            <strong>{{ noticia.titulo }}</strong>
+                    </td>
+                    {% endfor %}      
+
+                </tr>
+                <tr>
+                    {% for noticia in ult_notic1 %}
+                    
+                    <td>
+                            {{ noticia.texto|disminuir:200 }}
+                    </td>
+                    {% endfor %}      
+
+                </tr>         
+                <tr>
+                    {% for noticia in ult_notic1 %}
+                    
+                    <td>
+
+                        <p><a class="btn" href="{% url 'detalle_noticia' noticia.id %}">Ver detalles</a></p>
+                    </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+                <table width=100%  cellpadding="10">
+            <tbody>
+                <tr>
+                    {% for noticia in ult_notic2 %}
+                    
+                    <td>
+                            <strong>{{ noticia.titulo }}</strong>
+                    </td>
+                    {% endfor %}      
+
+                </tr>
+                <tr>
+                    {% for noticia in ult_notic2 %}
+                    
+                    <td>
+                            {{ noticia.texto|disminuir:200 }}
+                    </td>
+                    {% endfor %}      
+
+                </tr>         
+                <tr>
+                    {% for noticia in ult_notic2 %}
+                    
+                    <td>
+                    <p><a class="btn" href="{% url 'detalle_noticia' noticia.id %}">Ver detalles</a></p>
+                    </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+ 
+    </div>
+    
+</body>

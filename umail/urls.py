@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^django_messages/', include('django_messages.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'logout$',logout,{'next_page':'/'},),
-    url(r'^$','auth.views.index'),
+    url(r'^$','auth.views.index', name='inicio'),
 
    (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),

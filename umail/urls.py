@@ -11,7 +11,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-    (r'^grappelli/', include('grappelli.urls')),
     (r'^ajax_select/', include('ajax_select.urls')),
     (r'^admin/lookups/', include(ajax_select_urls)),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

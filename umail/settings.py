@@ -175,6 +175,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_messages',
     'ajax_select',
+    'suit_redactor',
 	'personas',
     'sedes',
     'noticias',
@@ -191,8 +192,8 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
 SUIT_CONFIG = {
     # header
     'ADMIN_NAME': 'Umail',
-    # 'HEADER_DATE_FORMAT': 'l, j. F Y',
-    # 'HEADER_TIME_FORMAT': 'H:i',
+    'HEADER_DATE_FORMAT': 'l, j. F Y',
+    'HEADER_TIME_FORMAT': 'H:i',
 
     # forms
     'SHOW_REQUIRED_ASTERISK': True,  # Default True

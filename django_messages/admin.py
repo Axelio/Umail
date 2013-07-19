@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User, Group
 from ajax_select.fields import AutoCompleteSelectMultipleField, AutoCompleteSelectField
 from django.contrib import messages
+from suit_redactor.widgets import RedactorWidget
 
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
@@ -44,6 +45,9 @@ class MessageAdminForm(forms.ModelForm):
 
     class Meta:
         model = Message
+        widgets = {
+                    'body': RedactorWidget(editor_options={'lang': 'es'})
+                }
     def clean(self):
         destinatarios = self.cleaned_data['recipient']
         # --- Tipo --- #

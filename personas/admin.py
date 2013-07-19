@@ -12,7 +12,7 @@ admin.site.register(Personas, PersonasAdmin)
 
 class PersonalAdmin(admin.ModelAdmin):
     list_filter     = ['dependencia','tipo_personal']
-    search_fields   = ['cargo']
+    search_fields   = ['dependencia__departamento']
 admin.site.register(Personal, PersonalAdmin)
 
 admin.site.register(TipoPersonal)

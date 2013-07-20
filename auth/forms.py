@@ -4,7 +4,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 
 class AuthenticacionForm(AuthenticationForm):
-    username = forms.CharField(label="Correo", max_length=200)
+    username = forms.CharField(label="Correo", max_length=200, widget = forms.TextInput(attrs={'type':'text', 'class':'input-block-level', 'required':'required', 'placeholder':u'Correo electrónico'}))
+    password = forms.CharField(max_length=200, widget = forms.PasswordInput(attrs={'type':'password', 'class':'input-block-level','required':'required', 'placeholder':u'Contraseña'}))
 
     def __init__(self, request=None, *args, **kwargs):       
         super(AuthenticacionForm, self).__init__(*args, **kwargs)

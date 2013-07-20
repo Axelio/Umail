@@ -17,11 +17,14 @@ urlpatterns = patterns('',
     url(r'^noticias/', include('noticias.urls')),
     url(r'^django_messages/', include('django_messages.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'logout$',logout,{'next_page':'/'},),
+    url(r'logout$',logout,{'next_page':'/'}, name='salir'),
     url(r'^$','auth.views.index', name='inicio'),
 
    (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),
+
+    # Login 
+    url(r'^auth$', 'auth.views.auth', name='auth'),
 
     # Manual de usuario 
     url(r'^ayuda/(?P<seccion>\w+)/$', 'manual_usuario.views.manual', name='manual_usuario'),

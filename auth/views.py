@@ -19,6 +19,7 @@ def auth(request):
     diccionario.update({'form':AuthenticacionForm()})
 
     if request.method == 'POST':
+        import pdb
         diccionario.update({'form':AuthenticacionForm(request.POST)})
         usuario = User.objects.filter(Q(username=request.POST['username'])|Q(email=request.POST['username']))
         if usuario.exists(): 
@@ -29,14 +30,18 @@ def auth(request):
                 login(request, usuario)
                 #"User is not valid, active and authenticated"
                 if not user.is_active:
-                    mensaje = "La contraseña es válida pero la cuenta ha sido desactivada"
+                    mensaje = "La contraseña es válida pero la cuenta ha sido desactivada."
                     diccionario.update({'m_error':mensaje})
                     return render_to_response('usuario/index/login.html', diccionario)
                 return index(request) 
+            else:
+                # El usuario o contraseña eran incorrectos
+                mensaje = "Contraseña incorrecta. Por favor, inténtelo nuevamente."
+                diccionario.update({'m_error':mensaje})
 
         else:
-            # El usuario o contraseña eran incorrectos
-            mensaje = "El usuario y/o la contraseña son incorrectos"
+            # El usuario no existe
+            mensaje = "El usuario %s no existe." %(request.POST['username'])
             diccionario.update({'m_error':mensaje})
         return render_to_response('usuario/index/login.html', diccionario)
 

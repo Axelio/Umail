@@ -3,12 +3,9 @@
 
 
 <body>
-    <div class="container-narrow">
-        {% include "usuario/banner.html" %}
-        
-    </div>
-    
-    <!-- Carousel
+    <div class="container-narrow"></div> 
+
+    <!-- Carousel/
     ================================================== -->
     <div id="myCarousel" class="carousel slide">
         <div class="carousel-inner">
@@ -22,149 +19,143 @@
                 <img src="{% static "images/4.png" %}" alt="">
             </div>
         </div>
-        
         <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
         <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
     </div><!-- /.carousel -->
-        
-    <div class="container">
-        {% load disminuir %}
-        <table width=100%  cellpadding="10" align=center>
-            <tbody>
-                <tr>
-                    {% for noticia in ult_notic1 %}
-                    
-                    <td>
-                            <strong>{{ noticia.titulo }}</strong>
-                    </td>
-                    {% endfor %}      
+    
+    <div class="strip strip-white" style="padding: 0px">
+        <div class="container">
+            {% load disminuir %}
+            <table width=100%  cellpadding="10" align=center>
+                <tbody>
+                    <tr>
+                        {% for noticia in ult_notic1 %}
+                        
+                        <td>
+                                <strong>{{ noticia.titulo }}</strong>
+                        </td>
+                        {% endfor %}      
 
-                </tr>
-                <tr>
-                    {% for noticia in ult_notic1 %}
-                    
-                    <td>
-                            {{ noticia.texto|disminuir:200 }}
-                    </td>
-                    {% endfor %}      
+                    </tr>
+                    <tr>
+                        {% for noticia in ult_notic1 %}
+                        
+                        <td>
+                                {{ noticia.texto|disminuir:200 }}
+                        </td>
+                        {% endfor %}      
 
-                </tr>         
-                <tr>
-                    {% for noticia in ult_notic1 %}
-                    
-                    <td>
+                    </tr>         
+                    <tr>
+                        {% for noticia in ult_notic1 %}
+                        
+                        <td>
 
+                            <p><a class="btn" href="{% url 'detalle_noticia' noticia.id %}">Ver detalles</a></p>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+                    <table width=100%  cellpadding="10">
+                <tbody>
+                    <tr>
+                        {% for noticia in ult_notic2 %}
+                        
+                        <td>
+                                <strong>{{ noticia.titulo }}</strong>
+                        </td>
+                        {% endfor %}      
+
+                    </tr>
+                    <tr>
+                        {% for noticia in ult_notic2 %}
+                        
+                        <td>
+                                {{ noticia.texto|disminuir:200 }}
+                        </td>
+                        {% endfor %}      
+
+                    </tr>         
+                    <tr>
+                        {% for noticia in ult_notic2 %}
+                        
+                        <td>
                         <p><a class="btn" href="{% url 'detalle_noticia' noticia.id %}">Ver detalles</a></p>
-                    </td>
-                    {% endfor %}
-                </tr>
-            </tbody>
-        </table>
-                <table width=100%  cellpadding="10">
-            <tbody>
-                <tr>
-                    {% for noticia in ult_notic2 %}
-                    
-                    <td>
-                            <strong>{{ noticia.titulo }}</strong>
-                    </td>
-                    {% endfor %}      
-
-                </tr>
-                <tr>
-                    {% for noticia in ult_notic2 %}
-                    
-                    <td>
-                            {{ noticia.texto|disminuir:200 }}
-                    </td>
-                    {% endfor %}      
-
-                </tr>         
-                <tr>
-                    {% for noticia in ult_notic2 %}
-                    
-                    <td>
-                    <p><a class="btn" href="{% url 'detalle_noticia' noticia.id %}">Ver detalles</a></p>
-                    </td>
-                    {% endfor %}
-                </tr>
-            </tbody>
-        </table>
- 
+                        </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+     
+        </div>
     </div>      
     
-        <hr style="border-width: 2px 0;">
-                               
-    <div class="container">
-        <div class"row" align=center>
-            <div class="span2">
-                <img src="{% static "images/firefox.png" %}" style="margin-bottom:30px"> 
-                <img src="{% static "images/iceweasel.png" %}">
+    <div class="strip">
+        <div class="container">
+            <div class"row" align=center>
+                <div class="span2">
+                    <img src="{% static "images/firefox.png" %}" style="margin-bottom:30px"> 
+                    <img src="{% static "images/iceweasel.png" %}">
 
-            </div>
-            <div class="span2">
-                <img src="{% static "images/safari.png" %}" style="margin-bottom:30px">
-                <img src="{% static "images/opera.png" %}">
-            </div>
-            <div class="span2">
-                <img src="{% static "images/chrome.png" %}" style="margin-bottom:30px">
-                <img src="{% static "images/safari.png" %}">
-            </div>
-            <div class="span4 carousel" id="testimonials">
-                <div class="item active">
-                    <blockquote>
-                    <p>Atmail gives us the flexibility to offer our customers truly business-class email.</p>
-                    </blockquote>
-                    <p class="cite"><strong>Sara Hicks</strong><br>
-                    <a href="http://mediatemple.com/" rel="external"><em>Media Temple Product Manager</em></a></p>
                 </div>
-                <div class="item">
-                    <blockquote>
-                    <p>20.000+ customers - In Atmail I absolutely love the fact that everything is in Zend Framework. So main selling factor for us is: being able to integrate our own email API's into the webmail.</p>
-                    </blockquote>
-                    <p class="cite"><strong>Thijs Feryn</strong><br>
-                    <a href="http://www.combell.com/" rel="external"><em>Combell Evangelist</em></a></p>
+                <div class="span2">
+                    <img src="{% static "images/safari.png" %}" style="margin-bottom:30px">
+                    <img src="{% static "images/opera.png" %}">
+                </div>
+                <div class="span2">
+                    <img src="{% static "images/chrome.png" %}" style="margin-bottom:30px">
+                    <img src="{% static "images/safari.png" %}">
+                </div>
+                <div class="span4 carousel" id="testimonials">
+                    <div class="item active">
+                        <blockquote>
+                        <p>Disponible para una larga lista de navegadores web en distintos Sistemas Operativos como lo son Google Chrome, Mozilla Firefox, Opera, Safari, entre otros.</p>
+                        </blockquote>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-        <hr style="border-width: 2px 0;">
-                               
+<div class="strip strip-white strip-grey">
     <div class="container">
-        <div class"row" align=center>
-            <div class="span2">
-                <img src="{% static "images/firefox.png" %}" style="margin-bottom:30px"> 
-                <img src="{% static "images/iceweasel.png" %}">
+        <div class="row-fluid">
+            <div class="span4">
+                <div class="thumbnail" align=center>
+                    <a href="/products/cloud">
+                        <img src="{% static "images/deploy-cloud.png" %}">
+                    </a>
+                </div>
+                        
+                <h3>Misión</h3> 
+                <p>Umail es un sistema comunicacional de banguardia dentro de las intituciones universitarias del país, atendiendo tanto las necesidades presentes como las tendencias y cambios de la tecnologia que confiere los memorándum del futuro.</p>
+            </div>
 
-            </div>
-            <div class="span2">
-                <img src="{% static "images/safari.png" %}" style="margin-bottom:30px">
-                <img src="{% static "images/opera.png" %}">
-            </div>
-            <div class="span2">
-                <img src="{% static "images/chrome.png" %}" style="margin-bottom:30px">
-                <img src="{% static "images/safari.png" %}">
-            </div>
-            <div class="span4 carousel" id="testimonials">
-                <div class="item active">
-                    <blockquote>
-                    <p>Atmail gives us the flexibility to offer our customers truly business-class email.</p>
-                    </blockquote>
-                    <p class="cite"><strong>Sara Hicks</strong><br>
-                    <a href="http://mediatemple.com/" rel="external"><em>Media Temple Product Manager</em></a></p>
+            <div class="span4">
+                <div class="thumbnail" align=center>
+                    <a href="/products/cloud">
+                        <img src="{% static "images/deploy-cloud.png" %}">
+                    </a>
                 </div>
-                <div class="item">
-                    <blockquote>
-                    <p>20.000+ customers - In Atmail I absolutely love the fact that everything is in Zend Framework. So main selling factor for us is: being able to integrate our own email API's into the webmail.</p>
-                    </blockquote>
-                    <p class="cite"><strong>Thijs Feryn</strong><br>
-                    <a href="http://www.combell.com/" rel="external"><em>Combell Evangelist</em></a></p>
+                <h3>Visión</h3>
+                <p>Ser un sistema con alta tecnología y altamente productiva, con vocación de servicio comunicacional, formada constantemente por profesionales comprometidos que satisfagan sus necesidades en materia de comunicación mediante memorándum recurriendo al uso de las más diversas tecnologíasas de generación.</p>
+            </div>
+
+            <div class="span4">
+                <div class="thumbnail" align=center>
+                    <a href="/products/cloud">
+                        <img src="{% static "images/deploy-cloud.png" %}">
+                    </a>
                 </div>
+                <h3>Objetivo</h3>
+                <p>Umail, integra la Universidad Rómulo Gallegos a través de documentos oficiales dirigidas a establecer indicaciones, recomendaciones, intrucciones o disposiciones entre departamentos, siempre comprometiendo la eficiencia, excelencia y responsabilidad de los datos.</p>
+                
             </div>
         </div>
-
     </div>
-    
-        <hr style="border-width: 2px 0;">
+</div>
+
 </body>
+
+{% include "usuario/pie.html" %}

@@ -45,6 +45,9 @@
 <!--       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
       <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a> -->
     </div><!-- /.carousel -->
+
+    <!-- Noticias
+    ================================================== -->
     
     <div class="strip strip-white" style="padding: 0px">
         <div class="container">
@@ -74,37 +77,7 @@
                         
                         <td>
 
-                            <p><a class="btn" href="{% url 'detalle_noticia' noticia.id %}">Ver detalles</a></p>
-                        </td>
-                        {% endfor %}
-                    </tr>
-                </tbody>
-            </table>
-                    <table width=100%  cellpadding="10">
-                <tbody>
-                    <tr>
-                        {% for noticia in ult_notic2 %}
-                        
-                        <td>
-                                <strong>{{ noticia.titulo }}</strong>
-                        </td>
-                        {% endfor %}      
-
-                    </tr>
-                    <tr>
-                        {% for noticia in ult_notic2 %}
-                        
-                        <td>
-                                {{ noticia.texto|disminuir:200 }}
-                        </td>
-                        {% endfor %}      
-
-                    </tr>         
-                    <tr>
-                        {% for noticia in ult_notic2 %}
-                        
-                        <td>
-                        <p><a class="btn" href="{% url 'detalle_noticia' noticia.id %}">Ver detalles</a></p>
+                            <p><a class="btn btn-primary" href="{% url 'detalle_noticia' noticia.id %}">Ver detalles</a></p>
                         </td>
                         {% endfor %}
                     </tr>

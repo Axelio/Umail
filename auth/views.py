@@ -13,10 +13,11 @@ def auth(request):
     diccionario = {}
     diccionario.update(csrf(request))
     diccionario.update({'request':request})
-    if request.user.is_authenticated():
-        return index(request)
-
-    diccionario.update({'form':AuthenticacionForm()})
+    diccionario.update({'form':AuthenticationForm()})
+    ultimas_noticias1 = Noticias.objects.all().order_by('-fecha')[:3]
+    diccionario.update({'ult_notic1':ultimas_noticias1})
+    mensaje = '' 
+    loggeado = False
 
     if request.method == 'POST':
         import pdb

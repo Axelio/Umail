@@ -6035,7 +6035,7 @@ a.badge:focus {
   left: 100%;
 }
 
-.carousel-control {
+/*.carousel-control {
   position: absolute;
   top: 40%;
   left: 15px;
@@ -6054,7 +6054,7 @@ a.badge:focus {
           border-radius: 23px;
   opacity: 0.5;
   filter: alpha(opacity=50);
-}
+}*/
 
 .carousel-control.right {
   right: 15px;
@@ -6094,7 +6094,7 @@ a.badge:focus {
   background-color: #fff;
 }
 
-.carousel-caption {
+/*.carousel-caption {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -6102,7 +6102,7 @@ a.badge:focus {
   padding: 15px;
   background: #333333;
   background: rgba(0, 0, 0, 0.75);
-}
+}*/
 
 .carousel-caption h4,
 .carousel-caption p {
@@ -6180,4 +6180,65 @@ a.badge:focus {
   -webkit-box-shadow: inset 0 2px 4px #cccccc;
   -moz-box-shadow: inset 0 2px 4px #cccccc;
   box-shadow: inset 0 2px 4px #cccccc;
+}
+
+    /* CUSTOMIZE THE CAROUSEL
+    -------------------------------------------------- */
+
+    .carousel .container {
+      position: relative;
+      z-index: 100;
+    }
+
+
+    .carousel-control {
+      height: 80px;
+      margin-top: 0;
+      font-size: 120px;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+      background-color: transparent;
+      border: 0;
+      z-index: 10;
+    }
+
+    .carousel .item {
+      height: 500px;
+    }
+    .carousel img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      height: 500px;
+    }
+
+    .carousel-caption {
+      background-color: transparent;
+      position: static;
+      max-width: 550px;
+      margin-top: 130px;
+    }
+
+
+    .carousel-caption h1,
+    .carousel-caption .lead {
+      margin: 0;
+      line-height: 1.25;
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+    }
+    .carousel-caption .btn {
+      margin-top: 10px;
+    }
+
+/* CUSTOMIZE THE CAROUSEL
+    -------------------------------------------------- */
+
+#logo {
+    background: url("/static/images/logo-white.png") no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 38px;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    width: 139px;
 }

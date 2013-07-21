@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="139.12166"
+   height="36.944"
+   id="svg3868"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="Documento nuevo 9">
+  <defs
+     id="defs3870" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.2243421"
+     inkscape:cx="91.428571"
+     inkscape:cy="0"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="596"
+     inkscape:window-height="452"
+     inkscape:window-x="363"
+     inkscape:window-y="229"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata3873">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-304.72488,-411.03305)">
+    <text
+       sodipodi:linespacing="125%"
+       id="text2985"
+       y="447.17163"
+       x="304.72488"
+       style="font-size:57.82173157px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#00659c;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/f0ry/public_html/umail/static/public/images/logo-white.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#00aec8;fill-opacity:1;stroke:none;font-family:'5Fatal Error';-inkscape-font-specification:'5Fatal Error'"
+         y="447.17163"
+         x="304.72488"
+         id="tspan2987"
+         sodipodi:role="line">U</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3780-0"
+       y="447.17163"
+       x="360.60568"
+       style="font-size:44.5808754px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/f0ry/public_html/umail/static/public/images/logo-white.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         style="font-size:44.5808754px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;font-family:Motor Oil 1937 M54;-inkscape-font-specification:Motor Oil 1937 M54"
+         y="447.17163"
+         x="360.60568"
+         id="tspan3782-2"
+         sodipodi:role="line">mail</tspan></text>
+  </g>
+</svg>

@@ -3,24 +3,47 @@
 
 
 <body>
-    <div class="container-narrow"></div> 
+    <div class="container-narrow"></div>
 
-    <!-- Carousel/
+        <!-- Carousel
     ================================================== -->
     <div id="myCarousel" class="carousel slide">
-        <div class="carousel-inner">
-            <div class="item active">
-                <img src="{% static "images/4.png" %}" alt="">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="{% static "images/4.png" %}" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+                <h1>Titulo Ejemplo.</h1>
+                <p class="lead">Sistema que busca la interoperabilidad entre las dependencias de la UNERG para lograr facilidad y eficiencia en la elaboración, envío y recepción en los memorándums.</p>
             </div>
-            <div class="item">
-                <img src="{% static "images/4.png" %}" alt="">
-            </div>
-            <div class="item">
-                <img src="{% static "images/4.png" %}" alt="">
-            </div>
+          </div>
         </div>
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+        <div class="item">
+          <img src="{% static "images/4.png" %}" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+                <h1>Otro Titulo Ejemplo.</h1>
+                <p class="lead">Sistema que busca la interoperabilidad entre las dependencias de la UNERG para lograr facilidad y eficiencia en la elaboración, envío y recepción en los memorándums.</p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="{% static "images/4.png" %}" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Otro Otro Titulo Ejemplo.</h1>
+              <p class="lead">Sistema que busca la interoperabilidad entre las dependencias de la UNERG para lograr facilidad y eficiencia en la elaboración, envío y recepción en los memorándums.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a> -->
     </div><!-- /.carousel -->
     
     <div class="strip strip-white" style="padding: 0px">

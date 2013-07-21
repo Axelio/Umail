@@ -12,7 +12,6 @@
                 <span class="icon-bar"></span>
               </button>
               <a id="logo" href="{% url 'inicio' %}"></a>                                     
-              <a href="#"><button class="btn btn-primary pull-right">Login</button></a>           
                 {% if request.user.is_authenticated %}
                     <a href="{% url 'salir' %}"><button class="btn btn-primary pull-right">Salir</button></a>                
                 {% else %}

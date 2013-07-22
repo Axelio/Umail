@@ -7,7 +7,7 @@ from django_messages.views import *
 urlpatterns = patterns('',
     #url(r'^$', redirect_to, {'url': 'inbox/'}, name='messages_redirect'), # Django 1.4
     url(r'^$', TemplateView.as_view(template_name='django_messages/inbox.html'), name='messages_redirect'), # Django 1.5
-    url(r'^inbox/$', inbox, name='messages_inbox'),
+    url(r'^inbox/$', bandeja, name='messages_inbox'),
     url(r'^outbox/$', outbox, name='messages_outbox'),
     url(r'^compose/$', compose, name='messages_compose'),
     url(r'^compose/(?P<recipient>[\w.@+-]+)/$', compose, name='messages_compose_to'),

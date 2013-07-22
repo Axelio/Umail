@@ -2,6 +2,8 @@
 import os
 import glob
 
+LOGIN_URL='/auth'
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -9,16 +11,24 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+AUTOCOMPLETE_MEDIA_PREFIX = '/autocomplete/media/'
+
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE' : 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle.'
+        'ENGINE' : 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle.'
         'NAME': 'db_umail',
-        'USER': 'umail',                      # Not used with sqlite3.
-        'PASSWORD': 'umail86245',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        #'ENGINE' : 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle.'
+        #'NAME': 'db_umail',
+        #'USER': 'umail',                      # Not used with sqlite3.
+        #'PASSWORD': 'umail86245',                  # Not used with sqlite3.
+        #'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        #'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 #import dj_database_url
@@ -164,7 +174,7 @@ COMPRESS_JS = {
 
 INSTALLED_APPS = (
     'auth',
-    'suit',
+    #'suit',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

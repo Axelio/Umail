@@ -3,6 +3,7 @@ import datetime
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.core.context_processors import csrf
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -13,10 +14,12 @@ from django.conf import settings
 from django.db import models
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django_messages.models import Message
-from django_messages.forms import ComposeForm
+from django_messages.forms import ComposeForm, BandejaForm
 from django_messages.utils import format_quote
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.models import LogEntry, ADDITION, DELETION, CHANGE
+from django.forms.models import modelformset_factory
+from umail import settings
 
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
@@ -103,41 +106,158 @@ def ver_por_aprobar(request, message_id, template_name='user/mensajes/leer_aprob
     }, context_instance=RequestContext(request))
 ver_por_aprobar = login_required(ver_por_aprobar)
 
-def inbox(request, mensaje=''):
+def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje=''):
     """
     Displays a list of received messages for the current user.
     Optional Arguments:
         ``template_name``: name of the template to use.
     """
     notify = False
-    if not mensaje == '':
-        notify = True
+    diccionario = {}
+    diccionario.update(csrf(request))
     if request.user.is_authenticated():
-        message_list = Message.objects.inbox_for(request.user).distinct()
-        mensajes = message_list
-        paginador = Paginator(message_list, 20)
+        if request.method == "POST":
+            form = BandejaForm(request.POST)
+            now = datetime.datetime.now()
+            # Revisar si hay POST con archivar
+            if request.POST.has_key('archivar'):
+                lista = request.POST.getlist('seleccion')
+                if lista.__len__() == 0:
+                    form.errors.update({'mensajes':u'No seleccionó ningún mensaje'})
+                    tipo_mensaje = 'error'
+                    mensaje = form.errors['mensajes']
+                else:
+                    lista_memos = []
+                    for num in lista:
+                        lista_memos.append(int(num))
+
+                    # Buscar los memos según los ids que llegan
+                    lista_memos = Message.objects.filter(id__in=lista_memos)
+
+                    total_memos = lista_memos.count()
+                    if lista_memos.exclude(status__nombre = 'En espera').count() == total_memos:
+                        tipo_mensaje = 'success'
+                        mensaje = 'Un total de %s mensajes fueron archivados.' %(total_memos)
+                    else:
+                        tipo_mensaje = 'error'
+                        mensaje = 'Los memos en espera que no pueden ser archivados. '
+                        if lista_memos.exclude(status__nombre = 'En espera').count() > 1:
+                            mensaje = mensaje + 'Sin embargo, %s memos fueron archivados' %(lista_memos.exclude(status__nombre = 'En espera').count())
+                        elif lista_memos.exclude(status__nombre = 'En espera').count() == 1:
+                            mensaje = mensaje + 'Sin embargo, %s memo fue archivado.' %(lista_memos.exclude(status__nombre = 'En espera').count())
+
+                    for memo in lista_memos.exclude(status__nombre = 'En espera'):
+                        memo.deleted_at = now
+                        # Guardar log de memo archivado
+                        LogEntry.objects.create(
+                        user_id         = request.user.pk, 
+                        content_type_id = ContentType.objects.get_for_model(Message).id,
+                        object_id       = memo.id,
+                        object_repr     = repr(memo), 
+                        change_message  = mensaje,
+                        action_flag     = DELETION
+                        )
+                        memo.save()
+
+
+
+                '''
+                message = get_object_or_404(Message, id=message_id)
+                deleted = False
+                notify = False
+                if success_url is None:
+                    success_url = reverse('messages_inbox')
+                if request.GET.has_key('next'):
+                    success_url = request.GET['next']
+                if message.sender.usuarios.user == user:
+                    message.sender_deleted_at = now
+                    deleted = True
+                for destinatario in message.recipient.get_query_set():
+                    if destinatario.grupos == None:
+                        if destinatario.usuarios.user.username == user.username:
+                            message.recipient_deleted_at = now
+                            deleted = True
+                    elif destinatario.usuarios == None:
+                        if user in destinatario.grupos.user_set.get_query_set():
+                            message.recipient_deleted_at = now
+                            deleted = True
+                if deleted:
+                    if message.status == 'En espera':
+                        message.save()
+                        mensaje_txt = u"Mensaje archivado exitosamente."
+
+                        # Guardar log de memo archivado
+                        LogEntry.objects.create(
+                        user_id         = request.user.pk, 
+                        content_type_id = ContentType.objects.get_for_model(Message).id,
+                        object_id       = message.id,
+                        object_repr     = repr(message), 
+                        change_message  = mensaje_txt,
+                        action_flag     = DELETION
+                        )
+                        mensaje = mensaje_txt
+                    else:
+                        mensaje = u'Un mensaje que está en espera de ser aprobado no puede ser archivado aún.'
+                    notify = True
+                    if notification:
+                        notification.send([user], "messages_deleted", {'message': message,})
+                    return inbox(request, mensaje)
+                raise Http404
+                '''
+
+
+
+
+
+
+
+
+
+
+        form = BandejaForm()
+        formset = modelformset_factory(
+                                        Message, # Modelo
+                                        extra=0, # Formularios extras
+                                    )
+        
+        if tipo_bandeja == 'enviados': # ENVIADOS
+            formset = formset(queryset=Message.objects.outbox_for(request.user).distinct()) #Filtrando la bandeja
+        if tipo_bandeja == 'entrada': # ENTRADA
+            formset = formset(queryset=Message.objects.inbox_for(request.user).distinct()) #Filtrando la bandeja
+        
+        paginador = Paginator(formset, settings.SUIT_CONFIG['LIST_PER_PAGE'])
         page = request.GET.get('page')
         try:
-            message_list = paginador.page(page)
+            formset = paginador.page(page)
         except PageNotAnInteger:
             # If page is not an integer, deliver first page.
-            message_list = paginador.page(1)
+            formset = paginador.page(1)
         except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
-            message_list = paginador.page(paginator.num_pages)
-        if not mensajes.exists():
+            formset = paginador.page(paginator.num_pages)
+
+        
+        message_list = Message.objects.all()
+        if not message_list.exists():
             mensaje = u'No tiene ningún mensaje hasta ahora'
-        return render_to_response('user/mensajes/bandeja.html', {
-            'message_list': message_list,
-            'request':request,
-            'mensaje':mensaje,
-            'notify':notify,
-            'tipo_bandeja':'entrada',
-        }, context_instance=RequestContext(request))
+        
+        if tipo_mensaje == 'success':
+            expresion = '¡Genial! '
+        if tipo_mensaje == 'error':
+            expresion = '¡Espera! Hay algo malo... '
+        diccionario.update({'request':request})
+        diccionario.update({'formulario':form})
+        diccionario.update({'formset':formset})
+        diccionario.update({'message_list':message_list})
+        diccionario.update({'tipo_mensaje':tipo_mensaje})
+        diccionario.update({'expresion':expresion})
+        diccionario.update({'mensaje':mensaje})
+        diccionario.update({'tipo_bandeja':tipo_bandeja})
+        return render_to_response('usuario/mensajes/bandejas.html', diccionario, context_instance=RequestContext(request))
     else:
         return HttpResponseRedirect('/')
 
-def outbox(request, mensaje='', template_name='user/mensajes/bandeja.html'):
+def outbox(request, mensaje='', template_name='usuario/mensajes/bandejas.html'):
     """
     Displays a list of sent messages by the current user.
     Optional arguments:
@@ -161,8 +281,9 @@ def outbox(request, mensaje='', template_name='user/mensajes/bandeja.html'):
         'request':request,
         'mensaje':mensaje,
         'message_list': message_list,
+        'tipo_bandeja':'enviados',
     }, context_instance=RequestContext(request))
-outbox = login_required(outbox)
+outbox = login_required(outbox, login_url='/auth')
 
 def trash(request, template_name='user/mensajes/bandeja.html', mensaje=''):
     """
@@ -194,7 +315,7 @@ def trash(request, template_name='user/mensajes/bandeja.html', mensaje=''):
 trash = login_required(trash)
 
 def compose(request, recipient=None,
-        template_name='user/mensajes/redactar.html', success_url=None, recipient_filter=None):
+        template_name='usuario/mensajes/redactar.html', success_url=None, recipient_filter=None):
     """
     Displays and handles the ``form_class`` form to compose new messages.
     Required Arguments: None
@@ -219,8 +340,6 @@ def compose(request, recipient=None,
         if valido:
             from django_messages.models import Destinatarios, EstadoMemo
             estado_memo = EstadoMemo.objects.get(nombre='En espera')
-            #form = form_class(request.POST)
-            #form = form_class(request.POST, recipient_filter=recipient_filter)
             mensaje = Message(
                             sender = Destinatarios.objects.get(usuarios__user=request.user),
                             subject = request.POST['subject'],

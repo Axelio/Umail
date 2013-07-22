@@ -13,7 +13,7 @@ def auth(request):
     diccionario = {}
     diccionario.update(csrf(request))
     diccionario.update({'request':request})
-    diccionario.update({'form':AuthenticationForm()})
+    diccionario.update({'form':AuthenticacionForm()})
     ultimas_noticias1 = Noticias.objects.all().order_by('-fecha')[:3]
     diccionario.update({'ult_notic1':ultimas_noticias1})
     mensaje = '' 
@@ -34,7 +34,7 @@ def auth(request):
                     mensaje = "La contraseña es válida pero la cuenta ha sido desactivada."
                     diccionario.update({'m_error':mensaje})
                     return render_to_response('usuario/index/login.html', diccionario)
-                return index(request) 
+                return HttpResponseRedirect('/')
             else:
                 # El usuario o contraseña eran incorrectos
                 mensaje = "Contraseña incorrecta. Por favor, inténtelo nuevamente."

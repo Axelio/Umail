@@ -16,6 +16,14 @@ from django_messages.fields import CommaSeparatedUserField
 from ajax_select.fields import AutoCompleteSelectMultipleField, AutoCompleteSelectField
 from ajax_select import make_ajax_field
 
+
+class BandejaForm(forms.Form):
+    mensajes = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple)
+    class Meta:
+        widgets = {
+              'mensaje': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
+              }
+
 class ComposeForm(forms.ModelForm):
     recipient = AutoCompleteSelectMultipleField('destinatarios', required=False, help_text=u'Por favor, ingrese al menos 4 caracteres para autocompletar. Puede agregar múltiples contactos.', label='Destinatarios')
     con_copia = AutoCompleteSelectMultipleField('destinatarios', required=False, help_text=u'Por favor, ingrese al menos 4 caracteres para autocompletar. Puede agregar múltiples contactos.')

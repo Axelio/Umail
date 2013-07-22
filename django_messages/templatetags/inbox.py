@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.template import Library, Node, TemplateSyntaxError
+from django.utils.html import format_html
 
 class InboxOutput(Node):
     def __init__(self, varname=None):
@@ -45,7 +46,7 @@ def do_print_inbox_count(parser, token):
 register = Library()     
 register.tag('inbox_count', do_print_inbox_count)
 
-register = Library()
+
 @register.filter(name="negrillas", is_safe=True)
 def negrillas(request,id_message):
     from django_messages.models import Message, Destinatarios
@@ -59,3 +60,25 @@ def negrillas(request,id_message):
     
 register.filter(negrillas)
 
+
+@register.filter(name="destin", is_safe=True)
+def destin(tipo_dest,id_message):
+    from django_messages.models import Message
+    if tipo_dest == 'recipient':
+        return Message.objects.get(id=id_message).recipient
+    else:
+        return Message.objects.get(id=id_message).sender
+register.filter(destin)
+
+@register.filter(name="icon_status", is_safe=True)
+def icon_status(id_message):
+    from django_messages.models import Message
+    memo = Message.objects.get(id=id_message)
+    if memo.status.nombre == 'Aprobado':
+        icono = '<i class="icon-ok"></i>'
+    elif memo.status.nombre == 'Anulado':
+        icono = '<i class="icon-remove"></i>'
+    elif memo.status.nombre == 'En espera':
+        icono = '<i class="icon-time"></i>'
+    return format_html(icono)
+register.filter(icon_status)

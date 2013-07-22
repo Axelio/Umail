@@ -25,9 +25,9 @@ class MessageAdminForm(forms.ModelForm):
     """
     #recipient = forms.ModelChoiceField(
     #    label=_('Recipient'), queryset=User.objects.all(), required=True)
-    recipient = AutoCompleteSelectMultipleField('destinatarios', required=True, label=_('Destinatario'),help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
-    con_copia = AutoCompleteSelectMultipleField('destinatarios', required=False,help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
-    leido_por = AutoCompleteSelectMultipleField('destinatarios', required=False)
+    recipient = AutoCompleteSelectField('destinatarios', required=True, label=_('Destinatario'),help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
+    con_copia = AutoCompleteSelectField('destinatarios', required=False,help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
+    #leido_por = AutoCompleteSelectMultipleField('destinatarios', required=False)
     sender = AutoCompleteSelectField('destinatarios', required=False)
 
     '''
@@ -51,6 +51,7 @@ class MessageAdminForm(forms.ModelForm):
     def clean(self):
         destinatarios = self.cleaned_data['recipient']
         # --- Tipo --- #
+        '''
         if destinatarios.__len__() > 1:
             self.cleaned_data['tipo'] = u'Circular'
         else:
@@ -62,7 +63,6 @@ class MessageAdminForm(forms.ModelForm):
                 self.cleaned_data['tipo'] = u'Circular'
             else:
                 self.cleaned_data['tipo'] = u'Personal'
-
         # --- Destinatarios --- #
         # Revisar si está el grupo Todos en destinatarios
         todos = Destinatarios.objects.get(grupos__name__iexact='Todos')
@@ -117,12 +117,29 @@ class MessageAdminForm(forms.ModelForm):
                 if usuario.usuarios.user.groups.get_query_set().filter(id__in=self.cleaned_data['con_copia']).exists():
                     self.cleaned_data['con_copia'].remove(usuario.id)
 
+        '''
         return self.cleaned_data
 
 class MessageAdmin(admin.ModelAdmin):
     form = MessageAdminForm
     #inlines = [AdjuntosInline]
+    '''
+    fieldsets = ( 
+        (None, {'fields': 'sender', 'recipient', 'parent_msg', 'subject', 'archivo', 
+                'status', 'tipo', 'body','sent_at', 'read_at', 'replied_at',
+                'deleted_at', })
+    )
+    '''
     fieldsets = (
+        (None, {
+            'fields': (
+                'sender', 'recipient', 'parent_msg', 'subject', 'archivo', 
+                'status', 'tipo', 'body','sent_at', 'read_at', 'replied_at',
+                'deleted_at', 
+            ),
+        }),
+    )
+    '''fieldsets = (
         (None, {
             'fields': (
                 'sender',
@@ -146,11 +163,10 @@ class MessageAdmin(admin.ModelAdmin):
             'fields': (
                 'sent_at', 'read_at', 'replied_at',
                 'sender_deleted_at', 'recipient_deleted_at',
-                'leido_por',
             ),
             'classes': ('collapse', 'wide'),
         }),
-    )
+    )'''
     list_display = ('subject', 'sender', 'sent_at', 'read_at', 'status')
     list_filter = ('sent_at', 'sender', 'tipo')
     search_fields = ('subject', 'body', 'codigo')
@@ -178,6 +194,7 @@ class MessageAdmin(admin.ModelAdmin):
             # Notification for the sender.
             notification.send([obj.sender], sender_label, {'message': obj,})
 
+        '''
         # Si está asignado 'todos' los usuarios (grupo Todos)
         dest_grupos = Destinatarios.objects.filter(grupos__in=form.cleaned_data['recipient'])
         revisar_usuarios = True
@@ -203,6 +220,7 @@ class MessageAdmin(admin.ModelAdmin):
             dest_user = Destinatarios.objects.filter(grupos__in=form.cleaned_data['recipient'])
             for dest in dest_user :
                 obj.recipient.add(dest)
+                '''
         obj.save()
 
         '''

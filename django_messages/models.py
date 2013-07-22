@@ -23,7 +23,7 @@ class MessageManager(models.Manager):
         return self.filter(
             models.Q(recipient__in=destinatarios)|
             models.Q(con_copia__in=destinatarios),
-            models.Q(recipient_deleted_at__isnull=True),
+            models.Q(deleted_at__isnull=True),
             models.Q(status__nombre__iexact='Aprobado'),
         )
 
@@ -54,7 +54,7 @@ class MessageManager(models.Manager):
         filtro = self.filter(
             models.Q(recipient__in=destinatarios)|
             models.Q(con_copia__in=destinatarios),
-            models.Q(recipient_deleted_at__isnull=False),
+            models.Q(deleted_at__isnull=False),
         
         ) | self.filter(
             models.Q(sender=destinatarios)|
@@ -94,8 +94,8 @@ class Message(models.Model):
     """
     A private message from user to multiple users
     """
-    recipient = models.ManyToManyField('Destinatarios', related_name='received_messages', verbose_name=_("Destinatario"))
-    con_copia = models.ManyToManyField('Destinatarios', related_name='con_copia', null=True, blank=True, verbose_name=("con copia a:"))
+    recipient = models.ForeignKey('Destinatarios', related_name='received_messages', verbose_name=_("Destinatario"))
+    con_copia = models.ForeignKey('Destinatarios', related_name='con_copia', null=True, blank=True, verbose_name=("con copia a:"))
     subject = models.CharField(_("Subject"), max_length=255)
     archivo = models.FileField(upload_to='media/adjuntos/',null=True, blank=True)
     body = models.TextField(verbose_name="Texto")
@@ -104,11 +104,9 @@ class Message(models.Model):
     sent_at = models.DateTimeField(_("sent at"), null=True, blank=True)
     read_at = models.DateTimeField(_("read at"), null=True, blank=True)
     replied_at = models.DateTimeField(_("replied at"), null=True, blank=True)
-    sender_deleted_at = models.DateTimeField(_("Sender deleted at"), null=True, blank=True)
-    recipient_deleted_at = models.DateTimeField(_("Recipient deleted at"), null=True, blank=True)
+    deleted_at = models.DateTimeField(("Archivado a las"), null=True, blank=True)
     status = models.ForeignKey('EstadoMemo', null=True, blank=True, verbose_name='Estado')
     tipo = models.CharField(max_length=10, blank=True, null=True)
-    leido_por = models.ManyToManyField('Destinatarios', related_name='leido_por', null=True, blank=True, verbose_name=("leido por: "))
     codigo = models.CharField(blank=True, null=True, verbose_name=u'código', unique=True, max_length=30)
     num_ident= models.BigIntegerField(blank=True, null=True, verbose_name=u'número identificador')
 

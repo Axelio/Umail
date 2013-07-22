@@ -5,7 +5,9 @@ from django.contrib import admin
 from django.conf import settings
 from django.contrib.auth.views import logout
 from django.views.generic import TemplateView
-from ajax_select import urls as ajax_select_urls
+from ajax_select import urls as ajax_select_urls    
+from autocomplete.views import autocomplete
+    
 
 admin.autodiscover()
 
@@ -13,9 +15,10 @@ urlpatterns = patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
     (r'^ajax_select/', include('ajax_select.urls')),
     (r'^admin/lookups/', include(ajax_select_urls)),
+    url('^autocomplete/', include(autocomplete.urls)),
+    
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^noticias/', include('noticias.urls')),
-    url(r'^django_messages/', include('django_messages.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'logout$',logout,{'next_page':'/'}, name='salir'),
     url(r'^$','auth.views.index', name='inicio'),
@@ -32,8 +35,11 @@ urlpatterns = patterns('',
     url(r'^ayuda/$', 'manual_usuario.views.manual', name='manual_usuario'),
 
     # Memos
+    ## Bandejas
+    url(r'^bandeja/(?P<tipo_bandeja>\w+)/$', 'django_messages.views.bandeja', name='bandeja'),
+
     ## Entrada
-    url(r'^entrada/$', 'django_messages.views.inbox', name='messages_inbox'),
+    url(r'^entrada/$', 'django_messages.views.bandeja', name='messages_inbox'),
 
     ## Enviados
     url(r'^enviados/$', 'django_messages.views.outbox', name='messages_outbox'),
@@ -49,7 +55,7 @@ urlpatterns = patterns('',
     url(r'^anular/(?P<message_id>[\d]+)/$', 'django_messages.views.anular', name='anular'),
 
     ## Redactar memo
-    url(r'^redactar/$', 'django_messages.views.compose'),
+    url(r'^redactar/$', 'django_messages.views.compose', name='redactar'),
     ## Responder memo
     url(r'^responder/(?P<message_id>[\d]+)/$', 'django_messages.views.reply', name='messages_reply'),
     ## Archivar memo

@@ -103,3 +103,9 @@ def estado(mensaje):
     return format_html(estado_memo)
 estado.is_safe = True 
 register.filter(estado)
+
+def active(request, tipo_bandeja):
+    if request.get_full_path().replace('/','').replace('bandeja','') == tipo_bandeja:
+        return format_html('class="active"')
+active.is_safe = True 
+register.filter(active)

@@ -4,6 +4,7 @@ from django_messages.models import Message
 from umail import settings
 from django.contrib.admin import widgets
 from django.utils.safestring import mark_safe
+from reportes.models import Comentarios
 
 class HorizontalRadioRenderer(forms.RadioSelect.renderer):
   def render(self):
@@ -37,3 +38,13 @@ class ConsultaMemoForm(forms.ModelForm):
         if not self.cleaned_data['codigo'] == None:
             return self.cleaned_data
 
+class Feedback_Form(forms.ModelForm):
+    class Meta:
+        model = Comentarios
+        widgets = {
+        'sentimiento': forms.Select(attrs={'class':'choices', 'value':''}),
+        'pregunta': forms.TextInput(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'Pregunta', 'style':'width:98%'}),
+        'comentario': forms.Textarea(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'Introduzca su comentario',  'style':'width:98%'}),
+        'nombre': forms.TextInput(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'¿Cómo se llama?', 'style':'width:98%'}),
+        'correo': forms.TextInput(attrs={'class':'email', 'required':'required', 'value':'','placeholder':u'Correo electrónico', 'style':'width:98%'}),
+        }

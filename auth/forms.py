@@ -18,3 +18,4 @@ class AuthenticacionForm(AuthenticationForm):
                 raise forms.ValidationError(u"Introduzca el usuario y/o contraseña correcta.")
             elif not self.user_cache.is_active:
                 raise forms.ValidationError(u"Esta cuenta está inactiva.")
+

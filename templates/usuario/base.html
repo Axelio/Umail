@@ -3,7 +3,7 @@
 <html lang="{{ LANGUAGE_CODE|default:"es-ve" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
     
 <head>
-<meta charset="utf-8">
+  <meta charset="utf-8">
     
     {% load admin_static %}{% load url from future %}
 
@@ -88,4 +88,7 @@
     
 </head>
 {% include "usuario/banner.html" %}
+
+<!-- EXTRAHEAD -->
+{% include "usuario/feedback.html" %}
 

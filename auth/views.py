@@ -8,6 +8,8 @@ from django.contrib.auth.views import login
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect
+from reportes.forms import Feedback_Form
+from reportes.models import Comentarios
 
 def auth(request):
     diccionario = {}
@@ -50,14 +52,35 @@ def auth(request):
         return render_to_response('usuario/index/login.html', diccionario)
 
 def index(request):
+    feedback_form, procesado = revisar_comentario(request)
     diccionario = {}
     diccionario.update(csrf(request))
     diccionario.update({'request':request})
+    diccionario.update({'feedback_form':feedback_form})
     ultimas_noticias1 = Noticias.objects.all().order_by('-fecha')[:3]
-    ultimas_noticias2 = Noticias.objects.all().order_by('-fecha')[3:6]
     diccionario.update({'ult_notic1':ultimas_noticias1})
-    diccionario.update({'ult_notic2':ultimas_noticias2})
     mensaje = '' 
     loggeado = False
 
     return render_to_response('usuario/index/index.html', diccionario)
+
+def revisar_comentario(request):
+    procesado = False
+    if request.method == 'POST':
+        form = Feedback_Form(request)
+        sentimiento = request.POST['sentimiento']
+        pregunta = request.POST['pregunta']
+        comentario = request.POST['comentario']
+        nombre = request.POST['nombre']
+        correo = request.POST['correo']
+        comentario = Comentarios.objects.create(
+                                                sentimiento = sentimiento,
+                                                pregunta = pregunta,
+                                                comentario = comentario,
+                                                nombre = nombre,
+                                                correo = correo
+            )
+        procesado = True
+
+    feedback_form = Feedback_Form()
+    return feedback_form, procesado

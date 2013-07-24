@@ -1,0 +1,130 @@
+{% include "usuario/base.html" %}
+{% load admin_static %} 
+
+
+<body>
+    <div class="container-narrow"> 
+        <div class="row-fluid">
+            <div class="span3">
+                <ul class="nav nav-list pull-right">
+                    {% include "usuario/mensajes/lista_menu_mensajes.html" %}
+                </ul>
+            </div>
+            <div class="span9">
+                <div class="strip strip-white strip-grey" style="min-height: 350px">
+                                <form action="" method="post">
+                                     <table width=100%>
+                                                <tr>
+                                                <td rowspan="3" align=center>
+                                                     <img width=150px src="{% static "images/logo_unerg.png" %}" alt="">
+                                                </td>
+                                                    <td align=center>
+                                                        REPÚBLICA BOLIVARIANA DE VENEZUELA
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align=center>
+                                                        MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN SUPERIOR
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align=center>
+                                                        UNIVERSIDAD "RÓMULO GALLEGOS"
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        <br /><br />
+                                        <table width=100%>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan=2>
+                                                        {{ request.user.profile.persona.cargo_principal.dependencia.dependencia.nivel }}.{{ request.user.profile.persona.cargo_principal.dependencia.nivel }}.{{ request.user.profile.persona.cargo_principal.dependencia.siglas }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br /><br />
+                                        {% csrf_token %} 
+
+                                    <table>
+                                        <tbody>
+                                            <!-- recipient -->
+    
+                                            <tr>
+                                                <td><script type="text/javascript">
+
+$('.autocompletar').typeahead({
+  source: function (query, process) {
+    return $.get('/lookup/type/', { query: query }, function (data) {
+      return process(data.options);
+    });
+  }
+});
+
+</script>
+                                                    <input type="text" class="autocompletar" data-provide="typeahead" data-items="4" >
+                                                    <b>{{ form.recipient.label }}</b>
+                                                </td>
+                                                <td>
+                                                {% for destin in form.recipient %}
+                                                    {{ destin }}
+                                                {% endfor %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>{{ form.con_copia.label }}</b>
+                                                </td>
+                                                <td>
+                                                    {{ form.con_copia }} 
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Adjuntar</b>
+                                                </td>
+                                                <td>
+                                                    {{ form.archivo }} 
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width=15%>
+                                                    <b>{{ form.subject.label }}</b>
+                                                </td>
+                                                <td width=85%>
+                                                    {{ form.subject }} 
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>{{ form.body.label }}: </b>
+                                                </td>
+                                                <td width=100% colspan="4">
+                                                    {{ form.body }}
+                                                </td>
+                                            </tr>
+                                        </body>
+                                    </table>
+                                    <table width=100%>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <br />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align=center>
+                                                    <input type="submit" value="Enviar" class="boton"/>
+                                                </td>
+                                            </tr>
+                                        </body>
+                                    </table>
+                                </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% include "usuario/pie.html" %}

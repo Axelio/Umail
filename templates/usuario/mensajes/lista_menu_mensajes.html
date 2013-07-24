@@ -1,0 +1,9 @@
+{% load menu%}
+<li class="nav-header">Bandejas</li>
+<li {{ request|active:'entrada' }}><a href="{% url 'bandeja' 'entrada' %}">Mensajes recibidos</a></li>
+<li {{ request|active:'enviados' }}><a href="{% url 'bandeja' 'enviados' %}">Mensajes enviados</a></li>
+<li class="divider"></li>
+<li class="nav-header">Mensajes</li>
+<li {{ request|active:'redactar' }}><a href="{% url 'redactar' %}"><i class="icon-plus"></i> Nuevo</a></li>
+<li {{ request|active:'borradores' }}><a href="#"><i class="icon-pencil"></i> Borradores</a></li>
+<li {{ request|active:'archivados' }}><a href="#"><i class="icon-folder-close"></i> Archivados</a></li>

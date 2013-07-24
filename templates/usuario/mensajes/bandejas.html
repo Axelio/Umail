@@ -1,0 +1,122 @@
+{% include "usuario/base.html" %}
+{% load admin_static %} 
+
+
+<body>
+  <script type="text/javascript">
+  function selectAllItems() {
+	  var selectAll = $("#select_all_items");
+
+	  $(".chkSelectItem").each(function (index, item) {
+		  if (selectAll.prop("checked") != $(item).prop('checked')) {
+			  $(item).trigger('click');
+		  }
+	  });
+
+  }
+  </script>
+    <div class="container-narrow"> 
+        <div class="row-fluid">
+            <form method="post" action="">
+                <div class="span3">
+                    <ul class="nav nav-list pull-right">
+                        {% include "usuario/mensajes/lista_menu_mensajes.html" %}
+                        <li class="divider"></li>
+                        <li class="nav-header">Acciones</li>
+                        <button class="btn btn-primary" type="submit" name="archivar">Archivar</button>
+                    </ul>
+                </div>
+                <div class="span9">
+                    {% if mensaje %}
+                        <div class="alert alert-{{ tipo_mensaje }}">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>{{ expresion }}</strong>{{ mensaje }}.
+                        </div>
+                    {% endif %}
+                    {% csrf_token %}
+                    <div class="strip strip-white strip-grey" style="padding:1px 0px 0px 0px; min-height: 350px">
+                        <div class="pagination">
+                          <ul>
+                            {% if contacts.has_previous %}
+                                <li>
+                                    <a href="?page={{ formset.previous_page_number }}">
+                                        Anterior
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <a href="#">
+                                    Página {{ formset.number }} de {{ formset.paginator.num_pages }}.
+                                </a>
+                            </li>
+                            {% if contacts.has_next %}
+                                <li>
+                                    <a href="#"><a href="?page={{ formset.next_page_number }}">
+                                        Siguiente
+                                    </a>
+                                </li>
+                                
+                            {% endif %}
+
+                          </ul>
+                        </div>
+
+                        <table class="table" style="background-color:#FFF">
+                            
+                            <tbody>
+                                <th>
+                                    <input type="checkbox" id="select_all_items" onchange="javascript:selectAllItems()" name="select_all_items" />
+                                </th>
+                                <th></th>
+                                {% ifequal tipo_bandeja 'enviados'%}
+                                    <th>Para</th>
+                                {% else %}
+                                    <th>De</th>
+                                {% endifequal %}
+                                <th>Asunto</th>
+                                <th>Fecha</th>
+                                {% load inbox %}
+                                {% for form in formset %}
+                                    <tr>
+                                            <td>
+                                                <input type="checkbox" class="chkSelectItem" name="seleccion" value="{{ form.id.value }}"/>
+                                            </td>
+                                            <td>
+                                                {{ form.id.value|icon_status }}
+                                            </td>
+                                            <td>
+                                                {% ifequal tipo_bandeja 'enviados' %}
+                                                    <a href="{% url 'messages_detail' form.id.value %}">
+                                                        {{ 'recipient'|destin:form.id.value }}
+                                                    </a>
+                                                {% else %}
+                                                    <a href="{% url 'messages_detail' form.id.value %}">
+                                                        {{ 'sender'|destin:form.id.value }}
+                                                    </a>
+                                                {% endifequal %}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'messages_detail' form.id.value %}">
+                                                    {{ form.subject.value }}
+                                                </a>
+                                            </td>
+                                            <td>
+<!--
+                                                {#<a href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
+-->
+                                                <a href="{% url 'messages_detail' form.id.value %}">
+                                                    {{ form.sent_at.value|date:"D d M P" }}
+                                                </a>
+                                            </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+{% include "usuario/pie.html" %}

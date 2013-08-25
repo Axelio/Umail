@@ -55,7 +55,7 @@
             <table width=100%  cellpadding="10" align=center>
                 <tbody>
                     <tr>
-                        {% for noticia in ult_notic1 %}
+                        {% for noticia in noticias %}
                         
                         <td>
                                 <strong>{{ noticia.titulo }}</strong>
@@ -64,7 +64,7 @@
 
                     </tr>
                     <tr>
-                        {% for noticia in ult_notic1 %}
+                        {% for noticia in noticias %}
                         
                         <td>
                                 {{ noticia.texto|disminuir:200 }}
@@ -73,7 +73,7 @@
 
                     </tr>         
                     <tr>
-                        {% for noticia in ult_notic1 %}
+                        {% for noticia in noticias %}
                         
                         <td>
 

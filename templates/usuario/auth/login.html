@@ -9,18 +9,18 @@
     </style>
         
      <div class="container">
-     {% if m_error %}
-        <div class="alert alert-error text-center">
+    {% if mensaje %}
+        <div class="alert alert-{{ tipo_mensaje }}" align=center>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>{{ m_error }}</strong>
+            <strong>{{ expresion }}</strong>{{ mensaje }}.
         </div>
     {% endif %}
 
       <form class="form-signin" method="post">
         {% csrf_token %}
         <h2 class="form-signin-heading">Ingresar a Umail</h2>
-        {{ form.username }}
-        {{ form.password }}
+        {{ formulario.username }}
+        {{ formulario.password }}
         <button class="btn btn-large btn-primary" type="submit">Ingresar</button>
       </form>
 

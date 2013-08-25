@@ -5,7 +5,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.contrib.auth.views import logout
 from django.views.generic import TemplateView
-from ajax_select import urls as ajax_select_urls    
+from auth.views import Auth, Revisar_preguntas
+from django.contrib.auth.decorators import login_required
     
 
 admin.autodiscover()
@@ -21,8 +22,9 @@ urlpatterns = patterns('',
    (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),
 
-    # Login 
-    url(r'^auth$', 'auth.views.auth', name='auth'),
+    # Auth
+    url(r'^auth$', Auth.as_view(), name='auth'),
+    url(r'^preguntas_secretas/$', login_required(Revisar_preguntas.as_view(), login_url='/auth'), name='preguntas_secretas'),
 
     # Manual de usuario 
     url(r'^ayuda/(?P<seccion>\w+)/$', 'manual_usuario.views.manual', name='manual_usuario'),

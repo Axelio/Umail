@@ -36,6 +36,21 @@ class Group(models.Model):
     def natural_key(self):
         return (self.name,)
 
+class Pregunta(models.Model):
+    opcion = models.CharField(max_length=50, verbose_name=u'opción')
+    def __unicode__(self):
+        return u'%s' %(self.opcion)
+
+class PreguntasSecretas(models.Model):
+    pregunta = models.ForeignKey('Pregunta')
+    respuesta = models.CharField(max_length=300)
+    usuario = models.ForeignKey(User)
+    class Meta:
+        verbose_name = 'Pregunta secreta'
+        verbose_name_plural = 'Preguntas secretas'
+    def __unicode__(self):
+        return u'%s' %(self.pregunta)
+
 class UserProfile(models.Model):
     from personas.models import Personas
     user=models.ForeignKey(User)

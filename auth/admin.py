@@ -7,8 +7,7 @@ from django.contrib import admin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django import forms
-from lib import admin as Autocompletar
-admin.site.unregister(Group)
+#admin.site.unregister(Group)
 
 class CrearUsuarioForm(UserCreationForm):
     username = forms.RegexField(label=_("Username"), max_length=200, regex=r'^[\w.@+-]+$',
@@ -24,19 +23,19 @@ class PermissionAdmin(admin.ModelAdmin):
     list_display    = ('name',)
 admin.site.register(Permission, PermissionAdmin)
 
+class PreguntasAdmin(admin.ModelAdmin):
+    list_display    = ('opcion',)
+admin.site.register(Pregunta, PreguntasAdmin)
+
 class UserProfileInline(admin.StackedInline):
     model=UserProfile
-    form=Autocompletar.make_ajax_form(UserProfile,dict(persona='personas',),)
     can_delete=False 
     extra=1
     max_num=1
-    class Media:
-        js=("admin/js/jquery.autocomplete.js","admin/js/ajax_select.js")
-        css={"all":("admin/css/jquery.autocomplete.css","admin/css/iconic.css")}
 
 class UserProfileAdmin(UserAdmin):
     search_fields=['userprofile__persona__num_identificacion','username','email',]
-    inlines=[UserProfileInline,]    
+    inlines=[UserProfileInline, ]    
     add_form=CrearUsuarioForm
     staff_fieldsets = (
         (None, {'fields': ('username', 'password')}),
@@ -112,9 +111,8 @@ class UserProfileAdmin(UserAdmin):
             return response
         else:
             return super(UserAdmin,self).change_view( request, *args, **kwargs)
-
-admin.site.unregister(User)
 admin.site.register(User,UserProfileAdmin)
+admin.site.unregister(User)
 
 class GroupAdmin(admin.ModelAdmin):
     search_fields = ('name',)

@@ -1,6 +1,5 @@
 #-*- coding: UTF8 -*-
 from django.contrib import admin
-from lib import admin as Autocompletar
 from django.contrib import admin
 from noticias.models import *
 

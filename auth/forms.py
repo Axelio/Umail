@@ -2,6 +2,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
+from auth.models import *
 
 class AuthenticacionForm(AuthenticationForm):
     username = forms.CharField(label="Correo", max_length=200, widget = forms.TextInput(attrs={'type':'text', 'class':'input-block-level', 'required':'required', 'placeholder':u'Correo electrónico'}))
@@ -19,3 +20,12 @@ class AuthenticacionForm(AuthenticationForm):
             elif not self.user_cache.is_active:
                 raise forms.ValidationError(u"Esta cuenta está inactiva.")
 
+class PreguntasForm(forms.ModelForm):
+    class Meta:
+        model = PreguntasSecretas
+        exclude = ('usuario',)
+
+        widgets = {
+              'pregunta': forms.Select(attrs={'required':'required'}),
+              'respuesta': forms.TextInput(attrs={'required':'required'})
+              }

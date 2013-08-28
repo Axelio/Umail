@@ -15,7 +15,7 @@ from django.template import RequestContext
 from django.views.generic.base import View
 from django.forms.formsets import formset_factory
 from django.forms.models import modelformset_factory
-from auth.models import PreguntasSecretas
+from auth.models import PreguntasSecretas, Pregunta
 
 class Auth(View):
     tipo_mensaje = ''
@@ -29,6 +29,9 @@ class Auth(View):
     
     def get(self, request, *args, **kwargs):
         self.form = self.form()
+        if request.user.is_authenticated():
+            return HttpResponseRedirect('/')
+            
         return renderizar_plantilla(request, 
                             plantilla = self.template, 
                             tipo_mensaje = self.tipo_mensaje, 
@@ -86,6 +89,8 @@ class Auth(View):
                                 form = form
                             )
 
+from django.db import transaction
+
 class Revisar_preguntas(View):
     from django.forms.formsets import formset_factory
     tipo_mensaje = ''
@@ -110,35 +115,44 @@ class Revisar_preguntas(View):
         else:
             return HttpResponseRedirect('/')
 
+    @transaction.commit_on_success
     def post(self, request, *args, **kwargs):
         
         form = self.form(request.POST)
-        valido = False
+        error = False
+
         if form.is_valid():
             posicion = 0
+            usuario = request.user
+            transaction.savepoint()
+
             for formulario in form.forms:
-                posicion = 0
-                print "a %s" %(formulario['pregunta'].data)
-                for formu in form.forms:
-                    print "b %s" %(formu['pregunta'].data)
-                    posicion = posicion + 1
-                    if not formulario['pregunta'].data == formu['pregunta'].data:
-                        valido = True
-                    else:
-                        formu.errors['pregunta'] = 'Ya ha seleccionado esta pregunta. Por favor elija otra'
-        if valido:
-            print "valido"
-        else:
-            print posicion
+                pregunta = formulario['pregunta'].data
+                pregunta = Pregunta.objects.get(id=pregunta)
+                respuesta = formulario['respuesta'].data
+                pregunta_secreta = PreguntasSecretas.objects.filter(usuario=usuario, pregunta=pregunta)
+                if not pregunta_secreta.exists():
+                    PreguntasSecretas.objects.create(usuario=usuario, pregunta=pregunta, respuesta=respuesta)
+                else:
+                    (self.tipo_mensaje, self.expresion) = msj_expresion('error')
+                    self.mensaje = u'Al parecer la pregunta "%s" ya la has elegido más de una vez.' %(pregunta)
+                    error=True
 
+            if not error:
+                transaction.commit()
+                return HttpResponseRedirect('/')
+            else:
+                transaction.rollback()
+                return renderizar_plantilla(request, 
+                                    plantilla=self.template, 
+                                    tipo_mensaje = self.tipo_mensaje, 
+                                    expresion = self.expresion, 
+                                    mensaje = self.mensaje, 
+                                    form = form
+                                )
 
-        return renderizar_plantilla(request, 
-                            plantilla=self.template, 
-                            tipo_mensaje = self.tipo_mensaje, 
-                            expresion = self.expresion, 
-                            mensaje = self.mensaje, 
-                            form = form
-                        )
+            #transaction.commit()
+
 
 def index(request):
     feedback_form, procesado = revisar_comentario(request)

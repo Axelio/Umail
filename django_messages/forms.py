@@ -13,8 +13,6 @@ else:
 
 from django_messages.models import Message
 from django_messages.fields import CommaSeparatedUserField
-from ajax_select.fields import AutoCompleteSelectMultipleField, AutoCompleteSelectField
-from ajax_select import make_ajax_field
 
 
 class BandejaForm(forms.Form):
@@ -25,8 +23,8 @@ class BandejaForm(forms.Form):
               }
 
 class ComposeForm(forms.ModelForm):
-    recipient = AutoCompleteSelectMultipleField('destinatarios', required=False, help_text=u'Por favor, ingrese al menos 4 caracteres para autocompletar. Puede agregar múltiples contactos.', label='Destinatarios')
-    con_copia = AutoCompleteSelectMultipleField('destinatarios', required=False, help_text=u'Por favor, ingrese al menos 4 caracteres para autocompletar. Puede agregar múltiples contactos.')
+    #recipient = AutoCompleteSelectMultipleField('destinatarios', required=False, help_text=u'Por favor, ingrese al menos 4 caracteres para autocompletar. Puede agregar múltiples contactos.', label='Destinatarios')
+    #con_copia = AutoCompleteSelectMultipleField('destinatarios', required=False, help_text=u'Por favor, ingrese al menos 4 caracteres para autocompletar. Puede agregar múltiples contactos.')
     class Meta:
         model = Message
         exclude = ('sender','parent_msg','sent_at','read_at','replied_at','sender_deleted_at','recipient_deleted_at','status','tipo','leido_por')

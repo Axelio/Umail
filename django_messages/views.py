@@ -241,16 +241,12 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
         if not message_list.exists():
             mensaje = u'No tiene ningún mensaje hasta ahora'
         
-        if tipo_mensaje == 'success':
-            expresion = '¡Genial! '
-        if tipo_mensaje == 'error':
-            expresion = '¡Espera! Hay algo malo... '
         diccionario.update({'request':request})
         diccionario.update({'formulario':form})
         diccionario.update({'formset':formset})
         diccionario.update({'message_list':message_list})
         diccionario.update({'tipo_mensaje':tipo_mensaje})
-        diccionario.update({'expresion':expresion})
+        diccionario.update({'expresion':msj_expresion(tipo_mensaje)})
         diccionario.update({'mensaje':mensaje})
         diccionario.update({'tipo_bandeja':tipo_bandeja})
         return render_to_response('usuario/mensajes/bandejas.html', diccionario, context_instance=RequestContext(request))

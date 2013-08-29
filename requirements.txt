@@ -1,11 +1,11 @@
-Django>=1.5
-django-suit>=0.2.2
-django-suit-redactor>=0.0.2
-six>=1.3
-gunicorn>=0.17.2
-django-debug-toolbar>=0.9.4
-docutils>=0.10
-reportlab>=2.6
-psycopg2>=2.5
-dj-database-url >= 0.2
-pil >= 1.1.7
+Django
+django-suit
+django-suit-redactor
+six
+gunicorn
+django-debug-toolbar
+docutils
+reportlab
+psycopg2
+dj-database-url
+pil

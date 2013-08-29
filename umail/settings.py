@@ -184,7 +184,6 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.admin',
     'django_messages',
-    'ajax_select',
     'suit_redactor',
 	'personas',
     'sedes',

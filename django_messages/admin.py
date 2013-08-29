@@ -4,7 +4,6 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
-from ajax_select.fields import AutoCompleteSelectMultipleField, AutoCompleteSelectField
 from django.contrib import messages
 from suit_redactor.widgets import RedactorWidget
 
@@ -25,10 +24,10 @@ class MessageAdminForm(forms.ModelForm):
     """
     #recipient = forms.ModelChoiceField(
     #    label=_('Recipient'), queryset=User.objects.all(), required=True)
-    recipient = AutoCompleteSelectField('destinatarios', required=True, label=_('Destinatario'),help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
-    con_copia = AutoCompleteSelectField('destinatarios', required=False,help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
+    ##recipient = AutoCompleteSelectField('destinatarios', required=True, label=_('Destinatario'),help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
+    ##con_copia = AutoCompleteSelectField('destinatarios', required=False,help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
     #leido_por = AutoCompleteSelectMultipleField('destinatarios', required=False)
-    sender = AutoCompleteSelectField('destinatarios', required=False)
+    ##sender = AutoCompleteSelectField('destinatarios', required=False)
 
     '''
     group = forms.ChoiceField(label=_('group'), required=False,

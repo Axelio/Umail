@@ -1,6 +1,5 @@
 from personas.models import *
 from django.contrib import admin
-from lib import admin as Autocompletar
 from django.contrib import admin
 from personas.models import *
 

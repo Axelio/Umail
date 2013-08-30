@@ -1,4 +1,4 @@
-Django
+django
 django-suit
 django-suit-redactor
 six

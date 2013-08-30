@@ -3,9 +3,8 @@
 
 
 <body>
-   <!-- Button to trigger modal -->
 
-        <!-- Carousel
+    <!-- Carousel
     ================================================== -->
     <div id="myCarousel" class="carousel slide">
         <ol class="carousel-indicators">
@@ -15,7 +14,7 @@
         </ol>
       <div class="carousel-inner">
         <div class="item active">
-          <img src="{% static "images/4.png" %}" alt="">
+          <img src="{% static "images/fodo_carousel.png" %}" alt="">
           <div class="container">
             <div class="carousel-caption">
                 <h1>Titulo Ejemplo.</h1>
@@ -24,7 +23,7 @@
           </div>
         </div>
         <div class="item">
-          <img src="{% static "images/4.png" %}" alt="">
+          <img src="{% static "images/fodo_carousel.png" %}" alt="">
           <div class="container">
             <div class="carousel-caption">
                 <h1>Otro Titulo Ejemplo.</h1>
@@ -33,7 +32,7 @@
           </div>
         </div>
         <div class="item">
-          <img src="{% static "images/4.png" %}" alt="">
+          <img src="{% static "images/fodo_carousel.png" %}" alt="">
           <div class="container">
             <div class="carousel-caption">
               <h1>Otro Otro Titulo Ejemplo.</h1>
@@ -42,13 +41,20 @@
           </div>
         </div>
       </div>
-<!--       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a> -->
-    </div><!-- /.carousel -->
+    </div>
+    <!-- Carousel
+        ================================================== -->
+
+    <!-- Monitor
+        ================================================== -->
+    <div class="img_oculta">
+        <img src="{% static "images/monitor.png" %}" alt="">
+    </div>
+    <!-- Monitor
+        ================================================== -->
 
     <!-- Noticias
-    ================================================== -->
-    
+        ================================================== -->
     <div class="strip strip-white" style="padding: 0px">
         <div class="container">
             {% load disminuir %}
@@ -86,6 +92,7 @@
      
         </div>
     </div>
+
     
 <!--     <div class="strip">
         <div class="container">
@@ -113,44 +120,50 @@
             </div>
         </div>
     </div> -->
+    <!-- Noticias
+        ================================================== -->
 
-<div class="strip strip-white strip-grey">
-    <div class="container">
-        <div class="row-fluid">
-            <div class="span4">
-                <div class="thumbnail" align=center>
-                    <a href="/products/cloud">
-                        <img src="{% static "images/deploy-cloud.png" %}">
-                    </a>
+    <!-- Mision, Visión y Obejtivo
+        ================================================== -->
+    <div class="strip strip-white strip-grey">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="thumbnail" align=center>
+                        <a href="/products/cloud">
+                            <img src="{% static "images/deploy-cloud.png" %}">
+                        </a>
+                    </div>
+                            
+                    <h3>Misión</h3> 
+                    <p>Umail es un sistema comunicacional de banguardia dentro de las intituciones universitarias del país, atendiendo tanto las necesidades presentes como las tendencias y cambios de la tecnologia que confiere los memorándum del futuro.</p>
                 </div>
-                        
-                <h3>Misión</h3> 
-                <p>Umail es un sistema comunicacional de banguardia dentro de las intituciones universitarias del país, atendiendo tanto las necesidades presentes como las tendencias y cambios de la tecnologia que confiere los memorándum del futuro.</p>
-            </div>
 
-            <div class="span4">
-                <div class="thumbnail" align=center>
-                    <a href="/products/cloud">
-                        <img src="{% static "images/deploy-cloud.png" %}">
-                    </a>
+                <div class="span4">
+                    <div class="thumbnail" align=center>
+                        <a href="/products/cloud">
+                            <img src="{% static "images/deploy-cloud.png" %}">
+                        </a>
+                    </div>
+                    <h3>Visión</h3>
+                    <p>Ser un sistema con alta tecnología y altamente productiva, con vocación de servicio comunicacional, formada constantemente por profesionales comprometidos que satisfagan sus necesidades en materia de comunicación mediante memorándum recurriendo al uso de las más diversas tecnologíasas de generación.</p>
                 </div>
-                <h3>Visión</h3>
-                <p>Ser un sistema con alta tecnología y altamente productiva, con vocación de servicio comunicacional, formada constantemente por profesionales comprometidos que satisfagan sus necesidades en materia de comunicación mediante memorándum recurriendo al uso de las más diversas tecnologíasas de generación.</p>
-            </div>
 
-            <div class="span4">
-                <div class="thumbnail" align=center>
-                    <a href="/products/cloud">
-                        <img src="{% static "images/deploy-cloud.png" %}">
-                    </a>
+                <div class="span4">
+                    <div class="thumbnail" align=center>
+                        <a href="/products/cloud">
+                            <img src="{% static "images/deploy-cloud.png" %}">
+                        </a>
+                    </div>
+                    <h3>Objetivo</h3>
+                    <p>Umail, integra la Universidad Rómulo Gallegos a través de documentos oficiales dirigidas a establecer indicaciones, recomendaciones, intrucciones o disposiciones entre departamentos, siempre comprometiendo la eficiencia, excelencia y responsabilidad de los datos.</p>
+                    
                 </div>
-                <h3>Objetivo</h3>
-                <p>Umail, integra la Universidad Rómulo Gallegos a través de documentos oficiales dirigidas a establecer indicaciones, recomendaciones, intrucciones o disposiciones entre departamentos, siempre comprometiendo la eficiencia, excelencia y responsabilidad de los datos.</p>
-                
             </div>
         </div>
     </div>
-</div>
+    <!-- Misión, Visión y Objetivo
+        ================================================== -->
 
 </body>
 

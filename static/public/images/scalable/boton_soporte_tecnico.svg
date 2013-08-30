@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="Documento nuevo 1">
+   sodipodi:docname="boton_soporte_tecnico.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,18 +24,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.22285321"
-     inkscape:cx="889.465"
-     inkscape:cy="1064.9272"
+     inkscape:zoom="0.44570642"
+     inkscape:cx="-167.66504"
+     inkscape:cy="237.72653"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     fit-margin-top="0"
+     fit-margin-top="-1.1"
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1280"
-     inkscape:window-height="965"
+     inkscape:window-width="1024"
+     inkscape:window-height="541"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1" />
@@ -56,29 +56,33 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(10.724393,-107.92731)">
-    <g
-       id="g3004"
-       transform="matrix(0,-4.1884087,4.1884087,0,-1807.0214,764.10623)">
-      <rect
-         ry="4.6778207"
-         y="428.87338"
-         x="25.780392"
-         height="30.936466"
-         width="130.88506"
-         id="rect2998"
-         style="fill:#000000;fill-opacity:1;stroke:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3000"
-         y="448.11057"
-         x="40.75882"
-         style="font-size:12.73730373px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           style="font-family:sans-serif;-inkscape-font-specification:sans-serif"
-           y="448.11057"
-           x="40.75882"
-           id="tspan3002"
-           sodipodi:role="line">Soporte Técnico</tspan></text>
-    </g>
+    <rect
+       style="fill:none;stroke:none"
+       id="rect2998"
+       width="121.34563"
+       height="14.230253"
+       x="-442.70016"
+       y="40.132439"
+       ry="2.1517189"
+       transform="matrix(0,-1,1,0,0,0)"
+       inkscape:export-filename="/home/f0ry/public_html/umail/static/public/images/boton_soporte_tecnico.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:13.04409218px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-433.70691"
+       y="51.107292"
+       id="text3000"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="/home/f0ry/public_html/umail/static/public/images/boton_soporte_tecnico.png"><tspan
+         sodipodi:role="line"
+         id="tspan3002"
+         x="-433.70691"
+         y="51.107292"
+         style="fill:#ffffff;fill-opacity:1;font-family:sans-serif;-inkscape-font-specification:sans-serif">Soporte Técnico</tspan></text>
   </g>
 </svg>

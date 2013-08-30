@@ -9,6 +9,13 @@ from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
+from django.contrib.auth.forms import PasswordChangeForm
+from auth.forms import PreguntasForm
+from django.contrib.formtools.wizard.views import SessionWizardView
+from django.views.generic.base import View
+from lib.umail import msj_expresion, renderizar_plantilla
+from auth.models import PreguntasSecretas
+import random
 
 @csrf_protect
 def contactos(request, template_name='user/contactos/index.html', mensaje=''):
@@ -70,7 +77,7 @@ def contactos(request, template_name='user/contactos/index.html', mensaje=''):
 contactos = login_required(contactos)
 
 @csrf_protect
-def perfil(request, template_name='user/personas/perfil.html', mensaje=''):
+def perfil(request, template_name='usuario/perfil/perfil.html', mensaje=''):
     c = {}
     c.update(csrf(request))
     c.update({'request':request})
@@ -114,3 +121,40 @@ def password_change(request,
         }
     return render_to_response(template_name, context)
 password_change = login_required(password_change)
+
+class Cambiar_Clave(SessionWizardView):
+    def get_template_names(self):
+        if self.steps.current == '0':
+            return 'usuario/perfil/preguntas_secretas.html'
+        elif self.steps.current == '1':
+            return 'usuario/perfil/cambiar_clave.html'
+
+    def get_form(self, step=None, data=None, files=None):
+        form = super(Cambiar_Clave, self).get_form(step, data, files)
+        # determine the step if not given
+        if step is None:
+            step = self.steps.current
+
+        # Paso 1: Preguntas secretas
+        '''
+        Se filtran las preguntas y respuestas personales del usuario.
+        Se elijen aleatoriamente 3 preguntas.
+        Se envían a la plantilla para que el usuario pueda responderlas
+        '''
+        if step == '0':
+            preguntas = PreguntasSecretas.objects.filter(usuario=self.request.user)
+            preguntas = random.sample(preguntas, 3)
+            pregs = []
+            for pregunta in preguntas:
+                pre_id = pregunta.id
+                pregs.append(pre_id)
+            preguntas = PreguntasSecretas.objects.filter(id__in=pregs)
+            import pdb
+            form.fields['pregunta'].queryset = preguntas
+        return form
+
+    def done(self, form_list, **kwargs):
+        import pdb
+        pdb.set_trace()
+        #return HttpResponseRedirect('/')
+

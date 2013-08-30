@@ -128,3 +128,4 @@ class GroupAdmin(admin.ModelAdmin):
         return super(GroupAdmin, self).formfield_for_manytomany(
             db_field, request=request, **kwargs)
 admin.site.register(Group,GroupAdmin)
+admin.site.register(PreguntasSecretas)

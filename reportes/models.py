@@ -18,7 +18,7 @@ class Comentarios(models.Model):
             ('INDIFERENTE', 'Indiferente'),
                 )
 
-    sentimiento = models.CharField(max_length=12, choices=SENT_OPC, blank=True, null=True)
+    #sentimiento = models.CharField(max_length=12, choices=SENT_OPC, blank=True, null=True)
     pregunta = models.CharField(max_length=50)
     comentario = models.TextField()
     nombre = models.CharField(max_length=50, verbose_name=u"nombre y apellido")

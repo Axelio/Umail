@@ -157,13 +157,11 @@ def revisar_comentario(request):
     procesado = False
     if request.method == 'POST':
         form = Feedback_Form(request)
-        sentimiento = request.POST['sentimiento']
         pregunta = request.POST['pregunta']
         comentario = request.POST['comentario']
         nombre = request.POST['nombre']
         correo = request.POST['correo']
         comentario = Comentarios.objects.create(
-                                                sentimiento = sentimiento,
                                                 pregunta = pregunta,
                                                 comentario = comentario,
                                                 nombre = nombre,

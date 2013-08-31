@@ -7,7 +7,6 @@ from django.contrib import admin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django import forms
-#admin.site.unregister(Group)
 
 class CrearUsuarioForm(UserCreationForm):
     username = forms.RegexField(label=_("Username"), max_length=200, regex=r'^[\w.@+-]+$',
@@ -111,8 +110,9 @@ class UserProfileAdmin(UserAdmin):
             return response
         else:
             return super(UserAdmin,self).change_view( request, *args, **kwargs)
-admin.site.register(User,UserProfileAdmin)
+
 admin.site.unregister(User)
+admin.site.register(User,UserProfileAdmin)
 
 class GroupAdmin(admin.ModelAdmin):
     search_fields = ('name',)
@@ -127,5 +127,6 @@ class GroupAdmin(admin.ModelAdmin):
             kwargs['queryset'] = qs.select_related('content_type')
         return super(GroupAdmin, self).formfield_for_manytomany(
             db_field, request=request, **kwargs)
+admin.site.unregister(Group)
 admin.site.register(Group,GroupAdmin)
 admin.site.register(PreguntasSecretas)

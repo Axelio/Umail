@@ -51,11 +51,21 @@
                             </div>
                         </div>
                         <div class="row">
+                            {% if request.user.is_authenticated %}
+                            <div class="span2">
+                                <input class="text" id="id_nombre" maxlength="50" name="nombre" placeholder="¿Cómo se llama?" required="required" style="width:98%" type="text" value="{{ request.user.profile.persona.primer_nombre }} {{ request.user.profile.persona.primer_apellido }}"/>
+                            </div>
+                            {% else %}
                             <div class="span2">
                                 {{ feedback_form.nombre }}
                             </div>
+                            {% endif %}
                             <div class="span2">
-                                {{ feedback_form.correo }}
+                                {% if request.user.is_authenticated %}
+                                    <input class="email" id="id_correo" maxlength="75" name="correo" placeholder="Correo electrónico" required="required" style="width:98%" type="text" value="{{ request.user.profile.persona.email}}" />
+                                {% else %}
+                                    {{ feedback_form.correo }}
+                                {% endif %}
                             </div>
                         </div>
                     </fieldset>

@@ -21,6 +21,8 @@ class AuthenticacionForm(AuthenticationForm):
                 raise forms.ValidationError(u"Esta cuenta está inactiva.")
 
 class PreguntasForm(forms.ModelForm):
+    #readonly_fields = ('pregunta')
+
     class Meta:
         model = PreguntasSecretas
         exclude = ('usuario',)

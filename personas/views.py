@@ -13,6 +13,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from auth.forms import PreguntasForm
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.views.generic.base import View
+from django.forms.formsets import formset_factory
 from lib.umail import msj_expresion, renderizar_plantilla
 from auth.models import PreguntasSecretas
 import random
@@ -142,6 +143,9 @@ class Cambiar_Clave(SessionWizardView):
         Se envían a la plantilla para que el usuario pueda responderlas
         '''
         if step == '0':
+            form = formset_factory(PreguntasForm, extra = 3)
+            import pdb
+            #pdb.set_trace()
             preguntas = PreguntasSecretas.objects.filter(usuario=self.request.user)
             preguntas = random.sample(preguntas, 3)
             pregs = []
@@ -150,7 +154,16 @@ class Cambiar_Clave(SessionWizardView):
                 pregs.append(pre_id)
             preguntas = PreguntasSecretas.objects.filter(id__in=pregs)
             import pdb
-            form.fields['pregunta'].queryset = preguntas
+            form = form(
+                        initial=[{
+                                'pregunta':preguntas[0],
+                                }])
+            form.form.base_fields['pregunta'].widget.attrs['readonly']=True
+            '''
+            pdb.set_trace()
+            opciones = preguntas[0]
+            form.form.base_fields['pregunta'].widget.render_options(self, choices=opciones, selected_choices=opciones)
+            '''
         return form
 
     def done(self, form_list, **kwargs):

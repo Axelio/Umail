@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.contrib.auth.forms import PasswordChangeForm
 from django.views.decorators.csrf import csrf_protect
 from django.core.context_processors import csrf
+from django import forms
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
@@ -14,6 +15,10 @@ from auth.forms import PreguntasForm
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.views.generic.base import View
 from django.forms.formsets import formset_factory
+#from personas.forms import PreguntasForm
+from django.forms.models import modelformset_factory
+from django.forms import TextInput
+
 from lib.umail import msj_expresion, renderizar_plantilla
 from auth.models import PreguntasSecretas
 import random
@@ -123,6 +128,54 @@ def password_change(request,
     return render_to_response(template_name, context)
 password_change = login_required(password_change)
 
+class PreguntasSecretas(View):
+    from django.forms.formsets import formset_factory
+    tipo_mensaje = ''
+    expresion = ''
+    mensaje = ''
+    template = 'usuario/auth/preguntas.html'
+    #form = PreguntasForm
+    form = formset_factory(PreguntasForm, extra = 3)
+
+    def get(self, request, *args, **kwargs):
+        from auth.models import PreguntasSecretas
+        if request.user.preguntassecretas_set.get_query_set().exists():
+            form = self.form()
+            preguntas = PreguntasSecretas.objects.filter(usuario=self.request.user)
+            preguntas = random.sample(preguntas, 3)
+            pregs = []
+            for pregunta in preguntas:
+                pre_id = pregunta.id
+                pregs.append(pre_id)
+            form = modelformset_factory(PreguntasSecretas, form = PreguntasForm, max_num=3, extra=0, )
+            form = form(queryset=PreguntasSecretas.objects.filter(id__in=pregs))
+            import pdb
+            pdb.set_trace()
+            form.form.base_fields['pregunta'].widget.attrs['disabled']=True
+            #form.form.base_fields['respuesta'].widget.attrs['value']
+
+            self.mensaje = u'Para su mayor seguridad debe proporcionar algunas preguntas y respuestas secretas'
+            (self.tipo_mensaje, self.expresion) = msj_expresion('alert')
+            return renderizar_plantilla(request, 
+                                plantilla = self.template, 
+                                tipo_mensaje = self.tipo_mensaje, 
+                                expresion = self.expresion, 
+                                mensaje = self.mensaje, 
+                                form = form 
+                            )
+
+        else:
+            return HttpResponseRedirect('preguntas_secretas/')
+
+    '''
+    def post(self, request, *args, **kwargs):
+        
+        form = self.form(request.POST)
+        error = False
+    '''
+
+
+
 class Cambiar_Clave(SessionWizardView):
     def get_template_names(self):
         if self.steps.current == '0':
@@ -143,31 +196,21 @@ class Cambiar_Clave(SessionWizardView):
         Se envían a la plantilla para que el usuario pueda responderlas
         '''
         if step == '0':
-            form = formset_factory(PreguntasForm, extra = 3)
-            import pdb
-            #pdb.set_trace()
             preguntas = PreguntasSecretas.objects.filter(usuario=self.request.user)
             preguntas = random.sample(preguntas, 3)
             pregs = []
             for pregunta in preguntas:
                 pre_id = pregunta.id
                 pregs.append(pre_id)
-            preguntas = PreguntasSecretas.objects.filter(id__in=pregs)
-            import pdb
-            form = form(
-                        initial=[{
-                                'pregunta':preguntas[0],
-                                }])
-            form.form.base_fields['pregunta'].widget.attrs['readonly']=True
-            '''
-            pdb.set_trace()
-            opciones = preguntas[0]
-            form.form.base_fields['pregunta'].widget.render_options(self, choices=opciones, selected_choices=opciones)
-            '''
+            form = modelformset_factory(PreguntasSecretas, form = PreguntasForm, max_num=3, extra=0, )
+            form = form(queryset=PreguntasSecretas.objects.filter(id__in=pregs))
         return form
 
     def done(self, form_list, **kwargs):
-        import pdb
-        pdb.set_trace()
-        #return HttpResponseRedirect('/')
+        Preguntas = form_list[0] # Formulario de preguntas secretas
+        Cambiar_Clave = form_list[1] # Formulario de preguntas secretas
+        if Preguntas.is_valid():
+            if Cambiar_Clave.is_valid():
+                print True
+        return HttpResponseRedirect('/')
 

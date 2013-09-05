@@ -43,8 +43,8 @@ class Feedback_Form(forms.ModelForm):
         model = Comentarios
         widgets = {
         'sentimiento': forms.Select(attrs={'class':'choices', 'value':''}),
-        'pregunta': forms.TextInput(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'Pregunta', 'style':'width:98%'}),
-        'comentario': forms.Textarea(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'Introduzca su comentario',  'style':'width:98%'}),
-        'nombre': forms.TextInput(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'¿Cómo se llama?', 'style':'width:98%'}),
-        'correo': forms.TextInput(attrs={'class':'email', 'required':'required', 'value':'','placeholder':u'Correo electrónico', 'style':'width:98%'}),
+        'pregunta': forms.TextInput(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'Describa brevemente su pregunta, sugerencia o problema.', 'style':'width:98%'}),
+        'comentario': forms.Textarea(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'Escriba aquí los detalles. Por favor sea lo más especifico posible.',  'style':'width:98%', 'rows':2}),
+        'nombre': forms.TextInput(attrs={'class':'text', 'required':'required', 'value':'', 'style':'width:98%'}),
+        'correo': forms.TextInput(attrs={'class':'email', 'required':'required', 'value':'', 'style':'width:98%'}),
         }

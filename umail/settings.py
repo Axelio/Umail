@@ -174,7 +174,8 @@ COMPRESS_JS = {
 
 INSTALLED_APPS = (
     'auth',
-    #'suit',
+    'bootstrap_admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -224,7 +225,7 @@ SUIT_CONFIG = {
     # ),
 
     # misc
-    'LIST_PER_PAGE': 15
+    'LIST_PER_PAGE': 50
 }
 
 #Configuraciones Django-suit

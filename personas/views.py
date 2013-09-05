@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import random
 from django.contrib.auth.decorators import login_required
 from personas.forms import PerfilForm, FiltroForm
 from django.shortcuts import render_to_response, get_object_or_404
@@ -11,17 +12,16 @@ from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
 from django.contrib.auth.forms import PasswordChangeForm
-from auth.forms import PreguntasForm
+#from auth.forms import PreguntasForm
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.views.generic.base import View
 from django.forms.formsets import formset_factory
-#from personas.forms import PreguntasForm
+from personas.forms import PreguntasForm
 from django.forms.models import modelformset_factory
 from django.forms import TextInput
 
 from lib.umail import msj_expresion, renderizar_plantilla
 from auth.models import PreguntasSecretas
-import random
 
 @csrf_protect
 def contactos(request, template_name='user/contactos/index.html', mensaje=''):
@@ -128,31 +128,25 @@ def password_change(request,
     return render_to_response(template_name, context)
 password_change = login_required(password_change)
 
-class PreguntasSecretas(View):
+class Preguntas_Secretas(View):
     from django.forms.formsets import formset_factory
     tipo_mensaje = ''
     expresion = ''
     mensaje = ''
-    template = 'usuario/auth/preguntas.html'
-    #form = PreguntasForm
-    form = formset_factory(PreguntasForm, extra = 3)
+    template = 'usuario/perfil/preguntas_secretas.html'
+    form = PreguntasForm
+    #form = formset_factory(PreguntasForm, extra = 3)
 
     def get(self, request, *args, **kwargs):
         from auth.models import PreguntasSecretas
         if request.user.preguntassecretas_set.get_query_set().exists():
-            form = self.form()
-            preguntas = PreguntasSecretas.objects.filter(usuario=self.request.user)
+            preguntas = PreguntasSecretas.objects.filter(usuario=request.user)
             preguntas = random.sample(preguntas, 3)
             pregs = []
             for pregunta in preguntas:
-                pre_id = pregunta.id
-                pregs.append(pre_id)
-            form = modelformset_factory(PreguntasSecretas, form = PreguntasForm, max_num=3, extra=0, )
-            form = form(queryset=PreguntasSecretas.objects.filter(id__in=pregs))
-            import pdb
-            pdb.set_trace()
-            form.form.base_fields['pregunta'].widget.attrs['disabled']=True
-            #form.form.base_fields['respuesta'].widget.attrs['value']
+                pregs.append(pregunta.id)
+            preguntas = PreguntasSecretas.objects.filter(id__in=pregs)
+            form = self.form()
 
             self.mensaje = u'Para su mayor seguridad debe proporcionar algunas preguntas y respuestas secretas'
             (self.tipo_mensaje, self.expresion) = msj_expresion('alert')
@@ -161,56 +155,71 @@ class PreguntasSecretas(View):
                                 tipo_mensaje = self.tipo_mensaje, 
                                 expresion = self.expresion, 
                                 mensaje = self.mensaje, 
-                                form = form 
+                                form = form,
+                                extra=preguntas
                             )
 
         else:
             return HttpResponseRedirect('preguntas_secretas/')
 
-    '''
     def post(self, request, *args, **kwargs):
-        
         form = self.form(request.POST)
-        error = False
-    '''
+        if form.is_valid():
+            pregunta_1 = request.POST['pregunta_1']
+            respuesta_1 = request.POST['respuesta_1']
+            pregunta_2 = request.POST['pregunta_2']
+            respuesta_2 = request.POST['respuesta_2']
+            pregunta_3 = request.POST['pregunta_3']
+            respuesta_3 = request.POST['respuesta_3']
 
+            # Revisión de respuestas para la pregunta
+            pregunta_1 = PreguntasSecretas.objects.get(id__iexact=pregunta_1)
+            pregunta_2 = PreguntasSecretas.objects.get(id__iexact=pregunta_2)
+            pregunta_3 = PreguntasSecretas.objects.get(id__iexact=pregunta_3)
 
+            if not pregunta_1.respuesta == respuesta_1:
+                self.mensaje = u'%s no es la respuesta para %s. Por favor inténtelo de nuevo' %(respuesta_1, pregunta_1)
+                self.tipo_mensaje = 'error'
+            elif not pregunta_2.respuesta == respuesta_2:
+                self.mensaje = u'%s no es la respuesta para %s. Por favor inténtelo de nuevo' %(respuesta_2, pregunta_2)
+                self.tipo_mensaje = 'error'
+            elif not pregunta_3.respuesta == respuesta_3:
+                self.mensaje = u'%s no es la respuesta para %s. Por favor inténtelo de nuevo' %(respuesta_3, pregunta_3)
+                self.tipo_mensaje = 'error'
 
-class Cambiar_Clave(SessionWizardView):
-    def get_template_names(self):
-        if self.steps.current == '0':
-            return 'usuario/perfil/preguntas_secretas.html'
-        elif self.steps.current == '1':
-            return 'usuario/perfil/cambiar_clave.html'
-
-    def get_form(self, step=None, data=None, files=None):
-        form = super(Cambiar_Clave, self).get_form(step, data, files)
-        # determine the step if not given
-        if step is None:
-            step = self.steps.current
-
-        # Paso 1: Preguntas secretas
-        '''
-        Se filtran las preguntas y respuestas personales del usuario.
-        Se elijen aleatoriamente 3 preguntas.
-        Se envían a la plantilla para que el usuario pueda responderlas
-        '''
-        if step == '0':
-            preguntas = PreguntasSecretas.objects.filter(usuario=self.request.user)
-            preguntas = random.sample(preguntas, 3)
             pregs = []
-            for pregunta in preguntas:
-                pre_id = pregunta.id
-                pregs.append(pre_id)
-            form = modelformset_factory(PreguntasSecretas, form = PreguntasForm, max_num=3, extra=0, )
-            form = form(queryset=PreguntasSecretas.objects.filter(id__in=pregs))
-        return form
-
-    def done(self, form_list, **kwargs):
-        Preguntas = form_list[0] # Formulario de preguntas secretas
-        Cambiar_Clave = form_list[1] # Formulario de preguntas secretas
-        if Preguntas.is_valid():
-            if Cambiar_Clave.is_valid():
-                print True
-        return HttpResponseRedirect('/')
+            if self.tipo_mensaje == 'error':
+                pregs.append(pregunta_1.id)
+                pregs.append(pregunta_2.id)
+                pregs.append(pregunta_3.id)
+                preguntas = PreguntasSecretas.objects.filter(id__in=pregs)
+                (self.tipo_mensaje, self.expresion) = msj_expresion(self.tipo_mensaje)
+                return renderizar_plantilla(request, 
+                                    plantilla=self.template, 
+                                    tipo_mensaje = self.tipo_mensaje, 
+                                    expresion = self.expresion, 
+                                    mensaje = self.mensaje, 
+                                    form = form,
+                                    extra = preguntas,
+                                )
+        #return HttpResponseRedirect('/invalido')
+        '''
+        if form.is_valid():
+            print "Todo bien"
+            return renderizar_plantilla(request, 
+                                plantilla=self.template, 
+                                tipo_mensaje = self.tipo_mensaje, 
+                                expresion = self.expresion, 
+                                mensaje = self.mensaje, 
+                                form = form
+                            )
+        else:
+            return renderizar_plantilla(request, 
+                                plantilla=self.template, 
+                                tipo_mensaje = self.tipo_mensaje, 
+                                expresion = self.expresion, 
+                                mensaje = self.mensaje, 
+                                form = form
+                            )
+            '''
 

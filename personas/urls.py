@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
-from personas.views import PreguntasSecretas, Cambiar_Clave
-from auth.forms import PreguntasForm
+from personas.views import Preguntas_Secretas
 from django.contrib.auth.forms import PasswordChangeForm
 
 urlpatterns=patterns('',
-    url(r'^cambiar_clave$', PreguntasSecretas.as_view(), name='cambiar_clave'), #Cambiar contraseña
+    url(r'^preguntas_secretas$', Preguntas_Secretas.as_view(), name='preguntas_secretas'),
 
     (r'^.*$', 'personas.views.perfil'), #Vista por defecto
 

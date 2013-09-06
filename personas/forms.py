@@ -1,14 +1,19 @@
 # -*- coding: utf8 -*-
 from django import forms
 from personas.models import Personas
-from auth.models import PreguntasSecretas
+from auth.models import PreguntasSecretas, UserProfile
 import random
 
 class PerfilForm(forms.ModelForm):
-    notificaciones = forms.BooleanField(help_text=u'Active si desea enviar notificaciones a su correo electrónico')
+    notificaciones = forms.BooleanField(required=False,help_text=u'Active si desea enviar notificaciones a su correo electrónico')
     class Meta:
         model = Personas
-        exclude = ('tipodoc','num_identificacion','email','cargo_principal','cargos_autorizados')
+        exclude = ('tipodoc','cargo_principal','cargos_autorizados')
+    def __init__(self, *args, **kwargs):
+        super(PerfilForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs['readonly'] = True
+        self.fields['num_identificacion'].widget.attrs['readonly'] = True
+
 
 class FiltroForm(forms.Form):
     filtro = forms.CharField()

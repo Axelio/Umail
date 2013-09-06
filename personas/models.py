@@ -14,7 +14,7 @@ class Personas(models.Model):
     segundo_nombre          = models.CharField(max_length=100,blank=True)
     genero                  = models.IntegerField(choices=((0,'Masculino'),(1,'Femenino')),default=0,verbose_name=u'género')
     email                   = models.EmailField()
-    telefono                = models.CharField(unique=True, max_length=15, null=True, blank=True, verbose_name=u'teléfono', help_text=u'Por favor, incluya el código de telefonía o área.')
+    telefono                = models.CharField(max_length=15, null=True, blank=True, verbose_name=u'teléfono', help_text=u'Por favor, incluya el código de telefonía o área.')
     cargo_principal         = models.ForeignKey('Personal',related_name=u'cargo_principal')
     cargos_autorizados      = models.ManyToManyField('Personal', null=True, blank=True, default=None, related_name=u'cargos_autorizados')
     class Meta:

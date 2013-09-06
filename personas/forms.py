@@ -2,6 +2,7 @@
 from django import forms
 from personas.models import Personas
 from auth.models import PreguntasSecretas
+import random
 
 class PerfilForm(forms.ModelForm):
     class Meta:
@@ -11,14 +12,7 @@ class PerfilForm(forms.ModelForm):
 class FiltroForm(forms.Form):
     filtro = forms.CharField()
 
-class PreguntasForm(forms.ModelForm):
-    respuesta_s = forms.CharField(label='Respuesta')
-    class Meta:
-        model = PreguntasSecretas
-        exclude = ('respuesta','usuario')
-
-    '''
-    def __init__(self, *args, **kwargs):
-        super(PreguntasForm, self).__init__(*args, **kwargs)
-        self.fields['pregunta'].widget.attrs['disabled'] = True
-    '''
+class PreguntasForm(forms.Form):
+    respuesta_1 = forms.CharField(widget=forms.TextInput(attrs={'required':'required'}))
+    respuesta_2 = forms.CharField(widget=forms.TextInput(attrs={'required':'required'}))
+    respuesta_3 = forms.CharField(widget=forms.TextInput(attrs={'required':'required'}))

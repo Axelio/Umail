@@ -29,7 +29,7 @@
                             {% if form.pregunta.errors %}
                                 <div class="alert alert-error" align=center>
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <strong>{{ form.respuesta.errors|striptags }}</strong>
+                                    <strong>{{ form.pregunta.errors|striptags }}</strong>
                                 </div>
                             {% endif %}
                             {{ form.pregunta }}

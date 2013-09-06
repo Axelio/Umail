@@ -18,7 +18,7 @@ def msj_expresion(tipo_mensaje):
     return (tipo_mensaje, expresion)
 
 
-def renderizar_plantilla(request, plantilla, tipo_mensaje='', expresion='', mensaje='', form=''):
+def renderizar_plantilla(request, plantilla, tipo_mensaje='', expresion='', mensaje='', form='', extra=''):
     '''
     Función personalizada para Umail y la renderización de plantillas 
     con mensajes pasando por estilos de Bootstrap
@@ -34,4 +34,8 @@ def renderizar_plantilla(request, plantilla, tipo_mensaje='', expresion='', mens
 
     # Actualización del formulario
     diccionario.update({'formulario':form})
+    num_ext = 0
+    for ext in extra:
+        num_ext = num_ext + 1
+        diccionario.update({'extra_%s'%(num_ext):ext})
     return render(request, plantilla, diccionario)

@@ -55,6 +55,7 @@ class UserProfile(models.Model):
     from personas.models import Personas
     user=models.ForeignKey(User)
     persona=models.OneToOneField(Personas,null=False,help_text=u'Por favor, ingrese nombre, apellido o cédula de la persona')
+    notificaciones=models.BooleanField(default=False,help_text=u'Active esta casilla si desea el envío de notificaciones a su correo electrónico')
     class Meta:
         verbose_name='Usuario'
         unique_together=('user','persona')

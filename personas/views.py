@@ -2,7 +2,9 @@
 import random
 from django.contrib.auth.decorators import login_required
 from personas.forms import PerfilForm, FiltroForm
+from django.http import Http404
 from django.shortcuts import render_to_response, get_object_or_404
+from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.contrib.auth.forms import PasswordChangeForm
 from django.views.decorators.csrf import csrf_protect
@@ -19,7 +21,7 @@ from django.forms.formsets import formset_factory
 from personas.forms import PreguntasForm
 from django.forms.models import modelformset_factory
 from django.forms import TextInput
-
+from django.contrib.auth import login
 from lib.umail import msj_expresion, renderizar_plantilla
 from auth.models import PreguntasSecretas
 
@@ -135,32 +137,36 @@ class Preguntas_Secretas(View):
     mensaje = ''
     template = 'usuario/perfil/preguntas_secretas.html'
     form = PreguntasForm
-    #form = formset_factory(PreguntasForm, extra = 3)
 
     def get(self, request, *args, **kwargs):
         from auth.models import PreguntasSecretas
-        if request.user.preguntassecretas_set.get_query_set().exists():
-            preguntas = PreguntasSecretas.objects.filter(usuario=request.user)
-            preguntas = random.sample(preguntas, 3)
-            pregs = []
-            for pregunta in preguntas:
-                pregs.append(pregunta.id)
-            preguntas = PreguntasSecretas.objects.filter(id__in=pregs)
-            form = self.form()
-
-            self.mensaje = u'Para su mayor seguridad debe proporcionar algunas preguntas y respuestas secretas'
-            (self.tipo_mensaje, self.expresion) = msj_expresion('alert')
-            return renderizar_plantilla(request, 
-                                plantilla = self.template, 
-                                tipo_mensaje = self.tipo_mensaje, 
-                                expresion = self.expresion, 
-                                mensaje = self.mensaje, 
-                                form = form,
-                                extra=preguntas
-                            )
-
+        try:
+            usuario = User.objects.get(id=kwargs['user_id'])
+        except:
+            raise Http404
         else:
-            return HttpResponseRedirect('preguntas_secretas/')
+            if usuario.preguntassecretas_set.get_query_set().exists():
+                preguntas = PreguntasSecretas.objects.filter(usuario__id=int(kwargs['user_id']))
+                preguntas = random.sample(preguntas, 3)
+                pregs = []
+                for pregunta in preguntas:
+                    pregs.append(pregunta.id)
+                preguntas = PreguntasSecretas.objects.filter(id__in=pregs)
+                form = self.form()
+
+                self.mensaje = u'Para su mayor seguridad debe proporcionar algunas preguntas y respuestas secretas'
+                (self.tipo_mensaje, self.expresion) = msj_expresion('alert')
+                return renderizar_plantilla(request, 
+                                    plantilla = self.template, 
+                                    tipo_mensaje = self.tipo_mensaje, 
+                                    expresion = self.expresion, 
+                                    mensaje = self.mensaje, 
+                                    form = form,
+                                    extra=preguntas
+                                )
+
+            else:
+                return HttpResponseRedirect('preguntas_secretas/')
 
     def post(self, request, *args, **kwargs):
         form = self.form(request.POST)
@@ -202,6 +208,18 @@ class Preguntas_Secretas(View):
                                     form = form,
                                     extra = preguntas,
                                 )
+            else:
+                try:
+                    usuario = User.objects.get(id=kwargs['user_id'])
+                except:
+                    raise Http404
+                else:
+                    usuario = User.objects.get(id=kwargs['user_id'])
+                usuario.backend = 'django.contrib.auth.backends.ModelBackend'
+                login(request, usuario)
+                return HttpResponseRedirect('/perfil/')
+
+
         #return HttpResponseRedirect('/invalido')
         '''
         if form.is_valid():

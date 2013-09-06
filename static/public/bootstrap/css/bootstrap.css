@@ -1038,7 +1038,7 @@ legend {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
   font-size: 21px;
   line-height: 40px;
   color: #333333;
@@ -3522,7 +3522,7 @@ input[type="button"].btn-block {
   background-color: #24748c \9;
 }
 
-.btn-inverse {
+/*.btn-inverse {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #363636;
@@ -3536,6 +3536,23 @@ input[type="button"].btn-block {
   border-color: #222222 #222222 #000000;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444', endColorstr='#ff222222', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}*/
+
+.btn-inverse {
+  color: #ffffff; 
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #363636;
+  *background-color: #111111;
+  background-image: -moz-linear-gradient(top, #111111);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#111111), to(#111111));
+  background-image: -webkit-linear-gradient(top, #111111);
+  background-image: -o-linear-gradient(top, #111111);
+  background-image: linear-gradient(to bottom, #111111);
+  background-repeat: repeat-x;
+  border-color: #111111 #111111 #000000;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(endColorstr='#ff111111', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
 
@@ -6198,12 +6215,13 @@ a.badge:focus {
 }
 
 .strip {
-  border-bottom: 1px solid #CCC;
+/*  border-bottom: 1px solid #CCC;*/
   padding: 40px 0;
 }
 .strip-white,
 .white {
   background: #FFF;
+  border-bottom: 1px solid #CCC;
 }
 .strip-grey {
   background: #EAEAEA;
@@ -6304,3 +6322,26 @@ a.badge:focus {
   }
 /* FEEDBACK
     -------------------------------------------------- */
+
+/* LOGIN
+    -------------------------------------------------- */
+#hero {
+  min-height: 140px;
+  background: url('/static/images/hero-umail.jpeg') repeat center top;
+}
+
+#hero-background {
+  padding: 20px;
+}
+/* LOGIN
+    -------------------------------------------------- */
+
+/* MIDDLE
+    -------------------------------------------------- */
+#middle {
+  background: #EAEAEA;
+}
+/* MIDDLE
+    -------------------------------------------------- */
+
+

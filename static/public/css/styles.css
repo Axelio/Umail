@@ -14,3 +14,6 @@
   -o-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
+@media (max-width: 480px) {
+.img_oculta {  display: none; }
+}

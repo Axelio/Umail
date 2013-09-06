@@ -84,7 +84,40 @@ def contactos(request, template_name='user/contactos/index.html', mensaje=''):
     return render_to_response(template_name, c)
 contactos = login_required(contactos)
 
-@csrf_protect
+class Perfil(View):
+    tipo_mensaje = ''
+    expresion = ''
+    mensaje = ''
+    template = 'usuario/perfil/perfil.html'
+    form = PerfilForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form(instance=request.user.profile.persona)
+        self.mensaje = u'Actualiza toda tu información personal para tener siempre tus datos al día'
+        (self.tipo_mensaje, self.expresion) = msj_expresion('info')
+
+        return renderizar_plantilla(request, 
+                            plantilla = self.template, 
+                            tipo_mensaje = self.tipo_mensaje, 
+                            expresion = self.expresion, 
+                            mensaje = self.mensaje, 
+                            form = form,
+                        )
+
+    def post(self, request, *args, **kwargs):
+        form = self.form(instance=request.user.profile.persona)
+        self.mensaje = u'Actualiza toda tu información personal para tener siempre tus datos al día'
+        (self.tipo_mensaje, self.expresion) = msj_expresion('info')
+
+        return renderizar_plantilla(request, 
+                            plantilla = self.template, 
+                            tipo_mensaje = self.tipo_mensaje, 
+                            expresion = self.expresion, 
+                            mensaje = self.mensaje, 
+                            form = form,
+                        )
+
+perfil = login_required(Perfil)
 def perfil(request, template_name='usuario/perfil/perfil.html', mensaje=''):
     c = {}
     c.update(csrf(request))
@@ -103,7 +136,6 @@ def perfil(request, template_name='usuario/perfil/perfil.html', mensaje=''):
         'persona':persona,
         })
     return render_to_response(template_name, c)
-perfil = login_required(perfil)
 
 @csrf_protect
 def password_change(request,
@@ -131,7 +163,6 @@ def password_change(request,
 password_change = login_required(password_change)
 
 class Preguntas_Secretas(View):
-    from django.forms.formsets import formset_factory
     tipo_mensaje = ''
     expresion = ''
     mensaje = ''

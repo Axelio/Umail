@@ -16,12 +16,43 @@
         </div>
     {% endif %}
 
-      <form class="form-signin" method="post">
+      <form class="form-signin" style="max-width:600px" method="post">
         {% csrf_token %}
-        <h2 class="form-signin-heading">Ingresar a Umail</h2>
-        {{ formulario.username }}
-        {{ formulario.password }}
-        <button class="btn btn-large btn-primary" type="submit">Ingresar</button>
+        <h2 class="form-signin-heading span8">Actualiza tu perfil</h2>
+            <div class="row">
+                <div class=span3>{{ formulario.primer_nombre.label }}</div>
+                <div class=span3>{{ formulario.primer_apellido.label }}</div>
+            </div>
+            <div class="row">
+                <div class=span3>{{ formulario.primer_nombre }}</div>
+                <div class=span3>{{ formulario.primer_apellido }}</div>
+            </div>
+
+            <div class="row">
+            <div class=span3>{{ formulario.segundo_nombre.label }}</div>
+            <div class=span3>{{ formulario.segundo_apellido.label }}</div>
+            </div>
+            <div class="row">
+            <div class=span3>{{ formulario.segundo_nombre }}</div>
+            <div class=span3>{{ formulario.segundo_apellido }}</div>
+
+            </div>
+            <div class="row">
+            <div class=span3>{{ formulario.genero.label }}</div>
+            <div class=span3>{{ formulario.telefono.label }}</div>
+            </div>
+            <div class="row">
+            <div class=span3>{{ formulario.genero }}</div>
+            <div class=span3>{{ formulario.telefono }}</div>
+            </div>
+            <div class="row">
+            <div class=span3>{{ formulario.notificaciones.label }} <small>({{ formulario.notificaciones.help_text }})</small></div>
+            <button class="btn btn-large btn-primary" type="submit">Ingresar</button>
+            </div>
+            <div class="row">
+            <div class=span3>{{ formulario.notificaciones }}</div>
+            </div>
+
       </form>
       <div>
         <p>

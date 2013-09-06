@@ -5,6 +5,7 @@ from auth.models import PreguntasSecretas
 import random
 
 class PerfilForm(forms.ModelForm):
+    notificaciones = forms.BooleanField(help_text=u'Active si desea enviar notificaciones a su correo electrónico')
     class Meta:
         model = Personas
         exclude = ('tipodoc','num_identificacion','email','cargo_principal','cargos_autorizados')

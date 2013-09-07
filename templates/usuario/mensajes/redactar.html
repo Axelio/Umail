@@ -62,17 +62,12 @@ $('.searchAhead').typeahead({
                                             <!-- recipient -->
     
                                             <tr>
-                                                <td><script type="text/javascript">
-
-$('.autocompletar').typeahead({
-  source: function (query, process) {
-    return $.get('/lookup/type/', { query: query }, function (data) {
-      return process(data.options);
-    });
-  }
-});
-
-</script>
+                                                <td>
+<form method="post">{% csrf_token %}
+<label>My Label</label>
+<input type="text" data-provide="typeahead" class="searchAhead" name="i1"/>
+<input type="submit" value="create" class="button"/>
+</form>
                                                     <input type="text" class="autocompletar" data-provide="typeahead" data-items="4" >
                                                     <b>{{ form.recipient.label }}</b>
                                                 </td>

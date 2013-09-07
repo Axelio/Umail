@@ -640,3 +640,14 @@ def view(request, message_id, template_name='user/mensajes/leer.html', mensaje='
         'message': message,
     }, context_instance=RequestContext(request))
 view = login_required(view)
+
+def search(request, search_type):
+    resultSet = {}
+    if search_type == 'myType1':
+        if request.method == "GET":
+            if request.GET.has_key(u'query'):
+                query = request.GET[u'query']
+                obj = Message.objects.all()
+                results = [ escape(x) for x in obj ]
+                resultSet["options"] = results
+    return HttpResponse(json.dumps(resultSet), content_type="application/json")

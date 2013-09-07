@@ -11,8 +11,6 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
-AUTOCOMPLETE_MEDIA_PREFIX = '/autocomplete/media/'
-
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -144,37 +142,8 @@ TEMPLATE_DIRS = (
 AJAX_SELECT_BOOTSTRAP = True
 AJAX_SELECT_INLINES = 'inline'
 
-AJAX_LOOKUP_CHANNELS={
-'personas':('personas.autocompletado','PersonasLookup'),
-'usuarios':('django_messages.autocompletado','UserLookup'),
-'destinatarios':('django_messages.autocompletado','DestinatariosLookup'),
-}
-
-COMPRESS_CSS = {
-    'all': {
-    'source_filenames': (
-        'shared/js/jqplugins/jquery.autocomplete.css',
-    ),
-    'output_filename': 'css/all_compressed.css',
-    'extra_context': {
-        'media': 'screen,projection',
-    },
-    },
-}
-
-COMPRESS_JS = {
-    'all': {
-        'source_filenames': (
-            'shared/jquery_ui/jquery-1.2.6.js',
-            'shared/js/jqplugins/jquery.autocomplete.js',
-        ),
-        'output_filename': 'js/all_compressed.js',
-    },
-}
-
 INSTALLED_APPS = (
     'auth',
-    #'suit',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -184,7 +153,6 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.admin',
     'django_messages',
-    'suit_redactor',
 	'personas',
     'sedes',
     'noticias',
@@ -198,7 +166,7 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
-SUIT_CONFIG = {
+UMAIL_CONFIG = {
     # header
     'ADMIN_NAME': 'Umail',
     'HEADER_DATE_FORMAT': 'l, j. F Y',
@@ -225,7 +193,7 @@ SUIT_CONFIG = {
 
     # misc
     'LIST_PER_PAGE': 15
-}
+    }
 
 #Configuraciones Django-suit
 

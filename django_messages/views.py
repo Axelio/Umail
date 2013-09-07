@@ -7,6 +7,7 @@ from django.core.context_processors import csrf
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from lib.umail import msj_expresion, renderizar_plantilla
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_noop
 from django.core.urlresolvers import reverse
@@ -215,38 +216,32 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
 
 
         form = BandejaForm()
-        formset = modelformset_factory(
-                                        Message, # Modelo
-                                        extra=0, # Formularios extras
-                                    )
-        
-        if tipo_bandeja == 'enviados': # ENVIADOS
-            formset = formset(queryset=Message.objects.outbox_for(request.user).distinct()) #Filtrando la bandeja
-        if tipo_bandeja == 'entrada': # ENTRADA
-            formset = formset(queryset=Message.objects.inbox_for(request.user).distinct()) #Filtrando la bandeja
-        
-        paginador = Paginator(formset, settings.SUIT_CONFIG['LIST_PER_PAGE'])
-        page = request.GET.get('page')
-        try:
-            formset = paginador.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            formset = paginador.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            formset = paginador.page(paginator.num_pages)
 
-        
-        message_list = Message.objects.all()
+        if tipo_bandeja == 'enviados': # ENVIADOS
+            message_list = Message.objects.outbox_for(request.user).distinct() #Filtrando la bandeja
+        if tipo_bandeja == 'entrada': # ENTRADA
+            message_list = Message.objects.inbox_for(request.user).distinct() #Filtrando la bandeja
+
         if not message_list.exists():
             mensaje = u'No tiene ningún mensaje hasta ahora'
+            (tipo_mensaje, expresion) = msj_expresion('info')
         
+        paginador = Paginator(message_list, settings.UMAIL_CONFIG['LIST_PER_PAGE'])
+        page = request.GET.get('page')
+        try:
+            message_list = paginador.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            message_list = paginador.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            message_list = paginador.page(paginator.num_pages)
+
         diccionario.update({'request':request})
         diccionario.update({'formulario':form})
-        diccionario.update({'formset':formset})
         diccionario.update({'message_list':message_list})
         diccionario.update({'tipo_mensaje':tipo_mensaje})
-        diccionario.update({'expresion':msj_expresion(tipo_mensaje)})
+        diccionario.update({'expresion':expresion})
         diccionario.update({'mensaje':mensaje})
         diccionario.update({'tipo_bandeja':tipo_bandeja})
         return render_to_response('usuario/mensajes/bandejas.html', diccionario, context_instance=RequestContext(request))

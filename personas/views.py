@@ -92,7 +92,7 @@ class Perfil(View):
 
     def get(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(user=request.user)
-        form = self.form(instance=request.user.profile.persona, initial={'notificaciones':user_profile.notificaciones})
+        form = self.form(instance=user_profile.persona, initial={'notificaciones':user_profile.notificaciones, 'num_identificacion':user_profile.persona.num_identificacion})
 
         return renderizar_plantilla(request, 
                             plantilla = self.template, 
@@ -131,8 +131,13 @@ class Perfil(View):
             user_profile.save()
 
             self.mensaje = u'¡Tus datos han sido actualizados exitosamente!'
-            (self.tipo_mensaje, self.expresion) = msj_expresion('success')
+            self.tipo_mensaje = 'success'
 
+        else:
+            self.tipo_mensaje = 'error'
+            for error in form.errors:
+                self.mensaje = form.errors['%s' %(error)].as_text().replace('* ','') + ": " + error
+        (self.tipo_mensaje, self.expresion) = msj_expresion(self.tipo_mensaje)
         return renderizar_plantilla(request, 
                             plantilla = self.template, 
                             tipo_mensaje = self.tipo_mensaje, 
@@ -185,7 +190,6 @@ class Preguntas_Secretas(View):
     form = PreguntasForm
 
     def get(self, request, *args, **kwargs):
-        from auth.models import PreguntasSecretas
         try:
             usuario = User.objects.get(id=kwargs['user_id'])
         except:
@@ -216,51 +220,55 @@ class Preguntas_Secretas(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form(request.POST)
-        if form.is_valid():
-            pregunta_1 = request.POST['pregunta_1']
-            respuesta_1 = request.POST['respuesta_1']
-            pregunta_2 = request.POST['pregunta_2']
-            respuesta_2 = request.POST['respuesta_2']
-            pregunta_3 = request.POST['pregunta_3']
-            respuesta_3 = request.POST['respuesta_3']
+        if not form.is_valid():
+            self.tipo_mensaje = 'error'
+            for error in form.errors:
+                mensaje = form.errors['%s' %(error)].as_text().replace('* ','')
 
-            # Revisión de respuestas para la pregunta
-            pregunta_1 = PreguntasSecretas.objects.get(id__iexact=pregunta_1)
-            pregunta_2 = PreguntasSecretas.objects.get(id__iexact=pregunta_2)
-            pregunta_3 = PreguntasSecretas.objects.get(id__iexact=pregunta_3)
+        pregunta_1 = request.POST['pregunta_1']
+        respuesta_1 = request.POST['respuesta_1']
+        pregunta_2 = request.POST['pregunta_2']
+        respuesta_2 = request.POST['respuesta_2']
+        pregunta_3 = request.POST['pregunta_3']
+        respuesta_3 = request.POST['respuesta_3']
 
-            if not pregunta_1.respuesta == respuesta_1:
-                self.mensaje = u'%s no es la respuesta para %s. Por favor inténtelo de nuevo' %(respuesta_1, pregunta_1)
-                self.tipo_mensaje = 'error'
-            elif not pregunta_2.respuesta == respuesta_2:
-                self.mensaje = u'%s no es la respuesta para %s. Por favor inténtelo de nuevo' %(respuesta_2, pregunta_2)
-                self.tipo_mensaje = 'error'
-            elif not pregunta_3.respuesta == respuesta_3:
-                self.mensaje = u'%s no es la respuesta para %s. Por favor inténtelo de nuevo' %(respuesta_3, pregunta_3)
-                self.tipo_mensaje = 'error'
+        # Revisión de respuestas para la pregunta
+        pregunta_1 = PreguntasSecretas.objects.get(id__iexact=pregunta_1)
+        pregunta_2 = PreguntasSecretas.objects.get(id__iexact=pregunta_2)
+        pregunta_3 = PreguntasSecretas.objects.get(id__iexact=pregunta_3)
 
-            pregs = []
-            if self.tipo_mensaje == 'error':
-                pregs.append(pregunta_1.id)
-                pregs.append(pregunta_2.id)
-                pregs.append(pregunta_3.id)
-                preguntas = PreguntasSecretas.objects.filter(id__in=pregs)
-                (self.tipo_mensaje, self.expresion) = msj_expresion(self.tipo_mensaje)
-                return renderizar_plantilla(request, 
-                                    plantilla=self.template, 
-                                    tipo_mensaje = self.tipo_mensaje, 
-                                    expresion = self.expresion, 
-                                    mensaje = self.mensaje, 
-                                    form = form,
-                                    extra = preguntas,
-                                )
+        if not pregunta_1.respuesta == respuesta_1:
+            self.mensaje = u'%s no es la respuesta para %s. Por favor inténtelo de nuevo' %(respuesta_1, pregunta_1)
+            self.tipo_mensaje = 'error'
+        elif not pregunta_2.respuesta == respuesta_2:
+            self.mensaje = u'%s no es la respuesta para %s. Por favor inténtelo de nuevo' %(respuesta_2, pregunta_2)
+            self.tipo_mensaje = 'error'
+        elif not pregunta_3.respuesta == respuesta_3:
+            self.mensaje = u'%s no es la respuesta para %s. Por favor inténtelo de nuevo' %(respuesta_3, pregunta_3)
+            self.tipo_mensaje = 'error'
+
+        pregs = []
+        if self.tipo_mensaje == 'error':
+            pregs.append(pregunta_1.id)
+            pregs.append(pregunta_2.id)
+            pregs.append(pregunta_3.id)
+            preguntas = PreguntasSecretas.objects.filter(id__in=pregs)
+            (self.tipo_mensaje, self.expresion) = msj_expresion(self.tipo_mensaje)
+            return renderizar_plantilla(request, 
+                                plantilla=self.template, 
+                                tipo_mensaje = self.tipo_mensaje, 
+                                expresion = self.expresion, 
+                                mensaje = self.mensaje, 
+                                form = form,
+                                extra = preguntas,
+                            )
+        else:
+            try:
+                usuario = User.objects.get(id=kwargs['user_id'])
+            except:
+                raise Http404
             else:
-                try:
-                    usuario = User.objects.get(id=kwargs['user_id'])
-                except:
-                    raise Http404
-                else:
-                    usuario = User.objects.get(id=kwargs['user_id'])
-                usuario.backend = 'django.contrib.auth.backends.ModelBackend'
-                login(request, usuario)
-                return HttpResponseRedirect('/perfil/asignar_clave/')
+                usuario = User.objects.get(id=kwargs['user_id'])
+            usuario.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request, usuario)
+            return HttpResponseRedirect('/perfil/asignar_clave/')

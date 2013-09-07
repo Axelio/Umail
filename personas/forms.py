@@ -6,9 +6,10 @@ import random
 
 class PerfilForm(forms.ModelForm):
     notificaciones = forms.BooleanField(required=False,help_text=u'Active si desea enviar notificaciones a su correo electrónico')
+    num_identificacion = forms.CharField(required=False)
     class Meta:
         model = Personas
-        exclude = ('tipodoc','cargo_principal','cargos_autorizados')
+        exclude = ('tipodoc','num_identificacion','cargo_principal','cargos_autorizados')
     def __init__(self, *args, **kwargs):
         super(PerfilForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs['readonly'] = True

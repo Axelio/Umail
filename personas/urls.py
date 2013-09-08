@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 from personas.views import Preguntas_Secretas, Perfil
 from django.contrib.auth.forms import PasswordChangeForm
 

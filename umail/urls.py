@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'logout$',logout,{'next_page':'/'}, name='salir'),
     url(r'^$','auth.views.index', name='inicio'),
-    url(r'^lookup/(?P<search_type>\w+)/$', 'django_messages.views.search', name='myap_search'),
+    url(r'^lookup/.*$', 'django_messages.views.destinatarios_lookup'),
 
    (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),

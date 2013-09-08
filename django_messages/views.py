@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from lib.umail import msj_expresion, renderizar_plantilla
 from django.utils.translation import ugettext as _
+from django.utils import simplejson
+from django.http import HttpResponse
 from django.utils.translation import ugettext_noop
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -238,7 +240,6 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
             message_list = paginador.page(paginator.num_pages)
 
         diccionario.update({'request':request})
-        diccionario.update({'formulario':form})
         diccionario.update({'message_list':message_list})
         diccionario.update({'tipo_mensaje':tipo_mensaje})
         diccionario.update({'expresion':expresion})
@@ -641,13 +642,32 @@ def view(request, message_id, template_name='user/mensajes/leer.html', mensaje='
     }, context_instance=RequestContext(request))
 view = login_required(view)
 
-def search(request, search_type):
-    resultSet = {}
-    if search_type == 'myType1':
-        if request.method == "GET":
-            if request.GET.has_key(u'query'):
-                query = request.GET[u'query']
-                obj = Message.objects.all()
-                results = [ escape(x) for x in obj ]
-                resultSet["options"] = results
-    return HttpResponse(json.dumps(resultSet), content_type="application/json")
+def destin_atarios_lookup(request):
+    # Default return list
+    results = []
+    import pdb
+    #pdb.set_trace()
+    if request.method == "GET":
+        if request.GET.has_key(u'query'):
+            value = request.GET[u'query']
+            # Ignore queries shorter than length 3
+            if len(value) > 2:
+                model_results = Message.objects.filter(subject__istartswith=value)
+                results = [ x.subject for x in model_results ]
+                print results
+    json = simplejson.dumps(results)
+    return HttpResponse(json, mimetype='application/json')
+
+def destinatarios_lookup(request):
+    #def autocompleteModel(request):
+    import pdb
+    #pdb.set_trace()
+    buscar = request.GET['palabra']
+    resp = ''
+    results = []
+    search_qs = Message.objects.filter(subject__istartswith=buscar)
+    results = [ x.subject for x in search_qs]
+    print results
+    #resp = request.REQUEST['callback'] + '(' + simplejson.dumps(results) + ');'
+    json = simplejson.dumps(results)
+    return HttpResponse(json, content_type='application/json')

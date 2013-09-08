@@ -12,6 +12,8 @@ from django.utils.translation import ugettext as _
 from django.utils import simplejson
 from django.http import HttpResponse
 from django.utils.translation import ugettext_noop
+from django.db.models import Q
+from django_messages.models import Destinatarios, EstadoMemo
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db import models
@@ -324,13 +326,11 @@ def compose(request, recipient=None,
         form = ComposeForm(request.POST)
         cuerpo = ''
         valido = form.is_valid()
-        from django_messages.models import Destinatarios
         if not Destinatarios.objects.filter(usuarios__user__userprofile__persona__cargo_principal__dependencia = request.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = request.user.profile.persona.cargo_principal.dependencia.cargo_max).exists():
             mensaje = u'Este memo no puede ser enviado ni aprobado porque no existe un jefe de departamento en %s' %(request.user.profile.persona.cargo_principal.dependencia)
             form_errors = mensaje
             valido = False
         if valido:
-            from django_messages.models import Destinatarios, EstadoMemo
             estado_memo = EstadoMemo.objects.get(nombre='En espera')
             mensaje = Message(
                             sender = Destinatarios.objects.get(usuarios__user=request.user),
@@ -434,7 +434,6 @@ def reply(request, message_id, form_class=ComposeForm,
         sender = request.user
         form = form_class(request.POST)
         if form.is_valid():
-            from django_messages.models import Destinatarios, EstadoMemo
             estado_memo = EstadoMemo.objects.get(nombre='En espera')
             mensaje = Message(
                             sender = Destinatarios.objects.get(usuarios__user=request.user),
@@ -659,15 +658,11 @@ def destin_atarios_lookup(request):
     return HttpResponse(json, mimetype='application/json')
 
 def destinatarios_lookup(request):
-    #def autocompleteModel(request):
-    import pdb
-    #pdb.set_trace()
-    buscar = request.GET['palabra']
+    buscar = request.GET['term']
     resp = ''
     results = []
-    search_qs = Message.objects.filter(subject__istartswith=buscar)
-    results = [ x.subject for x in search_qs]
-    print results
+    search_qs = Destinatarios.objects.filter(Q(usuarios__user__username__icontains=buscar) | Q(usuarios__persona__num_identificacion__icontains=buscar) | Q(usuarios__persona__primer_nombre__icontains=buscar) | Q(usuarios__persona__primer_apellido__icontains=buscar) | Q(grupos__name__icontains=buscar))
+    results = [ (destin.__unicode__()) for destin in search_qs]
     #resp = request.REQUEST['callback'] + '(' + simplejson.dumps(results) + ');'
     json = simplejson.dumps(results)
     return HttpResponse(json, content_type='application/json')

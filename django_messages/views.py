@@ -41,7 +41,7 @@ def anular(request, message_id):
         return por_aprobar(request, mensaje=u'Memorándum anulado exitosamente')
     else:
         raise Http404
-anular = login_required(anular)
+anular = login_required(anular, login_url='/auth')
 
 
 def aprobar(request, message_id):
@@ -54,7 +54,7 @@ def aprobar(request, message_id):
         return por_aprobar(request, mensaje=u'Memorándum aprobado exitosamente')
     else:
         raise Http404
-aprobar = login_required(aprobar)
+aprobar = login_required(aprobar, login_url='/auth')
 
 def por_aprobar(request, mensaje=''):
     """
@@ -109,7 +109,7 @@ def ver_por_aprobar(request, message_id, template_name='user/mensajes/leer_aprob
         'message': message,
         'message_list': message_list,
     }, context_instance=RequestContext(request))
-ver_por_aprobar = login_required(ver_por_aprobar)
+ver_por_aprobar = login_required(ver_por_aprobar, login_url='/auth')
 
 def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje=''):
     """
@@ -306,7 +306,7 @@ def trash(request, template_name='user/mensajes/bandeja.html', mensaje=''):
         'mensaje':mensaje,
         'request':request,
     }, context_instance=RequestContext(request))
-trash = login_required(trash)
+trash = login_required(trash, login_url='/auth')
 
 def compose(request, recipient=None,
         template_name='usuario/mensajes/redactar.html', success_url=None, recipient_filter=None):
@@ -326,6 +326,8 @@ def compose(request, recipient=None,
         form = ComposeForm(request.POST)
         cuerpo = ''
         valido = form.is_valid()
+        import pdb
+        pdb.set_trace()
         if not Destinatarios.objects.filter(usuarios__user__userprofile__persona__cargo_principal__dependencia = request.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = request.user.profile.persona.cargo_principal.dependencia.cargo_max).exists():
             mensaje = u'Este memo no puede ser enviado ni aprobado porque no existe un jefe de departamento en %s' %(request.user.profile.persona.cargo_principal.dependencia)
             form_errors = mensaje
@@ -389,7 +391,7 @@ def compose(request, recipient=None,
         'request': request,
         'form': form,
     }, context_instance=RequestContext(request))
-compose = login_required(compose)
+compose = login_required(compose, login_url='/auth')
 
 def reply(request, message_id, form_class=ComposeForm,
     template_name='user/mensajes/redactar.html', success_url=None, 
@@ -483,7 +485,7 @@ def reply(request, message_id, form_class=ComposeForm,
         'request': request,
         'form': form,
     }, context_instance=RequestContext(request))
-reply = login_required(reply)
+reply = login_required(reply, login_url='/auth')
 
 def delete(request, message_id, success_url=None):
     """
@@ -540,7 +542,7 @@ def delete(request, message_id, success_url=None):
             notification.send([user], "messages_deleted", {'message': message,})
         return inbox(request, mensaje)
     raise Http404
-delete = login_required(delete)
+delete = login_required(delete, login_url='/auth')
 
 def undelete(request, success_url=None):
     """
@@ -567,7 +569,7 @@ def undelete(request, success_url=None):
             notification.send([user], "messages_recovered", {'message': message,})
         return HttpResponseRedirect(success_url)
     raise Http404
-undelete = login_required(undelete)
+undelete = login_required(undelete, login_url='/auth')
 
 def view(request, message_id, template_name='user/mensajes/leer.html', mensaje=''):
     """
@@ -639,7 +641,7 @@ def view(request, message_id, template_name='user/mensajes/leer.html', mensaje='
         'jefe':jefe,
         'message': message,
     }, context_instance=RequestContext(request))
-view = login_required(view)
+view = login_required(view, login_url='/auth')
 
 def destin_atarios_lookup(request):
     # Default return list
@@ -658,11 +660,27 @@ def destin_atarios_lookup(request):
     return HttpResponse(json, mimetype='application/json')
 
 def destinatarios_lookup(request):
+    from django.core import serializers
     buscar = request.GET['term']
     resp = ''
     results = []
     search_qs = Destinatarios.objects.filter(Q(usuarios__user__username__icontains=buscar) | Q(usuarios__persona__num_identificacion__icontains=buscar) | Q(usuarios__persona__primer_nombre__icontains=buscar) | Q(usuarios__persona__primer_apellido__icontains=buscar) | Q(grupos__name__icontains=buscar))
-    results = [ (destin.__unicode__()) for destin in search_qs]
+    import pdb
+    #pdb.set_trace()
+    '''
+    results = []
+    destino = {}
+    for destin in search_qs:
+        destino.update({'id':destin.id})
+        destino.update({'nombre':destin.__unicode__()})
+        results.append(destino)
+    '''
+    #results = search_qs.values_list('id','usuarios' or 'grupos')
+    #results = [ search_qs.values('id','usuarios__persona__primer_nombre') for destin in search_qs]
+    #results = [ (str(destin.id), destin.__unicode__()) for destin in search_qs]
+    print results
+    print search_qs
     #resp = request.REQUEST['callback'] + '(' + simplejson.dumps(results) + ');'
-    json = simplejson.dumps(results)
+    #json = simplejson.dumps(results)
+    json = serializers.serialize("json", search_qs, indent=2, use_natural_keys=True)
     return HttpResponse(json, content_type='application/json')

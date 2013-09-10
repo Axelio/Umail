@@ -44,7 +44,7 @@ class Feedback_Form(forms.ModelForm):
         widgets = {
         'sentimiento': forms.Select(attrs={'class':'choices', 'value':''}),
         'pregunta': forms.TextInput(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'Pregunta', 'style':'width:98%'}),
-        'comentario': forms.Textarea(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'Introduzca su comentario',  'style':'width:98%'}),
+        'comentario': forms.Textarea(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'Introduzca su comentario',  'style':'rows:30'}),
         'nombre': forms.TextInput(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'¿Cómo se llama?', 'style':'width:98%'}),
         'correo': forms.TextInput(attrs={'class':'email', 'required':'required', 'value':'','placeholder':u'Correo electrónico', 'style':'width:98%'}),
         }

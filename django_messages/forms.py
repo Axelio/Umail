@@ -22,15 +22,9 @@ class BandejaForm(forms.Form):
               'mensaje': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
               }
 
-from django_select import *
+from django_select2 import *
 class ComposeForm(forms.ModelForm):
-    #recipient = AutoCompleteSelectMultipleField('destinatarios', required=False, help_text=u'Por favor, ingrese al menos 4 caracteres para autocompletar. Puede agregar múltiples contactos.', label='Destinatarios')
-    #con_copia = AutoCompleteSelectMultipleField('destinatarios', required=False, help_text=u'Por favor, ingrese al menos 4 caracteres para autocompletar. Puede agregar múltiples contactos.')
-    #recipient = ModelSelect2MultipleField(queryset=Destinatarios.objects.all(), required=False)
-    #recipient = SelfMultiChoices(label='Self copy multi-choices', initial=[2,3])
-
-    recipient = HeavyModelSelect2MultipleChoiceField(data_view='django_messages.views.destinatarios_lookup')
-    #recipient = ModelSelect2MultipleField(queryset=Destinatarios.objects, required=False)
+    recipient = ModelSelect2MultipleField(queryset=Destinatarios.objects, required=False)
     class Meta:
         model = Message
         exclude = ('recipient','sender','parent_msg','sent_at','read_at','replied_at','sender_deleted_at','recipient_deleted_at','status','tipo','leido_por')

@@ -7,7 +7,6 @@ from django.contrib.auth.views import logout
 from django.views.generic import TemplateView
 from auth.views import *
 from django.contrib.auth.decorators import login_required
-from django_select.views import AutoResponseView
 
 admin.autodiscover()
 
@@ -18,8 +17,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'logout$',logout,{'next_page':'/'}, name='salir'),
     url(r'^$','auth.views.index', name='inicio'),
-    url(r'^lookup/.*$', 'django_messages.views.destinatarios_lookup'),
-    url(r'^fields/auto.json$', AutoResponseView.as_view(), 'django_select2_central_json'),
 
    (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),

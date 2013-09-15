@@ -658,33 +658,3 @@ def destin_atarios_lookup(request):
                 print results
     json = simplejson.dumps(results)
     return HttpResponse(json, mimetype='application/json')
-
-def destinatarios_lookup(request):
-    from django.core import serializers
-    buscar = request.GET['term']
-    resp = ''
-    results = []
-    search_qs = Destinatarios.objects.filter(Q(usuarios__user__username__icontains=buscar) | Q(usuarios__persona__num_identificacion__icontains=buscar) | Q(usuarios__persona__primer_nombre__icontains=buscar) | Q(usuarios__persona__primer_apellido__icontains=buscar) | Q(grupos__name__icontains=buscar))
-    #search_qs = search_qs.values_list('id','usuarios' or 'grupos')
-    #results = [ search_qs.values('id','usuarios__persona__primer_nombre') for destin in search_qs]
-    results = [{'id':obj.id, 'text':obj.__unicode__()} for obj in search_qs]
-    #results = [{'text':obj.__unicode__(), 'id':obj.id } for obj in search_qs]
-    #from django.core import serializers
-    #response = serializers.serialize("json", search_qs)
-    return HttpResponse(simplejson.dumps({'more': True, 'results': results}))
-#return HttpResponse(simplejson.dumps({'err': 'nil', 'more': False, 'results': results}), content_type="application/json")
-#return HttpResponse(simplejson.dumps(results), content_type="application/json")
-#return HttpResponse(results, content_type="application/json")
-#return HttpResponse(json.dumps([ {'id': obj.id, 'text': obj.title } for obj in qset ]), content_type='application/json')
-'''
-return search_qs
-results = [ str(destin.__unicode__()) for destin in search_qs]
-print results
-print search_qs
-#resp = request.REQUEST['callback'] + '(' + simplejson.dumps(results) + ');'
-#json = serializers.serialize("json", search_qs)
-json = simplejson.dumps(results)
-#json = simplejson.dumps(search_qs)
-#json = serializers.serialize("json", search_qs, indent=2, use_natural_keys=True)
-return HttpResponse(json, content_type='application/json')
-'''

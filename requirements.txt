@@ -1,4 +1,5 @@
 django
+django-select2
 django-suit
 django-suit-redactor
 six

@@ -50,14 +50,13 @@
                             <tbody>
                                 <!-- recipient -->
 
-<input type="search" id="buscar-nombre" name="buscar-nombre" placeholder="Nombre"/>
-
                                 <tr>
                                     <td>
                                         <b>{{ form.recipient.label }}</b>
                                     </td>
                                     <td>
-                                        <input id="usuarios" type=text data-provide="typeahead" size="50" name="recipient"/>
+                                        <!--<input id="usuarios" type=text data-provide="typeahead" size="50" name="recipient"/>-->
+                                        {{ form.recipient }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -116,44 +115,3 @@
 </body>
 
 {% include "usuario/pie.html" %}
-<script>
-var producto = '';
-
-$('#buscar-nombre').autocomplete({
-    source: function(request, response) {
-        $.ajax({
-            url: "/lookup/",
-            type: "GET",
-            dataType: "json",
-            data: {
-                term : request.term
-            },
-        success: function(data) {
-            response(data);
-            }
-        });
-    },
-    minLength: 2,
-    select: function(event, ui){
-    producto = ui;
-    $('#buscar-nombre').val( ui.item.fields['usuarios'] );
-    //$('#buscar-nombre').val( ui.item.fields['usuarios'] );
-
-    /*
-    if(ui.item.fields['pk'] > 0){
-        $('#agregar-producto').removeAttr("disabled");
-    }else{
-        $('#agregar-producto').attr("disabled", true);
-    alert('No hay stock del producto.');
-    }
-    return false;
-    */
-    }
-})
-.data("uiAutocomplete")._renderItem = function(ul, item){
-    return $( "<li></li>" )
-    .data( "item.autocomplete", item )
-    .append( "<a>" + item.fields['usuarios'] + "</a>" )
-    .appendTo( ul );
-};
-</script>

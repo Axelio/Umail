@@ -5,6 +5,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext_noop
 from django.contrib.auth.models import User
+from django_messages.models import *
 
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
@@ -14,7 +15,6 @@ else:
 from django_messages.models import Message
 from django_messages.fields import CommaSeparatedUserField
 
-
 class BandejaForm(forms.Form):
     mensajes = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple)
     class Meta:
@@ -22,12 +22,18 @@ class BandejaForm(forms.Form):
               'mensaje': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
               }
 
+from django_select import *
 class ComposeForm(forms.ModelForm):
     #recipient = AutoCompleteSelectMultipleField('destinatarios', required=False, help_text=u'Por favor, ingrese al menos 4 caracteres para autocompletar. Puede agregar múltiples contactos.', label='Destinatarios')
     #con_copia = AutoCompleteSelectMultipleField('destinatarios', required=False, help_text=u'Por favor, ingrese al menos 4 caracteres para autocompletar. Puede agregar múltiples contactos.')
+    #recipient = ModelSelect2MultipleField(queryset=Destinatarios.objects.all(), required=False)
+    #recipient = SelfMultiChoices(label='Self copy multi-choices', initial=[2,3])
+
+    recipient = HeavyModelSelect2MultipleChoiceField(data_view='django_messages.views.destinatarios_lookup')
+    #recipient = ModelSelect2MultipleField(queryset=Destinatarios.objects, required=False)
     class Meta:
         model = Message
-        exclude = ('sender','parent_msg','sent_at','read_at','replied_at','sender_deleted_at','recipient_deleted_at','status','tipo','leido_por')
+        exclude = ('recipient','sender','parent_msg','sent_at','read_at','replied_at','sender_deleted_at','recipient_deleted_at','status','tipo','leido_por')
         widgets = {
                   'body': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
                   }

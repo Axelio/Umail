@@ -74,7 +74,7 @@ class Destinatarios(models.Model):
         if self.usuarios== None:
             return u'%s'%(self.grupos)
         elif self.grupos == None:
-            return u'%s'%(self.usuarios)
+            return u'%s (%s)'%(self.usuarios, self.usuarios.user.email)
 
 class EstadoMemo(models.Model):
     nombre = models.CharField(max_length=50, unique=True)

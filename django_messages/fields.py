@@ -55,3 +55,9 @@ class CommaSeparatedUserField(forms.Field):
         return users
 
 
+from django_messages.models import Destinatarios
+from django_select2.fields import AutoModelSelect2MultipleField
+
+class RecipientSelect2MultipleField(AutoModelSelect2MultipleField):
+    queryset = Destinatarios.objects
+    search_fields = ['usuarios__persona__primer_nombre__icontains']

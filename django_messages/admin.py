@@ -18,6 +18,7 @@ class AdjuntosInline(admin.TabularInline):
     model = Adjunto
     extra = 1
 
+from django_select2 import *
 class MessageAdminForm(forms.ModelForm):
     """
     Custom AdminForm to enable messages to groups and all users.
@@ -119,6 +120,7 @@ class MessageAdminForm(forms.ModelForm):
         '''
         return self.cleaned_data
 
+from django_messages.forms import ComposeForm
 class MessageAdmin(admin.ModelAdmin):
     form = MessageAdminForm
     #inlines = [AdjuntosInline]
@@ -244,5 +246,9 @@ class MessageAdmin(admin.ModelAdmin):
                 # Notification for the recipient.
                 notification.send([user], recipients_label, {'message' : obj,})
         '''
-admin.site.register(Message, MessageAdmin)
+#admin.site.register(Message, MessageAdmin)
+
+class MensajeAdmin(admin.ModelAdmin):
+    form = ComposeForm
+admin.site.register(Message, MensajeAdmin)
 admin.site.register(EstadoMemo)

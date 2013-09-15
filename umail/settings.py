@@ -158,6 +158,7 @@ INSTALLED_APPS = (
     'noticias',
     'reportes',
     'manual_usuario',
+    'django_select2',
 )
 #Configuraciones Django-suit
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP

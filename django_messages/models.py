@@ -143,6 +143,7 @@ class Message(models.Model):
     get_absolute_url = models.permalink(get_absolute_url)
     
     def save(self,*args,**kwargs):
+        super(Message,self).save(*args,**kwargs)
         if self.sent_at == None:
             self.sent_at = datetime.datetime.now()
 
@@ -161,7 +162,6 @@ class Message(models.Model):
             for ident in identificador:
                 self.codigo = self.codigo + str(ord(ident))
             self.codigo = self.codigo + str(datetime.datetime.today().microsecond)
-        super(Message,self).save(*args,**kwargs)
     
     class Meta:
         ordering = ['-sent_at']

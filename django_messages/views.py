@@ -326,64 +326,68 @@ def compose(request, recipient=None,
         form = ComposeForm(request.POST)
         cuerpo = ''
         valido = form.is_valid()
-        import pdb
-        pdb.set_trace()
+
+        # Revisar si hay quien apruebe en el departamento del redactor
         if not Destinatarios.objects.filter(usuarios__user__userprofile__persona__cargo_principal__dependencia = request.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = request.user.profile.persona.cargo_principal.dependencia.cargo_max).exists():
             mensaje = u'Este memo no puede ser enviado ni aprobado porque no existe un jefe de departamento en %s' %(request.user.profile.persona.cargo_principal.dependencia)
-            form_errors = mensaje
             valido = False
-        if valido:
-            estado_memo = EstadoMemo.objects.get(nombre='En espera')
-            mensaje = Message(
-                            sender = Destinatarios.objects.get(usuarios__user=request.user),
-                            subject = request.POST['subject'],
-                            body = request.POST['body'],
-                            status = estado_memo,
-                            tipo = '',
-                        )
 
-            mensaje.save()
-            dest = []
-            for i in request.POST['recipient'].split('|'):
-                if not i == '':
-                    dest.append(int(i))
-            for destin in dest:
-                sender = Destinatarios.objects.filter(id=destin)
-                if sender.exists():
-                    mensaje.recipient.add(sender[0])
-            mensaje.save()
+        if valido:
+            destinatarios = form.cleaned_data['recipient']
+
             mensaje_txt = u'Mensaje enviado exitosamente'
 
-            # Guardar log de envío de memo
-            LogEntry.objects.create(
-            user_id         = request.user.pk, 
-            content_type_id = ContentType.objects.get_for_model(Message).id,
-            object_id       = mensaje.id,
-            object_repr     = repr(mensaje), 
-            change_message  = mensaje_txt,
-            action_flag     = ADDITION
-            )
+            # Por cada destinatario, enviar el memo, generar un log y enviar correo si está en la opción de envío
+            estado_memo = EstadoMemo.objects.get(nombre='En espera')
+            for destino in destinatarios:
+
+                # Crear el mensaje a todas las personas en estado 'En espera'
+                mensaje = Message.objects.create(
+                                sender = Destinatarios.objects.get(usuarios__user=request.user),
+                                recipient = destino,
+                                subject = request.POST['subject'],
+                                body = request.POST['body'],
+                                status = estado_memo,
+                                tipo = ' ',
+                            )
+
+                # Guardar log de envío de memo
+                LogEntry.objects.create(
+                    user_id         = request.user.pk, 
+                    content_type_id = ContentType.objects.get_for_model(Message).id,
+                    object_id       = mensaje.id,
+                    object_repr     = repr(mensaje), 
+                    change_message  = mensaje_txt,
+                    action_flag     = ADDITION
+                )
+
             mensaje = mensaje_txt
 
             if success_url is None:
                 success_url = reverse('messages_inbox')
             if request.GET.has_key('next'):
                 success_url = request.GET['next']
-            return inbox(request, mensaje)
+
+        if form.errors or not valido:
+            (tipo_mensaje, expresion) = msj_expresion('error')
+            label = ""
+            if form.errors.keys()[0] == 'subject':
+                label = "Asunto"
+            elif form.errors.keys()[0] == 'recipient':
+                label = "Destinatarios"
+            elif form.errors.keys()[0] == 'body':
+                label = "Texto"
+
+            if not label == "":
+                mensaje =  label + ': ' + form.errors.values()[0][0]
+
+        return bandeja(request, mensaje)
     else:
         form = ComposeForm()
         cuerpo = form.fields['body'].initial = u"\n\nCordialmente, \n%s. %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
         if recipient is not None:
             recipients = [u for u in User.objects.filter(username__in=[r.strip() for r in recipient.split('+')])]
             form.fields['recipient'].initial = recipients
-    if form.errors:
-        if form.errors.keys()[0] == 'subject':
-            label = "Asunto"
-        elif form.errors.keys()[0] == 'recipient':
-            label = "Destinatarios"
-        elif form.errors.keys()[0] == 'body':
-            label = "Texto"
-        form_errors =  label + ': ' + form.errors.values()[0][0]
     return render_to_response(template_name, {
         'cuerpo': cuerpo,
         'tipo': 'Redactar',

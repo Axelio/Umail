@@ -24,82 +24,18 @@ class BandejaForm(forms.Form):
 
 from django_select2 import *
 class ComposeForm(forms.ModelForm):
-    recipient = ModelSelect2MultipleField(queryset=Destinatarios.objects, required=False)
+    recipient = ModelSelect2MultipleField(queryset=Destinatarios.objects, required=True, label='Destinatario')
+    recipient.widget.set_placeholder('Usuario o grupo') # Asignar un placeholder al campo
+
+    con_copia = ModelSelect2MultipleField(queryset=Destinatarios.objects, required=False)
+    con_copia.widget.set_placeholder('Usuario o grupo') # Asignar un placeholder al campo
+
     class Meta:
         model = Message
-        exclude = ('recipient','sender','parent_msg','sent_at','read_at','replied_at','sender_deleted_at','recipient_deleted_at','status','tipo','leido_por')
+        exclude = ('recipient', 'con_copia')
+        fields = ('archivo', 'body', 'subject')
         widgets = {
                   'body': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
+                  'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum'}),
                   }
-    '''
 
-    def save(self, sender, parent_msg=None):
-        recipients = self.cleaned_data['recipient']
-        subject = self.cleaned_data['subject']
-        body = self.cleaned_data['body']
-        con_copia = self.cleaned_data['con_copia']
-        message_list = []
-
-        for r in recipients:
-            msg = Message(
-                sender = sender,
-                recipient = r,
-                subject = subject,
-                body = body,
-            )
-
-            if parent_msg is not None:
-                msg.parent_msg = parent_msg
-                parent_msg.replied_at = datetime.datetime.now()
-                parent_msg.save()
-            #msg.save()
-            message_list.append(msg)
-        return message_list
-    '''
-
-'''
-class Compos_eForm(forms.Form):
-    """
-    A simple default form for private messages.
-    """
-    #recipient = CommaSeparatedUserField(label=_(u"Recipient"))
-    recipient = AutoCompleteSelectMultipleField('destinatarios', required=True)
-    subject = forms.CharField(label=_(u"Subject"), max_length=120)
-    body = forms.CharField(label=_(u"Body"),
-        widget=forms.Textarea(attrs={'rows': '12', 'cols':'55'}))
-    
-        
-    def __init__(self, *args, **kwargs):
-        recipient_filter = kwargs.pop('recipient_filter', None)
-        super(ComposeForm, self).__init__(*args, **kwargs)
-        if recipient_filter is not None:
-            self.fields['recipient']._recipient_filter = recipient_filter
-    
-                
-    def save(self, sender, parent_msg=None):
-        recipients = self.cleaned_data['recipient']
-        subject = self.cleaned_data['subject']
-        body = self.cleaned_data['body']
-        message_list = []
-        for r in recipients:
-            msg = Message(
-                sender = sender,
-                recipient = r,
-                subject = subject,
-                body = body,
-            )
-            if parent_msg is not None:
-                msg.parent_msg = parent_msg
-                parent_msg.replied_at = datetime.datetime.now()
-                parent_msg.save()
-            msg.save()
-            message_list.append(msg)
-            if notification:
-                if parent_msg is not None:
-                    notification.send([sender], "messages_replied", {'message': msg,})
-                    notification.send([r], "messages_reply_received", {'message': msg,})
-                else:
-                    notification.send([sender], "messages_sent", {'message': msg,})
-                    notification.send([r], "messages_received", {'message': msg,})
-        return message_list
-'''

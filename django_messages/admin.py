@@ -23,13 +23,6 @@ class MessageAdminForm(forms.ModelForm):
     """
     Custom AdminForm to enable messages to groups and all users.
     """
-    #recipient = forms.ModelChoiceField(
-    #    label=_('Recipient'), queryset=User.objects.all(), required=True)
-    ##recipient = AutoCompleteSelectField('destinatarios', required=True, label=_('Destinatario'),help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
-    ##con_copia = AutoCompleteSelectField('destinatarios', required=False,help_text=u'Introduzca al menos 4 caracteres para autocompletar un usuario o grupo.')
-    #leido_por = AutoCompleteSelectMultipleField('destinatarios', required=False)
-    ##sender = AutoCompleteSelectField('destinatarios', required=False)
-
     '''
     group = forms.ChoiceField(label=_('group'), required=False,
         help_text=_('Creates the message optionally for all users or a group of users.'))
@@ -48,6 +41,7 @@ class MessageAdminForm(forms.ModelForm):
         widgets = {
                     'body': RedactorWidget(editor_options={'lang': 'es'})
                 }
+
     def clean(self):
         destinatarios = self.cleaned_data['recipient']
         # --- Tipo --- #
@@ -123,51 +117,6 @@ class MessageAdminForm(forms.ModelForm):
 from django_messages.forms import ComposeForm
 class MessageAdmin(admin.ModelAdmin):
     form = MessageAdminForm
-    #inlines = [AdjuntosInline]
-    '''
-    fieldsets = ( 
-        (None, {'fields': 'sender', 'recipient', 'parent_msg', 'subject', 'archivo', 
-                'status', 'tipo', 'body','sent_at', 'read_at', 'replied_at',
-                'deleted_at', })
-    )
-    '''
-    fieldsets = (
-        (None, {
-            'fields': (
-                'sender', 'recipient', 'parent_msg', 'subject', 'archivo', 
-                'status', 'tipo', 'body','sent_at', 'read_at', 'replied_at',
-                'deleted_at', 
-            ),
-        }),
-    )
-    '''fieldsets = (
-        (None, {
-            'fields': (
-                'sender',
-                ('recipient', 'con_copia'),
-            ),
-        }),
-        (_('Message'), {
-            'fields': (
-                'parent_msg',
-                'subject', 'archivo', 'body',
-            ),
-            'classes': ('monospace' ),
-        }),
-        (('Detalles'), {
-            'fields': (
-                'status', 'tipo',
-            ),
-            'classes': ('collapse', 'wide'),
-        }),
-        (_('Date/time'), {
-            'fields': (
-                'sent_at', 'read_at', 'replied_at',
-                'sender_deleted_at', 'recipient_deleted_at',
-            ),
-            'classes': ('collapse', 'wide'),
-        }),
-    )'''
     list_display = ('subject', 'sender', 'sent_at', 'read_at', 'status')
     list_filter = ('sent_at', 'sender', 'tipo')
     search_fields = ('subject', 'body', 'codigo')
@@ -246,9 +195,9 @@ class MessageAdmin(admin.ModelAdmin):
                 # Notification for the recipient.
                 notification.send([user], recipients_label, {'message' : obj,})
         '''
-#admin.site.register(Message, MessageAdmin)
+admin.site.register(Message, MessageAdmin)
 
 class MensajeAdmin(admin.ModelAdmin):
     form = ComposeForm
-admin.site.register(Message, MensajeAdmin)
+#admin.site.register(Message, MensajeAdmin)
 admin.site.register(EstadoMemo)

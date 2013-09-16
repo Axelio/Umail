@@ -1,7 +1,8 @@
 django
 django-select2
-django-suit
-django-suit-redactor
+bootstrap-admin
+django-filer
+django-wysiwyg-redactor
 six
 gunicorn
 django-debug-toolbar

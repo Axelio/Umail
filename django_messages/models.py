@@ -95,7 +95,7 @@ class Message(models.Model):
     A private message from user to multiple users
     """
     recipient = models.ForeignKey('Destinatarios', related_name='received_messages', verbose_name=_("Destinatario"))
-    con_copia = models.ForeignKey('Destinatarios', related_name='con_copia', null=True, blank=True, verbose_name=("con copia a:"))
+    con_copia = models.BooleanField()
     subject = models.CharField(_("Subject"), max_length=255)
     archivo = models.FileField(upload_to='media/adjuntos/',null=True, blank=True)
     body = models.TextField(verbose_name="Texto")
@@ -142,27 +142,6 @@ class Message(models.Model):
         return ('messages_detail', [self.id])
     get_absolute_url = models.permalink(get_absolute_url)
     
-    def save(self,*args,**kwargs):
-        super(Message,self).save(*args,**kwargs)
-        if self.sent_at == None:
-            self.sent_at = datetime.datetime.now()
-
-        if self.num_ident == None:
-            fecha_actual = datetime.datetime.today()
-            mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=self.sender.usuarios.user.profile.persona.cargo_principal.dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
-            self.num_ident = mensajes.count() + 1
-
-        if self.codigo == None:
-            jefe = Destinatarios.objects.get(usuarios__user__userprofile__persona__cargo_principal__dependencia = self.sender.usuarios.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = self.sender.usuarios.user.profile.persona.cargo_principal.dependencia.cargo_max)
-
-            # El identificador se genera a partir del id del memo, del jefe de departamento y del minuto, segundo y microsegundo actual
-            identificador = '%s%s' %(self.id, jefe.id)
-
-            self.codigo = ''
-            for ident in identificador:
-                self.codigo = self.codigo + str(ord(ident))
-            self.codigo = self.codigo + str(datetime.datetime.today().microsecond)
-    
     class Meta:
         ordering = ['-sent_at']
         verbose_name = _("Message")
@@ -177,6 +156,25 @@ def save_message(sender, **kwargs):
     if memo.status == None:
         estado = EstadoMemo.objects.get(nombre='En espera')
         memo.status=estado
+
+    if memo.sent_at == None:
+        memo.sent_at = datetime.datetime.now()
+
+    if memo.num_ident == None:
+        fecha_actual = datetime.datetime.today()
+        mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=memo.sender.usuarios.user.profile.persona.cargo_principal.dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
+        memo.num_ident = mensajes.count() + 1
+
+    if memo.codigo == None:
+        jefe = Destinatarios.objects.get(usuarios__user__userprofile__persona__cargo_principal__dependencia = memo.sender.usuarios.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = memo.sender.usuarios.user.profile.persona.cargo_principal.dependencia.cargo_max)
+
+        # El identificador se genera a partir del id del memo, del jefe de departamento y del minuto, segundo y microsegundo actual
+        identificador = '%s%s' %(memo.id, memo.id)
+
+        memo.codigo = ''
+        for ident in identificador:
+            memo.codigo = memo.codigo + str(ord(ident))
+        memo.codigo = memo.codigo + str(datetime.datetime.today().microsecond)
 
 def inbox_count_for(user):
     """

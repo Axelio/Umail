@@ -18,7 +18,6 @@ class AdjuntosInline(admin.TabularInline):
     model = Adjunto
     extra = 1
 
-from django_select2 import *
 class MessageAdminForm(forms.ModelForm):
     """
     Custom AdminForm to enable messages to groups and all users.

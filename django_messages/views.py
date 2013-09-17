@@ -226,11 +226,11 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
         if tipo_bandeja == 'entrada': # ENTRADA
             message_list = Message.objects.inbox_for(request.user).distinct() #Filtrando la bandeja
 
-        if not message_list.exists():
+        if not message_list.exists() and mensaje == '':
             mensaje = u'No tiene ningún mensaje hasta ahora'
             (tipo_mensaje, expresion) = msj_expresion('info')
         
-        paginador = Paginator(message_list, settings.UMAIL_CONFIG['LIST_PER_PAGE'])
+        paginador = Paginator(message_list, settings.SUIT_CONFIG['LIST_PER_PAGE'])
         page = request.GET.get('page')
         try:
             message_list = paginador.page(page)
@@ -328,9 +328,12 @@ def compose(request, recipient=None,
         valido = form.is_valid()
 
         # Revisar si hay quien apruebe en el departamento del redactor
-        if not Destinatarios.objects.filter(usuarios__user__userprofile__persona__cargo_principal__dependencia = request.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = request.user.profile.persona.cargo_principal.dependencia.cargo_max).exists():
+        jefe = Destinatarios.objects.filter(usuarios__user__userprofile__persona__cargo_principal__dependencia = request.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = request.user.profile.persona.cargo_principal.dependencia.cargo_max)
+        if not jefe.exists():
             mensaje = u'Este memo no puede ser enviado ni aprobado porque no existe un jefe de departamento en %s' %(request.user.profile.persona.cargo_principal.dependencia)
             valido = False
+        else:
+            jefe = jefe[0]
 
         if valido:
             destinatarios = form.cleaned_data['recipient']
@@ -361,7 +364,29 @@ def compose(request, recipient=None,
                     action_flag     = ADDITION
                 )
 
+            if not destinatarios.__contains__(jefe):
+                # Crear el mensaje al jefe de la dependencia
+                mensaje = Message.objects.create(
+                                sender = Destinatarios.objects.get(usuarios__user=request.user),
+                                recipient = jefe,
+                                subject = request.POST['subject'],
+                                body = request.POST['body'],
+                                status = estado_memo,
+                                tipo = ' ',
+                            )
+
+                # Guardar log de envío de memo
+                LogEntry.objects.create(
+                    user_id         = request.user.pk, 
+                    content_type_id = ContentType.objects.get_for_model(Message).id,
+                    object_id       = mensaje.id,
+                    object_repr     = repr(mensaje), 
+                    change_message  = mensaje_txt,
+                    action_flag     = ADDITION
+                )
+
             mensaje = mensaje_txt
+            (tipo_mensaje, expresion) = msj_expresion('success')
 
             if success_url is None:
                 success_url = reverse('messages_inbox')
@@ -381,7 +406,7 @@ def compose(request, recipient=None,
             if not label == "":
                 mensaje =  label + ': ' + form.errors.values()[0][0]
 
-        return bandeja(request, mensaje)
+        return bandeja(request, tipo_bandeja='entrada', expresion=expresion, tipo_mensaje=tipo_mensaje, mensaje=mensaje)
     else:
         form = ComposeForm()
         cuerpo = form.fields['body'].initial = u"\n\nCordialmente, \n%s. %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
@@ -650,8 +675,6 @@ view = login_required(view, login_url='/auth')
 def destin_atarios_lookup(request):
     # Default return list
     results = []
-    import pdb
-    #pdb.set_trace()
     if request.method == "GET":
         if request.GET.has_key(u'query'):
             value = request.GET[u'query']

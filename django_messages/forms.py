@@ -2,8 +2,9 @@
 import datetime
 from django import forms
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext_noop
+from django.utils.translation import ugettext_lazy as _ 
+from django_select2 import *
+from redactor.widgets import RedactorEditor
 from django.contrib.auth.models import User
 from django_messages.models import *
 
@@ -22,12 +23,27 @@ class BandejaForm(forms.Form):
               'mensaje': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
               }
 
-from django_select2 import *
 class ComposeForm(forms.ModelForm):
-    recipient = ModelSelect2MultipleField(queryset=Destinatarios.objects, required=True, label='Destinatario')
+    recipient = ModelSelect2MultipleField(
+                                        queryset=Destinatarios.objects, 
+                                        required=True, 
+                                        label='Destinatario', 
+                                        search_fields = ('usuarios__persona__primer_nombre__icontains', #primer nombre
+                                                        'usuarios__persona__primer_apellido__icontains', #primer apellido
+                                                        'usuarios__persona__segundo_nombre__icontains', #segundo nombre
+                                                        'usuarios__persona__segundo_apellido__icontains', #segundo apellido
+                                                        'usuarios__email__icontains') #email
+                                            )
     recipient.widget.set_placeholder('Usuario o grupo') # Asignar un placeholder al campo
 
-    con_copia = ModelSelect2MultipleField(queryset=Destinatarios.objects, required=False)
+    con_copia = ModelSelect2MultipleField(queryset=Destinatarios.objects, 
+                                        required=False,
+                                        search_fields = ('usuarios__persona__primer_nombre__icontains', #primer nombre
+                                                        'usuarios__persona__primer_apellido__icontains', #primer apellido
+                                                        'usuarios__persona__segundo_nombre__icontains', #segundo nombre
+                                                        'usuarios__persona__segundo_apellido__icontains', #segundo apellido
+                                                        'usuarios__email__icontains') #email
+                                        )
     con_copia.widget.set_placeholder('Usuario o grupo') # Asignar un placeholder al campo
 
     class Meta:
@@ -37,5 +53,6 @@ class ComposeForm(forms.ModelForm):
         widgets = {
                   'body': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
                   'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum'}),
+                  'body': RedactorEditor(),
                   }
 

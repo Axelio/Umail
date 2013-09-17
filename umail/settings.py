@@ -144,6 +144,7 @@ AJAX_SELECT_INLINES = 'inline'
 
 INSTALLED_APPS = (
     'auth',
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -160,9 +161,8 @@ INSTALLED_APPS = (
     'reportes',
     'manual_usuario',
     'django_select2',
-    'bootstrap_admin',
-    'django-filer',
-    'redactor',
+    'filer',
+    'suit_redactor',
 )
 #Configuraciones Django-suit
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
@@ -171,10 +171,7 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
-REDACTOR_OPTIONS = {'lang': 'es'}
-REDACTOR_UPLOAD = 'uploads/'
-
-UMAIL_CONFIG = {
+SUIT_CONFIG = {
     # header
     'ADMIN_NAME': 'Umail',
     'HEADER_DATE_FORMAT': 'l, j. F Y',

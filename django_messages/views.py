@@ -337,55 +337,32 @@ def compose(request, recipient=None,
 
         if valido:
             destinatarios = form.cleaned_data['recipient']
+            con_copia = form.cleaned_data['con_copia']
+            sender = Destinatarios.objects.get(usuarios=request.user)
 
-            mensaje_txt = u'Mensaje enviado exitosamente'
 
             # Por cada destinatario, enviar el memo, generar un log y enviar correo si está en la opción de envío
-            estado_memo = EstadoMemo.objects.get(nombre='En espera')
             for destino in destinatarios:
 
-                # Crear el mensaje a todas las personas en estado 'En espera'
-                mensaje = Message.objects.create(
-                                sender = Destinatarios.objects.get(usuarios__user=request.user),
-                                recipient = destino,
-                                subject = request.POST['subject'],
-                                body = request.POST['body'],
-                                status = estado_memo,
-                                tipo = ' ',
+                crear_mensaje(
+                            destino=destino, 
+                            envio=sender, 
+                            asunto=request.POST['subject'], 
+                            cuerpo=request.POST['body'], 
                             )
 
-                # Guardar log de envío de memo
-                LogEntry.objects.create(
-                    user_id         = request.user.pk, 
-                    content_type_id = ContentType.objects.get_for_model(Message).id,
-                    object_id       = mensaje.id,
-                    object_repr     = repr(mensaje), 
-                    change_message  = mensaje_txt,
-                    action_flag     = ADDITION
-                )
 
+            # Crear el mensaje al jefe de la dependencia si no esta entre los destinatarios originales
             if not destinatarios.__contains__(jefe):
-                # Crear el mensaje al jefe de la dependencia
-                mensaje = Message.objects.create(
-                                sender = Destinatarios.objects.get(usuarios__user=request.user),
-                                recipient = jefe,
-                                subject = request.POST['subject'],
-                                body = request.POST['body'],
-                                status = estado_memo,
-                                tipo = ' ',
+                crear_mensaje(
+                            destino=jefe, 
+                            envio=sender, 
+                            asunto=request.POST['subject'], 
+                            cuerpo=request.POST['body'], 
+                            cc=True,
                             )
 
-                # Guardar log de envío de memo
-                LogEntry.objects.create(
-                    user_id         = request.user.pk, 
-                    content_type_id = ContentType.objects.get_for_model(Message).id,
-                    object_id       = mensaje.id,
-                    object_repr     = repr(mensaje), 
-                    change_message  = mensaje_txt,
-                    action_flag     = ADDITION
-                )
-
-            mensaje = mensaje_txt
+            mensaje = u'Mensaje enviado exitosamente'
             (tipo_mensaje, expresion) = msj_expresion('success')
 
             if success_url is None:
@@ -406,7 +383,20 @@ def compose(request, recipient=None,
             if not label == "":
                 mensaje =  label + ': ' + form.errors.values()[0][0]
 
-        return bandeja(request, tipo_bandeja='entrada', expresion=expresion, tipo_mensaje=tipo_mensaje, mensaje=mensaje)
+            if form.errors.has_key('__all__'):
+                mensaje = form.errors['__all__'].as_text().split('* ')[1]
+
+            return render_to_response(template_name, {
+                'cuerpo': cuerpo,
+                'tipo': 'Redactar',
+                'tipo_mensaje':tipo_mensaje,
+                'mensaje':mensaje,
+                'expresion':expresion,
+                'request': request,
+                'form': form,
+            }, context_instance=RequestContext(request))
+
+        return bandeja(request, tipo_bandeja='enviados', expresion=expresion, tipo_mensaje=tipo_mensaje, mensaje=mensaje)
     else:
         form = ComposeForm()
         cuerpo = form.fields['body'].initial = u"\n\nCordialmente, \n%s. %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
@@ -421,6 +411,40 @@ def compose(request, recipient=None,
         'form': form,
     }, context_instance=RequestContext(request))
 compose = login_required(compose, login_url='/auth')
+
+def crear_mensaje(destino='', envio='', cc=False, asunto='', cuerpo=''):
+    '''
+    Función para crear mensajes. Recibe parámetros:
+    destino: usuario destinatario
+    envio: usuario que lo envía
+    cc: con copia. Por defecto Falso
+    asunto: resumen del mensaje
+    cuerpo: texto general del mensaje
+    tipo: circular o personal
+    '''
+    # Crear el mensaje a todas las personas en estado 'En espera'
+    estado_memo = EstadoMemo.objects.get(nombre='En espera')
+    mensaje = Message.objects.create(
+                    recipient = destino,
+                    sender = envio,
+                    con_copia=cc,
+                    subject = asunto,
+                    body = cuerpo,
+                    tipo = '',
+                    status = estado_memo,
+                )
+
+    mensaje_txt = u'Mensaje enviado exitosamente'
+    # Guardar log de envío de memo
+    LogEntry.objects.create(
+        user_id         = envio.pk, 
+        content_type_id = ContentType.objects.get_for_model(Message).id,
+        object_id       = mensaje.id,
+        object_repr     = repr(mensaje), 
+        change_message  = mensaje_txt,
+        action_flag     = ADDITION
+    )
+
 
 def reply(request, message_id, form_class=ComposeForm,
     template_name='user/mensajes/redactar.html', success_url=None, 

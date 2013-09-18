@@ -10,6 +10,12 @@
                 </ul>
             </div>
             <div class="span9">
+                {% if mensaje %}
+                    <div class="alert alert-{{ tipo_mensaje }}">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>{{ expresion }}</strong>{{ mensaje }}.
+                    </div>
+                {% endif %}
                 <div class="strip strip-white strip-grey" style="min-height: 350px">
                     <form action="" method="post">
                         <table width=100%>

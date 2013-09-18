@@ -30,7 +30,10 @@ class Auth(View):
     def get(self, request, *args, **kwargs):
         self.form = self.form()
         if request.user.is_authenticated():
-            return HttpResponseRedirect('/')
+            if request.GET.has_keys['next']:
+                return HttpResponseRedirect(request.GET['next'])
+            else:
+                return HttpResponseRedirect('/')
             
         return renderizar_plantilla(request, 
                             plantilla = self.template, 

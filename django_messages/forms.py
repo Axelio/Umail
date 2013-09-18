@@ -55,4 +55,10 @@ class ComposeForm(forms.ModelForm):
                   'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum'}),
                   'body': RedactorEditor(),
                   }
+    def clean(self):
+        for con_copia in self.cleaned_data['con_copia']:
+            if self.cleaned_data['recipient'].__contains__(con_copia):
+                raise forms.ValidationError('%s está "con copia" y se encuentra entre los destinatarios. Debe estar sólo en uno de ambos campos.' %(con_copia))
+        return self.cleaned_data
+
 

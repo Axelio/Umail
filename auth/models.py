@@ -79,8 +79,10 @@ def save_group_dest(sender, **kwargs):
     ''' Guardar en la tabla Destinatarios el grupo a crear '''
     from django_messages.models import Destinatarios
     destinatario = Destinatarios.objects.get_or_create(grupos=kwargs['instance'])
+    '''
     grupo = Group.objects.get_or_create(name = 'Todos')
     grupo = Group.objects.get_or_create(name = 'Nadie')
+    '''
 
 @receiver(post_save, sender='UserProfile')
 def save_user_dest(sender, **kwargs):

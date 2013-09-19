@@ -107,7 +107,7 @@ class Message(models.Model):
     deleted_at = models.DateTimeField(("Archivado a las"), null=True, blank=True)
     status = models.ForeignKey('EstadoMemo', null=True, blank=True, verbose_name='Estado')
     tipo = models.CharField(max_length=10, blank=True, null=True)
-    codigo = models.CharField(blank=True, null=True, verbose_name=u'código', unique=True, max_length=30)
+    codigo = models.CharField(blank=True, null=True, verbose_name=u'código', max_length=30)
     num_ident= models.BigIntegerField(blank=True, null=True, verbose_name=u'número identificador')
 
     objects = MessageManager()
@@ -156,25 +156,8 @@ def save_message(sender, **kwargs):
     if memo.status == None:
         estado = EstadoMemo.objects.get(nombre='En espera')
         memo.status=estado
-
-    if memo.sent_at == None:
         memo.sent_at = datetime.datetime.now()
 
-    if memo.num_ident == None:
-        fecha_actual = datetime.datetime.today()
-        mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=memo.sender.usuarios.user.profile.persona.cargo_principal.dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
-        memo.num_ident = mensajes.count() + 1
-
-    if memo.codigo == None:
-        jefe = Destinatarios.objects.get(usuarios__user__userprofile__persona__cargo_principal__dependencia = memo.sender.usuarios.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = memo.sender.usuarios.user.profile.persona.cargo_principal.dependencia.cargo_max)
-
-        # El identificador se genera a partir del id del memo, del jefe de departamento y del minuto, segundo y microsegundo actual
-        identificador = '%s%s' %(memo.id, memo.id)
-
-        memo.codigo = ''
-        for ident in identificador:
-            memo.codigo = memo.codigo + str(ord(ident))
-        memo.codigo = memo.codigo + str(datetime.datetime.today().microsecond)
 
 def inbox_count_for(user):
     """

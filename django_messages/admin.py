@@ -116,7 +116,7 @@ class MessageAdminForm(forms.ModelForm):
 from django_messages.forms import ComposeForm
 class MessageAdmin(admin.ModelAdmin):
     form = MessageAdminForm
-    list_display = ('subject', 'sender', 'sent_at', 'read_at', 'status')
+    list_display = ('subject', 'sender', 'recipient', 'sent_at', 'read_at', 'status')
     list_filter = ('sent_at', 'sender', 'tipo')
     search_fields = ('subject', 'body', 'codigo')
 

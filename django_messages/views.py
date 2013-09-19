@@ -222,9 +222,13 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
         form = BandejaForm()
 
         if tipo_bandeja == 'enviados': # ENVIADOS
-            message_list = Message.objects.outbox_for(request.user).distinct() #Filtrando la bandeja
+            message_list = Message.objects.outbox_for(request.user) #Filtrando la bandeja
         if tipo_bandeja == 'entrada': # ENTRADA
             message_list = Message.objects.inbox_for(request.user).distinct() #Filtrando la bandeja
+        import pdb
+        pdb.set_trace()
+        message_list = message_list.values_list('codigo').distinct()
+        message_list = Message.objects.filter(id__in=message_list)
 
         if not message_list.exists() and mensaje == '':
             mensaje = u'No tiene ningún mensaje hasta ahora'
@@ -340,6 +344,17 @@ def compose(request, recipient=None,
             con_copia = form.cleaned_data['con_copia']
             sender = Destinatarios.objects.get(usuarios=request.user)
 
+            fecha_actual = datetime.datetime.today()
+            mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=sender.usuarios.user.profile.persona.cargo_principal.dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
+            num_ident = mensajes.count() + 1
+
+            # El identificador se genera a partir del id del memo, del jefe de departamento y del minuto, segundo y microsegundo actual
+            identificador = '%s%s' %(Message.objects.all().count(), jefe.id)
+
+            codigo = ''
+            for ident in identificador:
+                codigo = codigo + str(ord(ident))
+            codigo = codigo + str(datetime.datetime.today().microsecond)
 
             # Por cada destinatario, enviar el memo, generar un log y enviar correo si está en la opción de envío
             for destino in destinatarios:
@@ -349,6 +364,8 @@ def compose(request, recipient=None,
                             envio=sender, 
                             asunto=request.POST['subject'], 
                             cuerpo=request.POST['body'], 
+                            num_ident=num_ident,
+                            codigo=codigo,
                             )
 
 
@@ -360,6 +377,8 @@ def compose(request, recipient=None,
                             asunto=request.POST['subject'], 
                             cuerpo=request.POST['body'], 
                             cc=True,
+                            num_ident=num_ident,
+                            codigo=codigo,
                             )
 
             mensaje = u'Mensaje enviado exitosamente'
@@ -412,7 +431,7 @@ def compose(request, recipient=None,
     }, context_instance=RequestContext(request))
 compose = login_required(compose, login_url='/auth')
 
-def crear_mensaje(destino='', envio='', cc=False, asunto='', cuerpo=''):
+def crear_mensaje(destino='', envio='', cc=False, asunto='', cuerpo='', num_ident='', codigo=''):
     '''
     Función para crear mensajes. Recibe parámetros:
     destino: usuario destinatario
@@ -432,6 +451,8 @@ def crear_mensaje(destino='', envio='', cc=False, asunto='', cuerpo=''):
                     body = cuerpo,
                     tipo = '',
                     status = estado_memo,
+                    num_ident = num_ident,
+                    codigo=codigo
                 )
 
     mensaje_txt = u'Mensaje enviado exitosamente'

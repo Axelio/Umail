@@ -70,10 +70,8 @@ def destin(tipo_dest,id_message):
     else:
         mensaje = Message.objects.get(id=id_message)
         mensajes = Message.objects.filter(codigo=mensaje.codigo).exclude(con_copia=True)
-        if mensajes.count() > 2:
-            return u'%s y otros %s más' %(mensajes[0].recipient, mensajes.count()-1)
-        if mensajes.count() == 2:
-            return u'%s y otro más' %(mensajes[0].recipient, mensajes.count()-1)
+        if mensajes.count() > 1:
+            return u'%s y %s más' %(mensajes[0].recipient, mensajes.count()-1)
         else:
             return Message.objects.get(id=id_message).recipient
 

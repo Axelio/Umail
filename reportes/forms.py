@@ -41,10 +41,12 @@ class ConsultaMemoForm(forms.ModelForm):
 class Feedback_Form(forms.ModelForm):
     class Meta:
         model = Comentarios
+        texto= u"Escriba aquí los detalles."
+        texto.join(u'\nPor favor sea lo más específico posible.')
         widgets = {
         'sentimiento': forms.Select(attrs={'class':'choices', 'value':''}),
-        'pregunta': forms.TextInput(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'Describa brevemente su pregunta, sugerencia o problema.', 'style':'width:98%'}),
-        'comentario': forms.Textarea(attrs={'class':'text', 'required':'required', 'value':'','placeholder':u'Escriba aquí los detalles. Por favor sea lo más especifico posible.',  'style':'width:98%', 'rows':2}),
-        'nombre': forms.TextInput(attrs={'class':'text', 'required':'required', 'value':'', 'style':'width:98%'}),
-        'correo': forms.TextInput(attrs={'class':'email', 'required':'required', 'value':'', 'style':'width:98%'}),
+        'pregunta': forms.TextInput(attrs={'class':'prependedInput', 'required':'required', 'value':'','placeholder':u'breve descripción', 'size':16}),
+        'comentario': forms.Textarea(attrs={'class':'text', 'required':'required', 'value':'','placeholder':texto,  'style':'width:230px; height:230px'  }),
+        'nombre': forms.TextInput(attrs={'class':'prependedInput', 'required':'required', 'value':'', 'placeholder':u'nombre apellido', 'size':16}),
+        'correo': forms.TextInput(attrs={'class':'prependedInput', 'required':'required', 'value':'', 'type':'email', 'placeholder':u'usuario@ejemplo.com', 'size':16}),
         }

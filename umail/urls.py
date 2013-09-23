@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'logout$',logout,{'next_page':'/'}, name='salir'),
     url(r'^$','auth.views.index', name='inicio'),
+    url(r'^feedback$','auth.views.revisar_comentario', name='feedback'),
 
    (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),

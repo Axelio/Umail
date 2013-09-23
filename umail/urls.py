@@ -12,7 +12,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-    url(r'^redactor/', include('redactor.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^noticias/', include('noticias.urls')),
     url(r'^admin/', include(admin.site.urls)),

@@ -4,7 +4,7 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _ 
 from django_select2 import *
-from redactor.widgets import RedactorEditor
+from suit_redactor.widgets import RedactorWidget
 from django.contrib.auth.models import User
 from django_messages.models import *
 
@@ -53,7 +53,7 @@ class ComposeForm(forms.ModelForm):
         widgets = {
                   'body': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
                   'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum'}),
-                  'body': RedactorEditor(),
+                  'body': RedactorWidget(editor_options={'lang': 'es'})
                   }
     def clean(self):
         for con_copia in self.cleaned_data['con_copia']:

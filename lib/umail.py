@@ -12,7 +12,7 @@ def msj_expresion(tipo_mensaje):
     if tipo_mensaje == 'success':
         expresion = u'¡Genial! '
     if tipo_mensaje == 'error':
-        expresion = u'¡Espera! Algo ocurrió mal... '
+        expresion = u'¡ERROR! '
     if tipo_mensaje == 'Information':
         expresion = u'¿Sabías qué? '
     return (tipo_mensaje, expresion)

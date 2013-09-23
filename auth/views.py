@@ -56,7 +56,7 @@ class Auth(View):
                 login(request, usuario)
                 #"User is not valid, active and authenticated"
                 if not user.is_active:
-                    self.mensaje = u"La contraseña es válida pero la cuenta ha sido desactivada."
+                    self.mensaje = u"La contraseña es válida pero la cuenta ha sido desactivada"
                     (self.tipo_mensaje, self.expresion) = msj_expresion('error')
                     return renderizar_plantilla(request, 
                                         plantilla = self.template, 
@@ -70,7 +70,7 @@ class Auth(View):
                     return HttpResponseRedirect('/preguntas_secretas/')
             else:
                 # El usuario o contraseña eran incorrectos
-                self.mensaje = u"Contraseña incorrecta. Por favor, inténtelo nuevamente."
+                self.mensaje = u"Contraseña incorrecta. Por favor, inténtelo nuevamente"
                 (self.tipo_mensaje, self.expresion) = msj_expresion('error')
                 return renderizar_plantilla(request, 
                                     plantilla = self.template, 
@@ -81,7 +81,7 @@ class Auth(View):
                                 )
         else:
             # El usuario no existe
-            self.mensaje = u"El usuario %s no existe." %(request.POST['username'])
+            self.mensaje = u"No existe el usuario %s. Por favor, confirme sus datos" %(request.POST['username'])
             (self.tipo_mensaje, self.expresion) = msj_expresion('error')
             form = self.form(request.POST)
             return renderizar_plantilla(request, 

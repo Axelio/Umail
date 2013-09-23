@@ -39,19 +39,19 @@
                           <ul>
                             {% if contacts.has_previous %}
                                 <li>
-                                    <a href="?page={{ formset.previous_page_number }}">
+                                    <a href="?page={{ message_list.previous_page_number }}">
                                         Anterior
                                     </a>
                                 </li>
                             {% endif %}
                             <li>
                                 <a href="#">
-                                    Página {{ formset.number }} de {{ formset.paginator.num_pages }}.
+                                    Página {{ message_list.number }} de {{ message_list.paginator.num_pages }}.
                                 </a>
                             </li>
                             {% if contacts.has_next %}
                                 <li>
-                                    <a href="#"><a href="?page={{ formset.next_page_number }}">
+                                    <a href="#"><a href="?page={{ message_list.next_page_number }}">
                                         Siguiente
                                     </a>
                                 </li>
@@ -67,7 +67,7 @@
                                 <th>
                                     <input type="checkbox" id="select_all_items" onchange="javascript:selectAllItems()" name="select_all_items" />
                                 </th>
-                                <th></th>
+                                <th>Estado</th>
                                 {% ifequal tipo_bandeja 'enviados'%}
                                     <th>Para</th>
                                 {% else %}
@@ -76,36 +76,36 @@
                                 <th>Asunto</th>
                                 <th>Fecha</th>
                                 {% load inbox %}
-                                {% for form in formset %}
+                                {% for form in message_list %}
                                     <tr>
                                             <td>
                                                 <input type="checkbox" class="chkSelectItem" name="seleccion" value="{{ form.id.value }}"/>
                                             </td>
                                             <td>
-                                                {{ form.id.value|icon_status }}
+                                                {{ form.id|icon_status }}
                                             </td>
                                             <td>
                                                 {% ifequal tipo_bandeja 'enviados' %}
-                                                    <a href="{% url 'messages_detail' form.id.value %}">
-                                                        {{ 'recipient'|destin:form.id.value }}
+                                                    <a href="{% url 'messages_detail' form.id %}">
+                                                        {{ 'recipient'|destin:form.id }}
                                                     </a>
                                                 {% else %}
                                                     <a href="{% url 'messages_detail' form.id.value %}">
-                                                        {{ 'sender'|destin:form.id.value }}
+                                                        {{ 'sender'|destin:form.id }}
                                                     </a>
                                                 {% endifequal %}
                                             </td>
                                             <td>
-                                                <a href="{% url 'messages_detail' form.id.value %}">
-                                                    {{ form.subject.value }}
+                                                <a href="{% url 'messages_detail' form.id %}">
+                                                    {{ form.subject }}
                                                 </a>
                                             </td>
                                             <td>
 <!--
                                                 {#<a href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
 -->
-                                                <a href="{% url 'messages_detail' form.id.value %}">
-                                                    {{ form.sent_at.value|date:"D d M P" }}
+                                                <a href="{% url 'messages_detail' form.id %}">
+                                                    {{ form.sent_at|date:"D d M P" }}
                                                 </a>
                                             </td>
                                     </tr>

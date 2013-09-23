@@ -78,7 +78,7 @@ class Auth(View):
                                 )
         else:
             # El usuario no existe
-            self.mensaje = "El usuario %s no existe." %(request.POST['username'])
+            self.mensaje = u"El usuario %s no existe." %(request.POST['username'])
             (self.tipo_mensaje, self.expresion) = msj_expresion('error')
             form = self.form(request.POST)
             return renderizar_plantilla(request, 

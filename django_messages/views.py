@@ -7,8 +7,13 @@ from django.core.context_processors import csrf
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from lib.umail import msj_expresion, renderizar_plantilla
 from django.utils.translation import ugettext as _
+from django.utils import simplejson
+from django.http import HttpResponse
 from django.utils.translation import ugettext_noop
+from django.db.models import Q
+from django_messages.models import Destinatarios, EstadoMemo
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db import models
@@ -215,38 +220,31 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
 
 
         form = BandejaForm()
-        formset = modelformset_factory(
-                                        Message, # Modelo
-                                        extra=0, # Formularios extras
-                                    )
-        
-        if tipo_bandeja == 'enviados': # ENVIADOS
-            formset = formset(queryset=Message.objects.outbox_for(request.user).distinct()) #Filtrando la bandeja
-        if tipo_bandeja == 'entrada': # ENTRADA
-            formset = formset(queryset=Message.objects.inbox_for(request.user).distinct()) #Filtrando la bandeja
-        
-        paginador = Paginator(formset, settings.SUIT_CONFIG['LIST_PER_PAGE'])
-        page = request.GET.get('page')
-        try:
-            formset = paginador.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            formset = paginador.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            formset = paginador.page(paginator.num_pages)
 
-        
-        message_list = Message.objects.all()
+        if tipo_bandeja == 'enviados': # ENVIADOS
+            message_list = Message.objects.outbox_for(request.user).distinct() #Filtrando la bandeja
+        if tipo_bandeja == 'entrada': # ENTRADA
+            message_list = Message.objects.inbox_for(request.user).distinct() #Filtrando la bandeja
+
         if not message_list.exists():
             mensaje = u'No tiene ningún mensaje hasta ahora'
+            (tipo_mensaje, expresion) = msj_expresion('info')
         
+        paginador = Paginator(message_list, settings.UMAIL_CONFIG['LIST_PER_PAGE'])
+        page = request.GET.get('page')
+        try:
+            message_list = paginador.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            message_list = paginador.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            message_list = paginador.page(paginator.num_pages)
+
         diccionario.update({'request':request})
-        diccionario.update({'formulario':form})
-        diccionario.update({'formset':formset})
         diccionario.update({'message_list':message_list})
         diccionario.update({'tipo_mensaje':tipo_mensaje})
-        diccionario.update({'expresion':msj_expresion(tipo_mensaje)})
+        diccionario.update({'expresion':expresion})
         diccionario.update({'mensaje':mensaje})
         diccionario.update({'tipo_bandeja':tipo_bandeja})
         return render_to_response('usuario/mensajes/bandejas.html', diccionario, context_instance=RequestContext(request))
@@ -328,13 +326,11 @@ def compose(request, recipient=None,
         form = ComposeForm(request.POST)
         cuerpo = ''
         valido = form.is_valid()
-        from django_messages.models import Destinatarios
         if not Destinatarios.objects.filter(usuarios__user__userprofile__persona__cargo_principal__dependencia = request.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = request.user.profile.persona.cargo_principal.dependencia.cargo_max).exists():
             mensaje = u'Este memo no puede ser enviado ni aprobado porque no existe un jefe de departamento en %s' %(request.user.profile.persona.cargo_principal.dependencia)
             form_errors = mensaje
             valido = False
         if valido:
-            from django_messages.models import Destinatarios, EstadoMemo
             estado_memo = EstadoMemo.objects.get(nombre='En espera')
             mensaje = Message(
                             sender = Destinatarios.objects.get(usuarios__user=request.user),
@@ -438,7 +434,6 @@ def reply(request, message_id, form_class=ComposeForm,
         sender = request.user
         form = form_class(request.POST)
         if form.is_valid():
-            from django_messages.models import Destinatarios, EstadoMemo
             estado_memo = EstadoMemo.objects.get(nombre='En espera')
             mensaje = Message(
                             sender = Destinatarios.objects.get(usuarios__user=request.user),
@@ -645,3 +640,29 @@ def view(request, message_id, template_name='user/mensajes/leer.html', mensaje='
         'message': message,
     }, context_instance=RequestContext(request))
 view = login_required(view)
+
+def destin_atarios_lookup(request):
+    # Default return list
+    results = []
+    import pdb
+    #pdb.set_trace()
+    if request.method == "GET":
+        if request.GET.has_key(u'query'):
+            value = request.GET[u'query']
+            # Ignore queries shorter than length 3
+            if len(value) > 2:
+                model_results = Message.objects.filter(subject__istartswith=value)
+                results = [ x.subject for x in model_results ]
+                print results
+    json = simplejson.dumps(results)
+    return HttpResponse(json, mimetype='application/json')
+
+def destinatarios_lookup(request):
+    buscar = request.GET['term']
+    resp = ''
+    results = []
+    search_qs = Destinatarios.objects.filter(Q(usuarios__user__username__icontains=buscar) | Q(usuarios__persona__num_identificacion__icontains=buscar) | Q(usuarios__persona__primer_nombre__icontains=buscar) | Q(usuarios__persona__primer_apellido__icontains=buscar) | Q(grupos__name__icontains=buscar))
+    results = [ (destin.__unicode__()) for destin in search_qs]
+    #resp = request.REQUEST['callback'] + '(' + simplejson.dumps(results) + ');'
+    json = simplejson.dumps(results)
+    return HttpResponse(json, content_type='application/json')

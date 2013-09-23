@@ -16,17 +16,56 @@
         </div>
     {% endif %}
 
-      <form class="form-signin" method="post">
+      <form class="form-signin" style="max-width:600px" method="post" action=".">
         {% csrf_token %}
-        <h2 class="form-signin-heading">Ingresar a Umail</h2>
-        {{ formulario.username }}
-        {{ formulario.password }}
-        <button class="btn btn-large btn-primary" type="submit">Ingresar</button>
+            <h2 class="form-signin-heading span6" align=center>Actualiza tu perfil</h2>
+            <table width=100%>
+                <tbody>
+                    <tr>
+                        <td> {{ formulario.num_identificacion.label }} </td>
+                        <td> {{ formulario.email.label }} </td>
+                    </tr>
+                    <tr>
+                        <td> {{ formulario.num_identificacion }} </td>
+                        <td> {{ formulario.email }} </td>
+                    </tr>
+                    <tr>
+                        <td> {{ formulario.primer_nombre.label }} </td>
+                        <td> {{ formulario.primer_apellido.label }} </td>
+                    </tr>
+                    <tr>
+                        <td> {{ formulario.primer_nombre }} </td>
+                        <td> {{ formulario.primer_apellido }} </td>
+                    </tr>
+                    <tr>
+                        <td> {{ formulario.segundo_nombre.label }} </td>
+                        <td> {{ formulario.segundo_apellido.label }} </td>
+                    </tr>
+                        <td> {{ formulario.segundo_nombre }} </td>
+                        <td> {{ formulario.segundo_apellido }} </td>
+                    <tr>
+                        <td> {{ formulario.genero.label }} </td>
+                        <td> {{ formulario.telefono.label }} </td>
+                    </tr>
+                    <tr>
+                        <td> {{ formulario.genero }} </td>
+                        <td> {{ formulario.telefono }} </td>
+                    </tr>
+                    <tr>
+                        <td> {{ formulario.notificaciones.label}} </td>
+                    </tr>
+                    <tr>
+                        <td> {{ formulario.notificaciones }} <small>{{ formulario.notificaciones.help_text }}</small> </td>
+                        <td> <button class="btn btn-large btn-primary" type="submit">Ingresar</button> </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <div class="row" align=center>
+                <small>Para más seguridad recuerda <a href='{% url "cambiar_clave" "asignar" %}'>cambiar tu contraseña regularmente</a></small>
+            </div>
       </form>
       <div>
-        <p>
-            Recuerda <a href='{% url "cambiar_clave" %}'>cambiar tu contraseña regularmente</a>
-        </p>
 
       </div>
 

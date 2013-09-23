@@ -64,10 +64,19 @@ register.filter(negrillas)
 @register.filter(name="destin", is_safe=True)
 def destin(tipo_dest,id_message):
     from django_messages.models import Message
-    if tipo_dest == 'recipient':
-        return Message.objects.get(id=id_message).recipient
-    else:
+    mensajes = ''
+    if tipo_dest == 'sender':
         return Message.objects.get(id=id_message).sender
+    else:
+        mensaje = Message.objects.get(id=id_message)
+        mensajes = Message.objects.filter(codigo=mensaje.codigo).exclude(con_copia=True)
+        if mensajes.count() > 2:
+            return u'%s y otros %s más' %(mensajes[0].recipient, mensajes.count()-1)
+        if mensajes.count() == 2:
+            return u'%s y otro más' %(mensajes[0].recipient, mensajes.count()-1)
+        else:
+            return Message.objects.get(id=id_message).recipient
+
 register.filter(destin)
 
 @register.filter(name="icon_status", is_safe=True)

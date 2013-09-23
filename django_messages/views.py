@@ -222,13 +222,20 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
         form = BandejaForm()
 
         if tipo_bandeja == 'enviados': # ENVIADOS
-            message_list = Message.objects.outbox_for(request.user) #Filtrando la bandeja
+            destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=request.user)|models.Q(grupos__user=request.user))
+
+            # Si es el jefe maximo, deben aparecer todos los memos de esa dependencia
+            if request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
+                message_list = Message.objects.filter(sender__usuarios__persona__cargo_principal__dependencia=request.user.profile.persona.cargo_principal.dependencia, status__nombre__iexact='Aprobado').distinct('codigo')
+            else:
+                message_list = Message.objects.filter(sender__in=destinatarios).order_by('codigo','con_copia').distinct('codigo')
+
         if tipo_bandeja == 'entrada': # ENTRADA
             message_list = Message.objects.inbox_for(request.user).distinct() #Filtrando la bandeja
-        import pdb
-        pdb.set_trace()
+        '''
         message_list = message_list.values_list('codigo').distinct()
         message_list = Message.objects.filter(id__in=message_list)
+        '''
 
         if not message_list.exists() and mensaje == '':
             mensaje = u'No tiene ningún mensaje hasta ahora'
@@ -342,7 +349,7 @@ def compose(request, recipient=None,
         if valido:
             destinatarios = form.cleaned_data['recipient']
             con_copia = form.cleaned_data['con_copia']
-            sender = Destinatarios.objects.get(usuarios=request.user)
+            sender = Destinatarios.objects.get(usuarios__user=request.user)
 
             fecha_actual = datetime.datetime.today()
             mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=sender.usuarios.user.profile.persona.cargo_principal.dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
@@ -431,7 +438,14 @@ def compose(request, recipient=None,
     }, context_instance=RequestContext(request))
 compose = login_required(compose, login_url='/auth')
 
-def crear_mensaje(destino='', envio='', cc=False, asunto='', cuerpo='', num_ident='', codigo=''):
+def crear_mensaje(destino='', 
+                  envio='', 
+                  cc=False, 
+                  asunto='', 
+                  cuerpo='', 
+                  num_ident='', 
+                  codigo='', 
+                  log=True):
     '''
     Función para crear mensajes. Recibe parámetros:
     destino: usuario destinatario
@@ -440,6 +454,7 @@ def crear_mensaje(destino='', envio='', cc=False, asunto='', cuerpo='', num_iden
     asunto: resumen del mensaje
     cuerpo: texto general del mensaje
     tipo: circular o personal
+    log: Crea un log en LogEntry. Por defecto activo
     '''
     # Crear el mensaje a todas las personas en estado 'En espera'
     estado_memo = EstadoMemo.objects.get(nombre='En espera')
@@ -458,7 +473,7 @@ def crear_mensaje(destino='', envio='', cc=False, asunto='', cuerpo='', num_iden
     mensaje_txt = u'Mensaje enviado exitosamente'
     # Guardar log de envío de memo
     LogEntry.objects.create(
-        user_id         = envio.pk, 
+        user_id         = envio.usuarios.user.pk, 
         content_type_id = ContentType.objects.get_for_model(Message).id,
         object_id       = mensaje.id,
         object_repr     = repr(mensaje), 

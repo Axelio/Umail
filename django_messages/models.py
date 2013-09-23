@@ -21,29 +21,10 @@ class MessageManager(models.Manager):
         """
         destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
         return self.filter(
-            models.Q(recipient__in=destinatarios)|
-            models.Q(con_copia__in=destinatarios),
-            models.Q(deleted_at__isnull=True),
-            models.Q(status__nombre__iexact='Aprobado'),
+            recipient__in=destinatarios,
+            deleted_at__isnull=True,
+            status__nombre__iexact='Aprobado',
         )
-
-    def outbox_for(self, user):
-        """
-        Returns all messages that were sent by the given user and are not
-        marked as deleted.
-        """
-        destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
-
-        # Si es el jefe maximo, deben aparecer todos los memos de esa dependencia
-        if user.profile.persona.cargo_principal.cargo == user.profile.persona.cargo_principal.dependencia.cargo_max:
-            return self.filter(
-                sender__usuarios__persona__cargo_principal__dependencia=user.profile.persona.cargo_principal.dependencia,
-                status__nombre__iexact='Aprobado',
-            )
-        else:
-            return self.filter(
-                sender__in=destinatarios,
-            )
 
     def trash_for(self, user):
         """
@@ -52,14 +33,12 @@ class MessageManager(models.Manager):
         """
         destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
         filtro = self.filter(
-            models.Q(recipient__in=destinatarios)|
-            models.Q(con_copia__in=destinatarios),
-            models.Q(deleted_at__isnull=False),
+            recipient__in=destinatarios,
+            deleted_at__isnull=False,
         
         ) | self.filter(
-            models.Q(sender=destinatarios)|
-            models.Q(con_copia__in=destinatarios),
-            models.Q(recipient_deleted_at__isnull=False),
+            sender=destinatarios,
+            recipient_deleted_at__isnull=False,
         )
         return filtro
 
@@ -70,6 +49,7 @@ class Destinatarios(models.Model):
         db_table            = u'destinatarios'
         verbose_name_plural = u'destinatarios'
         verbose_name        = u'destinatario'
+        ordering            = ['usuarios__persona__primer_nombre','usuarios__persona__primer_apellido','grupos__name']
     def __unicode__(self):
         if self.usuarios== None:
             return u'%s'%(self.grupos)

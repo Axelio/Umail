@@ -116,7 +116,7 @@ class MessageAdminForm(forms.ModelForm):
 from django_messages.forms import ComposeForm
 class MessageAdmin(admin.ModelAdmin):
     form = MessageAdminForm
-    list_display = ('subject', 'sender', 'recipient', 'sent_at', 'read_at', 'status')
+    list_display = ('subject', 'sender', 'recipient', 'sent_at', 'read_at', 'status', 'con_copia')
     list_filter = ('sent_at', 'sender', 'tipo')
     search_fields = ('subject', 'body', 'codigo')
 
@@ -200,3 +200,4 @@ class MensajeAdmin(admin.ModelAdmin):
     form = ComposeForm
 #admin.site.register(Message, MensajeAdmin)
 admin.site.register(EstadoMemo)
+admin.site.register(Destinatarios)

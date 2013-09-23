@@ -1,80 +1,64 @@
    <!-- Button to trigger modal -->
 {% load admin_static %}
-
-<div class="feedback">
-    <form method='post'>
-    <a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">
+    <a href="{% url "feedback" %}" role="button" class="btn btn-inverse" style=" position: fixed; top: calc(55% - 6rem)" data-toggle="modal">
+    <!--<a href="/feedback/#betaModal" role="button" class="btn btn-inverse" style=" position: fixed; top: calc(55% - 6rem)" data-toggle="modal">-->
         <img src="{% static "images/boton_soporte_tecnico.png" %}">
     </a>
-     
-    <!-- Modal -->
-    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 align="center" id="myModalLabel">¿Cómo podemos ayudarle?</h3>
-        </div>
+
+<div id="betaModal" class="modal hide fade">
+    <div class="modal-header">
+            <button class="close" data-dismiss="modal">×</button>
+            <h3>¿Cómo podemos ayudarle?</h3>
+    </div>
+
+<div class="modal-body">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="span6">
+                
+                    
+                <form method="post" class="form-horizontal" >
                     {% csrf_token %}
-            <div class="modal-body">
+
+                    <p class="help-block">Pregunta</p>
+                    <div class="input-prepend">
+                        <span class="add-on">?</span>
+                        {{ feedback_form.pregunta }}
+                    </div>
+
+                    <p class="help-block">Nombre</p>
+                    <div class="input-prepend">
+                        <span class="add-on">*</span>
+                        {{ feedback_form.nombre }}
+                    </div>
 
 
-                    <fieldset>
+                    <p class="help-block">Correo</p>
+                    <div class="input-prepend">
+                        <span class="add-on">@</span>
+                        {{ feedback_form.correo }}
 
-                        <div class="row">
-                            <div class="span5">
-                                {{ feedback_form.pregunta.label }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="span5">
-                                {{ feedback_form.pregunta }}
-                            </div>
-                        </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="span5">
-                                {{ feedback_form.comentario.label }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="span5">
-                                {{ feedback_form.comentario }}
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="span2">
-                                {{ feedback_form.nombre.label }}
-                            </div>
-
-                            <div class="span2">
-                                {{ feedback_form.correo.label }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            {% if request.user.is_authenticated %}
-                            <div class="span2">
-                                <input class="text" id="id_nombre" maxlength="50" name="nombre" required="required" style="width:100%" type="text" value="{{ request.user.profile.persona.primer_nombre }} {{ request.user.profile.persona.primer_apellido }}"/>
-                            </div>
-                            {% else %}
-                            <div class="span2">
-                                {{ feedback_form.nombre }}
-                            </div>
-                            {% endif %}
-                            <div class="span3">
-                                {% if request.user.is_authenticated %}
-                                    <input class="email" id="id_correo" maxlength="75" name="correo" required="required" style="width:98%" type="text" value="{{ request.user.profile.persona.email}}" />
-                                {% else %}
-                                    {{ feedback_form.correo }}
-                                {% endif %}
-                            </div>
-                        </div>
-                    </fieldset>
+                    <hr>
+                    <div class="help-block pull-right">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+                        <button  type="submit" class="btn btn-primary" aria-hidden="true">Enviar</button>
+                    </div>
+                
             </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-                <button  type="submit" class="btn btn-primary" aria-hidden="true">Enviar</button>
+            <div class="span6">
+
+            {{ feedback_form.comentario }}
+            
             </div>
-    </div>  
-        </form>
+            </form>
+        </div>
+    </div>
+</div>
+    <div class="modal-footer">
+        <p><i>{{fecha}}</i></p>
+    </div>
 </div>
     

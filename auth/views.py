@@ -158,11 +158,12 @@ class Revisar_preguntas(View):
 
 
 def index(request):
-    feedback_form, procesado = revisar_comentario(request)
+    import datetime
+    fecha_actual = datetime.datetime.today()
     diccionario = {}
     diccionario.update(csrf(request))
     diccionario.update({'request':request})
-    diccionario.update({'feedback_form':feedback_form})
+    diccionario.update({'fecha':fecha_actual})
     ultimas_noticias1 = Noticias.objects.all().order_by('-fecha')[:3]
     diccionario.update({'ult_notic1':ultimas_noticias1})
     mensaje = '' 
@@ -186,5 +187,10 @@ def revisar_comentario(request):
             )
         procesado = True
 
-    feedback_form = Feedback_Form()
-    return feedback_form, procesado
+    else:
+        feedback_form = Feedback_Form()
+        diccionario = {}
+        diccionario.update(csrf(request))
+        diccionario.update({'feedback_form':feedback_form})
+
+        return render_to_response('usuario/feedback.html', diccionario)

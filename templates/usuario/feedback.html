@@ -29,14 +29,23 @@
                     <p class="help-block">Nombre</p>
                     <div class="input-prepend">
                         <span class="add-on">*</span>
-                        <input type=text name="nombre" class="prependedInput" required="required" placeholder="nombre apellido" size=16>
+                        {% if request.user.is_authenticated %}
+                            <input type=text name="nombre" class="prependedInput" required="required" placeholder="nombre apellido" size=16 value="{{ request.user.profile.persona.primer_nombre }} {{ request.user.profile.persona.primer_apellido }} ">
+                        {% else %}
+                            <input type=text name="nombre" class="prependedInput" required="required" placeholder="nombre apellido" size=16>
+                        {% endif %}
                     </div>
 
 
                     <p class="help-block">Correo</p>
                     <div class="input-prepend">
                         <span class="add-on">@</span>
-                        <input type=email name="correo" class="prependedInput" required="required" placeholder="usuario@correo.com" size=16>
+                        {% if request.user.is_authenticated %}
+                            <input type=email name="correo" class="prependedInput" required="required" placeholder="usuario@correo.com" size=16 value="{{ request.user.email }}">
+
+                        {% else %}
+                            <input type=email name="correo" class="prependedInput" required="required" placeholder="usuario@correo.com" size=16>
+                        {% endif %}
                     </div>
 
 

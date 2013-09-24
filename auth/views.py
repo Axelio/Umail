@@ -8,7 +8,7 @@ from django.contrib.auth.views import login
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse
-from reportes.models import Comentarios
+from reportes.models import Comentarios, Respuestas
 from lib.umail import msj_expresion, renderizar_plantilla
 from django.template import RequestContext
 from django.views.generic.base import View
@@ -153,9 +153,6 @@ class Revisar_preguntas(View):
                                     form = form
                                 )
 
-            #transaction.commit()
-
-
 def index(request):
     import datetime
     fecha_actual = datetime.datetime.today()
@@ -171,7 +168,14 @@ def index(request):
     return render_to_response('usuario/auth/index.html', diccionario)
 
 def revisar_comentario(request):
-    procesado = False
+    from umail.settings import ADMINS
+    from django.contrib.sites.models import Site
+    from lib.umail import enviar_email
+
+    correos = []
+    for admin in ADMINS:
+        correos.append(admin[1])
+
     if request.method == 'POST':
         pregunta = request.POST['pregunta']
         comentario = request.POST['comentario']
@@ -183,6 +187,18 @@ def revisar_comentario(request):
                                                 nombre = nombre,
                                                 correo = correo
                                                 )
-        procesado = True
+
+        # Enviar correo a los administradores del sistema
+        asunto = u"Pregunta nueva"
+        contenido = u'Tiene un comentario de %s preguntando "%s" con el siguiente mensaje: %s. \n\nTambién puede visitar el mensaje en %s/admin/reportes/comentarios/%s' %(comentario.correo, comentario.pregunta, comentario.comentario, Site.objects.get_current(), comentario.id)
+        enviar_email(asunto=asunto, contenido=contenido, correos=correos)
+
+        # Se crea una respuesta tentativa
+        respuesta = Respuestas.objects.create(
+                                               pregunta = comentario,
+                                               comentario = '',
+                                               usuario = None,
+                                               respondido = False,
+                                              )
         return HttpResponseRedirect(request.POST['url'])
 

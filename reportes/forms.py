@@ -4,7 +4,9 @@ from django_messages.models import Message
 from umail import settings
 from django.contrib.admin import widgets
 from django.utils.safestring import mark_safe
-from reportes.models import Comentarios
+from reportes.models import Comentarios, Respuestas
+from suit_redactor.widgets import RedactorWidget
+from suit_ckeditor.widgets import CKEditorWidget
 
 class HorizontalRadioRenderer(forms.RadioSelect.renderer):
   def render(self):
@@ -37,3 +39,13 @@ class ConsultaMemoForm(forms.ModelForm):
     def clean_codigo(self):
         if not self.cleaned_data['codigo'] == None:
             return self.cleaned_data
+
+
+class RespuestaForm(forms.ModelForm):
+    class Meta:
+        model = Respuestas
+        widgets = {
+                  'comentario': RedactorWidget(editor_options={'lang': 'es'})
+                  }
+    ordering = ('-respondido',)
+

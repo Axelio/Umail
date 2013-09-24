@@ -20,7 +20,8 @@ class BandejaForm(forms.Form):
     mensajes = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple)
     class Meta:
         widgets = {
-              'mensaje': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
+              #'mensaje': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
+              'mensaje': RedactorWidget(editor_options={'lang': 'es'}),
               }
 
 class ComposeForm(forms.ModelForm):
@@ -51,7 +52,7 @@ class ComposeForm(forms.ModelForm):
         exclude = ('recipient', 'con_copia')
         fields = ('archivo', 'body', 'subject')
         widgets = {
-                  'body': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
+                  #'body': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
                   'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum'}),
                   'body': RedactorWidget(editor_options={'lang': 'es'})
                   }

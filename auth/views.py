@@ -8,7 +8,6 @@ from django.contrib.auth.views import login
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse
-from reportes.forms import Feedback_Form
 from reportes.models import Comentarios
 from lib.umail import msj_expresion, renderizar_plantilla
 from django.template import RequestContext
@@ -184,7 +183,7 @@ def revisar_comentario(request):
                                                 comentario = comentario,
                                                 nombre = nombre,
                                                 correo = correo
-            )
+                                                )
         procesado = True
         return HttpResponseRedirect(request.POST['url'])
 

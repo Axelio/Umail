@@ -173,7 +173,6 @@ def index(request):
 def revisar_comentario(request):
     procesado = False
     if request.method == 'POST':
-        form = Feedback_Form(request)
         pregunta = request.POST['pregunta']
         comentario = request.POST['comentario']
         nombre = request.POST['nombre']
@@ -187,10 +186,3 @@ def revisar_comentario(request):
         procesado = True
         return HttpResponseRedirect(request.POST['url'])
 
-    else:
-        feedback_form = Feedback_Form()
-        diccionario = {}
-        diccionario.update(csrf(request))
-        diccionario.update({'feedback_form':feedback_form})
-
-        return render_to_response('usuario/feedback.html', diccionario)

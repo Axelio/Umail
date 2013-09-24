@@ -186,6 +186,7 @@ def revisar_comentario(request):
                                                 correo = correo
             )
         procesado = True
+        return HttpResponseRedirect(request.POST['url'])
 
     else:
         feedback_form = Feedback_Form()

@@ -8,7 +8,7 @@ from django.db.models.signals import post_save
 from auth.models import UserProfile
 
 class Comentarios(models.Model):
-    pregunta = models.CharField(max_length=50)
+    pregunta = models.CharField(max_length=50, verbose_name=u'título')
     comentario = models.TextField()
     nombre = models.CharField(max_length=50, verbose_name=u"nombre y apellido")
     correo = models.EmailField()

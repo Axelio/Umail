@@ -1,6 +1,17 @@
 {% include "usuario/base.html" %}
 {% load admin_static %} 
 
+<head>
+
+
+<!--
+    <script type="text/javascript">
+        $(function(){
+            $(".tip").tooltip(show);
+        });
+    </script>
+    -->
+</head>
 
 <body>
   <script type="text/javascript">
@@ -15,7 +26,40 @@
 
   }
   </script>
+
+  <div class="navbar">
+      <div class="navbar-inner">
+        <div class="btn-group tooltip-demo">
+            <button class="btn">
+                <a 
+                    href="{% url 'redactar' %}" 
+                    data-toggle="tooltip" 
+                    data-placement="bottom" 
+                    data-original-title="Nuevo">
+                    <i class="icon-pencil"></i>
+                </a>
+            </button>
+
+          <!--   <button class="btn dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-chevron-down"></i>
+            </button> -->
+
+
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
+              <li><a tabindex="-1" href="{% url 'redactar' %}">Nuevo Memo</a></li>
+              <li><a tabindex="-1" href="#">Nuevo Contacto</a></li>
+
+            </ul>
+          
+
+        </div>
+      </div>
+</div>
+
+
+
     <div class="container-narrow"> 
+
         <div class="row-fluid">
             <form method="post" action="">
                 <div class="span3">
@@ -49,6 +93,9 @@
                                     Página {{ message_list.number }} de {{ message_list.paginator.num_pages }}.
                                 </a>
                             </li>
+    
+
+        
                             {% if contacts.has_next %}
                                 <li>
                                     <a href="#"><a href="?page={{ message_list.next_page_number }}">

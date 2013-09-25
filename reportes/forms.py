@@ -40,10 +40,17 @@ class ConsultaMemoForm(forms.ModelForm):
         if not self.cleaned_data['codigo'] == None:
             return self.cleaned_data
 
-
 class RespuestaForm(forms.ModelForm):
     class Meta:
         model = Respuestas
+        widgets = {
+                  'comentario': RedactorWidget(editor_options={'lang': 'es'})
+                  }
+    ordering = ('-respondido',)
+
+class ComentariosForm(forms.ModelForm):
+    class Meta:
+        model = Comentarios
         widgets = {
                   'comentario': RedactorWidget(editor_options={'lang': 'es'})
                   }

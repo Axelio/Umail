@@ -17,3 +17,25 @@
 @media (max-width: 480px) {
 .img_oculta {  display: none; }
 }
+
+#link:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+#link:hover,
+#link:active {
+  outline: 0;
+}
+
+#link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+#link:hover,
+#link:focus {
+  color: #ffffff;
+  text-decoration: underline;
+}

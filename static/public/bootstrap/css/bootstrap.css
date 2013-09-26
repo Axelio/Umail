@@ -2284,6 +2284,7 @@ table th[class*="span"],
   background-image: url("../img/glyphicons-halflings.png");
   background-position: 14px 14px;
   background-repeat: no-repeat;
+  background: none;
 }
 
 /* White icons with optional class, or on hover/focus/active states of certain elements */
@@ -3976,7 +3977,7 @@ input[type="submit"].btn.btn-mini {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #eeeeee;
+  /*background-color: #eeeeee;*/
 }
 
 .nav > li > a > img {
@@ -4024,7 +4025,7 @@ input[type="submit"].btn.btn-mini {
 .nav-list > .active > a:focus {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-  background-color: #0088cc;
+  background-color: #F1F4F7;
 }
 
 .nav-list [class^="icon-"],

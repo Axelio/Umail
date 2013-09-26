@@ -1,16 +1,19 @@
 {% load menu%}
-<li class="nav-header">Buzón</li>
-<li {{ request|active:'entrada' }}>
-	<a href="{% url 'bandeja' 'entrada' %}">
-	<i class="icon-download-alt"></i><strong>Recibidos</strong></a>
+
+<li class="nav-header bs-docs-sidenav">Buzón</li>
+<li {{ request|active:'entrada' }} id="li-ancho">
+	<a href="{% url 'bandeja' 'entrada' %}" id="link-negro">
+	<i class="icon-download-alt icon-large"></i>Recibidos <span class="label label-info pull-right">3</span> </a>
 </li>
-<li {{ request|active:'enviados' }}>
-	<a href="{% url 'bandeja' 'enviados' %}">
-	<i class="icon-share-alt"></i><strong>Enviados</strong></a>
+<li {{ request|active:'enviados' }} id="li-ancho">
+	<a href="{% url 'bandeja' 'enviados' %}" id="link-negro">
+	<i class="icon-mail-forward icon-large"></i>Enviados</a>
 </li>
-<li {{ request|active:'borradores' }}>
-	<a href="#"><i class=" icon-file"></i><strong>Borradores</strong></a>
+<li {{ request|active:'borradores' }} id="li-ancho">
+	<a href="#" id="link-negro">
+	<i class=" icon-file icon-large"></i>Borradores</a>
 </li>
-<li {{ request|active:'archivados' }}>
-	<a href="#"><i class="icon-folder-open"></i><strong>Archivados</strong></a>
+<li {{ request|active:'archivados' }} id="li-ancho">
+	<a href="#" id="link-negro">
+	<i class="icon-folder-open icon-large"></i>Archivados</a>
 </li>

@@ -15,15 +15,16 @@
       }
   </script>
 
-<!-- MENSAJES -->
+<!-- MENSAJES-->
   <div>
         <div class="navbar-inner" style="min-height:40px">
             <div class="container">
             <div class="row">
             <div class="span3">
-                <div class="btn-group tooltip-demo" style="padding-top: 8px">
+                <div class="btn-group tooltip-demo" style="padding-top: 8px"> 
                     <button class="btn ">
                         <a 
+                            id="link-negro" 
                             href="{% url 'redactar' %}" 
                             data-toggle="tooltip" 
                             data-placement="bottom" 
@@ -31,8 +32,12 @@
                             <i class="icon-pencil"></i>
                         </a>
                     </button>
-                    <button class="btn dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-chevron-down"></i>
+                    <button class="btn dropdown-toggle tooltip-demo" data-toggle="dropdown">
+                        <a 
+                            id="link-negro" 
+                            data-placement="bottom">
+                            <i class="icon-caret-down"></i>
+                        </a>
                     </button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
                         <li><a tabindex="-1" href="{% url 'redactar' %}">Nuevo Memo</a></li>
@@ -45,6 +50,7 @@
                     <div class="btn-group" >
                         <button class="btn btn-group">
                             <a 
+                                id="link-negro" 
                                 href="{% url 'redactar' %}" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
@@ -56,6 +62,7 @@
                     <div class="btn-group">
                         <button class="btn">
                             <a 
+                                id="link-negro" 
                                 href="{% url 'redactar' %}" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
@@ -67,6 +74,7 @@
                     <div class="btn-group">
                         <button class="btn">
                             <a 
+                                id="link-negro" 
                                 href="{% url 'redactar' %}" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
@@ -78,6 +86,7 @@
                     <div class="btn-group ">
                         <button class="btn">
                             <a 
+                                id="link-negro" 
                                 href="{% url 'redactar' %}" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
@@ -87,13 +96,13 @@
                         </button>
                     </div>
                     <div class="btn-group">
-                        <button class="btn">
+                        <button class="btn" type="submit" name="archivar">
                             <a 
-                                href="{% url 'redactar' %}" 
+                                id="link-negro" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
                                 data-original-title="Archicar">
-                                <i class="icon-folder-open"></i>
+                                <i class="icon-folder-open "></i>
                             </a>
                         </button>
                     </div>
@@ -103,7 +112,7 @@
                 <form class="navbar-search pull-left">
                     <input type="text" class="search-query" placeholder="Buscar memo..">
                 </form>
-            </div>>
+            </div>
             </div>
             </div>
         </div>
@@ -112,29 +121,28 @@
                     
 
   <div>
-  <div class="strip strip-white strip-grey" style="padding:1px 0px 0px 0px; min-height: 350px">
+  <div class="container">
         <div class="container-narrow">
             <div class="row-fluid">
-                <div class="span1">
-                    <br />
-                </div>
-                <div class="span2">
-                    <ul class="nav nav-list" style="margin-right:-100px">
+                <div class="span3">
+                <div class="strip strip-white" id="strip-grey-degradado" style="padding:1px 0px 0px 0px; min-height: 350px">
+                    <ul class="nav nav-list">
                         {% include "usuario/mensajes/lista_menu_mensajes.html" %}
                         <li class="divider"></li>
                         <li class="nav-header">Acciones</li>
-                        <button class="btn btn-primary" type="submit" name="archivar">Archivar</button>
                     </ul>
+                </div>
                 </div>
                   
                 <div class="span9"> 
-                <div class="strip strip-white" style="padding:1px 0px 0px 0px; min-height: 350px">   
+               
                     asdasas
                 </div>
-            </div>
+         
+        
         </div>
         </div>
-        </div>
+         </div>
 </div>
 
 

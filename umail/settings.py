@@ -1,6 +1,21 @@
+# -*- coding: utf-8 -*-
 # Django settings for umail project.
 import os
 import glob
+
+USE_THOUSAND_SEPARATOR = True
+
+#Configuración de envío de correo por Gmail
+REMITENTE='Nombre Remitente <correo@correo.com>' #Correo remitente por defecto que usará la activación de cuentas
+EMAIL_SUBJECT_PREFIX = '[Umail] '
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'diaz.axelio@gmail.com'
+EMAIL_HOST_PASSWORD = 'axelio-19276008-'
+
+# Control para que cuando se use un sitio con conexión segura
+EMAIL_USE_TLS = True 
 
 LOGIN_URL='/auth'
 
@@ -8,7 +23,9 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    (u'Axel Díaz', 'diaz.axelio@gmail.com'),
+    (u'Jennifer Montilla', 'montilla.jennifer@gmail.com'),
+# Django settings for umail project.
 )
 
 MANAGERS = ADMINS

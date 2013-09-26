@@ -109,3 +109,9 @@ def active(request, tipo_bandeja):
         return format_html('class="active"')
 active.is_safe = True 
 register.filter(active)
+
+def respuesta_comentario(comentario):
+    from reportes.models import Respuestas
+    return Respuestas.objects.get(pregunta=comentario).id
+respuesta_comentario.is_safe = True 
+register.filter(respuesta_comentario)

@@ -138,7 +138,6 @@ def save_message(sender, **kwargs):
         memo.status=estado
     memo.sent_at = datetime.datetime.now()
 
-
 def inbox_count_for(user):
     """
     returns the number of unread messages for the given user but does not

@@ -57,7 +57,7 @@ register.filter(menu)
 def num_entrada(request):
     from django_messages.models import Message, Destinatarios
     destinatario = Destinatarios.objects.get(usuarios__user=request.user)
-    message_list = Message.objects.inbox_for(request.user).exclude(leido_por=destinatario).distinct()
+    message_list = Message.objects.filter(recipient=destinatario, read_at__isnull=True, deleted_at__isnull=True).distinct()
     return message_list.count()
 num_entrada.is_safe = True 
 register.filter(num_entrada)

@@ -6,13 +6,14 @@
 
  <!-- Hero
     ================================================== -->
-    <div id="hero">
+    <div id="hero" >
       <div id="hero-background">
         <div class="container">
           <div class="row">
             <div class="span5">
-              <div class="title">
-                <h1 color:FFFFFF>Login</h1>
+              <div class="title" style="color:#FFFFFF" >
+                <h1>
+                  Login</h1>
               </div>
             </div>
           </div>
@@ -34,17 +35,15 @@
 
             <fieldset>
             <legend>Portal de Usuario Umail</legend>
-{% if mensaje %}
-        <div class="alert alert-{{ tipo_mensaje }}" align=center>
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>{{ expresion }}</strong>{{ mensaje }}.
-        </div>
-      {% endif %}
-
-
-      
 
               <p>Los usuarios existentes pueden iniciar sesión en el portal de usuario para ver el estado de sus memos y descargar registros más recientes.</p>
+
+            {% if mensaje %}
+              <div class="alert alert-{{ tipo_mensaje }}" align=center>
+                   <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <strong>{{ expresion }}</strong>{{ mensaje }}.
+              </div>
+            {% endif %}
 
             <form method="post" action="" class="form-horizontal bsval">
             
@@ -66,8 +65,8 @@
                 </div>
               </div>
 
-              <div class="form-actions">
-                <button class="btn btn-primary" type="submit">Ingresar</button>
+              <div class="form-actions" >
+                <button class="btn btn-primary pull-right" type="submit">Ingresar</button>
               </div>
 
             </fieldset>
@@ -83,33 +82,4 @@
      </div><!-- /.strip white -->
 
   </div>
-
- <!-- Middle
-    ================================================== -->
-
-   <!-- <style type="text/css">
-      body {
-        background-color: #f5f5f5;
-      }
-    </style>
-        
-     <div class="container">
-    {% if mensaje %}
-        <div class="alert alert-{{ tipo_mensaje }}" align=center>
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>{{ expresion }}</strong>{{ mensaje }}.
-        </div>
-    {% endif %}
-
-      <form class="form-signin" method="post">
-        {% csrf_token %}
-        <h2 class="form-signin-heading">Ingresar a Umail</h2>
-        {{ formulario.username }}
-        {{ formulario.password }}
-        <button class="btn btn-large btn-primary" type="submit">Ingresar</button>
-      </form>
-
-    </div>
-    
-        <hr style="border-width: 2px 0;">-->
 </body>

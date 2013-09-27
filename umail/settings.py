@@ -1,6 +1,21 @@
+# -*- coding: utf-8 -*-
 # Django settings for umail project.
 import os
 import glob
+
+USE_THOUSAND_SEPARATOR = True
+
+#Configuración de envío de correo por Gmail
+REMITENTE='Nombre Remitente <correo@correo.com>' #Correo remitente por defecto que usará la activación de cuentas
+EMAIL_SUBJECT_PREFIX = '[Umail] '
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'diaz.axelio@gmail.com'
+EMAIL_HOST_PASSWORD = 'axelio-19276008-'
+
+# Control para que cuando se use un sitio con conexión segura
+EMAIL_USE_TLS = True 
 
 LOGIN_URL='/auth'
 
@@ -8,7 +23,9 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    (u'Axel Díaz', 'diaz.axelio@gmail.com'),
+    (u'Jennifer Montilla', 'montilla.jennifer@gmail.com'),
+# Django settings for umail project.
 )
 
 MANAGERS = ADMINS
@@ -21,12 +38,11 @@ DATABASES = {
         #'PASSWORD': '',                  # Not used with sqlite3.
         #'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         #'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-
         'ENGINE' : 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle.'
         'NAME': 'db_umail',
         'USER': 'umail',                      # Not used with sqlite3.
         'PASSWORD': 'umail86245',                  # Not used with sqlite3.
-        'HOST': '192.168.1.4',                      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '192.168.1.5',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -145,6 +161,8 @@ AJAX_SELECT_INLINES = 'inline'
 
 INSTALLED_APPS = (
     'auth',
+    'suit',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -159,6 +177,9 @@ INSTALLED_APPS = (
     'noticias',
     'reportes',
     'manual_usuario',
+    'django_select2',
+    'filer',
+    'suit_redactor',
 )
 #Configuraciones Django-suit
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
@@ -167,7 +188,7 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
-UMAIL_CONFIG = {
+SUIT_CONFIG = {
     # header
     'ADMIN_NAME': 'Umail',
     'HEADER_DATE_FORMAT': 'l, j. F Y',
@@ -193,8 +214,8 @@ UMAIL_CONFIG = {
     # ),
 
     # misc
-    'LIST_PER_PAGE': 15
-    }
+    'LIST_PER_PAGE': 50
+}
 
 #Configuraciones Django-suit
 

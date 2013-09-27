@@ -38,6 +38,7 @@ class Group(models.Model):
 
 class Pregunta(models.Model):
     opcion = models.CharField(max_length=50, verbose_name=u'opción')
+
     def __unicode__(self):
         return u'%s' %(self.opcion)
 
@@ -56,11 +57,16 @@ class UserProfile(models.Model):
     user=models.ForeignKey(User)
     persona=models.OneToOneField(Personas,null=False,help_text=u'Por favor, ingrese nombre, apellido o cédula de la persona')
     notificaciones=models.BooleanField(default=False,help_text=u'Active esta casilla si desea el envío de notificaciones a su correo electrónico')
+
     class Meta:
         verbose_name='Usuario'
         unique_together=('user','persona')
+
     def __unicode__(self):
         return u'%s %s' %(self.persona.primer_nombre, self.persona.primer_apellido)
+
+    def natural_key(self):
+        return u'%s (%s)' %(self.persona.natural_key(),self.user.__unicode__() )
 
 def funcion(u):
     if not hasattr(u, '_cached_profile'):
@@ -73,8 +79,10 @@ def save_group_dest(sender, **kwargs):
     ''' Guardar en la tabla Destinatarios el grupo a crear '''
     from django_messages.models import Destinatarios
     destinatario = Destinatarios.objects.get_or_create(grupos=kwargs['instance'])
+    '''
     grupo = Group.objects.get_or_create(name = 'Todos')
     grupo = Group.objects.get_or_create(name = 'Nadie')
+    '''
 
 @receiver(post_save, sender='UserProfile')
 def save_user_dest(sender, **kwargs):

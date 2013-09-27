@@ -22,6 +22,8 @@ class Personas(models.Model):
         verbose_name_plural = u'personas'
     def __unicode__(self):
         return u'%s %s'%(self.primer_nombre,self.primer_apellido)
+    def natural_key(self):
+        return u'%s %s'%(self.primer_nombre,self.primer_apellido)
 
 @receiver(post_save, sender=Personas)
 def save_pers_user(sender, **kwargs):

@@ -1,9 +1,10 @@
 django
 django-suit
 django-suit-redactor
+django-select2
+django-filer
 six
 gunicorn
-django-debug-toolbar
 docutils
 reportlab
 psycopg2

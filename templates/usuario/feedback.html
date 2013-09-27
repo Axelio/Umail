@@ -1,7 +1,6 @@
    <!-- Button to trigger modal -->
 {% load admin_static %}
-    <a href="{% url "feedback" %}" role="button" class="btn btn-inverse" style=" position: fixed; top: calc(55% - 6rem)" data-toggle="modal">
-    <!--<a href="/feedback/#betaModal" role="button" class="btn btn-inverse" style=" position: fixed; top: calc(55% - 6rem)" data-toggle="modal">-->
+    <a href="/feedback/#betaModal" role="button" class="btn btn-inverse" style=" position: fixed; top: calc(55% - 6rem)" data-toggle="modal">
         <img src="{% static "images/boton_soporte_tecnico.png" %}">
     </a>
 
@@ -17,27 +16,36 @@
             <div class="span6">
                 
                     
-                <form method="post" class="form-horizontal" >
+                <form method="post" class="form-horizontal" action={% url "comentario" %}>
                     {% csrf_token %}
+                    <input type=hidden name="url" value={{ request.path }}>
 
                     <p class="help-block">Pregunta</p>
                     <div class="input-prepend">
                         <span class="add-on">?</span>
-                        {{ feedback_form.pregunta }}
+                        <input class='prependedInput' placeholder='breve descripción' type=text name="pregunta" size=16 required='required'>
                     </div>
 
                     <p class="help-block">Nombre</p>
                     <div class="input-prepend">
                         <span class="add-on">*</span>
-                        {{ feedback_form.nombre }}
+                        {% if request.user.is_authenticated %}
+                            <input type=text name="nombre" class="prependedInput" required="required" placeholder="nombre apellido" size=16 value="{{ request.user.profile.persona.primer_nombre }} {{ request.user.profile.persona.primer_apellido }} ">
+                        {% else %}
+                            <input type=text name="nombre" class="prependedInput" required="required" placeholder="nombre apellido" size=16>
+                        {% endif %}
                     </div>
 
 
                     <p class="help-block">Correo</p>
                     <div class="input-prepend">
                         <span class="add-on">@</span>
-                        {{ feedback_form.correo }}
+                        {% if request.user.is_authenticated %}
+                            <input type=email name="correo" class="prependedInput" required="required" placeholder="usuario@correo.com" size=16 value="{{ request.user.email }}">
 
+                        {% else %}
+                            <input type=email name="correo" class="prependedInput" required="required" placeholder="usuario@correo.com" size=16>
+                        {% endif %}
                     </div>
 
 
@@ -50,7 +58,8 @@
             </div>
             <div class="span6">
 
-            {{ feedback_form.comentario }}
+            <textarea name="comentario" class="text" required="required" placeholder="Escriba aquí los detalles, sugerencias o comentarios. Por favor, sea lo más específico posible.
+" style="width:230px; height:230px"></textarea>
             
             </div>
             </form>

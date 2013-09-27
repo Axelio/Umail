@@ -41,7 +41,7 @@ def anular(request, message_id):
         return por_aprobar(request, mensaje=u'Memorándum anulado exitosamente')
     else:
         raise Http404
-anular = login_required(anular)
+anular = login_required(anular, login_url='/auth')
 
 
 def aprobar(request, message_id):
@@ -54,7 +54,7 @@ def aprobar(request, message_id):
         return por_aprobar(request, mensaje=u'Memorándum aprobado exitosamente')
     else:
         raise Http404
-aprobar = login_required(aprobar)
+aprobar = login_required(aprobar, login_url='/auth')
 
 def por_aprobar(request, mensaje=''):
     """
@@ -109,7 +109,7 @@ def ver_por_aprobar(request, message_id, template_name='user/mensajes/leer_aprob
         'message': message,
         'message_list': message_list,
     }, context_instance=RequestContext(request))
-ver_por_aprobar = login_required(ver_por_aprobar)
+ver_por_aprobar = login_required(ver_por_aprobar, login_url='/auth')
 
 def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje=''):
     """
@@ -222,15 +222,26 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
         form = BandejaForm()
 
         if tipo_bandeja == 'enviados': # ENVIADOS
-            message_list = Message.objects.outbox_for(request.user).distinct() #Filtrando la bandeja
+            destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=request.user)|models.Q(grupos__user=request.user))
+
+            # Si es el jefe maximo, deben aparecer todos los memos de esa dependencia
+            if request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
+                message_list = Message.objects.filter(sender__usuarios__persona__cargo_principal__dependencia=request.user.profile.persona.cargo_principal.dependencia, status__nombre__iexact='Aprobado').distinct('codigo')
+            else:
+                message_list = Message.objects.filter(sender__in=destinatarios).order_by('codigo','con_copia').distinct('codigo')
+
         if tipo_bandeja == 'entrada': # ENTRADA
             message_list = Message.objects.inbox_for(request.user).distinct() #Filtrando la bandeja
+        '''
+        message_list = message_list.values_list('codigo').distinct()
+        message_list = Message.objects.filter(id__in=message_list)
+        '''
 
-        if not message_list.exists():
+        if not message_list.exists() and mensaje == '':
             mensaje = u'No tiene ningún mensaje hasta ahora'
             (tipo_mensaje, expresion) = msj_expresion('info')
         
-        paginador = Paginator(message_list, settings.UMAIL_CONFIG['LIST_PER_PAGE'])
+        paginador = Paginator(message_list, settings.SUIT_CONFIG['LIST_PER_PAGE'])
         page = request.GET.get('page')
         try:
             message_list = paginador.page(page)
@@ -306,7 +317,7 @@ def trash(request, template_name='user/mensajes/bandeja.html', mensaje=''):
         'mensaje':mensaje,
         'request':request,
     }, context_instance=RequestContext(request))
-trash = login_required(trash)
+trash = login_required(trash, login_url='/auth')
 
 def compose(request, recipient=None,
         template_name='usuario/mensajes/redactar.html', success_url=None, recipient_filter=None):
@@ -326,62 +337,98 @@ def compose(request, recipient=None,
         form = ComposeForm(request.POST)
         cuerpo = ''
         valido = form.is_valid()
-        if not Destinatarios.objects.filter(usuarios__user__userprofile__persona__cargo_principal__dependencia = request.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = request.user.profile.persona.cargo_principal.dependencia.cargo_max).exists():
+
+        # Revisar si hay quien apruebe en el departamento del redactor
+        jefe = Destinatarios.objects.filter(usuarios__user__userprofile__persona__cargo_principal__dependencia = request.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = request.user.profile.persona.cargo_principal.dependencia.cargo_max)
+        if not jefe.exists():
             mensaje = u'Este memo no puede ser enviado ni aprobado porque no existe un jefe de departamento en %s' %(request.user.profile.persona.cargo_principal.dependencia)
-            form_errors = mensaje
             valido = False
+        else:
+            jefe = jefe[0]
+
         if valido:
-            estado_memo = EstadoMemo.objects.get(nombre='En espera')
-            mensaje = Message(
-                            sender = Destinatarios.objects.get(usuarios__user=request.user),
-                            subject = request.POST['subject'],
-                            body = request.POST['body'],
-                            status = estado_memo,
-                            tipo = '',
-                        )
+            destinatarios = form.cleaned_data['recipient']
+            con_copia = form.cleaned_data['con_copia']
+            sender = Destinatarios.objects.get(usuarios__user=request.user)
 
-            mensaje.save()
-            dest = []
-            for i in request.POST['recipient'].split('|'):
-                if not i == '':
-                    dest.append(int(i))
-            for destin in dest:
-                sender = Destinatarios.objects.filter(id=destin)
-                if sender.exists():
-                    mensaje.recipient.add(sender[0])
-            mensaje.save()
-            mensaje_txt = u'Mensaje enviado exitosamente'
+            fecha_actual = datetime.datetime.today()
+            mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=sender.usuarios.user.profile.persona.cargo_principal.dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
+            num_ident = mensajes.count() + 1
 
-            # Guardar log de envío de memo
-            LogEntry.objects.create(
-            user_id         = request.user.pk, 
-            content_type_id = ContentType.objects.get_for_model(Message).id,
-            object_id       = mensaje.id,
-            object_repr     = repr(mensaje), 
-            change_message  = mensaje_txt,
-            action_flag     = ADDITION
-            )
-            mensaje = mensaje_txt
+            # El identificador se genera a partir del id del memo, del jefe de departamento y del minuto, segundo y microsegundo actual
+            identificador = '%s%s' %(Message.objects.all().count(), jefe.id)
+
+            codigo = ''
+            for ident in identificador:
+                codigo = codigo + str(ord(ident))
+            codigo = codigo + str(datetime.datetime.today().microsecond)
+
+            # Por cada destinatario, enviar el memo, generar un log y enviar correo si está en la opción de envío
+            for destino in destinatarios:
+
+                crear_mensaje(
+                            destino=destino, 
+                            envio=sender, 
+                            asunto=request.POST['subject'], 
+                            cuerpo=request.POST['body'], 
+                            num_ident=num_ident,
+                            codigo=codigo,
+                            )
+
+
+            # Crear el mensaje al jefe de la dependencia si no esta entre los destinatarios originales
+            if not destinatarios.__contains__(jefe):
+                crear_mensaje(
+                            destino=jefe, 
+                            envio=sender, 
+                            asunto=request.POST['subject'], 
+                            cuerpo=request.POST['body'], 
+                            cc=True,
+                            num_ident=num_ident,
+                            codigo=codigo,
+                            )
+
+            mensaje = u'Mensaje enviado exitosamente'
+            (tipo_mensaje, expresion) = msj_expresion('success')
 
             if success_url is None:
                 success_url = reverse('messages_inbox')
             if request.GET.has_key('next'):
                 success_url = request.GET['next']
-            return inbox(request, mensaje)
+
+        if form.errors or not valido:
+            (tipo_mensaje, expresion) = msj_expresion('error')
+            label = ""
+            if form.errors.keys()[0] == 'subject':
+                label = "Asunto"
+            elif form.errors.keys()[0] == 'recipient':
+                label = "Destinatarios"
+            elif form.errors.keys()[0] == 'body':
+                label = "Texto"
+
+            if not label == "":
+                mensaje =  label + ': ' + form.errors.values()[0][0]
+
+            if form.errors.has_key('__all__'):
+                mensaje = form.errors['__all__'].as_text().split('* ')[1]
+
+            return render_to_response(template_name, {
+                'cuerpo': cuerpo,
+                'tipo': 'Redactar',
+                'tipo_mensaje':tipo_mensaje,
+                'mensaje':mensaje,
+                'expresion':expresion,
+                'request': request,
+                'form': form,
+            }, context_instance=RequestContext(request))
+
+        return bandeja(request, tipo_bandeja='enviados', expresion=expresion, tipo_mensaje=tipo_mensaje, mensaje=mensaje)
     else:
         form = ComposeForm()
         cuerpo = form.fields['body'].initial = u"\n\nCordialmente, \n%s. %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
         if recipient is not None:
             recipients = [u for u in User.objects.filter(username__in=[r.strip() for r in recipient.split('+')])]
             form.fields['recipient'].initial = recipients
-    if form.errors:
-        if form.errors.keys()[0] == 'subject':
-            label = "Asunto"
-        elif form.errors.keys()[0] == 'recipient':
-            label = "Destinatarios"
-        elif form.errors.keys()[0] == 'body':
-            label = "Texto"
-        form_errors =  label + ': ' + form.errors.values()[0][0]
     return render_to_response(template_name, {
         'cuerpo': cuerpo,
         'tipo': 'Redactar',
@@ -389,7 +436,51 @@ def compose(request, recipient=None,
         'request': request,
         'form': form,
     }, context_instance=RequestContext(request))
-compose = login_required(compose)
+compose = login_required(compose, login_url='/auth')
+
+def crear_mensaje(destino='', 
+                  envio='', 
+                  cc=False, 
+                  asunto='', 
+                  cuerpo='', 
+                  num_ident='', 
+                  codigo='', 
+                  log=True):
+    '''
+    Función para crear mensajes. Recibe parámetros:
+    destino: usuario destinatario
+    envio: usuario que lo envía
+    cc: con copia. Por defecto Falso
+    asunto: resumen del mensaje
+    cuerpo: texto general del mensaje
+    tipo: circular o personal
+    log: Crea un log en LogEntry. Por defecto activo
+    '''
+    # Crear el mensaje a todas las personas en estado 'En espera'
+    estado_memo = EstadoMemo.objects.get(nombre='En espera')
+    mensaje = Message.objects.create(
+                    recipient = destino,
+                    sender = envio,
+                    con_copia=cc,
+                    subject = asunto,
+                    body = cuerpo,
+                    tipo = '',
+                    status = estado_memo,
+                    num_ident = num_ident,
+                    codigo=codigo
+                )
+
+    mensaje_txt = u'Mensaje enviado exitosamente'
+    # Guardar log de envío de memo
+    LogEntry.objects.create(
+        user_id         = envio.usuarios.user.pk, 
+        content_type_id = ContentType.objects.get_for_model(Message).id,
+        object_id       = mensaje.id,
+        object_repr     = repr(mensaje), 
+        change_message  = mensaje_txt,
+        action_flag     = ADDITION
+    )
+
 
 def reply(request, message_id, form_class=ComposeForm,
     template_name='user/mensajes/redactar.html', success_url=None, 
@@ -483,7 +574,7 @@ def reply(request, message_id, form_class=ComposeForm,
         'request': request,
         'form': form,
     }, context_instance=RequestContext(request))
-reply = login_required(reply)
+reply = login_required(reply, login_url='/auth')
 
 def delete(request, message_id, success_url=None):
     """
@@ -540,7 +631,7 @@ def delete(request, message_id, success_url=None):
             notification.send([user], "messages_deleted", {'message': message,})
         return inbox(request, mensaje)
     raise Http404
-delete = login_required(delete)
+delete = login_required(delete, login_url='/auth')
 
 def undelete(request, success_url=None):
     """
@@ -567,7 +658,7 @@ def undelete(request, success_url=None):
             notification.send([user], "messages_recovered", {'message': message,})
         return HttpResponseRedirect(success_url)
     raise Http404
-undelete = login_required(undelete)
+undelete = login_required(undelete, login_url='/auth')
 
 def view(request, message_id, template_name='user/mensajes/leer.html', mensaje=''):
     """
@@ -639,13 +730,11 @@ def view(request, message_id, template_name='user/mensajes/leer.html', mensaje='
         'jefe':jefe,
         'message': message,
     }, context_instance=RequestContext(request))
-view = login_required(view)
+view = login_required(view, login_url='/auth')
 
 def destin_atarios_lookup(request):
     # Default return list
     results = []
-    import pdb
-    #pdb.set_trace()
     if request.method == "GET":
         if request.GET.has_key(u'query'):
             value = request.GET[u'query']
@@ -656,13 +745,3 @@ def destin_atarios_lookup(request):
                 print results
     json = simplejson.dumps(results)
     return HttpResponse(json, mimetype='application/json')
-
-def destinatarios_lookup(request):
-    buscar = request.GET['term']
-    resp = ''
-    results = []
-    search_qs = Destinatarios.objects.filter(Q(usuarios__user__username__icontains=buscar) | Q(usuarios__persona__num_identificacion__icontains=buscar) | Q(usuarios__persona__primer_nombre__icontains=buscar) | Q(usuarios__persona__primer_apellido__icontains=buscar) | Q(grupos__name__icontains=buscar))
-    results = [ (destin.__unicode__()) for destin in search_qs]
-    #resp = request.REQUEST['callback'] + '(' + simplejson.dumps(results) + ');'
-    json = simplejson.dumps(results)
-    return HttpResponse(json, content_type='application/json')

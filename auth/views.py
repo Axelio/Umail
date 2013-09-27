@@ -8,8 +8,7 @@ from django.contrib.auth.views import login
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse
-from reportes.forms import Feedback_Form
-from reportes.models import Comentarios
+from reportes.models import Comentarios, Respuestas
 from lib.umail import msj_expresion, renderizar_plantilla
 from django.template import RequestContext
 from django.views.generic.base import View
@@ -30,7 +29,10 @@ class Auth(View):
     def get(self, request, *args, **kwargs):
         self.form = self.form()
         if request.user.is_authenticated():
-            return HttpResponseRedirect('/')
+            if request.GET.has_keys['next']:
+                return HttpResponseRedirect(request.GET['next'])
+            else:
+                return HttpResponseRedirect('/')
             
         return renderizar_plantilla(request, 
                             plantilla = self.template, 
@@ -53,7 +55,7 @@ class Auth(View):
                 login(request, usuario)
                 #"User is not valid, active and authenticated"
                 if not user.is_active:
-                    self.mensaje = u"La contraseña es válida pero la cuenta ha sido desactivada."
+                    self.mensaje = u"La contraseña es válida pero la cuenta ha sido desactivada"
                     (self.tipo_mensaje, self.expresion) = msj_expresion('error')
                     return renderizar_plantilla(request, 
                                         plantilla = self.template, 
@@ -67,7 +69,7 @@ class Auth(View):
                     return HttpResponseRedirect('/preguntas_secretas/')
             else:
                 # El usuario o contraseña eran incorrectos
-                self.mensaje = u"Contraseña incorrecta. Por favor, inténtelo nuevamente."
+                self.mensaje = u"Contraseña incorrecta. Por favor, inténtelo nuevamente"
                 (self.tipo_mensaje, self.expresion) = msj_expresion('error')
                 return renderizar_plantilla(request, 
                                     plantilla = self.template, 
@@ -78,7 +80,7 @@ class Auth(View):
                                 )
         else:
             # El usuario no existe
-            self.mensaje = u"El usuario %s no existe." %(request.POST['username'])
+            self.mensaje = u"No existe el usuario %s. Por favor, confirme sus datos" %(request.POST['username'])
             (self.tipo_mensaje, self.expresion) = msj_expresion('error')
             form = self.form(request.POST)
             return renderizar_plantilla(request, 
@@ -151,9 +153,6 @@ class Revisar_preguntas(View):
                                     form = form
                                 )
 
-            #transaction.commit()
-
-
 def index(request):
     import datetime
     fecha_actual = datetime.datetime.today()
@@ -169,9 +168,15 @@ def index(request):
     return render_to_response('usuario/auth/index.html', diccionario)
 
 def revisar_comentario(request):
-    procesado = False
+    from umail.settings import ADMINS
+    from django.contrib.sites.models import Site
+    from lib.umail import enviar_email
+
+    correos = []
+    for admin in ADMINS:
+        correos.append(admin[1])
+
     if request.method == 'POST':
-        form = Feedback_Form(request)
         pregunta = request.POST['pregunta']
         comentario = request.POST['comentario']
         nombre = request.POST['nombre']
@@ -181,13 +186,19 @@ def revisar_comentario(request):
                                                 comentario = comentario,
                                                 nombre = nombre,
                                                 correo = correo
-            )
-        procesado = True
+                                                )
 
-    else:
-        feedback_form = Feedback_Form()
-        diccionario = {}
-        diccionario.update(csrf(request))
-        diccionario.update({'feedback_form':feedback_form})
+        # Enviar correo a los administradores del sistema
+        asunto = u"Pregunta nueva"
+        contenido = u'Tiene un comentario de %s preguntando "%s" con el siguiente mensaje: %s. \n\nTambién puede visitar el mensaje en %s/admin/reportes/comentarios/%s' %(comentario.correo, comentario.pregunta, comentario.comentario, Site.objects.get_current(), comentario.id)
+        enviar_email(asunto=asunto, contenido=contenido, correos=correos)
 
-        return render_to_response('usuario/feedback.html', diccionario)
+        # Se crea una respuesta tentativa
+        respuesta = Respuestas.objects.create(
+                                               pregunta = comentario,
+                                               comentario = '',
+                                               usuario = None,
+                                               respondido = False,
+                                              )
+        return HttpResponseRedirect(request.POST['url'])
+

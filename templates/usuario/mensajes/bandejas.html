@@ -1,21 +1,172 @@
 {% include "usuario/base.html" %}
-{% load admin_static %} 
-
+{% load admin_static %}
 
 <body>
+
   <script type="text/javascript">
-  function selectAllItems() {
-	  var selectAll = $("#select_all_items");
+      function selectAllItems() {
+    	var selectAll = $("#select_all_items");
 
-	  $(".chkSelectItem").each(function (index, item) {
-		  if (selectAll.prop("checked") != $(item).prop('checked')) {
-			  $(item).trigger('click');
-		  }
-	  });
-
-  }
+    	   $(".chkSelectItem").each(function (index, item) {
+    		  if (selectAll.prop("checked") != $(item).prop('checked')) {
+    			  $(item).trigger('click');
+    		  }
+    	});
+      }
   </script>
+
+<!-- MENSAJES-->
+  <div>
+        <div class="navbar-inner" style="min-height:40px">
+            <div class="container">
+            <div class="row">
+            <div class="span3">
+                <div class="btn-group tooltip-demo" style="padding-top: 8px"> 
+                    <button class="btn ">
+                        <a 
+                            id="link-negro" 
+                            href="{% url 'redactar' %}" 
+                            data-toggle="tooltip" 
+                            data-placement="bottom" 
+                            data-original-title="Nuevo">
+                            <i class="icon-pencil"></i>
+                        </a>
+                    </button>
+                    <button class="btn dropdown-toggle tooltip-demo" data-toggle="dropdown">
+                        <a 
+                            id="link-negro" 
+                            data-placement="bottom">
+                            <i class="icon-caret-down"></i>
+                        </a>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
+                        <li><a tabindex="-1" href="{% url 'redactar' %}">Nuevo Memo</a></li>
+                        <li><a tabindex="-1" href="{% url 'reportes' %}">Nuevo Reporte</a></li>
+                    </ul>
+                </div>    
+            </div>
+            <div class="span6">    
+                <div class="btn-group tooltip-demo" style="padding-top: 8px">
+                    <div class="btn-group" >
+                        <button class="btn btn-group">
+                            <a 
+                                id="link-negro" 
+                                href="{% url 'redactar' %}" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                data-original-title="Atrás">
+                                <i class="icon-chevron-left"></i>
+                            </a>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn">
+                            <a 
+                                id="link-negro" 
+                                href="{% url 'redactar' %}" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                data-original-title="Inicio">
+                                <i class="icon-backward"></i>
+                            </a>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn">
+                            <a 
+                                id="link-negro" 
+                                href="{% url 'redactar' %}" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                data-original-title="Final">
+                                <i class="icon-forward "></i>
+                            </a>
+                        </button>
+                    </div>
+                    <div class="btn-group ">
+                        <button class="btn">
+                            <a 
+                                id="link-negro" 
+                                href="{% url 'redactar' %}" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                data-original-title="Adelante">
+                                <i class="icon-chevron-right"></i>
+                            </a>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn" type="submit" name="archivar">
+                            <a 
+                                id="link-negro" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                data-original-title="Archicar">
+                                <i class="icon-folder-open "></i>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="span1">
+                <form class="navbar-search pull-left">
+                    <input type="text" class="search-query" placeholder="Buscar memo..">
+                </form>
+            </div>
+            </div>
+            </div>
+        </div>
+</div>
+<!-- MENSAJES -->
+                    
+
+  <div>
+  <div class="container">
+        <div class="container-narrow">
+            <div class="row-fluid">
+                <div class="span3">
+                <div class="strip strip-white" id="strip-grey-degradado" style="padding:1px 0px 0px 0px; min-height: 350px">
+                    <ul class="nav nav-list">
+                        {% include "usuario/mensajes/lista_menu_mensajes.html" %}
+                        <li class="divider"></li>
+                        <li class="nav-header">Acciones</li>
+                    </ul>
+                </div>
+                </div>
+                  
+                <div class="span9"> 
+               
+                    asdasas
+                </div>
+         
+        
+        </div>
+        </div>
+         </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
     <div class="container-narrow"> 
+
         <div class="row-fluid">
             <form method="post" action="">
                 <div class="span3">
@@ -26,6 +177,8 @@
                         <button class="btn btn-primary" type="submit" name="archivar">Archivar</button>
                     </ul>
                 </div>
+
+
                 <div class="span9">
                     {% if mensaje %}
                         <div class="alert alert-{{ tipo_mensaje }}">
@@ -49,6 +202,9 @@
                                     Página {{ message_list.number }} de {{ message_list.paginator.num_pages }}.
                                 </a>
                             </li>
+    
+
+        
                             {% if contacts.has_next %}
                                 <li>
                                     <a href="#"><a href="?page={{ message_list.next_page_number }}">
@@ -101,9 +257,9 @@
                                                 </a>
                                             </td>
                                             <td>
-<!--
+<!
                                                 {#<a href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
--->
+
                                                 <a href="{% url 'messages_detail' form.id %}">
                                                     {{ form.sent_at|date:"D d M P" }}
                                                 </a>
@@ -116,7 +272,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
 </body>
 
 {% include "usuario/pie.html" %}

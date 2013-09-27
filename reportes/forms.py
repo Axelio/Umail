@@ -4,7 +4,8 @@ from django_messages.models import Message
 from umail import settings
 from django.contrib.admin import widgets
 from django.utils.safestring import mark_safe
-from reportes.models import Comentarios
+from reportes.models import Comentarios, Respuestas
+from suit_redactor.widgets import RedactorWidget
 
 class HorizontalRadioRenderer(forms.RadioSelect.renderer):
   def render(self):
@@ -38,15 +39,19 @@ class ConsultaMemoForm(forms.ModelForm):
         if not self.cleaned_data['codigo'] == None:
             return self.cleaned_data
 
-class Feedback_Form(forms.ModelForm):
+class RespuestaForm(forms.ModelForm):
+    class Meta:
+        model = Respuestas
+        widgets = {
+                  'comentario': RedactorWidget(editor_options={'lang': 'es'})
+                  }
+    ordering = ('-respondido',)
+
+class ComentariosForm(forms.ModelForm):
     class Meta:
         model = Comentarios
-        texto= u"Escriba aquí los detalles."
-        texto.join(u'\nPor favor sea lo más específico posible.')
         widgets = {
-        'sentimiento': forms.Select(attrs={'class':'choices', 'value':''}),
-        'pregunta': forms.TextInput(attrs={'class':'prependedInput', 'required':'required', 'value':'','placeholder':u'breve descripción', 'size':16}),
-        'comentario': forms.Textarea(attrs={'class':'text', 'required':'required', 'value':'','placeholder':texto,  'style':'width:230px; height:230px'  }),
-        'nombre': forms.TextInput(attrs={'class':'prependedInput', 'required':'required', 'value':'', 'placeholder':u'nombre apellido', 'size':16}),
-        'correo': forms.TextInput(attrs={'class':'prependedInput', 'required':'required', 'value':'', 'type':'email', 'placeholder':u'usuario@ejemplo.com', 'size':16}),
-        }
+                  'comentario': RedactorWidget(editor_options={'lang': 'es'})
+                  }
+    ordering = ('-respondido',)
+

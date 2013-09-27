@@ -10,6 +10,12 @@
                 </ul>
             </div>
             <div class="span9">
+                {% if mensaje %}
+                    <div class="alert alert-{{ tipo_mensaje }}">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>{{ expresion }}</strong>{{ mensaje }}.
+                    </div>
+                {% endif %}
                 <div class="strip strip-white strip-grey" style="min-height: 350px">
                     <form action="" method="post">
                         <table width=100%>
@@ -49,12 +55,14 @@
                         <table>
                             <tbody>
                                 <!-- recipient -->
+
                                 <tr>
                                     <td>
                                         <b>{{ form.recipient.label }}</b>
                                     </td>
                                     <td>
-                                        <input id="usuarios" type=text data-provide="typeahead" size="50" name="recipient"/>
+                                        <!--<input id="usuarios" type=text data-provide="typeahead" size="50" name="recipient"/>-->
+                                        {{ form.recipient }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -62,7 +70,7 @@
                                         <b>{{ form.con_copia.label }}</b>
                                     </td>
                                     <td>
-                                        {{ form.con_copia }} 
+                                        <b>{{ form.con_copia }}</b>
                                     </td>
                                 </tr>
                                 <tr>

@@ -21,29 +21,10 @@ class MessageManager(models.Manager):
         """
         destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
         return self.filter(
-            models.Q(recipient__in=destinatarios)|
-            models.Q(con_copia__in=destinatarios),
-            models.Q(deleted_at__isnull=True),
-            models.Q(status__nombre__iexact='Aprobado'),
+            recipient__in=destinatarios,
+            deleted_at__isnull=True,
+            status__nombre__iexact='Aprobado',
         )
-
-    def outbox_for(self, user):
-        """
-        Returns all messages that were sent by the given user and are not
-        marked as deleted.
-        """
-        destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
-
-        # Si es el jefe maximo, deben aparecer todos los memos de esa dependencia
-        if user.profile.persona.cargo_principal.cargo == user.profile.persona.cargo_principal.dependencia.cargo_max:
-            return self.filter(
-                sender__usuarios__persona__cargo_principal__dependencia=user.profile.persona.cargo_principal.dependencia,
-                status__nombre__iexact='Aprobado',
-            )
-        else:
-            return self.filter(
-                sender__in=destinatarios,
-            )
 
     def trash_for(self, user):
         """
@@ -52,14 +33,12 @@ class MessageManager(models.Manager):
         """
         destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=user)|models.Q(grupos__user=user))
         filtro = self.filter(
-            models.Q(recipient__in=destinatarios)|
-            models.Q(con_copia__in=destinatarios),
-            models.Q(deleted_at__isnull=False),
+            recipient__in=destinatarios,
+            deleted_at__isnull=False,
         
         ) | self.filter(
-            models.Q(sender=destinatarios)|
-            models.Q(con_copia__in=destinatarios),
-            models.Q(recipient_deleted_at__isnull=False),
+            sender=destinatarios,
+            recipient_deleted_at__isnull=False,
         )
         return filtro
 
@@ -70,11 +49,12 @@ class Destinatarios(models.Model):
         db_table            = u'destinatarios'
         verbose_name_plural = u'destinatarios'
         verbose_name        = u'destinatario'
+        ordering            = ['usuarios__persona__primer_nombre','usuarios__persona__primer_apellido','grupos__name']
     def __unicode__(self):
         if self.usuarios== None:
             return u'%s'%(self.grupos)
         elif self.grupos == None:
-            return u'%s'%(self.usuarios)
+            return u'%s (%s)'%(self.usuarios, self.usuarios.user.email)
 
 class EstadoMemo(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
@@ -95,7 +75,7 @@ class Message(models.Model):
     A private message from user to multiple users
     """
     recipient = models.ForeignKey('Destinatarios', related_name='received_messages', verbose_name=_("Destinatario"))
-    con_copia = models.ForeignKey('Destinatarios', related_name='con_copia', null=True, blank=True, verbose_name=("con copia a:"))
+    con_copia = models.BooleanField()
     subject = models.CharField(_("Subject"), max_length=255)
     archivo = models.FileField(upload_to='media/adjuntos/',null=True, blank=True)
     body = models.TextField(verbose_name="Texto")
@@ -107,7 +87,7 @@ class Message(models.Model):
     deleted_at = models.DateTimeField(("Archivado a las"), null=True, blank=True)
     status = models.ForeignKey('EstadoMemo', null=True, blank=True, verbose_name='Estado')
     tipo = models.CharField(max_length=10, blank=True, null=True)
-    codigo = models.CharField(blank=True, null=True, verbose_name=u'código', unique=True, max_length=30)
+    codigo = models.CharField(blank=True, null=True, verbose_name=u'código', max_length=30)
     num_ident= models.BigIntegerField(blank=True, null=True, verbose_name=u'número identificador')
 
     objects = MessageManager()
@@ -142,27 +122,6 @@ class Message(models.Model):
         return ('messages_detail', [self.id])
     get_absolute_url = models.permalink(get_absolute_url)
     
-    def save(self,*args,**kwargs):
-        if self.sent_at == None:
-            self.sent_at = datetime.datetime.now()
-
-        if self.num_ident == None:
-            fecha_actual = datetime.datetime.today()
-            mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=self.sender.usuarios.user.profile.persona.cargo_principal.dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
-            self.num_ident = mensajes.count() + 1
-
-        if self.codigo == None:
-            jefe = Destinatarios.objects.get(usuarios__user__userprofile__persona__cargo_principal__dependencia = self.sender.usuarios.user.profile.persona.cargo_principal.dependencia, usuarios__user__userprofile__persona__cargo_principal__cargo = self.sender.usuarios.user.profile.persona.cargo_principal.dependencia.cargo_max)
-
-            # El identificador se genera a partir del id del memo, del jefe de departamento y del minuto, segundo y microsegundo actual
-            identificador = '%s%s' %(self.id, jefe.id)
-
-            self.codigo = ''
-            for ident in identificador:
-                self.codigo = self.codigo + str(ord(ident))
-            self.codigo = self.codigo + str(datetime.datetime.today().microsecond)
-        super(Message,self).save(*args,**kwargs)
-    
     class Meta:
         ordering = ['-sent_at']
         verbose_name = _("Message")
@@ -177,6 +136,7 @@ def save_message(sender, **kwargs):
     if memo.status == None:
         estado = EstadoMemo.objects.get(nombre='En espera')
         memo.status=estado
+    memo.sent_at = datetime.datetime.now()
 
 def inbox_count_for(user):
     """

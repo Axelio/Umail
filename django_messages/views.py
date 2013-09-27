@@ -231,7 +231,9 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
                 message_list = Message.objects.filter(sender__in=destinatarios).order_by('codigo','con_copia').distinct('codigo')
 
         if tipo_bandeja == 'entrada': # ENTRADA
-            message_list = Message.objects.inbox_for(request.user).distinct() #Filtrando la bandeja
+            destinatario = Destinatarios.objects.get(usuarios__user=request.user)
+            message_list = Message.objects.filter(recipient=destinatario, read_at__isnull=True, deleted_at__isnull=True).distinct()
+            #message_list = Message.objects.inbox_for(request.user).distinct() #Filtrando la bandeja
         '''
         message_list = message_list.values_list('codigo').distinct()
         message_list = Message.objects.filter(id__in=message_list)
@@ -258,6 +260,8 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
         diccionario.update({'expresion':expresion})
         diccionario.update({'mensaje':mensaje})
         diccionario.update({'tipo_bandeja':tipo_bandeja})
+        diccionario.update({'nombre_action':'buscar_memos'})
+
         return render_to_response('usuario/mensajes/bandejas.html', diccionario, context_instance=RequestContext(request))
     else:
         return HttpResponseRedirect('/')
@@ -745,3 +749,6 @@ def destin_atarios_lookup(request):
                 print results
     json = simplejson.dumps(results)
     return HttpResponse(json, mimetype='application/json')
+
+def buscar_memos(request):
+    pass

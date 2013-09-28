@@ -58,6 +58,8 @@ def num_entrada(request):
     from django_messages.models import Message, Destinatarios
     destinatario = Destinatarios.objects.get(usuarios__user=request.user)
     message_list = Message.objects.filter(recipient=destinatario, read_at__isnull=True, deleted_at__isnull=True).distinct()
+    if not request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
+        message_list = message_list.filter(status__nombre__iexact='Aprobado')
     return message_list.count()
 num_entrada.is_safe = True 
 register.filter(num_entrada)

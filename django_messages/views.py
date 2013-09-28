@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+from django.views.generic.base import View
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -233,14 +234,32 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
         if tipo_bandeja == 'entrada': # ENTRADA
             destinatario = Destinatarios.objects.get(usuarios__user=request.user)
             message_list = Message.objects.filter(recipient=destinatario, read_at__isnull=True, deleted_at__isnull=True).distinct()
-            #message_list = Message.objects.inbox_for(request.user).distinct() #Filtrando la bandeja
-        '''
-        message_list = message_list.values_list('codigo').distinct()
-        message_list = Message.objects.filter(id__in=message_list)
-        '''
+            if not request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
+                message_list = message_list.filter(status__nombre__iexact='Aprobado')
+
+        if request.POST.has_key('filtro'):
+            filtro = request.POST['filtro']
+            message_list = message_list.filter(Q(subject__icontains=filtro)| 
+                                               Q(body__icontains=filtro)| 
+                                               Q(sender__usuarios__persona__primer_nombre__icontains=filtro)| 
+                                               Q(sender__usuarios__persona__primer_apellido__icontains=filtro)|
+                                               Q(sender__usuarios__persona__segundo_nombre__icontains=filtro)|
+                                               Q(sender__usuarios__persona__segundo_apellido__icontains=filtro)| 
+                                               Q(recipient__grupos__name__icontains=filtro)|
+                                               Q(recipient__usuarios__persona__primer_nombre__icontains=filtro)|
+                                               Q(recipient__usuarios__persona__primer_apellido__icontains=filtro)|
+                                               Q(recipient__usuarios__persona__segundo_nombre__icontains=filtro)| 
+                                               Q(recipient__usuarios__persona__segundo_apellido__icontains=filtro)| 
+                                               Q(status__nombre__iexact=filtro)| 
+                                               Q(codigo__iexact=filtro)|
+                                               Q(num_ident__iexact=filtro)
+                                )
 
         if not message_list.exists() and mensaje == '':
-            mensaje = u'No tiene ningún mensaje hasta ahora'
+            if request.POST.has_key('filtro'):
+                mensaje = u'No se consiguió ningún mensaje'
+            else:
+                mensaje = u'No tiene ningún mensaje hasta ahora'
             (tipo_mensaje, expresion) = msj_expresion('info')
         
         paginador = Paginator(message_list, settings.SUIT_CONFIG['LIST_PER_PAGE'])
@@ -750,5 +769,3 @@ def destin_atarios_lookup(request):
     json = simplejson.dumps(results)
     return HttpResponse(json, mimetype='application/json')
 
-def buscar_memos(request):
-    pass

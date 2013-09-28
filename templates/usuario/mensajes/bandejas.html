@@ -124,8 +124,9 @@
                 </div>
             </div>
             <div class="span1" style="margin-left:20px">
-                <form class="navbar-search pull-left" action='/{{ nombre_action }}'>
-                    <input type="text" class="search-query" placeholder="Buscar memo..">
+                <form class="navbar-search pull-left" action="/bandeja/{{ tipo_bandeja }}/" method="post">
+                    {% csrf_token %}
+                    <input type="text" class="search-query" name=filtro placeholder="Buscar memorándum">
                 </form>
                 
             </div>

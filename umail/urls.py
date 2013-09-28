@@ -33,8 +33,6 @@ urlpatterns = patterns('',
     url(r'^ayuda/$', 'manual_usuario.views.manual', name='manual_usuario'),
 
     # Memos
-    ## Búsqueda de memos
-    url(r'^buscar_memos/$', 'django_messages.views.buscar_memos', name='buscar_memos'),
 
     ## Bandejas
     url(r'^bandeja/(?P<tipo_bandeja>\w+)/$', 'django_messages.views.bandeja', name='bandeja'),

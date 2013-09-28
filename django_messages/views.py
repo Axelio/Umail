@@ -234,6 +234,9 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
         if tipo_bandeja == 'entrada': # ENTRADA
             destinatario = Destinatarios.objects.get(usuarios__user=request.user)
             message_list = Message.objects.filter(recipient=destinatario, read_at__isnull=True, deleted_at__isnull=True).distinct()
+            if not request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
+                message_list = message_list.filter(status__nombre__iexact='Aprobado')
+
         if request.POST.has_key('filtro'):
             filtro = request.POST['filtro']
             message_list = message_list.filter(Q(subject__icontains=filtro)| 

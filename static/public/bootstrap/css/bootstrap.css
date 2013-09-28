@@ -231,14 +231,14 @@ body {
 }
 
 a {
-  color: #0088cc;
+  color: #000000;
   text-decoration: none;
 }
 
 a:hover,
 a:focus {
-  color: #005580;
-  text-decoration: underline;
+  color: #000000;
+/*  text-decoration: underline;*/
 }
 
 .img-rounded {
@@ -2012,6 +2012,8 @@ table {
   text-align: left;
   vertical-align: top;
   border-top: 1px solid #dddddd;
+
+  
 }
 
 .table th {
@@ -5746,7 +5748,7 @@ a.badge:focus {
 
 .label-info,
 .badge-info {
-  background-color: #3a87ad;
+  background-color: #0088cc;
 }
 
 .label-info[href],

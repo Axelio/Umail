@@ -15,7 +15,7 @@
       }
   </script>
 
-<!-- MENSAJES-->
+<!-- ACCIONES -->
   <div>
         <div class="navbar-inner" style="min-height:40px">
             <div class="container">
@@ -42,31 +42,34 @@
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
                         <li><a tabindex="-1" href="{% url 'redactar' %}">Nuevo Memo</a></li>
                         <li><a tabindex="-1" href="{% url 'reportes' %}">Nuevo Reporte</a></li>
+                        <li><a tabindex="-1" href="#">Nueva Plantilla</a></li>
                     </ul>
                 </div>    
             </div>
             <div class="span6" style="margin:0px">    
                 <div class="btn-group tooltip-demo" style="padding-top: 8px">
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown"
+                            id="link-negro" 
+                            data-placement="bottom">
+                            <i class="icon-sort-by-attributes"></i>
+                        </a>
+                      <ul class="dropdown-menu">
+                        <li><a tabindex="-1" href="#">Leído</a></li>
+                        <li><a tabindex="-1" href="#">No leído</a></li>
+                        <li><a tabindex="-1" href="#">Aprobado</a></li>
+                        <li><a tabindex="-1" href="#">En espera</a></li>
+                        <li><a tabindex="-1" href="#">Anulado</a></li>
+                      </ul>
+                    </div>
                     <div class="btn-group" >
                         <button class="btn btn-group">
                             <a 
                                 id="link-negro" 
-                                href="{% url 'redactar' %}" 
+                                href="#" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
-                                data-original-title="Atrás">
-                                <i class="icon-chevron-left"></i>
-                            </a>
-                        </button>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn">
-                            <a 
-                                id="link-negro" 
-                                href="{% url 'redactar' %}" 
-                                data-toggle="tooltip" 
-                                data-placement="bottom" 
-                                data-original-title="Inicio">
+                                data-original-title="">
                                 <i class="icon-backward"></i>
                             </a>
                         </button>
@@ -75,11 +78,23 @@
                         <button class="btn">
                             <a 
                                 id="link-negro" 
-                                href="{% url 'redactar' %}" 
+                                href="#" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
-                                data-original-title="Final">
-                                <i class="icon-forward "></i>
+                                data-original-title="">
+                                <i class="icon-chevron-left"></i>
+                            </a>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn">
+                            <a 
+                                id="link-negro" 
+                                href="#" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                data-original-title="">
+                                <i class="icon-chevron-right"></i>
                             </a>
                         </button>
                     </div>
@@ -90,8 +105,8 @@
                                 href="{% url 'redactar' %}" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
-                                data-original-title="Adelante">
-                                <i class="icon-chevron-right"></i>
+                                data-original-title="">
+                                <i class="icon-forward"></i>
                             </a>
                         </button>
                     </div>
@@ -118,10 +133,10 @@
             </div>
         </div>
 </div>
-<!-- MENSAJES -->
-                    
+<!-- ACCIONES -->
 
-  <div>
+<!-- BUZÓN -->
+<div>
   <div class="container">
         <div class="container-narrow">
             <div class="row-fluid">
@@ -134,12 +149,18 @@
                     </ul>
                 </div>
                 </div>
-                  
+                <!-- BUZÓN -->
+
+                <div>
+                    
+                </div>
 
 
 
+
+
+                <!-- ENTRADA -->
                 <div class="span9 row-fluid" style="margin-left:0px"> 
-
                     {% csrf_token %}
                     <table class="table table-striped">
                         <form method="post" action="">
@@ -152,55 +173,52 @@
                                 <th>De</th>
                                 {% endifequal %}
                                 <th>Asunto</th>
-                                <th id="table-striped-degradado">Fecha</th>
+                                <th>Fecha</th>
                                 {% load inbox %}
                                 {% for form in message_list %}
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" class="chkSelectItem" name="seleccion" value="{{ form.id.value }}"/>
-                                        </td>
-                                        <td>
-                                            {{ form.id|icon_status }}
-                                        </td>
-                                        <td>
-                                            {% ifequal tipo_bandeja 'enviados' %}
-                                                <a href="/leer/{{ form.id }}">
-                                                    {{ 'recipient'|destin:form.id }}
-                                                </a>
-                                            {% else %}
+                                <tr>
+                                <td>
+                                    <input type="checkbox" class="chkSelectItem" name="seleccion" value="{{ form.id.value }}"/>
+                                </td>
+                                <td>
+                                    {{ form.id|icon_status }}
+                                </td>
+                                <td>
+                                    {% ifequal tipo_bandeja 'enviados' %}
+                                        <a href="/leer/{{ form.id }}">
+                                            {{ 'recipient'|destin:form.id }}
+                                        </a>
+                                    {% else %}
 
-                                                <a href="/leer/{{ form.id }}">
-                                                    {{ 'sender'|destin:form.id }}
-                                                </a>
-                                            {% endifequal %}
-                                        </td>
-                                        <td>
-                                            <a href="{% url 'messages_detail' form.id %}">
-                                                {{ form.subject }}
-                                            </a>
-                                        </td>
-                                        <td >
-                                            
-                                            {#<a id="table-striped-degradado"href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
+                                        <a href="/leer/{{ form.id }}">
+                                            {{ 'sender'|destin:form.id }}
+                                        </a>
+                                    {% endifequal %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'messages_detail' form.id %}">
+                                        {{ form.subject }}
+                                    </a>
+                                </td>
+                                <td >
 
-                                            <a href="{% url 'messages_detail' form.id %}" >
-                                                {{ form.sent_at|date:"D d M P" }}
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    {#<a id="table-striped-degradado"href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
+
+                                    <a href="{% url 'messages_detail' form.id %}" >
+                                        {{ form.sent_at|date:"D d M P" }}
+                                    </a>
+                                </td>
+                                </tr>
                                 {% endfor %}
                             </tbody>
                         </form>
                     </table>
+                </div>
+                <!-- ENTRADA -->
 
-
-
-            
-
-</div>
-</div>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 

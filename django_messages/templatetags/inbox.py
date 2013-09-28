@@ -82,10 +82,10 @@ def icon_status(id_message):
     from django_messages.models import Message
     memo = Message.objects.get(id=id_message)
     if memo.status.nombre == 'Aprobado':
-        icono = '<i class="icon-ok"></i>'
+        icono = '<i class="icon-ok" style="color:#2BC243"></i>'
     elif memo.status.nombre == 'Anulado':
-        icono = '<i class="icon-remove"></i>'
+        icono = '<i class="icon-remove" style="color:#EA4444"></i>'
     elif memo.status.nombre == 'En espera':
-        icono = '<i class="icon-time"></i>'
+        icono = '<i class="icon-time" style="color:#0088CC"></i>'
     return format_html(icono)
 register.filter(icon_status)

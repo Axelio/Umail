@@ -3,11 +3,12 @@
 <li class="nav-header bs-docs-sidenav">Buzón</li>
 <li {{ request|active:'entrada' }} id="li-ancho">
 	<a href="{% url 'bandeja' 'entrada' %}" id="link-negro">
-	<i class="icon-download-alt icon-large"></i>Recibidos
-        {% ifnotequal request|num_entrada 0 %}
-            <span class="label label-info pull-right">
-                    {{ request|num_entrada }}
-            </span>
+	<i class="icon-download-alt icon-large"></i>
+		Recibidos
+    	{% ifnotequal request|num_entrada 0 %}
+        <span class="label label-info pull-right" style="margin-top:6px">
+            {{ request|num_entrada }}
+        </span>
         {% endifnotequal %}
     </a>
 </li>

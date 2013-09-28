@@ -169,24 +169,41 @@
                                                     {{ 'recipient'|destin:form.id }}
                                                 </a>
                                             {% else %}
-
-                                                <a href="/leer/{{ form.id }}">
-                                                    {{ 'sender'|destin:form.id }}
-                                                </a>
+                                                {% if not form.read_at %}
+                                                    <b>
+                                                {% endif %}
+                                                    <a href="/leer/{{ form.id }}">
+                                                        {{ 'sender'|destin:form.id }}
+                                                    </a>
+                                                {% if not form.read_at %}
+                                                    </b>
+                                                {% endif %}
                                             {% endifequal %}
                                         </td>
                                         <td>
-                                            <a href="{% url 'messages_detail' form.id %}">
-                                                {{ form.subject }}
-                                            </a>
+                                            {% if not form.read_at %}
+                                                <b>
+                                            {% endif %}
+                                                <a href="{% url 'messages_detail' form.id %}">
+                                                    {{ form.subject }}
+                                                </a>
+                                            {% if not form.read_at %}
+                                                </b>
+                                            {% endif %}
                                         </td>
                                         <td >
                                             
                                             {#<a id="table-striped-degradado"href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
 
-                                            <a href="{% url 'messages_detail' form.id %}" >
-                                                {{ form.sent_at|date:"D d M P" }}
-                                            </a>
+                                            {% if not form.read_at %}
+                                                <b>
+                                            {% endif %}
+                                                <a href="{% url 'messages_detail' form.id %}" >
+                                                    {{ form.sent_at|date:"D d M P" }}
+                                                </a>
+                                            {% if not form.read_at %}
+                                                </b>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}

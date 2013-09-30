@@ -685,7 +685,7 @@ def undelete(request, success_url=None):
     raise Http404
 undelete = login_required(undelete, login_url='/auth')
 
-def view(request, message_id, template_name='user/mensajes/leer.html', mensaje=''):
+def view(request, message_id, template_name='usuario/mensajes/leer.html', mensaje=''):
     """
     Shows a single message.``message_id`` argument is required.
     The user is only allowed to see the message, if he is either 
@@ -699,25 +699,13 @@ def view(request, message_id, template_name='user/mensajes/leer.html', mensaje='
     message = get_object_or_404(Message, id=message_id)
     esta_destinatario = False
 
-    for destinatario in message.con_copia.get_query_set():
-        if destinatario.grupos == None:
-            if destinatario.usuarios.user == user:
-                esta_destinatario = True
-                continue
-        elif destinatario.usuarios == None:
-            if user in destinatario.grupos.user_set.get_query_set():
-                esta_destinatario = True
-                continue
-
-    for destinatario in message.recipient.get_query_set():
-        if destinatario.grupos == None:
-            if destinatario.usuarios.user == user:
-                esta_destinatario = True
-                continue
-        elif destinatario.usuarios == None:
-            if user in destinatario.grupos.user_set.get_query_set():
-                esta_destinatario = True
-                continue
+    destinatario = message.recipient
+    if destinatario.grupos == None:
+        if destinatario.usuarios.user == user:
+            esta_destinatario = True
+    elif destinatario.usuarios == None:
+        if user in destinatario.grupos.user_set.get_query_set():
+            esta_destinatario = True
 
     from django_messages.models import Destinatarios
     destin = Destinatarios.objects.get(usuarios__user=user)
@@ -731,10 +719,6 @@ def view(request, message_id, template_name='user/mensajes/leer.html', mensaje='
         if message.status.nombre == 'Aprobado':
             message.read_at = now
             
-            if message.sender != destin and not user == jefe.usuarios.user: 
-                message.leido_por.add(destin)
-            if message.sender in message.leido_por.get_query_set():
-                message.leido_por.remove(destin)
             mensaje=message
             mensaje.save()
             mensaje_txt = u"Mensaje nuevo leído."

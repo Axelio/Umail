@@ -274,7 +274,7 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
             #Periodo
             elementos.append(Spacer(1,-15))# Quitandole espacio al periodo para subirlo un poco mas
             #txtPeriodo = u'%s hasta %s'%(memos[0].sent_at, memos[memos.count()-1].sent_at)
-            txtPeriodo = u'Memorándum desde %s/%s/%s hasta %s/%s/%s'%(memos[0].sent_at.day, memos[0].sent_at.month, memos[0].sent_at.year, memos[memos.count()-1].sent_at.day, memos[memos.count()-1].sent_at.month, memos[memos.count()-1].sent_at.year)
+            txtPeriodo = u'Lista de memorándum desde %s/%s/%s hasta %s/%s/%s'%(memos[0].sent_at.day, memos[0].sent_at.month, memos[0].sent_at.year, memos[memos.count()-1].sent_at.day, memos[memos.count()-1].sent_at.month, memos[memos.count()-1].sent_at.year)
             periodo = Paragraph(txtPeriodo, styleF)
             elementos.append(periodo)
 
@@ -283,15 +283,7 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
             tabla.append(['NUM', 'REDACTADO', 'APROBADO POR', 'PARA', 'FECHA', 'ASUNTO']) # Encabezado de la Tabla.
             for memo in memos:
                 num += 1
-
-                dest= ''
-                if memo.recipient.get_query_set().count() == 1:
-                    dest = memo.recipient.get_query_set()[0]
-                else:
-                    for destin in memo.recipient.get_query_set()[:memo.recipient.get_query_set()-2]:
-                        dest+= str(destin) + ', '
-                    dest = dest + memo.recipient.get_query_set()[memo.recipient.get_query_set()-1]
-                tabla.append([num, memo.sender, jefe_dep(request), dest, u'%s/%s/%s' %(memo.sent_at.day, memo.sent_at.month, memo.sent_at.year), memo.subject])
+                tabla.append([num, memo.sender, jefe_dep(request), memo.recipient, u'%s/%s/%s' %(memo.sent_at.day, memo.sent_at.month, memo.sent_at.year), memo.subject])
 
                 t1 = Table(tabla, colWidths=('', '', '', '', '', ''))
                 t1.setStyle(TableStyle(x))
@@ -435,7 +427,7 @@ def Libro_Memos_PDF(request, memos):
                 elementos.append(saltoV)
 
             # Datos del encabezado
-            logo = Image(settings.STATIC_ROOT+'images/unerg.jpg', width = 100, height = 38)
+            logo = Image(settings.STATIC_ROOT+'images/institucion.jpg', width = 100, height = 38)
             logo.hAlign = 'LEFT'
             elementos.append(logo)
             elementos.append(Spacer(1,-25))
@@ -636,7 +628,7 @@ memo = login_required(memo)
 
 def encabezado_constancia(canvas, doc):
     canvas.saveState()
-    canvas.drawImage(settings.STATIC_ROOT+'images/unerg.jpg', 2.6*cm, PAGE_HEIGHT-4.5*cm, width = 100, height = 38)
+    canvas.drawImage(settings.STATIC_ROOT+'images/institucion.jpg', 2.6*cm, PAGE_HEIGHT-4.5*cm, width = 100, height = 38)
     canvas.setFont("Helvetica-Bold",10)
     canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-3.6*cm, u'REPÚBLICA BOLIVARIANA DE VENEZUELA')
     canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.0*cm, u'UNIVERSIDAD NACIONAL EXPERIMENTAL RÓMULO GALLEGOS')

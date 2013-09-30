@@ -3,12 +3,14 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext, loader
 from django.contrib.auth.decorators import login_required
+from umail import settings
 from django.db import transaction, models
 from django.core import serializers
 from reportlab.lib.colors import black
 from django.core.context_processors import csrf
 from lib import fecha
 import datetime
+from lib.umail import msj_expresion
 from umail import settings
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT 
 from reportlab.pdfgen import  canvas
@@ -41,7 +43,7 @@ def revisar_fechas(fecha_inicio, fecha_fin):
     return valido, mensaje
 
 
-def index(request, template_name='user/reportes/reportes.html', mensaje=''):
+def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
     jefe = jefe_dep(request)
     usuario = user_destin(request)
     dependencia = request.user.profile.persona.cargo_principal.dependencia
@@ -62,6 +64,7 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
     c.update({'mensaje':mensaje})
     c.update({'libro_memo':libro_memo})
     c.update({'consulta_memo':consulta_memo})
+    (tipo_mensaje, expresion) = msj_expresion('error')
     
 
     if request.method == 'POST':
@@ -78,9 +81,7 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
                     asunto = resultado_memo.subject
                     hora = resultado_memo.sent_at
                     sender = resultado_memo.sender
-                    destinos = ''
-                    for destin in resultado_memo.recipient.get_query_set():
-                        destinos = str(destin) + ', ' + destinos
+                    destinos = resultado_memo.recipient
                     c.update({'jefe':jefe})
                     c.update({'asunto':asunto})
                     c.update({'hora':hora})
@@ -100,6 +101,8 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
                 return render_to_response(template_name, c)
 
         else:
+            import pdb
+            #pdb.set_trace()
             mensaje = consulta_memo.errors['codigo']
 
         if libro_memo.is_valid():
@@ -152,7 +155,7 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
                 c.update({'mensaje':mensaje})
                 c.update({'libro_memo':libro_memo})
             else:
-                paginador = Paginator(memos, 3)
+                paginador = Paginator(memos, settings.SUIT_CONFIG['LIST_PER_PAGE'])
                 page = request.GET.get('page')
                 try:
                     memos = paginador.page(page)
@@ -169,7 +172,18 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
                     lista_mensajes = str(memo.id) + ',' + lista_mensajes
                 c.update({'lista_mensajes':lista_mensajes}) # pasamos la misma variable de memos pero para traernosla de vuelta en el hidden para sacar el PDF
             return render_to_response(template_name, c)
-        if request.POST['lista_mensajes']:
+        else:
+            if not request.POST.has_key('opcion') and not request.POST.has_key('codigo'):
+                mensaje = u'Debe elegir un tipo de libro de memos.'
+                return render_to_response(template_name, {
+                    'tipo_mensaje':tipo_mensaje,
+                    'mensaje':mensaje,
+                    'expresion':expresion,
+                    'request': request,
+                    'libro_memo':libro_memo,
+                    'consulta_memo':consulta_memo,
+                }, context_instance=RequestContext(request))
+        if request.POST.has_key('lista_mensajes'):
             memos = request.POST['lista_mensajes']
             opcion = request.POST['opcion']
             memos = memos.split(',')

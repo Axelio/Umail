@@ -28,16 +28,8 @@ class LibroMemoForm(forms.Form):
         self.fields['fecha_inicio'].widget = self.Meta.widgets['fecha_inicio']
         self.fields['fecha_fin'].widget = self.Meta.widgets['fecha_fin']
 
-class ConsultaMemoForm(forms.ModelForm):
-    class Meta:
-        model = Message
-        exclude = ('recipient','con_copia','subject','body','sender','parent_msg','sent_at','read_at','replied_at','sender_deleted_at','recipient_deleted_at','status','tipo','leido_por','num_ident')
-        widgets = {
-            'codigo': forms.TextInput(attrs={'class':'input', 'required':'required', 'value':'','placeholder':'código del memo'}),
-            }
-    def clean_codigo(self):
-        if not self.cleaned_data['codigo'] == None:
-            return self.cleaned_data
+class ConsultaMemoForm(forms.Form):
+    codigo = forms.IntegerField(required=False)
 
 class RespuestaForm(forms.ModelForm):
     class Meta:

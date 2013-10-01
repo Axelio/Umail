@@ -28,12 +28,9 @@ urlpatterns = patterns('',
     url(r'^preguntas_secretas/$', Revisar_preguntas.as_view(), name='preguntas_secretas'),
 
     # Manual de usuario 
-    url(r'^ayuda/(?P<seccion>\w+)/$', 'manual_usuario.views.manual', name='manual_usuario'),
-
-    url(r'^ayuda/$', 'manual_usuario.views.manual', name='manual_usuario'),
+    url(r'^ayuda/$', TemplateView.as_view(template_name="usuario/manual/manual.html"), name='manual'),
 
     # Memos
-
     ## Bandejas
     url(r'^bandeja/(?P<tipo_bandeja>\w+)/$', 'django_messages.views.bandeja', name='bandeja'),
 

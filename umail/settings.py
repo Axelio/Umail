@@ -42,7 +42,7 @@ DATABASES = {
         'NAME': 'db_umail',
         'USER': 'umail',                      # Not used with sqlite3.
         'PASSWORD': 'umail86245',                  # Not used with sqlite3.
-        'HOST': '192.168.1.6',                      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '192.168.1.4',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -176,7 +176,6 @@ INSTALLED_APPS = (
     'sedes',
     'noticias',
     'reportes',
-    'manual_usuario',
     'django_select2',
     'filer',
     'suit_redactor',

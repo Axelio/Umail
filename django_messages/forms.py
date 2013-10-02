@@ -49,11 +49,11 @@ class ComposeForm(forms.ModelForm):
 
     class Meta:
         model = Message
-        exclude = ('recipient', 'con_copia')
-        fields = ('archivo', 'body', 'subject')
+        exclude = ('recipient', 'con_copia', 'body')
+        fields = ('archivo', 'subject')
         widgets = {
-                  #'body': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
-                  'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum'}),
+                  'body': forms.Textarea(attrs={'id':'summernote'}),
+                  'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum', 'class':'input-xxlarge'}),
                   'body': RedactorWidget(editor_options={'lang': 'es'})
                   }
     def clean(self):

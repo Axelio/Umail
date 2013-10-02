@@ -1,0 +1,119 @@
+<!-- ACCIONES -->
+  <div>
+        <div class="navbar-inner" style="min-height:40px">
+            <div class="container">
+            <div class="row">
+            <div class="span3">
+                <div class="btn-group tooltip-demo" style="padding-top: 8px"> 
+                    <button class="btn ">
+                        <a 
+                            id="link-negro" 
+                            href="{% url 'redactar' %}" 
+                            data-toggle="tooltip" 
+                            data-placement="bottom" 
+                            data-original-title="Nuevo">
+                            <i class="icon-pencil"></i>
+                        </a>
+                    </button>
+                    <button class="btn dropdown-toggle tooltip-demo" data-toggle="dropdown">
+                        <a 
+                            id="link-negro" 
+                            data-placement="bottom">
+                            <i class="icon-caret-down"></i>
+                        </a>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
+                        <li><a tabindex="-1" href="{% url 'redactar' %}">Nuevo Memo</a></li>
+                        <li><a tabindex="-1" href="{% url 'reportes' %}">Nuevo Reporte</a></li>
+                    </ul>
+                </div>    
+            </div>
+            <div class="span6" style="margin:0px">    
+                <div class="btn-group tooltip-demo" style="padding-top: 8px">
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown"
+                            id="link-negro" 
+                            data-placement="bottom">
+                            <i class="icon-sort-by-attributes"></i>
+                        </a>
+                      <ul class="dropdown-menu">
+                        <li><a tabindex="-1" href="#">Leído</a></li>
+                        <li><a tabindex="-1" href="#">No leído</a></li>
+                        <li><a tabindex="-1" href="#">Aprobado</a></li>
+                        <li><a tabindex="-1" href="#">En espera</a></li>
+                        <li><a tabindex="-1" href="#">Anulado</a></li>
+                      </ul>
+                    </div>
+                    <div class="btn-group" >
+                        <button class="btn btn-group">
+                            <a 
+                                id="link-negro" 
+                                href="#" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                data-original-title="">
+                                <i class="icon-backward"></i>
+                            </a>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn">
+                            <a 
+                                id="link-negro" 
+                                href="#" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                data-original-title="">
+                                <i class="icon-chevron-left"></i>
+                            </a>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn">
+                            <a 
+                                id="link-negro" 
+                                href="#" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                data-original-title="">
+                                <i class="icon-chevron-right"></i>
+                            </a>
+                        </button>
+                    </div>
+                    <div class="btn-group ">
+                        <button class="btn">
+                            <a 
+                                id="link-negro" 
+                                href="{% url 'redactar' %}" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                data-original-title="">
+                                <i class="icon-forward"></i>
+                            </a>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn" type="submit" name="archivar">
+                            <a 
+                                id="link-negro" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                data-original-title="Archicar">
+                                <i class="icon-folder-open "></i>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="span1" style="margin-left:20px">
+                <form class="navbar-search pull-left" action="/bandeja/{{ tipo_bandeja }}/" method="post">
+                    {% csrf_token %}
+                    <input type="text" class="search-query" name=filtro placeholder="Buscar memorándum">
+                </form>
+                
+            </div>
+            </div>
+            </div>
+        </div>
+</div>
+<!-- ACCIONES -->

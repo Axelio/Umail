@@ -246,6 +246,8 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
                                                Q(sender__usuarios__persona__primer_apellido__icontains=filtro)|
                                                Q(sender__usuarios__persona__segundo_nombre__icontains=filtro)|
                                                Q(sender__usuarios__persona__segundo_apellido__icontains=filtro)| 
+                                               Q(recipient__usuarios__persona__cargo__dependencia__departamento__icontains=filtro)|
+                                               Q(sender__usuarios__persona__cargo__dependencia__departamento__icontains=filtro)|
                                                Q(recipient__grupos__name__icontains=filtro)|
                                                Q(recipient__usuarios__persona__primer_nombre__icontains=filtro)|
                                                Q(recipient__usuarios__persona__primer_apellido__icontains=filtro)|

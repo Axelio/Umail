@@ -120,7 +120,7 @@ register.filter(respuesta_comentario)
 
 def nombre_iniciales(dest):
     import re
-    re.findall(u'([A-Z])[A-Za-z]* *', u"%s %s %s %s"%(dest.usuarios.userprofile.persona.primer_nombre, dest.usuarios.userprofile.persona.segundo_nombre, dest.usuarios.userprofile.persona.primer_apellido, dest.usuarios.userprofile.persona.segundo_apellido ))
+    m = re.findall(u'([A-Z])[A-Za-z]* *', u"%s %s %s %s"%(dest.usuarios.persona.primer_nombre, dest.usuarios.persona.segundo_nombre, dest.usuarios.persona.primer_apellido, dest.usuarios.persona.segundo_apellido ))
     iniciales = "".join(m)
     return iniciales
 nombre_iniciales.is_safe = True 

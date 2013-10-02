@@ -10,3 +10,4 @@ reportlab
 psycopg2
 dj-database-url
 pil
+south

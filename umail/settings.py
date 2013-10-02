@@ -180,6 +180,7 @@ INSTALLED_APPS = (
     'django_select2',
     'filer',
     'suit_redactor',
+    'south',
 )
 #Configuraciones Django-suit
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP

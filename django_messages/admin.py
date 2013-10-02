@@ -199,5 +199,5 @@ admin.site.register(Message, MessageAdmin)
 class MensajeAdmin(admin.ModelAdmin):
     form = ComposeForm
 #admin.site.register(Message, MensajeAdmin)
-admin.site.register(EstadoMemo)
-admin.site.register(Destinatarios)
+#admin.site.register(EstadoMemo)
+#admin.site.register(Destinatarios)

@@ -3,12 +3,14 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext, loader
 from django.contrib.auth.decorators import login_required
+from umail import settings
 from django.db import transaction, models
 from django.core import serializers
 from reportlab.lib.colors import black
 from django.core.context_processors import csrf
 from lib import fecha
 import datetime
+from lib.umail import msj_expresion
 from umail import settings
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT 
 from reportlab.pdfgen import  canvas
@@ -41,7 +43,7 @@ def revisar_fechas(fecha_inicio, fecha_fin):
     return valido, mensaje
 
 
-def index(request, template_name='user/reportes/reportes.html', mensaje=''):
+def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
     jefe = jefe_dep(request)
     usuario = user_destin(request)
     dependencia = request.user.profile.persona.cargo_principal.dependencia
@@ -62,6 +64,7 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
     c.update({'mensaje':mensaje})
     c.update({'libro_memo':libro_memo})
     c.update({'consulta_memo':consulta_memo})
+    (tipo_mensaje, expresion) = msj_expresion('error')
     
 
     if request.method == 'POST':
@@ -78,9 +81,7 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
                     asunto = resultado_memo.subject
                     hora = resultado_memo.sent_at
                     sender = resultado_memo.sender
-                    destinos = ''
-                    for destin in resultado_memo.recipient.get_query_set():
-                        destinos = str(destin) + ', ' + destinos
+                    destinos = resultado_memo.recipient
                     c.update({'jefe':jefe})
                     c.update({'asunto':asunto})
                     c.update({'hora':hora})
@@ -100,6 +101,8 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
                 return render_to_response(template_name, c)
 
         else:
+            import pdb
+            #pdb.set_trace()
             mensaje = consulta_memo.errors['codigo']
 
         if libro_memo.is_valid():
@@ -152,7 +155,7 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
                 c.update({'mensaje':mensaje})
                 c.update({'libro_memo':libro_memo})
             else:
-                paginador = Paginator(memos, 3)
+                paginador = Paginator(memos, settings.SUIT_CONFIG['LIST_PER_PAGE'])
                 page = request.GET.get('page')
                 try:
                     memos = paginador.page(page)
@@ -169,7 +172,18 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
                     lista_mensajes = str(memo.id) + ',' + lista_mensajes
                 c.update({'lista_mensajes':lista_mensajes}) # pasamos la misma variable de memos pero para traernosla de vuelta en el hidden para sacar el PDF
             return render_to_response(template_name, c)
-        if request.POST['lista_mensajes']:
+        else:
+            if not request.POST.has_key('opcion') and not request.POST.has_key('codigo'):
+                mensaje = u'Debe elegir un tipo de libro de memos.'
+                return render_to_response(template_name, {
+                    'tipo_mensaje':tipo_mensaje,
+                    'mensaje':mensaje,
+                    'expresion':expresion,
+                    'request': request,
+                    'libro_memo':libro_memo,
+                    'consulta_memo':consulta_memo,
+                }, context_instance=RequestContext(request))
+        if request.POST.has_key('lista_mensajes'):
             memos = request.POST['lista_mensajes']
             opcion = request.POST['opcion']
             memos = memos.split(',')
@@ -260,7 +274,7 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
             #Periodo
             elementos.append(Spacer(1,-15))# Quitandole espacio al periodo para subirlo un poco mas
             #txtPeriodo = u'%s hasta %s'%(memos[0].sent_at, memos[memos.count()-1].sent_at)
-            txtPeriodo = u'Memorándum desde %s/%s/%s hasta %s/%s/%s'%(memos[0].sent_at.day, memos[0].sent_at.month, memos[0].sent_at.year, memos[memos.count()-1].sent_at.day, memos[memos.count()-1].sent_at.month, memos[memos.count()-1].sent_at.year)
+            txtPeriodo = u'Lista de memorándum desde %s/%s/%s hasta %s/%s/%s'%(memos[0].sent_at.day, memos[0].sent_at.month, memos[0].sent_at.year, memos[memos.count()-1].sent_at.day, memos[memos.count()-1].sent_at.month, memos[memos.count()-1].sent_at.year)
             periodo = Paragraph(txtPeriodo, styleF)
             elementos.append(periodo)
 
@@ -269,15 +283,7 @@ def index(request, template_name='user/reportes/reportes.html', mensaje=''):
             tabla.append(['NUM', 'REDACTADO', 'APROBADO POR', 'PARA', 'FECHA', 'ASUNTO']) # Encabezado de la Tabla.
             for memo in memos:
                 num += 1
-
-                dest= ''
-                if memo.recipient.get_query_set().count() == 1:
-                    dest = memo.recipient.get_query_set()[0]
-                else:
-                    for destin in memo.recipient.get_query_set()[:memo.recipient.get_query_set()-2]:
-                        dest+= str(destin) + ', '
-                    dest = dest + memo.recipient.get_query_set()[memo.recipient.get_query_set()-1]
-                tabla.append([num, memo.sender, jefe_dep(request), dest, u'%s/%s/%s' %(memo.sent_at.day, memo.sent_at.month, memo.sent_at.year), memo.subject])
+                tabla.append([num, memo.sender, jefe_dep(request), memo.recipient, u'%s/%s/%s' %(memo.sent_at.day, memo.sent_at.month, memo.sent_at.year), memo.subject])
 
                 t1 = Table(tabla, colWidths=('', '', '', '', '', ''))
                 t1.setStyle(TableStyle(x))
@@ -421,7 +427,7 @@ def Libro_Memos_PDF(request, memos):
                 elementos.append(saltoV)
 
             # Datos del encabezado
-            logo = Image(settings.STATIC_ROOT+'images/unerg.jpg', width = 100, height = 38)
+            logo = Image(settings.STATIC_ROOT+'images/institucion.jpg', width = 100, height = 38)
             logo.hAlign = 'LEFT'
             elementos.append(logo)
             elementos.append(Spacer(1,-25))
@@ -622,7 +628,7 @@ memo = login_required(memo)
 
 def encabezado_constancia(canvas, doc):
     canvas.saveState()
-    canvas.drawImage(settings.STATIC_ROOT+'images/unerg.jpg', 2.6*cm, PAGE_HEIGHT-4.5*cm, width = 100, height = 38)
+    canvas.drawImage(settings.STATIC_ROOT+'images/institucion.jpg', 2.6*cm, PAGE_HEIGHT-4.5*cm, width = 100, height = 38)
     canvas.setFont("Helvetica-Bold",10)
     canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-3.6*cm, u'REPÚBLICA BOLIVARIANA DE VENEZUELA')
     canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.0*cm, u'UNIVERSIDAD NACIONAL EXPERIMENTAL RÓMULO GALLEGOS')

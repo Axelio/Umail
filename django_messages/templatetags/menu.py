@@ -117,3 +117,11 @@ def respuesta_comentario(comentario):
     return Respuestas.objects.get(pregunta=comentario).id
 respuesta_comentario.is_safe = True 
 register.filter(respuesta_comentario)
+
+def nombre_iniciales(dest):
+    import re
+    re.findall(u'([A-Z])[A-Za-z]* *', u"%s %s %s %s"%(dest.usuarios.userprofile.persona.primer_nombre, dest.usuarios.userprofile.persona.segundo_nombre, dest.usuarios.userprofile.persona.primer_apellido, dest.usuarios.userprofile.persona.segundo_apellido ))
+    iniciales = "".join(m)
+    return iniciales
+nombre_iniciales.is_safe = True 
+register.filter(nombre_iniciales)

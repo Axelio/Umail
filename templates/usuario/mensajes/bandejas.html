@@ -19,7 +19,6 @@
   {% include "usuario/mensajes/acciones.html" %}
 <!-- ACCIONES -->
 
-
 <div>
   <div class="container">
         <div class="container-narrow">
@@ -53,39 +52,56 @@
                                 <th>Fecha</th>
                                 {% load inbox %}
                                 {% for form in message_list %}
-                                <tr>
-                                <td>
-                                    <input type="checkbox" class="chkSelectItem" name="seleccion" value="{{ form.id.value }}"/>
-                                </td>
-                                <td>
-                                    {{ form.id|icon_status }}
-                                </td>
-                                <td>
-                                    {% ifequal tipo_bandeja 'enviados' %}
-                                        <a href="/leer/{{ form.id }}">
-                                            {{ 'recipient'|destin:form.id }}
-                                        </a>
-                                    {% else %}
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="chkSelectItem" name="seleccion" value="{{ form.id.value }}"/>
+                                        </td>
+                                        <td>
+                                            {{ form.id|icon_status }}
+                                        </td>
+                                        <td>
+                                            {% ifequal tipo_bandeja 'enviados' %}
+                                                <a href="/leer/{{ form.id }}">
+                                                    {{ 'recipient'|destin:form.id }}
+                                                </a>
+                                            {% else %}
+                                                {% if not form.read_at %}
+                                                    <b>
+                                                {% endif %}
+                                                    <a href="/leer/{{ form.id }}">
+                                                        {{ 'sender'|destin:form.id }}
+                                                    </a>
+                                                {% if not form.read_at %}
+                                                    </b>
+                                                {% endif %}
+                                            {% endifequal %}
+                                        </td>
+                                        <td>
+                                            {% if not form.read_at %}
+                                                <b>
+                                            {% endif %}
+                                                <a href="{% url 'messages_detail' form.id %}">
+                                                    {{ form.subject }}
+                                                </a>
+                                            {% if not form.read_at %}
+                                                </b>
+                                            {% endif %}
+                                        </td>
+                                        <td >
+                                            
+                                            {#<a id="table-striped-degradado"href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
 
-                                        <a href="/leer/{{ form.id }}">
-                                            {{ 'sender'|destin:form.id }}
-                                        </a>
-                                    {% endifequal %}
-                                </td>
-                                <td>
-                                    <a href="{% url 'messages_detail' form.id %}">
-                                        {{ form.subject }}
-                                    </a>
-                                </td>
-                                <td >
-
-                                    {#<a id="table-striped-degradado"href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
-
-                                    <a href="{% url 'messages_detail' form.id %}" >
-                                        {{ form.sent_at|date:"D d M P" }}
-                                    </a>
-                                </td>
-                                </tr>
+                                            {% if not form.read_at %}
+                                                <b>
+                                            {% endif %}
+                                                <a href="{% url 'messages_detail' form.id %}" >
+                                                    {{ form.sent_at|date:"D d M P" }}
+                                                </a>
+                                            {% if not form.read_at %}
+                                                </b>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
                                 {% endfor %}
                             </tbody>
                         </form>

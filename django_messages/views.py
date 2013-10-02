@@ -227,18 +227,19 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
 
             # Si es el jefe maximo, deben aparecer todos los memos de esa dependencia
             if request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
-                message_list = Message.objects.filter(sender__usuarios__persona__cargo_principal__dependencia=request.user.profile.persona.cargo_principal.dependencia, status__nombre__iexact='Aprobado').distinct('codigo')
+                message_list = Message.objects.filter(sender__usuarios__persona__cargo_principal__dependencia=request.user.profile.persona.cargo_principal.dependencia, status__nombre__iexact='Aprobado')
             else:
-                message_list = Message.objects.filter(sender__in=destinatarios).order_by('codigo','con_copia').distinct('codigo')
+                message_list = Message.objects.filter(sender__in=destinatarios)
 
+        destinatario = Destinatarios.objects.get(usuarios__user=request.user)
         if tipo_bandeja == 'entrada': # ENTRADA
-            destinatario = Destinatarios.objects.get(usuarios__user=request.user)
-            message_list = Message.objects.filter(recipient=destinatario, read_at__isnull=True, deleted_at__isnull=True).distinct()
+            message_list = Message.objects.filter(recipient=destinatario, deleted_at__isnull=True).distinct()
             if not request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
                 message_list = message_list.filter(status__nombre__iexact='Aprobado')
 
         if request.POST.has_key('filtro'):
             filtro = request.POST['filtro']
+            message_list = Message.objects.filter(deleted_at__isnull=True).distinct()
             message_list = message_list.filter(Q(subject__icontains=filtro)| 
                                                Q(body__icontains=filtro)| 
                                                Q(sender__usuarios__persona__primer_nombre__icontains=filtro)| 
@@ -255,6 +256,7 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
                                                Q(num_ident__iexact=filtro)
                                 )
 
+        message_list = message_list.order_by('codigo','con_copia').distinct('codigo')
         if not message_list.exists() and mensaje == '':
             if request.POST.has_key('filtro'):
                 mensaje = u'No se consiguió ningún mensaje'
@@ -683,7 +685,7 @@ def undelete(request, success_url=None):
     raise Http404
 undelete = login_required(undelete, login_url='/auth')
 
-def view(request, message_id, template_name='user/mensajes/leer.html', mensaje=''):
+def view(request, message_id, template_name='usuario/mensajes/leer.html', mensaje=''):
     """
     Shows a single message.``message_id`` argument is required.
     The user is only allowed to see the message, if he is either 
@@ -697,25 +699,13 @@ def view(request, message_id, template_name='user/mensajes/leer.html', mensaje='
     message = get_object_or_404(Message, id=message_id)
     esta_destinatario = False
 
-    for destinatario in message.con_copia.get_query_set():
-        if destinatario.grupos == None:
-            if destinatario.usuarios.user == user:
-                esta_destinatario = True
-                continue
-        elif destinatario.usuarios == None:
-            if user in destinatario.grupos.user_set.get_query_set():
-                esta_destinatario = True
-                continue
-
-    for destinatario in message.recipient.get_query_set():
-        if destinatario.grupos == None:
-            if destinatario.usuarios.user == user:
-                esta_destinatario = True
-                continue
-        elif destinatario.usuarios == None:
-            if user in destinatario.grupos.user_set.get_query_set():
-                esta_destinatario = True
-                continue
+    destinatario = message.recipient
+    if destinatario.grupos == None:
+        if destinatario.usuarios.user == user:
+            esta_destinatario = True
+    elif destinatario.usuarios == None:
+        if user in destinatario.grupos.user_set.get_query_set():
+            esta_destinatario = True
 
     from django_messages.models import Destinatarios
     destin = Destinatarios.objects.get(usuarios__user=user)
@@ -729,10 +719,6 @@ def view(request, message_id, template_name='user/mensajes/leer.html', mensaje='
         if message.status.nombre == 'Aprobado':
             message.read_at = now
             
-            if message.sender != destin and not user == jefe.usuarios.user: 
-                message.leido_por.add(destin)
-            if message.sender in message.leido_por.get_query_set():
-                message.leido_por.remove(destin)
             mensaje=message
             mensaje.save()
             mensaje_txt = u"Mensaje nuevo leído."

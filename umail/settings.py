@@ -178,7 +178,6 @@ INSTALLED_APPS = (
     'reportes',
     'manual_usuario',
     'django_select2',
-    'filer',
     'suit_redactor',
     'south',
 )

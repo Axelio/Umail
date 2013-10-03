@@ -74,11 +74,11 @@ class Message(models.Model):
     """
     A private message from user to multiple users
     """
-    recipient = models.ForeignKey('Destinatarios', related_name='received_messages', verbose_name=_("Destinatario"))
+    recipient = models.ForeignKey('Destinatarios', related_name='received_messages', verbose_name=_("Destinatario"), null=True, blank=True)
     con_copia = models.BooleanField()
-    subject = models.CharField(_("Subject"), max_length=255)
+    subject = models.CharField(_("Subject"), max_length=255, null=True, blank=True)
     archivo = models.FileField(upload_to='media/adjuntos/',null=True, blank=True)
-    body = models.TextField(verbose_name="Texto")
+    body = models.TextField(verbose_name="Texto", null=True)
     sender = models.ForeignKey('Destinatarios', related_name='sent_messages', verbose_name=_("Sender"))
     parent_msg = models.ForeignKey('self', related_name='next_messages', null=True, blank=True, verbose_name=_("Parent message"))
     sent_at = models.DateTimeField(_("sent at"), null=True, blank=True)
@@ -89,6 +89,7 @@ class Message(models.Model):
     tipo = models.CharField(max_length=10, blank=True, null=True)
     codigo = models.CharField(blank=True, null=True, verbose_name=u'código', max_length=30)
     num_ident= models.BigIntegerField(blank=True, null=True, verbose_name=u'número identificador')
+    borrador = models.BooleanField()
 
     objects = MessageManager()
 

@@ -41,9 +41,9 @@
                     <!-- BUZÓN -->
 
                     <!-- REDACTAR -->
-                    {% csrf_token %}
                     <div class="span9 row-fluid">
                         <form action="" method="post">
+                        {% csrf_token %}
                             <table style="margin-top:5px">
                                 <tbody>               
                                     <tr>
@@ -55,7 +55,7 @@
                                       <td>{{ form.con_copia }}</td>
                                     </tr>
                                     <tr>                    
-                                      <td>Asunto:</td>
+                                      <th>Asunto:</th>
                                       <td>{{ form.subject }}</td>
                                     </tr>
                                     <tr>                    
@@ -70,22 +70,19 @@
 
                             <textarea id="summernote" name="body">{{ cuerpo }}</textarea> 
 
-                            
                             <button 
                                 class="btn btn-primary pull-right" 
                                 style="margin: 10px 0px 0px 10px" 
                                 type="submit"
-                                value="Enviar">
+                                name="enviar">
                                 Enviar
                             </button>
-                            
-
                             
                             <button 
                                 class="btn pull-right" 
                                 style="margin: 10px 0px 0px 10px" 
                                 type="submit"
-                                value="Enviar">
+                                name="previsualizar">
                                 Previsualizar
                             </button>
 
@@ -93,7 +90,7 @@
                                 class="btn pull-right" 
                                 style="margin: 10px 0px 0px 10px" 
                                 type="submit"
-                                value="Enviar">
+                                name="borrador">
                                 Guardar como borrador
                             </button>
                          
@@ -102,7 +99,7 @@
                                 class="btn pull-right" 
                                 style="margin-top:10px" 
                                 type="submit"
-                                value="Enviar">
+                                name="plantilla">
                                 Guardar como plantilla
                             </button>
                         </form>

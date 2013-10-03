@@ -388,6 +388,11 @@ def compose(request, recipient=None,
                 codigo = codigo + str(ord(ident))
             codigo = codigo + str(datetime.datetime.today().microsecond)
 
+            # Revisar si se envió el formulario como borrador
+            borrador = False
+            if request.POST.has_key('borrador'):
+                borrador = True
+
             # Por cada destinatario, enviar el memo, generar un log y enviar correo si está en la opción de envío
             for destino in destinatarios:
 
@@ -398,6 +403,7 @@ def compose(request, recipient=None,
                             cuerpo=request.POST['body'], 
                             num_ident=num_ident,
                             codigo=codigo,
+                            borrador=borrador,
                             )
 
 
@@ -411,6 +417,7 @@ def compose(request, recipient=None,
                             cc=True,
                             num_ident=num_ident,
                             codigo=codigo,
+                            borrador=borrador,
                             )
 
             mensaje = u'Mensaje enviado exitosamente'
@@ -436,7 +443,9 @@ def compose(request, recipient=None,
 
             if form.errors.has_key('__all__'):
                 mensaje = form.errors['__all__'].as_text().split('* ')[1]
+            cuerpo = request.POST['body']
 
+        if form.errors or not valido or request.POST.has_key('borrador'):
             return render_to_response(template_name, {
                 'cuerpo': cuerpo,
                 'tipo': 'Redactar',
@@ -470,6 +479,7 @@ def crear_mensaje(destino='',
                   cuerpo='', 
                   num_ident='', 
                   codigo='', 
+                  borrador=False,
                   log=True):
     '''
     Función para crear mensajes. Recibe parámetros:
@@ -492,7 +502,8 @@ def crear_mensaje(destino='',
                     tipo = '',
                     status = estado_memo,
                     num_ident = num_ident,
-                    codigo=codigo
+                    codigo=codigo,
+                    borrador=borrador,
                 )
 
     mensaje_txt = u'Mensaje enviado exitosamente'

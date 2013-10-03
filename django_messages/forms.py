@@ -27,7 +27,7 @@ class BandejaForm(forms.Form):
 class ComposeForm(forms.ModelForm):
     recipient = ModelSelect2MultipleField(
                                         queryset=Destinatarios.objects, 
-                                        required=True, 
+                                        required=False, 
                                         label='Destinatario', 
                                         search_fields = ('usuarios__persona__primer_nombre__icontains', #primer nombre
                                                         'usuarios__persona__primer_apellido__icontains', #primer apellido
@@ -54,12 +54,26 @@ class ComposeForm(forms.ModelForm):
         widgets = {
                   'body': forms.Textarea(attrs={'id':'summernote'}),
                   'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum', 'class':'input-xxlarge'}),
-                  'body': RedactorWidget(editor_options={'lang': 'es'})
                   }
     def clean(self):
-        for con_copia in self.cleaned_data['con_copia']:
-            if self.cleaned_data['recipient'].__contains__(con_copia):
-                raise forms.ValidationError('%s está "con copia" y se encuentra entre los destinatarios. Debe estar sólo en uno de ambos campos.' %(con_copia))
+        # Si hizo click en enviar, debe validar todos los campos
+        if self.data.has_key('enviar'):
+            # Validar destinatario obligatorio
+            if not self.data.has_key('recipient'):
+                raise forms.ValidationError(u'No seleccionó ningún destinatario. Por favor, indique para quién es el memorándum.')
+
+            # Validar asunto obligatorio
+            if self.cleaned_data['subject'] == '':
+                raise forms.ValidationError(u'No introdujo ningún asunto. Por favor ingrese el resumen del contenido del memorándum.')
+
+            # Validar cuerpo obligatorio
+            if not self.data.has_key('cuerpo'):
+                raise forms.ValidationError(u'No introdujo ningún mensaje. Por favor ingrese el contenido del memorándum.')
+
+            for con_copia in self.cleaned_data['con_copia']:
+                if self.cleaned_data['recipient'].__contains__(con_copia):
+                    raise forms.ValidationError(u'%s está "con copia" y se encuentra entre los destinatarios. Debe estar sólo en uno de ambos campos.' %(con_copia))
+
         return self.cleaned_data
 
 

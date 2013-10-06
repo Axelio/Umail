@@ -54,7 +54,9 @@ urlpatterns = patterns('',
     url(r'^anular/(?P<message_id>[\d]+)/$', 'django_messages.views.anular', name='anular'),
 
     ## Redactar memo
+    url(r'^redactar/(?P<message_id>[\d]+)/$$', 'django_messages.views.compose', name='redactar'),
     url(r'^redactar/$', 'django_messages.views.compose', name='redactar'),
+
     ## Responder memo
     url(r'^responder/(?P<message_id>[\d]+)/$', 'django_messages.views.reply', name='messages_reply'),
     ## Archivar memo

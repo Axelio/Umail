@@ -49,8 +49,8 @@ class ComposeForm(forms.ModelForm):
 
     class Meta:
         model = Message
-        exclude = ('recipient', 'con_copia', 'body')
-        fields = ('archivo', 'subject')
+        exclude = ('recipient', 'con_copia')
+        fields = ('archivo', 'subject', 'body')
         widgets = {
                   'body': forms.Textarea(attrs={'id':'summernote'}),
                   'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum', 'class':'input-xxlarge'}),

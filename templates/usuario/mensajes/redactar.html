@@ -63,12 +63,15 @@
                                       <td>{{ form.subject }}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><hr></td>
+                                        <td colspan="2">
+                                            {{ form.body }}
+                                        </td>
+                                    </tr>
+                                    <tr>                    
+                                      <td colspan=2></td>
                                     </tr>
                                 </tbody>
                             </table>
-
-                            <textarea id="summernote" name="body">{{ cuerpo }}</textarea> 
 
                             <button 
                                 class="btn btn-primary pull-right" 
@@ -218,7 +221,6 @@
                                         <b>{{ form.body.label }}: </b>
                                     </td>
                                     <td width=100% colspan="4">
-                                        {{ form.body }}
                                     </td>
                                 </tr>
                             </body>

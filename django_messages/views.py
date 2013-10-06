@@ -344,7 +344,7 @@ def trash(request, template_name='user/mensajes/bandeja.html', mensaje=''):
     }, context_instance=RequestContext(request))
 trash = login_required(trash, login_url='/auth')
 
-def compose(request, recipient=None,
+def compose(request, message_id=None,
         template_name='usuario/mensajes/redactar.html', success_url=None, recipient_filter=None):
     """
     Displays and handles the ``form_class`` form to compose new messages.
@@ -372,45 +372,150 @@ def compose(request, recipient=None,
             jefe = jefe[0]
 
         if valido:
-            destinatarios = form.cleaned_data['recipient']
-            con_copia = form.cleaned_data['con_copia']
+            if request.POST.has_key('recipient'):
+                destinatarios = request.POST['recipient']
+            else:
+                destinatarios = None
+
+            if request.POST.has_key('con_copia'):
+                con_copia = form.cleaned_data['con_copia']
+            else:
+                con_copia = None
+
+            if request.POST.has_key('archivo'):
+                archivo = request.POST['archivo']
+            else:
+                archivo = None
+
             sender = Destinatarios.objects.get(usuarios__user=request.user)
-
-            fecha_actual = datetime.datetime.today()
-            mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=sender.usuarios.user.profile.persona.cargo_principal.dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
-            num_ident = mensajes.count() + 1
-
-            # El identificador se genera a partir del id del memo, del jefe de departamento y del minuto, segundo y microsegundo actual
-            identificador = '%s%s' %(Message.objects.all().count(), jefe.id)
-
-            codigo = ''
-            for ident in identificador:
-                codigo = codigo + str(ord(ident))
-            codigo = codigo + str(datetime.datetime.today().microsecond)
 
             # Revisar si se envió el formulario como borrador
             borrador = False
+            enviar = False
+            plantilla = False
             if request.POST.has_key('borrador'):
                 borrador = True
+            if request.POST.has_key('enviar'):
+                enviar = True
+            if request.POST.has_key('plantilla'):
+                plantilla = True
+
+            if enviar:
+                if destinatarios and not destinatarios.__contains__(jefe):
+                    destinatarios = jefe
+                mensaje = u'Mensaje enviado exitosamente'
+            elif borrador:
+                mensaje = u'Borrador guardado exitosamente'
+
+            elif plantilla:
+                print "Aún no programado"
+                mensaje = u'Plantilla guardada exitosamente'
 
             # Por cada destinatario, enviar el memo, generar un log y enviar correo si está en la opción de envío
-            for destino in destinatarios:
+            if message_id:
+                import pdb
+                pdb.set_trace()
+                msjs_guardados = Message.objects.get(id=message_id)
+                body = request.POST['body']
+                subject = request.POST['subject']
+                num_ident = msjs_guardados.num_ident
+                codigo = msjs_guardados.codigo
 
-                crear_mensaje(
-                            destino=destino, 
-                            envio=sender, 
-                            asunto=request.POST['subject'], 
-                            cuerpo=request.POST['body'], 
-                            num_ident=num_ident,
-                            codigo=codigo,
-                            borrador=borrador,
-                            )
+                # Enlazar los destinatarios con los con_copia
+                destinos = []
+                if destinatarios and con_copia:
+                    for dest, dest_cc in zip(destinatarios, con_copia):
+                        destinos.append(dest)
+                        destinos.append(dest_cc)
+
+                elif destinatarios and not con_copia:
+                    for dest in destinatarios:
+                        destinos.append(dest)
+
+                elif not destinatarios and con_copia:
+                    for dest in con_copia:
+                        destinos.append(dest)
+
+                msjs_guardados = Message.objects.filter(codigo=msjs_guardados.codigo)
+
+                for dest in destinos:
+                    # Si con ese codigo, están los mismos destinatarios, entonces se guarda la información
+                    dest = Destinatarios.objects.get(id=dest)
+                    if msjs_guardados.filter(recipient=dest).exists():
+                        msj = msjs_guardados[0]
+                        msj.recipient = dest
+                        msj.body = body
+                        msj.subject = subject
+                        msj.archivo = archivo
+                        msj.borrador = borrador
+
+                        # Si el destinatario no está en el campo 'recipient', entonces está en 'con_copia'
+                        if Destinatarios.objects.filter(recipient__id=dest).exists():
+                            msj.con_copia = True
+                        else:
+                            msj.con_copia = False
+
+                        msj.save()
+
+                    # Si no existe, se crea
+                    else:
+                        message = crear_mensaje(
+                                    destino=dest, 
+                                    envio=sender, 
+                                    asunto=subject, 
+                                    cuerpo=body, 
+                                    num_ident=msjs_guardados[0].num_ident,
+                                    codigo=msjs_guardados[0].codigo,
+                                    borrador=borrador,
+                                    archivo = archivo,
+                                    )
+
+                # Eliminar memos cuyos destinatarios hayan sido excluidos
+                msjs_guardados = msjs_guardados.exclude(recipient__in=destinos)
+                if msjs_guardados.exists():
+                    msjs_guardados.delete()
+
+            else:
+                fecha_actual = datetime.datetime.today()
+                mensajes = Message.objects.filter(sender__usuarios__user__userprofile__persona__cargo_principal__dependencia=sender.usuarios.user.profile.persona.cargo_principal.dependencia, sent_at__year=fecha_actual.year, sent_at__month=fecha_actual.month)
+                num_ident = mensajes.count() + 1
+
+                # El identificador se genera a partir del id del memo, del jefe de departamento y del minuto, segundo y microsegundo actual
+                identificador = '%s%s' %(Message.objects.all().count(), jefe.id)
+
+                codigo = ''
+                for ident in identificador:
+                    codigo = codigo + str(ord(ident))
+                codigo = codigo + str(datetime.datetime.today().microsecond)
+
+                if destinatarios:
+                    for destino in destinatarios:
+                        message = crear_mensaje(
+                                    destino=destino, 
+                                    envio=sender, 
+                                    asunto=request.POST['subject'], 
+                                    cuerpo=request.POST['body'], 
+                                    num_ident=num_ident,
+                                    codigo=codigo,
+                                    borrador=borrador,
+                                    archivo=archivo,
+                                    )
+                else:
+                    message = crear_mensaje(
+                                destino=destinatarios, 
+                                envio=sender, 
+                                asunto=request.POST['subject'], 
+                                cuerpo=request.POST['body'], 
+                                num_ident=num_ident,
+                                codigo=codigo,
+                                borrador=borrador,
+                                archivo=archivo,
+                                )
 
 
-            # Crear el mensaje al jefe de la dependencia si no esta entre los destinatarios originales
-            if not destinatarios.__contains__(jefe):
-                crear_mensaje(
-                            destino=jefe, 
+            if borrador or not destinatarios.__contains__(jefe):
+                message = crear_mensaje(
+                            destino=destinatarios, 
                             envio=sender, 
                             asunto=request.POST['subject'], 
                             cuerpo=request.POST['body'], 
@@ -418,9 +523,9 @@ def compose(request, recipient=None,
                             num_ident=num_ident,
                             codigo=codigo,
                             borrador=borrador,
+                            archivo=archivo,
                             )
-
-            mensaje = u'Mensaje enviado exitosamente'
+        
             (tipo_mensaje, expresion) = msj_expresion('success')
 
             if success_url is None:
@@ -428,6 +533,7 @@ def compose(request, recipient=None,
             if request.GET.has_key('next'):
                 success_url = request.GET['next']
 
+        form.body = request.POST['body']
         if form.errors or not valido:
             (tipo_mensaje, expresion) = msj_expresion('error')
             label = ""
@@ -443,11 +549,14 @@ def compose(request, recipient=None,
 
             if form.errors.has_key('__all__'):
                 mensaje = form.errors['__all__'].as_text().split('* ')[1]
-            cuerpo = request.POST['body']
 
-        if form.errors or not valido or request.POST.has_key('borrador'):
+        if request.POST.has_key('borrador'):
+            return HttpResponseRedirect('/redactar/%s/' %(message.id))
+
+
+        if form.errors or not valido:
+
             return render_to_response(template_name, {
-                'cuerpo': cuerpo,
                 'tipo': 'Redactar',
                 'tipo_mensaje':tipo_mensaje,
                 'mensaje':mensaje,
@@ -459,12 +568,31 @@ def compose(request, recipient=None,
         return bandeja(request, tipo_bandeja='enviados', expresion=expresion, tipo_mensaje=tipo_mensaje, mensaje=mensaje)
     else:
         form = ComposeForm()
-        cuerpo = u"\n\nCordialmente, \n%s. %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
-        if recipient is not None:
-            recipients = [u for u in User.objects.filter(username__in=[r.strip() for r in recipient.split('+')])]
-            form.fields['recipient'].initial = recipients
+        if message_id:
+            message = Message.objects.get(id=message_id)
+            messages = Message.objects.filter(codigo=message.codigo)
+            messages_cc = messages.filter(con_copia=True)
+            messages = messages.filter(con_copia=False)
+            dest_cc = []
+            dest = []
+            if messages_cc.exists():
+                for msj in messages_cc:
+                    dest_cc.append(msj.recipient)
+
+            if messages.exists():
+                for msj in messages:
+                    dest.append(msj.recipient)
+
+            form.fields['recipient'].initial = dest
+            form.fields['body'].initial = message.body
+            form.fields['body'].initial = message.body
+            form.fields['con_copia'].initial = dest_cc
+            form.fields['subject'].initial = message.subject
+            form.fields['archivo'].initial = message.archivo
+                
+        else:
+            form.fields['body'].initial = u"Cordialmente, %s. %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
     return render_to_response(template_name, {
-        'cuerpo': cuerpo,
         'tipo': 'Redactar',
         'form_errors':form_errors,
         'request': request,
@@ -474,6 +602,7 @@ compose = login_required(compose, login_url='/auth')
 
 def crear_mensaje(destino='', 
                   envio='', 
+                  archivo=None,
                   cc=False, 
                   asunto='', 
                   cuerpo='', 
@@ -493,6 +622,7 @@ def crear_mensaje(destino='',
     '''
     # Crear el mensaje a todas las personas en estado 'En espera'
     estado_memo = EstadoMemo.objects.get(nombre='En espera')
+
     mensaje = Message.objects.create(
                     recipient = destino,
                     sender = envio,
@@ -504,7 +634,9 @@ def crear_mensaje(destino='',
                     num_ident = num_ident,
                     codigo=codigo,
                     borrador=borrador,
+                    archivo=archivo,
                 )
+    return mensaje
 
     mensaje_txt = u'Mensaje enviado exitosamente'
     # Guardar log de envío de memo

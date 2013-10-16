@@ -500,7 +500,7 @@ def compose(request, message_id=None,
                                     borrador=borrador,
                                     archivo=archivo,
                                     )
-                if con_copia:
+                elif con_copia:
                     for destino_cc in con_copia:
                         message = crear_mensaje(
                                     destino=destino_cc, 
@@ -513,6 +513,18 @@ def compose(request, message_id=None,
                                     borrador=borrador,
                                     archivo=archivo,
                                     )
+                else:
+                    message = crear_mensaje(
+                                destino=None, 
+                                envio=sender, 
+                                asunto=request.POST['subject'], 
+                                cuerpo=request.POST['body'], 
+                                cc=False,
+                                num_ident=num_ident,
+                                codigo=codigo,
+                                borrador=borrador,
+                                archivo=archivo,
+                                )
             if enviar and not destinatarios.__contains__(jefe):
                 destino = jefe,
                 message = crear_mensaje(

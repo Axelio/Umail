@@ -7,11 +7,12 @@
         $('#summernote').summernote({
           height: 300,
           focus: true 
-});
-
-
-
         });
+    });
+    setInterval(function() {
+          // Do something every 5 seconds
+        document.getElementById('borrador').click();
+    }, 300000);
 </script>
 
 
@@ -93,6 +94,7 @@
                                 class="btn pull-right" 
                                 style="margin: 10px 0px 0px 10px" 
                                 type="submit"
+                                id="borrador"
                                 name="borrador">
                                 Guardar como borrador
                             </button>

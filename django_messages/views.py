@@ -125,6 +125,7 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
         if request.method == "POST":
             form = BandejaForm(request.POST)
             now = datetime.datetime.now()
+
             # Revisar si hay POST con archivar
             if request.POST.has_key('archivar'):
                 lista = request.POST.getlist('seleccion')
@@ -373,7 +374,7 @@ def compose(request, message_id=None,
 
         if valido:
             if request.POST.has_key('recipient'):
-                destinatarios = request.POST['recipient']
+                destinatarios = form.cleaned_data['recipient']
             else:
                 destinatarios = None
 
@@ -413,8 +414,6 @@ def compose(request, message_id=None,
 
             # Por cada destinatario, enviar el memo, generar un log y enviar correo si está en la opción de envío
             if message_id:
-                import pdb
-                pdb.set_trace()
                 msjs_guardados = Message.objects.get(id=message_id)
                 body = request.POST['body']
                 subject = request.POST['subject']
@@ -423,46 +422,44 @@ def compose(request, message_id=None,
 
                 # Enlazar los destinatarios con los con_copia
                 destinos = []
-                if destinatarios and con_copia:
-                    for dest, dest_cc in zip(destinatarios, con_copia):
-                        destinos.append(dest)
-                        destinos.append(dest_cc)
 
-                elif destinatarios and not con_copia:
+                if destinatarios:
                     for dest in destinatarios:
                         destinos.append(dest)
 
-                elif not destinatarios and con_copia:
-                    for dest in con_copia:
-                        destinos.append(dest)
+                if con_copia:
+                    for dest_cc in con_copia:
+                        destinos.append(dest_cc)
 
-                msjs_guardados = Message.objects.filter(codigo=msjs_guardados.codigo)
-
+                msjs_guardados = Message.objects.filter(codigo=codigo)
                 for dest in destinos:
+                    # Si el destinatario no está en el campo 'recipient', entonces está en 'con_copia'
+                    if not str(dest.id) in request.POST.getlist('recipient'):
+                        cc = True
+                    else:
+                        cc = False
+
                     # Si con ese codigo, están los mismos destinatarios, entonces se guarda la información
-                    dest = Destinatarios.objects.get(id=dest)
                     if msjs_guardados.filter(recipient=dest).exists():
-                        msj = msjs_guardados[0]
-                        msj.recipient = dest
-                        msj.body = body
-                        msj.subject = subject
-                        msj.archivo = archivo
-                        msj.borrador = borrador
+                        message = Message.objects.get(recipient=dest, codigo=codigo)
+                        message.recipient = dest
+                        message.body = body
+                        message.subject = subject
+                        message.archivo = archivo
+                        message.borrador = borrador
+                        message.con_copia = cc
 
-                        # Si el destinatario no está en el campo 'recipient', entonces está en 'con_copia'
-                        if Destinatarios.objects.filter(recipient__id=dest).exists():
-                            msj.con_copia = True
-                        else:
-                            msj.con_copia = False
-
-                        msj.save()
+                        message.save()
 
                     # Si no existe, se crea
                     else:
+                        import pdb
+                        pdb.set_trace()
                         message = crear_mensaje(
                                     destino=dest, 
                                     envio=sender, 
                                     asunto=subject, 
+                                    cc=cc,
                                     cuerpo=body, 
                                     num_ident=msjs_guardados[0].num_ident,
                                     codigo=msjs_guardados[0].codigo,
@@ -495,31 +492,33 @@ def compose(request, message_id=None,
                                     envio=sender, 
                                     asunto=request.POST['subject'], 
                                     cuerpo=request.POST['body'], 
+                                    cc=False,
                                     num_ident=num_ident,
                                     codigo=codigo,
                                     borrador=borrador,
                                     archivo=archivo,
                                     )
-                else:
-                    message = crear_mensaje(
-                                destino=destinatarios, 
-                                envio=sender, 
-                                asunto=request.POST['subject'], 
-                                cuerpo=request.POST['body'], 
-                                num_ident=num_ident,
-                                codigo=codigo,
-                                borrador=borrador,
-                                archivo=archivo,
-                                )
-
-
-            if borrador or not destinatarios.__contains__(jefe):
+                if con_copia:
+                    for destino_cc in con_copia:
+                        message = crear_mensaje(
+                                    destino=destino_cc, 
+                                    envio=sender, 
+                                    asunto=request.POST['subject'], 
+                                    cuerpo=request.POST['body'], 
+                                    cc=True,
+                                    num_ident=num_ident,
+                                    codigo=codigo,
+                                    borrador=borrador,
+                                    archivo=archivo,
+                                    )
+            if enviar and not destinatarios.__contains__(jefe):
+                destino = jefe,
                 message = crear_mensaje(
-                            destino=destinatarios, 
+                            destino=destino, 
                             envio=sender, 
                             asunto=request.POST['subject'], 
                             cuerpo=request.POST['body'], 
-                            cc=True,
+                            cc=False,
                             num_ident=num_ident,
                             codigo=codigo,
                             borrador=borrador,
@@ -555,7 +554,6 @@ def compose(request, message_id=None,
 
 
         if form.errors or not valido:
-
             return render_to_response(template_name, {
                 'tipo': 'Redactar',
                 'tipo_mensaje':tipo_mensaje,

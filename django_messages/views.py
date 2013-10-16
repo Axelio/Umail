@@ -223,6 +223,10 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
 
         form = BandejaForm()
 
+        if tipo_bandeja == 'borradores': # BORRADORES
+            sender = Destinatarios.objects.get(usuarios__user=request.user)
+            message_list = Message.objects.filter(sender=sender, borrador=True).order_by('codigo').distinct('codigo')
+
         if tipo_bandeja == 'enviados': # ENVIADOS
             destinatarios = Destinatarios.objects.filter(models.Q(usuarios__user=request.user)|models.Q(grupos__user=request.user))
 
@@ -415,6 +419,10 @@ def compose(request, message_id=None,
             # Por cada destinatario, enviar el memo, generar un log y enviar correo si está en la opción de envío
             if message_id:
                 msjs_guardados = Message.objects.get(id=message_id)
+                if msjs_guardados.status.nombre == 'Aprobado':
+                    (tipo_mensaje, expresion) = msj_expresion('error')
+                    mensaje = u'Ese mensaje ya ha sido aprobado. No puede ser editado'
+                    return bandeja(request, tipo_bandeja='enviados', expresion=expresion, tipo_mensaje=tipo_mensaje, mensaje=mensaje)
                 body = request.POST['body']
                 subject = request.POST['subject']
                 num_ident = msjs_guardados.num_ident
@@ -524,7 +532,7 @@ def compose(request, message_id=None,
                             )
         
             (tipo_mensaje, expresion) = msj_expresion('success')
-
+            
             if success_url is None:
                 success_url = reverse('messages_inbox')
             if request.GET.has_key('next'):

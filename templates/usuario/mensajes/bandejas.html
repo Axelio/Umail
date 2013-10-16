@@ -43,10 +43,10 @@
                             <tbody>
                                 <th><input type="checkbox" id="select_all_items" onchange="javascript:selectAllItems()" name="select_all_items"/></th>
                                 <th></th>
-                                {% ifequal tipo_bandeja 'enviados'%}
-                                <th>Para</th>
-                                {% else %}
+                                {% ifequal tipo_bandeja 'entrada'%}
                                 <th>De</th>
+                                {% else %}
+                                <th>Para</th>
                                 {% endifequal %}
                                 <th>Asunto</th>
                                 <th>Fecha</th>
@@ -60,16 +60,16 @@
                                             {{ form.id|icon_status }}
                                         </td>
                                         <td>
-                                            {% ifequal tipo_bandeja 'enviados' %}
+                                            {% ifequal tipo_bandeja 'entrada' %}
                                                 <a href="/leer/{{ form.id }}">
-                                                    {{ 'recipient'|destin:form.id }}
+                                                    {{ 'sender'|destin:form.id }}
                                                 </a>
                                             {% else %}
                                                 {% if not form.read_at %}
                                                     <b>
                                                 {% endif %}
                                                     <a href="/leer/{{ form.id }}">
-                                                        {{ 'sender'|destin:form.id }}
+                                                        {{ 'recipient'|destin:form.id }}
                                                     </a>
                                                 {% if not form.read_at %}
                                                     </b>

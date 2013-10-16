@@ -52,7 +52,7 @@ class Destinatarios(models.Model):
         ordering            = ['usuarios__persona__primer_nombre','usuarios__persona__primer_apellido','grupos__name']
     def __unicode__(self):
         if self.usuarios== None:
-            return u'%s'%(self.grupos)
+            return u'Grupo: %s'%(self.grupos)
         elif self.grupos == None:
             return u'%s (%s)'%(self.usuarios, self.usuarios.user.email)
 

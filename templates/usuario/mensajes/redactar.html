@@ -49,12 +49,18 @@
                                 <tbody>               
                                     <tr>
                                       <th>Para:</th>
-                                      <th>{{ form.recipient }}</th>
+                                      {% if form.recipient%}
+                                          <th>{{ form.recipient }}</th>
+                                      {% else %}
+                                          <th>Nadie</th>
+                                      {% endif %}
                                     </tr>
-                                    <tr>                    
-                                      <td>Copia:</td>
-                                      <td>{{ form.con_copia }}</td>
-                                    </tr>
+                                    {% if form.recipient%}
+                                      <tr>                    
+                                        <td>Copia:</td>
+                                        <td>{{ form.con_copia }}</td>
+                                      </tr>
+                                    {% endif %}
                                     <tr>                    
                                       <th>Asunto:</th>
                                       <td>{{ form.subject }}</td>

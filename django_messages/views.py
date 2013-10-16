@@ -430,10 +430,17 @@ def compose(request, message_id=None,
                 if destinatarios:
                     for dest in destinatarios:
                         destinos.append(dest)
-
                 if con_copia:
                     for dest_cc in con_copia:
                         destinos.append(dest_cc)
+                if not destinatarios or not con_copia:
+                    message = Message.objects.get(id=message_id)
+                    message.body = body
+                    message.subject = subject
+                    message.archivo = archivo
+                    message.borrador = borrador
+                    message.save()
+
 
                 msjs_guardados = Message.objects.filter(codigo=codigo)
                 for dest in destinos:
@@ -468,11 +475,11 @@ def compose(request, message_id=None,
                                     borrador=borrador,
                                     archivo = archivo,
                                     )
-
                 # Eliminar memos cuyos destinatarios hayan sido excluidos
-                msjs_guardados = msjs_guardados.exclude(recipient__in=destinos)
-                if msjs_guardados.exists():
-                    msjs_guardados.delete()
+                if destinos:
+                    msjs_guardados = msjs_guardados.exclude(recipient__in=destinos)
+                    if msjs_guardados.exists():
+                        msjs_guardados.delete()
 
             else:
                 fecha_actual = datetime.datetime.today()
@@ -861,12 +868,13 @@ def view(request, message_id, template_name='usuario/mensajes/leer.html', mensaj
     esta_destinatario = False
 
     destinatario = message.recipient
-    if destinatario.grupos == None:
-        if destinatario.usuarios.user == user:
-            esta_destinatario = True
-    elif destinatario.usuarios == None:
-        if user in destinatario.grupos.user_set.get_query_set():
-            esta_destinatario = True
+    if destinatario:
+        if destinatario.grupos == None:
+            if destinatario.usuarios.user == user:
+                esta_destinatario = True
+        elif destinatario.usuarios == None:
+            if user in destinatario.grupos.user_set.get_query_set():
+                esta_destinatario = True
 
     from django_messages.models import Destinatarios
     destin = Destinatarios.objects.get(usuarios__user=user)

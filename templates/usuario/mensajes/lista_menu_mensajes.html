@@ -17,7 +17,7 @@
 	<i class="icon-mail-forward icon-large"></i>Enviados</a>
 </li>
 <li {{ request|active:'borradores' }} id="li-ancho">
-	<a href="#" id="link-negro">
+	<a href="{% url 'bandeja' 'borradores' %}" id="link-negro">
 	<i class=" icon-file icon-large"></i>Borradores</a>
 </li>
 <li {{ request|active:'archivados' }} id="li-ancho">

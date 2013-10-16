@@ -564,6 +564,7 @@ def compose(request, message_id=None,
                 'tipo': 'Redactar',
                 'tipo_mensaje':tipo_mensaje,
                 'mensaje':mensaje,
+                'message':message,
                 'expresion':expresion,
                 'request': request,
                 'form': form,
@@ -589,7 +590,6 @@ def compose(request, message_id=None,
 
             form.fields['recipient'].initial = dest
             form.fields['body'].initial = message.body
-            form.fields['body'].initial = message.body
             form.fields['con_copia'].initial = dest_cc
             form.fields['subject'].initial = message.subject
             form.fields['archivo'].initial = message.archivo
@@ -599,6 +599,7 @@ def compose(request, message_id=None,
     return render_to_response(template_name, {
         'tipo': 'Redactar',
         'form_errors':form_errors,
+        'message':message,
         'request': request,
         'form': form,
     }, context_instance=RequestContext(request))

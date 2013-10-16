@@ -80,7 +80,7 @@
                                             {% if not form.read_at %}
                                                 <b>
                                             {% endif %}
-                                                <a href="{% url 'messages_detail' form.id %}">
+                                                <a href="{% url 'leer' form.id %}">
                                                     {{ form.subject }}
                                                 </a>
                                             {% if not form.read_at %}
@@ -94,7 +94,7 @@
                                             {% if not form.read_at %}
                                                 <b>
                                             {% endif %}
-                                                <a href="{% url 'messages_detail' form.id %}" >
+                                                <a href="{% url 'leer' form.id %}" >
                                                     {{ form.sent_at|date:"D d M P" }}
                                                 </a>
                                             {% if not form.read_at %}
@@ -199,26 +199,27 @@
                                             </td>
                                             <td>
                                                 {% ifequal tipo_bandeja 'enviados' %}
-                                                    <a href="/leer/{{ form.id }}">
+                                                    <a href="{% url 'leer' form.id">
                                                         {{ 'recipient'|destin:form.id }}
                                                     </a>
                                                 {% else %}
 
-                                                    <a href="/leer/{{ form.id }}">
+                                                    <a href="{% url 'leer' form.id">
                                                         {{ 'sender'|destin:form.id }}
                                                     </a>
                                                 {% endifequal %}
                                             </td>
                                             <td>
-                                                <a href="{% url 'messages_detail' form.id %}">
+                                                <a href="{% url 'leer' form.id %}">
                                                     {{ form.subject }}
                                                 </a>
                                             </td>
                                             <td>
-<!
-                                                {#<a href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
+                                                {% comment %}
+                                                <a href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>
+                                                {% endcomment %}
 
-                                                <a href="{% url 'messages_detail' form.id %}">
+                                                <a href="{% url 'leer' form.id %}">
                                                     {{ form.sent_at|date:"D d M P" }}
                                                 </a>
                                             </td>

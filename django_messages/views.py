@@ -363,7 +363,6 @@ def compose(request, message_id=None,
         ``success_url``: where to redirect after successfull submission
     """
     form_errors = ''
-    message = ''
     if request.method == "POST":
         form = ComposeForm(request.POST)
         cuerpo = ''
@@ -596,6 +595,7 @@ def compose(request, message_id=None,
             form.fields['archivo'].initial = message.archivo
                 
         else:
+            message = ''
             form.fields['body'].initial = u"Cordialmente, %s. %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
     return render_to_response(template_name, {
         'tipo': 'Redactar',

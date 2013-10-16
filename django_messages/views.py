@@ -453,8 +453,6 @@ def compose(request, message_id=None,
 
                     # Si no existe, se crea
                     else:
-                        import pdb
-                        pdb.set_trace()
                         message = crear_mensaje(
                                     destino=dest, 
                                     envio=sender, 

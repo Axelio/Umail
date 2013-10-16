@@ -363,6 +363,7 @@ def compose(request, message_id=None,
         ``success_url``: where to redirect after successfull submission
     """
     form_errors = ''
+    message = ''
     if request.method == "POST":
         form = ComposeForm(request.POST)
         cuerpo = ''
@@ -419,10 +420,6 @@ def compose(request, message_id=None,
             # Por cada destinatario, enviar el memo, generar un log y enviar correo si está en la opción de envío
             if message_id:
                 msjs_guardados = Message.objects.get(id=message_id)
-                if msjs_guardados.status.nombre == 'Aprobado':
-                    (tipo_mensaje, expresion) = msj_expresion('error')
-                    mensaje = u'Ese mensaje ya ha sido aprobado. No puede ser editado'
-                    return bandeja(request, tipo_bandeja='enviados', expresion=expresion, tipo_mensaje=tipo_mensaje, mensaje=mensaje)
                 body = request.POST['body']
                 subject = request.POST['subject']
                 num_ident = msjs_guardados.num_ident
@@ -575,6 +572,10 @@ def compose(request, message_id=None,
         form = ComposeForm()
         if message_id:
             message = Message.objects.get(id=message_id)
+            if message.status.nombre == 'Aprobado':
+                (tipo_mensaje, expresion) = msj_expresion('error')
+                mensaje = u'Ese mensaje ya ha sido aprobado. No puede ser editado'
+                return bandeja(request, tipo_bandeja='enviados', expresion=expresion, tipo_mensaje=tipo_mensaje, mensaje=mensaje)
             messages = Message.objects.filter(codigo=message.codigo)
             messages_cc = messages.filter(con_copia=True)
             messages = messages.filter(con_copia=False)

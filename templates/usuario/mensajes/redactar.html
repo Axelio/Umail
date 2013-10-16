@@ -81,7 +81,7 @@
                                 name="enviar">
                                 Enviar
                             </button>
-                            
+                            {% if message %}
                             <a
                                 class="btn pull-right" 
                                 style="margin: 10px 0px 0px 10px" 
@@ -89,6 +89,7 @@
                                 href="{% url 'leer' message.id %} ">
                                 Previsualizar
                             </a>
+                            {% endif %}
 
                             <button 
                                 class="btn pull-right" 

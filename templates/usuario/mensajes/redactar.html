@@ -61,7 +61,7 @@
                                     </tr>
                                     <tr>                    
                                       <td>Adjuntar:</td>
-                                      <td>{{ form.subject }}</td>
+                                      <td>{{ form.archivo }}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
@@ -82,13 +82,13 @@
                                 Enviar
                             </button>
                             
-                            <button 
+                            <a
                                 class="btn pull-right" 
                                 style="margin: 10px 0px 0px 10px" 
-                                type="submit"
-                                name="previsualizar">
+                                name="previsualizar"
+                                href="{% url 'leer' message.id %} ">
                                 Previsualizar
-                            </button>
+                            </a>
 
                             <button 
                                 class="btn pull-right" 
@@ -99,7 +99,7 @@
                                 Guardar como borrador
                             </button>
                          
-                            
+                            {% comment %}
                             <button 
                                 class="btn pull-right" 
                                 style="margin-top:10px" 
@@ -107,6 +107,7 @@
                                 name="plantilla">
                                 Guardar como plantilla
                             </button>
+                            {% endcomment %}
                         </form>
                     </div>
 

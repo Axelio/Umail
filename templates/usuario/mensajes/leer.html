@@ -122,12 +122,12 @@
                 </div>
             </div>
 
-            <div class="span9 row-fluid" style="margin-left:0px"> 
+            <div class="span9 row-fluid"> 
                 {% csrf_token %}
                 <table width=100%>
                     <tr>
                     <td rowspan="3" align=center>
-                         <img width=150px src="{% static "images/logo_unerg.png" %}" alt="">
+                         <img width=150px src="{% static "images/institucion.jpg" %}" alt="">
                     </td>
                         <td align=center>
                             REPÚBLICA BOLIVARIANA DE VENEZUELA
@@ -210,6 +210,9 @@
                     </tbody>
                 </table>
                 {% load responder_memos %}
+                {% if message.borrador %}
+                    <a href="{% url 'redactar' message.id %}">Seguir editando</a>
+                {% endif %}
                 {{ message.id|responder_memo:user.id }}
 
             </div>

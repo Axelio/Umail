@@ -66,7 +66,7 @@ urlpatterns = patterns('',
     url(r'^archivados/$', 'django_messages.views.trash', name='messages_trash'),
 
     ## Leer memo
-    url(r'^leer/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='messages_detail'),
+    url(r'^leer/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='leer'),
 
 
     # Personas

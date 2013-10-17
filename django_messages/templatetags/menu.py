@@ -125,3 +125,29 @@ def nombre_iniciales(dest):
     return iniciales
 nombre_iniciales.is_safe = True 
 register.filter(nombre_iniciales)
+
+def primero(paginador):
+    return '?page=1'
+primero.is_safe = True 
+register.filter(primero)
+
+def ultimo(paginador):
+    return '?page=%s' %(paginador.paginator.num_pages)
+ultimo.is_safe = True 
+register.filter(ultimo)
+
+def anterior(paginador):
+    if paginador.has_previous():
+        return '?page=%s' %(paginador.previous_page_number())
+    else:
+        return '#'
+anterior.is_safe = True 
+register.filter(anterior)
+
+def siguiente(paginador):
+    if paginador.has_next():
+        return '?page=%s' %(paginador.next_page_number())
+    else:
+        return '#'
+siguiente.is_safe = True 
+register.filter(siguiente)

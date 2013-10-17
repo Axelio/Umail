@@ -1,5 +1,6 @@
 <!-- ACCIONES -->
   <div>
+        {% load menu %}
         <div class="navbar-inner" style="min-height:40px">
             <div class="container">
             <div class="row">
@@ -48,7 +49,7 @@
                         <button class="btn btn-group">
                             <a 
                                 id="link-negro" 
-                                href="#" 
+                                href="{{ message_list|primero }}" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
                                 data-original-title="">
@@ -60,7 +61,7 @@
                         <button class="btn">
                             <a 
                                 id="link-negro" 
-                                href="#" 
+                                href="{{ message_list|anterior }}" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
                                 data-original-title="">
@@ -72,7 +73,7 @@
                         <button class="btn">
                             <a 
                                 id="link-negro" 
-                                href="#" 
+                                href="{{ message_list|siguiente}}" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
                                 data-original-title="">
@@ -84,7 +85,7 @@
                         <button class="btn">
                             <a 
                                 id="link-negro" 
-                                href="{% url 'redactar' %}" 
+                                href="{{ message_list|ultimo}}" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
                                 data-original-title="">
@@ -98,7 +99,7 @@
                                 id="link-negro" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
-                                data-original-title="Archicar">
+                                data-original-title="Archivar">
                                 <i class="icon-folder-open "></i>
                             </a>
                         </button>

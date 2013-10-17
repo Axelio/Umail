@@ -223,6 +223,11 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
 
         form = BandejaForm()
 
+        if tipo_bandeja == 'por_aprobar': # POR APROBAR
+            sender = Destinatarios.objects.get(usuarios__user=request.user)
+            dependencia = request.user.profile.persona.cargo_principal.dependencia
+            message_list = Message.objects.filter(models.Q(status__nombre__iexact='En espera', sender__usuarios__persona__cargo_principal__dependencia=dependencia)| models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=dependencia)).order_by('codigo').distinct('codigo')
+
         if tipo_bandeja == 'borradores': # BORRADORES
             sender = Destinatarios.objects.get(usuarios__user=request.user)
             message_list = Message.objects.filter(sender=sender, borrador=True).order_by('codigo').distinct('codigo')

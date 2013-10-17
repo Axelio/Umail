@@ -16,7 +16,7 @@
   </script>
 
 <!-- ACCIONES -->
-<form method="post">
+<form method="post" style="margin:0px">
   {% include "usuario/mensajes/acciones.html" %}
 <!-- ACCIONES -->
 
@@ -26,7 +26,7 @@
             <div class="row-fluid">
                 <!-- BUZÓN -->
                 <div class="span3">
-                <div class="strip strip-white" id="strip-grey-degradado" style="padding:1px 0px 0px 0px; min-height: 350px">
+                <div class="strip strip-white" id="strip-grey-degradado" style="padding:0px 0px 0px 0px; min-height: 350px">
                     <ul class="nav nav-list">
                         {% include "usuario/mensajes/lista_menu_mensajes.html" %}
                         <li class="divider"></li>
@@ -38,6 +38,12 @@
 
                 <!-- ENTRADA -->
                 <div class="span9 row-fluid" style="margin-left:0px"> 
+                    {% if mensaje %}
+                        <div class="alert alert-{{ tipo_mensaje }}">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>{{ expresion }}</strong>{{ mensaje }}.
+                        </div>
+                    {% endif %}
                     {% csrf_token %}
                     <table class="table table-striped">
                         <form method="post" action="">
@@ -62,7 +68,7 @@
                                         </td>
                                         <td>
                                             {% ifequal tipo_bandeja 'entrada' %}
-                                                <a href="/leer/{{ form.id }}">
+                                                <a href="{% url 'leer' form.id %}">
                                                     {{ 'sender'|destin:form.id }}
                                                 </a>
                                             {% else %}

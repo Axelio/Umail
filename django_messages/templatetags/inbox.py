@@ -71,12 +71,20 @@ def destin(tipo_dest,id_message):
     else:
         mensaje = Message.objects.get(id=id_message)
         mensajes = Message.objects.filter(codigo=mensaje.codigo).exclude(con_copia=True)
-        if mensajes.count() > 1:
-            destinatario = str(mensajes[0].recipient)
-            return u'%s... y %s más' %(destinatario[:23], mensajes.count()-1)
+        destinatario = mensajes[0].recipient
+        if destinatario:
+            if mensajes.count() > 1:
+                if destinatario.__unicode__().__len__() <= 23:
+                    return u'%s y %s más' %(destinatario.__unicode__()[:23], mensajes.count()-1)
+                else:
+                    return u'%s... y %s más' %(destinatario.__unicode__()[:23], mensajes.count()-1)
+            else:
+                if destinatario.__unicode__().__len__() <= 23:
+                    return destinatario
+                else:
+                    return u'%s...' %(destinatario.__unicode__()[:23])
         else:
-            destinatario = Message.objects.get(id=id_message).recipient
-            return str(destinatario)[:23] + '...'
+            return 'Nadie hasta ahora'
 register.filter(destin)
 
 @register.filter(name="icon_status", is_safe=True)

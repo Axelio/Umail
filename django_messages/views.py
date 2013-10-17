@@ -383,6 +383,9 @@ def compose(request, message_id=None,
         ``success_url``: where to redirect after successfull submission
     """
     form_errors = ''
+
+    (tipo_mensaje, expresion) = msj_expresion('alert')
+    mensaje = u'El mensaje será guardado como borrador automáticamente cada 5 minutos'
     message = None
     if request.method == "POST":
         form = ComposeForm(request.POST)
@@ -634,12 +637,13 @@ def compose(request, message_id=None,
             form.fields['archivo'].initial = message.archivo
                 
         else:
-            message = ''
             form.fields['body'].initial = u"Cordialmente, %s. %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
     return render_to_response(template_name, {
         'tipo': 'Redactar',
-        'form_errors':form_errors,
+        'tipo_mensaje':tipo_mensaje,
+        'mensaje':mensaje,
         'message':message,
+        'expresion':expresion,
         'request': request,
         'form': form,
     }, context_instance=RequestContext(request))

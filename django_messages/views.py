@@ -269,6 +269,26 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
                 mensaje = u'No tiene ningún mensaje hasta ahora'
             (tipo_mensaje, expresion) = msj_expresion('info')
         
+        # Revisar si hay algún orden
+        if request.GET.has_key('ver'):
+            opcion = request.GET['ver']
+            if opcion == 'leido':
+                # Excluir los que no están sin leer
+                message_list = message_list.exclude(read_at=None)
+            if opcion == 'no_leido':
+                # Filtrar los que están sin leer
+                message_list = message_list.filter(read_at=None)
+            if opcion == 'apro':
+                # Filtrar los que tengan estatus con nombre 'Aprobado'
+                message_list = message_list.filter(estatus__nombre='Aprobado')
+            if opcion == 'espera':
+                # Filtrar los que tengan estatus con nombre 'Aprobado'
+                message_list = message_list.filter(estatus__nombre='En espera')
+            if opcion == 'anulado':
+                # Filtrar los que tengan estatus con nombre 'Aprobado'
+                message_list = message_list.filter(estatus__nombre='Anulado')
+
+
         paginador = Paginator(message_list, settings.SUIT_CONFIG['LIST_PER_PAGE'])
         page = request.GET.get('page')
         try:

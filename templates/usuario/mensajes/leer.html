@@ -2,6 +2,7 @@
 {% load admin_static %}
 
 
+
 <body>
 
 <!-- ACCIONES -->
@@ -13,6 +14,7 @@
         <div class="container">
             <div class="container-narrow">
                 <div class="row-fluid">
+
                     <!-- BUZÓN -->
                     <div class="span3">
                     <div class="strip strip-white" id="strip-grey-degradado" style="padding:1px 0px 0px 0px; min-height: 635px">
@@ -28,15 +30,15 @@
                     <!-- LEER -->
 
                     <div class="span9 row-fluid">
-                        {% csrf_token %}
 
+                        {% csrf_token %}
                         <div class="accordion" id="accordion2">
                           <div class="accordion-group">
                             <div class="accordion-heading">
                                 <div class="row accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" style="margin: 0px">
                                     <div class="span6"> 
                                         <a>
-                                            {{ message.subject }} <br />
+                                            <h3 style="line-height:5px">{{ message.subject }} <br /></h3>
                                             {{ message.recipient }}
                                         </a>
                                     </div> 
@@ -48,46 +50,58 @@
                                 </div>
                             </div>
                             <div id="collapseOne" class="accordion-body collapse in">
-                              <div class="accordion-inner">
-                                <i class="icon-info-sign"></i>
-                                <i class="icon-chevron-sign-down"></i>
+                                <div class="accordion-inner">
+                                    <i class="icon-chevron-sign-down"></i>
+                            
+                                    <a
+                                    class=" icon-info-sign" 
+                                    data-toggle="popover" 
+                                    data-placement="bottom"
+                                    data-html="true" 
+                                    title=
+                                    "<div>
+                                        <div class='dl-horizontal' >
+                                            <dt>Para:</dt>
+                                            <dt>De:</dt>
+                                            <dt>Fecha:</dt>
+                                            <dt>Ident:</dt>
+                                            <dd>{{ message.recipient}}</dd>
+                                            <dd>{{ jefe }}</dd>
+                                            <dd>{{ message.sent_at|date:_("DATETIME_FORMAT")}}</dd>
+                                            <dd>{{ message.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.siglas }} - {{ message.id }}</dd>
+                                        </div>
+                                    </div>">
+                                    </a>
 
-<div class="btn-group"> 
-                    <button data-toggle="dropdown">
-                        <a 
-                            id="link-negro" 
-                            data-placement="bottom">
-                            <i class="icon-caret-down"></i>
-                        </a>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
-                        <li><a tabindex="-1" href="{% url 'redactar' %}">Nuevo Memo</a></li>
-                        <li><a tabindex="-1" href="{% url 'reportes' %}">Nuevo Reporte</a></li>
-                    </ul>
-                </div>
+                       <!--  <div class="btn-group"> 
+                            <button data-toggle="dropdown">
+                                <a 
+                                    id="link-negro" 
+                                    data-placement="bottom">
+                                    <i class="icon-caret-down"></i>
+                                </a>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
+                                <li><a tabindex="-1" href="{% url 'redactar' %}">Nuevo Memo</a></li>
+                                <li><a tabindex="-1" href="{% url 'reportes' %}">Nuevo Reporte</a></li>
+                            </ul>
+                        </div> -->
+
+                                {{ message.body|linebreaksbr }}
+
+                                <br /><br />
 
 
+                                {% load menu %}
+                                {{ jefe|nombre_iniciales }}/{{ message.sender|nombre_iniciales|lower }}
 
-
-
-                                Anim pariatur cliche...
-                              </div>
+                                </div>
                             </div>
                           </div>
                         </div> 
                     </div>
-
-
-
-
-
-
-
-
-
-
-
                     <!-- LEER -->
+
                 </div>
             </div>
         </div>
@@ -133,7 +147,6 @@
             </div>
 
             <div class="span9 row-fluid"> 
-                {% csrf_token %}
                 <table width=100%>
                     <tr>
                     <td rowspan="3" align=center>

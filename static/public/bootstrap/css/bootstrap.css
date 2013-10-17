@@ -881,7 +881,7 @@ dd {
 
 .dl-horizontal dt {
   float: left;
-  width: 160px;
+  width: 50px;
   overflow: hidden;
   clear: left;
   text-align: right;
@@ -890,7 +890,7 @@ dd {
 }
 
 .dl-horizontal dd {
-  margin-left: 180px;
+  margin-left: 60px;
 }
 
 hr {
@@ -5430,12 +5430,12 @@ input[type="submit"].btn.btn-mini {
 }
 
 .popover {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 1010;
   display: none;
-  max-width: 276px;
+/*  max-width: 276px;*/
   padding: 1px;
   text-align: left;
   white-space: normal;
@@ -5462,8 +5462,10 @@ input[type="submit"].btn.btn-mini {
 }
 
 .popover.bottom {
-  margin-top: 10px;
-}
+  margin-top: 15px;
+/*  margin-left: 300px; 
+  margin-right: -280px;
+}*/
 
 .popover.left {
   margin-left: -10px;
@@ -5486,9 +5488,9 @@ input[type="submit"].btn.btn-mini {
   display: none;
 }
 
-.popover-content {
+/*.popover-content {
   padding: 9px 14px;
-}
+}*/
 
 .popover .arrow,
 .popover .arrow:after {
@@ -5541,7 +5543,7 @@ input[type="submit"].btn.btn-mini {
   border-left-width: 0;
 }
 
-.popover.bottom .arrow {
+/*.popover.bottom .arrow {
   top: -11px;
   left: 50%;
   margin-left: -11px;
@@ -5555,7 +5557,7 @@ input[type="submit"].btn.btn-mini {
   margin-left: -10px;
   border-bottom-color: #ffffff;
   border-top-width: 0;
-}
+}*/
 
 .popover.left .arrow {
   top: 50%;

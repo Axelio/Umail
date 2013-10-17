@@ -137,7 +137,8 @@ def save_message(sender, **kwargs):
     if memo.status == None:
         estado = EstadoMemo.objects.get(nombre='En espera')
         memo.status=estado
-    memo.sent_at = datetime.datetime.now()
+    if memo.sent_at == None:
+        memo.sent_at = datetime.datetime.now()
 
 def inbox_count_for(user):
     """

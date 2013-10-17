@@ -64,8 +64,7 @@ register.filter(negrillas)
 @register.filter(name="destin", is_safe=True)
 def destin(tipo_dest,id_message):
     from django_messages.models import Message
-    from django.utils.text import Truncator
-    import pdb
+
     mensajes = ''
     if tipo_dest == 'sender':
         return Message.objects.get(id=id_message).sender
@@ -73,9 +72,11 @@ def destin(tipo_dest,id_message):
         mensaje = Message.objects.get(id=id_message)
         mensajes = Message.objects.filter(codigo=mensaje.codigo).exclude(con_copia=True)
         if mensajes.count() > 1:
-            return u'%s y %s más' %(mensajes[0].recipient, mensajes.count()-1)
+            destinatario = str(mensajes[0].recipient)
+            return u'%s... y %s más' %(destinatario[:23], mensajes.count()-1)
         else:
-            return Message.objects.get(id=id_message).recipient
+            destinatario = Message.objects.get(id=id_message).recipient
+            return str(destinatario)[:23] + '...'
 register.filter(destin)
 
 @register.filter(name="icon_status", is_safe=True)

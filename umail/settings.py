@@ -42,7 +42,7 @@ DATABASES = {
         'NAME': 'db_umail',
         'USER': 'umail',                      # Not used with sqlite3.
         'PASSWORD': 'umail86245',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '192.168.1.5',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }

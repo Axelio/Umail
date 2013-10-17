@@ -72,19 +72,19 @@
                                         </td>
                                         <td>
                                             {% ifequal tipo_bandeja 'entrada' %}
-                                                <a href="{% url 'leer' form.id %}">
-                                                    {{ 'sender'|destin:form.id }}
-                                                </a>
-                                            {% else %}
                                                 {% if not form.read_at %}
                                                     <b>
                                                 {% endif %}
-                                                    <a href="/leer/{{ form.id }}">
-                                                        {{ 'recipient'|destin:form.id }}
+                                                    <a href="{% url 'leer' form.id %}">
+                                                        {{ 'sender'|destin:form.id }}
                                                     </a>
                                                 {% if not form.read_at %}
                                                     </b>
                                                 {% endif %}
+                                            {% else %}
+                                                <a href="/leer/{{ form.id }}">
+                                                    {{ 'recipient'|destin:form.id }}
+                                                </a>
                                             {% endifequal %}
                                         </td>
                                         <td>

@@ -127,6 +127,8 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
             now = datetime.datetime.now()
 
             # Revisar si hay POST con archivar
+            import pdb
+            pdb.set_trace()
             if request.POST.has_key('archivar'):
                 lista = request.POST.getlist('seleccion')
                 if lista.__len__() == 0:
@@ -280,13 +282,13 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
                 message_list = message_list.filter(read_at=None)
             if opcion == 'apro':
                 # Filtrar los que tengan estatus con nombre 'Aprobado'
-                message_list = message_list.filter(estatus__nombre='Aprobado')
+                message_list = message_list.filter(status__nombre='Aprobado')
             if opcion == 'espera':
                 # Filtrar los que tengan estatus con nombre 'Aprobado'
-                message_list = message_list.filter(estatus__nombre='En espera')
+                message_list = message_list.filter(status__nombre='En espera')
             if opcion == 'anulado':
                 # Filtrar los que tengan estatus con nombre 'Aprobado'
-                message_list = message_list.filter(estatus__nombre='Anulado')
+                message_list = message_list.filter(status__nombre='Anulado')
 
 
         paginador = Paginator(message_list, settings.SUIT_CONFIG['LIST_PER_PAGE'])

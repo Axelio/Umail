@@ -10,9 +10,11 @@
         });
     });
     setInterval(function() {
-          // Do something every 5 seconds
         document.getElementById('borrador').click();
     }, 300000);
+    setInterval(function() {
+        document.getElementById('cerrar').click();
+    }, 10000);
 </script>
 
 
@@ -44,6 +46,12 @@
                     <!-- REDACTAR -->
                     <div class="span9 row-fluid">
                         <form action="" method="post">
+                        {% if mensaje %}
+                            <div class="alert alert-{{ tipo_mensaje }}">
+                                <button type="button" class="close" id="cerrar" data-dismiss="alert">&times;</button>
+                                <strong>{{ expresion }}</strong>{{ mensaje }}.
+                            </div>
+                        {% endif %}
                         {% csrf_token %}
                             <table style="margin-top:5px">
                                 <tbody>               

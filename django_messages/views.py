@@ -127,8 +127,6 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
             now = datetime.datetime.now()
 
             # Revisar si hay POST con archivar
-            import pdb
-            pdb.set_trace()
             if request.POST.has_key('archivar'):
                 lista = request.POST.getlist('seleccion')
                 if lista.__len__() == 0:
@@ -385,6 +383,7 @@ def compose(request, message_id=None,
         ``success_url``: where to redirect after successfull submission
     """
     form_errors = ''
+    message = None
     if request.method == "POST":
         form = ComposeForm(request.POST)
         cuerpo = ''
@@ -592,10 +591,6 @@ def compose(request, message_id=None,
             if form.errors.has_key('__all__'):
                 mensaje = form.errors['__all__'].as_text().split('* ')[1]
 
-        if request.POST.has_key('borrador'):
-            return HttpResponseRedirect('/redactar/%s/' %(message.id))
-
-
         if form.errors or not valido:
             return render_to_response(template_name, {
                 'tipo': 'Redactar',
@@ -606,6 +601,9 @@ def compose(request, message_id=None,
                 'request': request,
                 'form': form,
             }, context_instance=RequestContext(request))
+
+        elif request.POST.has_key('borrador'):
+            return HttpResponseRedirect('/redactar/%s/' %(message.id))
 
         return bandeja(request, tipo_bandeja='enviados', expresion=expresion, tipo_mensaje=tipo_mensaje, mensaje=mensaje)
     else:

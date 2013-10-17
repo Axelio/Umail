@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.template import Library, Node, TemplateSyntaxError
 from django.utils.html import format_html
+from django_messages.models import Message
 
 class InboxOutput(Node):
     def __init__(self, varname=None):
@@ -89,7 +90,6 @@ register.filter(destin)
 
 @register.filter(name="icon_status", is_safe=True)
 def icon_status(id_message):
-    from django_messages.models import Message
     memo = Message.objects.get(id=id_message)
     if memo.status.nombre == 'Aprobado':
         icono = '<i class="icon-ok" style="color:#2BC243"></i>'
@@ -99,3 +99,4 @@ def icon_status(id_message):
         icono = '<i class="icon-time" style="color:#0088CC"></i>'
     return format_html(icono)
 register.filter(icon_status)
+

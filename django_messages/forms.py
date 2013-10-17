@@ -67,7 +67,7 @@ class ComposeForm(forms.ModelForm):
                 raise forms.ValidationError(u'No introdujo ningún asunto. Por favor ingrese el resumen del contenido del memorándum')
 
             # Validar cuerpo obligatorio
-            if not self.data.has_key('cuerpo'):
+            if not self.data.has_key('body'):
                 raise forms.ValidationError(u'No introdujo ningún mensaje. Por favor ingrese el contenido del memorándum')
 
         for con_copia in self.cleaned_data['con_copia']:

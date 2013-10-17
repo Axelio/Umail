@@ -78,7 +78,7 @@ def por_aprobar(request):
     dependencia = request.user.profile.persona.cargo_principal.dependencia
     message_list = Message.objects.filter(models.Q( status__nombre__iexact='En espera', 
                                                     sender__usuarios__persona__cargo_principal__dependencia=dependencia)| 
-                                          models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=dependencia))
+                                          models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=dependencia)).order_by('codigo').distinct('codigo')
     return message_list 
 por_aprobar.is_safe = True 
 register.filter(por_aprobar)

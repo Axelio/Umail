@@ -144,84 +144,38 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
                     total_memos = lista_memos.count()
                     if lista_memos.exclude(status__nombre = 'En espera').count() == total_memos:
                         tipo_mensaje = 'success'
-                        mensaje = 'Un total de %s mensajes fueron archivados.' %(total_memos)
+                        mensaje = 'Un total de %s mensajes fueron archivados' %(total_memos)
                     else:
                         tipo_mensaje = 'error'
-                        mensaje = 'Los memos en espera que no pueden ser archivados. '
+                        mensaje = 'Los memorándum en espera que no pueden ser archivados. '
                         if lista_memos.exclude(status__nombre = 'En espera').count() > 1:
                             mensaje = mensaje + 'Sin embargo, %s memos fueron archivados' %(lista_memos.exclude(status__nombre = 'En espera').count())
                         elif lista_memos.exclude(status__nombre = 'En espera').count() == 1:
                             mensaje = mensaje + 'Sin embargo, %s memo fue archivado.' %(lista_memos.exclude(status__nombre = 'En espera').count())
 
                     for memo in lista_memos.exclude(status__nombre = 'En espera'):
-                        memo.deleted_at = now
-                        # Guardar log de memo archivado
-                        LogEntry.objects.create(
-                        user_id         = request.user.pk, 
-                        content_type_id = ContentType.objects.get_for_model(Message).id,
-                        object_id       = memo.id,
-                        object_repr     = repr(memo), 
-                        change_message  = mensaje,
-                        action_flag     = DELETION
-                        )
-                        memo.save()
-
-
-
-                '''
-                message = get_object_or_404(Message, id=message_id)
-                deleted = False
-                notify = False
-                if success_url is None:
-                    success_url = reverse('messages_inbox')
-                if request.GET.has_key('next'):
-                    success_url = request.GET['next']
-                if message.sender.usuarios.user == user:
-                    message.sender_deleted_at = now
-                    deleted = True
-                for destinatario in message.recipient.get_query_set():
-                    if destinatario.grupos == None:
-                        if destinatario.usuarios.user.username == user.username:
-                            message.recipient_deleted_at = now
-                            deleted = True
-                    elif destinatario.usuarios == None:
-                        if user in destinatario.grupos.user_set.get_query_set():
-                            message.recipient_deleted_at = now
-                            deleted = True
-                if deleted:
-                    if message.status == 'En espera':
-                        message.save()
-                        mensaje_txt = u"Mensaje archivado exitosamente."
-
-                        # Guardar log de memo archivado
-                        LogEntry.objects.create(
-                        user_id         = request.user.pk, 
-                        content_type_id = ContentType.objects.get_for_model(Message).id,
-                        object_id       = message.id,
-                        object_repr     = repr(message), 
-                        change_message  = mensaje_txt,
-                        action_flag     = DELETION
-                        )
-                        mensaje = mensaje_txt
-                    else:
-                        mensaje = u'Un mensaje que está en espera de ser aprobado no puede ser archivado aún.'
-                    notify = True
-                    if notification:
-                        notification.send([user], "messages_deleted", {'message': message,})
-                    return inbox(request, mensaje)
-                raise Http404
-                '''
-
-
-
-
-
-
-
-
+                        # Se filtran los memos con el código del memo con el id filtrado anteriormente
+                        memos = Message.objects.filter(codigo = memo.codigo).exclude(status__nombre = 'En espera')
+                        for memorandum in memos:
+                            memorandum.deleted_at = now
+                            # Guardar log de memo archivado
+                            LogEntry.objects.create(
+                            user_id         = request.user.pk, 
+                            content_type_id = ContentType.objects.get_for_model(Message).id,
+                            object_id       = memorandum.id,
+                            object_repr     = repr(memo), 
+                            change_message  = mensaje,
+                            action_flag     = DELETION
+                            )
+                            memorandum.save()
 
 
         form = BandejaForm()
+
+        if tipo_bandeja == 'archivados': # ARCHIVADOS
+            sender = Destinatarios.objects.get(usuarios__user=request.user)
+            dependencia = request.user.profile.persona.cargo_principal.dependencia
+            message_list = Message.objects.filter(models.Q(sender=sender) | models.Q(recipient=sender), deleted_at__isnull=False).order_by('codigo').distinct('codigo')
 
         if tipo_bandeja == 'por_aprobar': # POR APROBAR
             sender = Destinatarios.objects.get(usuarios__user=request.user)
@@ -249,22 +203,23 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
 
         if request.POST.has_key('filtro'):
             filtro = request.POST['filtro']
-            message_list = Message.objects.filter(deleted_at__isnull=True).distinct()
-            message_list = message_list.filter(Q(subject__icontains=filtro)| 
-                                               Q(body__icontains=filtro)| 
-                                               Q(sender__usuarios__persona__primer_nombre__icontains=filtro)| 
-                                               Q(sender__usuarios__persona__primer_apellido__icontains=filtro)|
-                                               Q(sender__usuarios__persona__segundo_nombre__icontains=filtro)|
-                                               Q(sender__usuarios__persona__segundo_apellido__icontains=filtro)| 
-                                               Q(recipient__grupos__name__icontains=filtro)|
-                                               Q(recipient__usuarios__persona__primer_nombre__icontains=filtro)|
-                                               Q(recipient__usuarios__persona__primer_apellido__icontains=filtro)|
-                                               Q(recipient__usuarios__persona__segundo_nombre__icontains=filtro)| 
-                                               Q(recipient__usuarios__persona__segundo_apellido__icontains=filtro)| 
-                                               Q(status__nombre__iexact=filtro)| 
-                                               Q(codigo__iexact=filtro)|
-                                               Q(num_ident__iexact=filtro)
-                                )
+            if not filtro == '':
+                message_list = Message.objects.filter(deleted_at__isnull=True).distinct()
+                message_list = message_list.filter(Q(subject__icontains=filtro)| 
+                                                   Q(body__icontains=filtro)| 
+                                                   Q(sender__usuarios__persona__primer_nombre__icontains=filtro)| 
+                                                   Q(sender__usuarios__persona__primer_apellido__icontains=filtro)|
+                                                   Q(sender__usuarios__persona__segundo_nombre__icontains=filtro)|
+                                                   Q(sender__usuarios__persona__segundo_apellido__icontains=filtro)| 
+                                                   Q(recipient__grupos__name__icontains=filtro)|
+                                                   Q(recipient__usuarios__persona__primer_nombre__icontains=filtro)|
+                                                   Q(recipient__usuarios__persona__primer_apellido__icontains=filtro)|
+                                                   Q(recipient__usuarios__persona__segundo_nombre__icontains=filtro)| 
+                                                   Q(recipient__usuarios__persona__segundo_apellido__icontains=filtro)| 
+                                                   Q(status__nombre__iexact=filtro)| 
+                                                   Q(codigo__iexact=filtro)|
+                                                   Q(num_ident__iexact=filtro)
+                                    )
 
         message_list = message_list.order_by('codigo','con_copia').distinct('codigo')
         if not message_list.exists() and mensaje == '':
@@ -435,8 +390,6 @@ def compose(request, message_id=None,
                 plantilla = True
 
             if enviar:
-                if destinatarios and not destinatarios.__contains__(jefe):
-                    destinatarios = jefe
                 mensaje = u'Mensaje enviado exitosamente'
             elif borrador:
                 mensaje = u'Borrador guardado exitosamente'
@@ -561,6 +514,8 @@ def compose(request, message_id=None,
                                 borrador=borrador,
                                 archivo=archivo,
                                 )
+            # ¿Necesita el jefe recibir directamente el memorándum?
+            '''
             if enviar and not destinatarios.__contains__(jefe):
                 destino = jefe,
                 message = crear_mensaje(
@@ -574,6 +529,7 @@ def compose(request, message_id=None,
                             borrador=borrador,
                             archivo=archivo,
                             )
+            '''
         
             (tipo_mensaje, expresion) = msj_expresion('success')
             

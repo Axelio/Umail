@@ -239,7 +239,7 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
             ('BOTTOMPADDING', (0,0), (-1,-1), 2),
             ('GRID', (0,0), (-1,-1), 0.80, colors.black),
             ('FONT', (0,0), (-1,-1), "Helvetica", 7),
-            ('FONT', (0,0), (4,0), "Helvetica-Bold", 7),
+            ('FONT', (0,0), (5,0), "Helvetica-Bold", 7),
             ('ALIGN', (1,1), (2,-1), 'LEFT'),
             ]
 
@@ -288,7 +288,8 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
             tabla.append(['NUM', 'REDACTADO', 'APROBADO POR', 'PARA', 'FECHA', 'ASUNTO']) # Encabezado de la Tabla.
             for memo in memos:
                 num += 1
-                tabla.append([num, memo.sender, jefe_dep(request), memo.recipient, u'%s/%s/%s' %(memo.sent_at.day, memo.sent_at.month, memo.sent_at.year), memo.subject])
+                jefe = jefe_dep(request)
+                tabla.append([num, '%s (%s)' %(memo.sender.usuarios.persona.__unicode__(), memo.sender.usuarios.persona.cargo_principal.dependencia.departamento), '%s (%s)' %(jefe.usuarios.persona.__unicode__(), jefe.usuarios.persona.cargo_principal.dependencia.departamento), '%s (%s)' %(memo.recipient.usuarios.persona.__unicode__(), memo.recipient.usuarios.persona.cargo_principal.dependencia.departamento), u'%s/%s/%s' %(memo.sent_at.day, memo.sent_at.month, memo.sent_at.year), memo.subject])
 
                 t1 = Table(tabla, colWidths=('', '', '', '', '', ''))
                 t1.setStyle(TableStyle(x))
@@ -437,8 +438,8 @@ def Libro_Memos_PDF(request, memos):
             elementos.append(logo)
             elementos.append(Spacer(1,-25))
             txtEncabezado = u'REPÚBLICA BOLIVARIANA DE VENEZUELA'
+            txtEncabezado += u'<br />MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN SUPERIOR'
             txtEncabezado += u'<br />UNIVERSIDAD NACIONAL EXPERIMENTAL RÓMULO GALLEGOS'
-            txtEncabezado += u'<br />DIRECCIÓN DE ADMISIÓN, CONTROL Y EVALUACIÓN'
             txtEncabezado += u'<br />ÁREA: %s'%(texto)
             txtEncabezado += u'<br />CARRERA: %s'%(texto)
             styleEncabezado = getSampleStyleSheet()
@@ -632,11 +633,11 @@ memo = login_required(memo)
 
 def encabezado_constancia(canvas, doc):
     canvas.saveState()
-    canvas.drawImage(settings.STATIC_ROOT+'images/institucion.jpg', 2.6*cm, PAGE_HEIGHT-4.5*cm, width = 100, height = 38)
+    canvas.drawImage(settings.STATIC_ROOT+'images/institucion.jpg', 2.0*cm, PAGE_HEIGHT-4.5*cm, width = 100, height = 38)
     canvas.setFont("Helvetica-Bold",10)
     canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-3.6*cm, u'REPÚBLICA BOLIVARIANA DE VENEZUELA')
-    canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.0*cm, u'UNIVERSIDAD NACIONAL EXPERIMENTAL RÓMULO GALLEGOS')
-    canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.4*cm, u'DIRECCIÓN DE ADMISIÓN, CONTROL Y EVALUACIÓN')
+    canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.0*cm, u'MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN SUPERIOR')
+    canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.4*cm, u'UNIVERSIDAD NACIONAL EXPERIMENTAL RÓMULO GALLEGOS')
     canvas.restoreState()
     canvas.saveState()
 

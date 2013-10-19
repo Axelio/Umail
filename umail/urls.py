@@ -54,17 +54,19 @@ urlpatterns = patterns('',
     url(r'^anular/(?P<message_id>[\d]+)/$', 'django_messages.views.anular', name='anular'),
 
     ## Redactar memo
+    url(r'^redactar/(?P<message_id>[\d]+)/$$', 'django_messages.views.compose', name='redactar'),
     url(r'^redactar/$', 'django_messages.views.compose', name='redactar'),
+
     ## Responder memo
-    url(r'^responder/(?P<message_id>[\d]+)/$', 'django_messages.views.reply', name='messages_reply'),
+    url(r'^responder/(?P<message_id>[\d]+)/$', 'django_messages.views.reply', name='responder'),
     ## Archivar memo
-    url(r'^archivar/(?P<message_id>[\d]+)/$', 'django_messages.views.delete', name='messages_delete'),
+    url(r'^archivar/(?P<message_id>[\d]+)/$', 'django_messages.views.delete', name='archivados'),
 
     ## Memos archivados
     url(r'^archivados/$', 'django_messages.views.trash', name='messages_trash'),
 
     ## Leer memo
-    url(r'^leer/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='messages_detail'),
+    url(r'^leer/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='leer'),
 
 
     # Personas

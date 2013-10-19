@@ -30,8 +30,8 @@ class Group(models.Model):
         verbose_name = _('group')
         verbose_name_plural = _('groups')
 
-    def __str__(self):
-        return self.name
+    def __unicode__(self):
+        return u'%s' %(self.name)
 
     def natural_key(self):
         return (self.name,)

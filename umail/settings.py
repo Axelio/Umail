@@ -178,8 +178,8 @@ INSTALLED_APPS = (
     'reportes',
     'manual_usuario',
     'django_select2',
-    'filer',
     'suit_redactor',
+    'south',
 )
 #Configuraciones Django-suit
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
@@ -214,7 +214,7 @@ SUIT_CONFIG = {
     # ),
 
     # misc
-    'LIST_PER_PAGE': 50
+    'LIST_PER_PAGE': 15
 }
 
 #Configuraciones Django-suit

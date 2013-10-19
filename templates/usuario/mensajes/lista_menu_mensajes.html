@@ -3,11 +3,12 @@
 <li class="nav-header bs-docs-sidenav">Buzón</li>
 <li {{ request|active:'entrada' }} id="li-ancho">
 	<a href="{% url 'bandeja' 'entrada' %}" id="link-negro">
-	<i class="icon-download-alt icon-large"></i>Recibidos
-        {% ifnotequal request|num_entrada 0 %}
-            <span class="label label-info pull-right">
-                    {{ request|num_entrada }}
-            </span>
+	<i class="icon-download-alt icon-large"></i>
+		Recibidos
+    	{% ifnotequal request|num_entrada 0 %}
+        <span class="label label-info pull-right" style="margin-top:6px">
+            {{ request|num_entrada }}
+        </span>
         {% endifnotequal %}
     </a>
 </li>
@@ -16,9 +17,23 @@
 	<i class="icon-mail-forward icon-large"></i>Enviados</a>
 </li>
 <li {{ request|active:'borradores' }} id="li-ancho">
-	<a href="#" id="link-negro">
+	<a href="{% url 'bandeja' 'borradores' %}" id="link-negro">
 	<i class=" icon-file icon-large"></i>Borradores</a>
 </li>
+
+
+{% ifequal request.user.profile.persona.cargo_principal.cargo request.user.profile.persona.cargo_principal.dependencia.cargo_max %}
+<li {{ request|active:'por_aprobar' }} id="li-ancho">
+	<a href="{% url 'bandeja' 'por_aprobar' %}" id="link-negro">
+	<i class=" icon-file icon-large"></i>Por aprobar
+    	{% ifnotequal request|num_por_aprobar 0 %}
+        <span class="label label-info pull-right" style="margin-top:6px">
+            {{ request|num_por_aprobar }}
+        </span>
+        {% endifnotequal %}
+    </a>
+</li>
+{% endifequal %}
 <li {{ request|active:'archivados' }} id="li-ancho">
 	<a href="#" id="link-negro">
 	<i class="icon-folder-open icon-large"></i>Archivados</a>

@@ -82,11 +82,18 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
                     hora = resultado_memo.sent_at
                     sender = resultado_memo.sender
                     destinos = resultado_memo.recipient
+                    memo = resultado_memo
+                    # Si el memorándum es para el usuario conectado, o lo redactó él o es el jefe de la dependencia, entonces puede descargar el memorándum.
+                    descargable = False
+                    if request.user.profile.persona == destinos.usuarios.persona or request.user.profile.persona == sender.usuarios.persona or request.user.profile.persona == jefe.usuarios.persona:
+                        descargable = True
                     c.update({'jefe':jefe})
                     c.update({'asunto':asunto})
                     c.update({'hora':hora})
                     c.update({'sender':sender})
                     c.update({'destinos':destinos})
+                    c.update({'descargable':descargable})
+                    c.update({'memo':memo})
                     
                     if resultado_memo.status.nombre == 'Aprobado':
                         c.update({'aprobado':True})
@@ -101,8 +108,6 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
                 return render_to_response(template_name, c)
 
         else:
-            import pdb
-            #pdb.set_trace()
             mensaje = consulta_memo.errors['codigo']
 
         if libro_memo.is_valid():
@@ -568,9 +573,9 @@ def memo(request, message_id):
     identificador = '%s.%s.%s - %d %s' %(memo.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.siglas, memo.id, salto)
 
     para = '' 
-    for destin in  memo.recipient.get_query_set()[0:memo.recipient.get_query_set().count()-1]:
-        para = u'%s, %s' %(destin, para)
-    para = u'%s %s' %(para, memo.recipient.get_query_set()[memo.recipient.get_query_set().count()-1])
+    memos = Message.objects.filter(codigo=memo.codigo)
+    for memorandums in  memos:
+        para = u'%s, %s' %(memorandums.recipient, para)
 
     para = u'<b>Para: </b> %s %s' %(para, salto)
 

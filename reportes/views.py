@@ -240,7 +240,7 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
             ('GRID', (0,0), (-1,-1), 0.80, colors.black),
             ('FONT', (0,0), (-1,-1), "Helvetica", 7),
             ('FONT', (0,0), (5,0), "Helvetica-Bold", 7),
-            ('ALIGN', (1,1), (2,-1), 'LEFT'),
+            ('ALIGN', (1,1), (2,-1), 'CENTER'),
             ]
 
             elementos = []
@@ -289,7 +289,7 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
             for memo in memos:
                 num += 1
                 jefe = jefe_dep(request)
-                tabla.append([num, '%s (%s)' %(memo.sender.usuarios.persona.__unicode__(), memo.sender.usuarios.persona.cargo_principal.dependencia.departamento), '%s (%s)' %(jefe.usuarios.persona.__unicode__(), jefe.usuarios.persona.cargo_principal.dependencia.departamento), '%s (%s)' %(memo.recipient.usuarios.persona.__unicode__(), memo.recipient.usuarios.persona.cargo_principal.dependencia.departamento), u'%s/%s/%s' %(memo.sent_at.day, memo.sent_at.month, memo.sent_at.year), memo.subject])
+                tabla.append([num, '%s \n(%s)' %(memo.sender.usuarios.persona.__unicode__(), memo.sender.usuarios.persona.cargo_principal.dependencia.departamento), '%s \n(%s)' %(jefe.usuarios.persona.__unicode__(), jefe.usuarios.persona.cargo_principal.dependencia.departamento), '%s \n(%s)' %(memo.recipient.usuarios.persona.__unicode__(), memo.recipient.usuarios.persona.cargo_principal.dependencia.departamento), u'%s/%s/%s' %(memo.sent_at.day, memo.sent_at.month, memo.sent_at.year), memo.subject])
 
                 t1 = Table(tabla, colWidths=('', '', '', '', '', ''))
                 t1.setStyle(TableStyle(x))

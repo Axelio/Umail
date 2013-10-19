@@ -572,6 +572,8 @@ def memo(request, message_id):
 
     identificador = '%s.%s.%s - %d %s' %(memo.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.siglas, memo.id, salto)
 
+    de = u'<b>De: </b> %s %s' %(memo.sender, salto)
+
     para = '' 
     memos = Message.objects.filter(codigo=memo.codigo)
     for memorandums in  memos:
@@ -579,14 +581,11 @@ def memo(request, message_id):
 
     para = u'<b>Para: </b> %s %s' %(para, salto)
 
-    de = u'<b>De: </b> %s %s' %(memo.sender, salto)
-
     memo_mes = fecha.NormalDate(memo.sent_at).monthName()
     memo_dia = fecha.NormalDate(memo.sent_at).dayOfWeekName()
-    enviado = '<b>Fecha:</b> %s, %s de %s de %s a las %s:%s:%s'%(memo_dia, memo.sent_at.day, memo_mes, memo.sent_at.year, memo.sent_at.time().hour, memo.sent_at.time().minute, memo.sent_at.time().second)
-    enviado = u'<b>Fecha:</b> %s %s' %(enviado, salto)
+    enviado = '<b>Fecha:</b> %s, %s de %s de %s a las %s:%s:%s %s'%(memo_dia, memo.sent_at.day, memo_mes, memo.sent_at.year, memo.sent_at.time().hour, memo.sent_at.time().minute, memo.sent_at.time().second, salto)
 
-    txtInfo = '%s %s %s %s' %(identificador, para, de, enviado)
+    txtInfo = '%s %s %s %s' %(identificador, de, para, enviado)
     # Estilo txtInfo
     info = style['Normal']
     info.fontSize = 12
@@ -621,7 +620,7 @@ def memo(request, message_id):
     codigoBarra.fontName = 'Courier'
     codigoBarra.alignment = TA_RIGHT
 
-    st = createBarcodeDrawing('Code128',value = str(memo.codigo), barWidth= 0.040*cm, barHeight=0.500*cm, lquiet=11.500*cm)
+    st = createBarcodeDrawing('Code128',value = str(memo.codigo), barWidth= 0.040*cm, barHeight=0.500*cm, lquiet=11.950*cm)
     elementos.append(st)
     txtCodigoBarra = Paragraph(str(memo.codigo), codigoBarra)
     elementos.append(txtCodigoBarra)

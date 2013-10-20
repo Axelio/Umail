@@ -20,9 +20,10 @@
   </script>
 
 <!-- ACCIONES -->
-<form method="post" style="margin:0px">
-  {% include "usuario/mensajes/acciones.html" %}
+<form method="post" action="" style="margin:0px">
 <!-- ACCIONES -->
+
+{% include "usuario/mensajes/acciones.html" %}
 
 <div>
   <div class="container">
@@ -40,7 +41,6 @@
                 </div>
                 <!-- BUZÓN -->
 
-                <!-- ENTRADA -->
                 <div class="span9 row-fluid" style="margin-left:0px"> 
                     {% if mensaje %}
                         <div class="alert alert-{{ tipo_mensaje }}">
@@ -48,83 +48,79 @@
                             <strong>{{ expresion }}</strong>{{ mensaje }}.
                         </div>
                     {% endif %}
-                    {% csrf_token %}
                     <table class="table table-striped">
-                        <form method="post" action="">
-                            <tbody>
-                                <th><input type="checkbox" id="select_all_items" onchange="javascript:selectAllItems()" name="select_all_items"/></th>
-                                <th></th>
-                                {% ifequal tipo_bandeja 'entrada'%}
-                                <th>De</th>
-                                {% else %}
-                                <th>Para</th>
-                                {% endifequal %}
-                                <th>Asunto</th>
-                                <th>Fecha</th>
-                                {% load inbox %}
-                                {% for form in message_list %}
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" class="chkSelectItem" name="seleccion" value="{{ form.id.value }}"/>
-                                        </td>
-                                        <td>
-                                            {{ form.id|icon_status }}
-                                        </td>
-                                        <td>
-                                            {% ifequal tipo_bandeja 'entrada' %}
-                                                {% if not form.read_at %}
-                                                    <b>
-                                                {% endif %}
-                                                    <a href="{% url 'leer' form.id %}">
-                                                        {{ 'sender'|destin:form.id }}
-                                                    </a>
-                                                {% if not form.read_at %}
-                                                    </b>
-                                                {% endif %}
-                                            {% else %}
-                                                <a href="/leer/{{ form.id }}">
-                                                    {{ 'recipient'|destin:form.id }}
-                                                </a>
-                                            {% endifequal %}
-                                        </td>
-                                        <td>
+                        <tbody>
+                            <th><input type="checkbox" id="select_all_items" onchange="javascript:selectAllItems()" name="select_all_items"/></th>
+                            <th></th>
+                            {% ifequal tipo_bandeja 'entrada'%}
+                            <th>De</th>
+                            {% else %}
+                            <th>Para</th>
+                            {% endifequal %}
+                            <th>Asunto</th>
+                            <th>Fecha</th>
+                            {% load inbox %}
+                            {% for form in message_list %}
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="chkSelectItem" name="seleccion" value="{{ form.id }}"/>
+                                    </td>
+                                    <td>
+                                        {{ form.id|icon_status }}
+                                    </td>
+                                    <td>
+                                        {% ifequal tipo_bandeja 'entrada' %}
                                             {% if not form.read_at %}
                                                 <b>
                                             {% endif %}
                                                 <a href="{% url 'leer' form.id %}">
-                                                    {{ form.subject }}
+                                                    {{ 'sender'|destin:form.id }}
                                                 </a>
                                             {% if not form.read_at %}
                                                 </b>
                                             {% endif %}
-                                        </td>
-                                        <td >
-                                            
-                                            {#<a id="table-striped-degradado"href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
+                                        {% else %}
+                                            <a href="/leer/{{ form.id }}">
+                                                {{ 'recipient'|destin:form.id }}
+                                            </a>
+                                        {% endifequal %}
+                                    </td>
+                                    <td>
+                                        {% if not form.read_at %}
+                                            <b>
+                                        {% endif %}
+                                            <a href="{% url 'leer' form.id %}">
+                                                {{ form.subject }}
+                                            </a>
+                                        {% if not form.read_at %}
+                                            </b>
+                                        {% endif %}
+                                    </td>
+                                    <td >
+                                        
+                                        {#<a id="table-striped-degradado"href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
 
-                                            {% if not form.read_at %}
-                                                <b>
-                                            {% endif %}
-                                                <a href="{% url 'leer' form.id %}" >
-                                                    {{ form.sent_at|date:"D d M P" }}
-                                                </a>
-                                            {% if not form.read_at %}
-                                                </b>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
+                                        {% if not form.read_at %}
+                                            <b>
+                                        {% endif %}
+                                            <a href="{% url 'leer' form.id %}" >
+                                                {{ form.sent_at|date:"D d M P" }}
+                                            </a>
+                                        {% if not form.read_at %}
+                                            </b>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
                         </form>
+                        </tbody>
                     </table>
                 </div>
-                <!-- ENTRADA -->
 
             </div>
         </div>
     </div>
 </div>
-</form>
 
 
                     
@@ -243,7 +239,7 @@
                 </div>
             </form>
         </div>
-    </div> --> 
+    </div> 
 </body>
 
 <!-- {% include "usuario/pie.html" %} -->

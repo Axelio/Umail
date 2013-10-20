@@ -6,16 +6,15 @@
             <div class="row">
             <div class="span3">
                 <div class="btn-group tooltip-demo" style="padding-top: 8px"> 
-                    <button class="btn ">
-                        <a 
-                            id="link-negro" 
-                            href="{% url 'redactar' %}" 
-                            data-toggle="tooltip" 
-                            data-placement="bottom" 
-                            data-original-title="Nuevo">
-                            <i class="icon-pencil"></i>
-                        </a>
-                    </button>
+                    <a 
+                        id="link-negro" 
+                        href="{% url 'redactar' %}" 
+                        data-toggle="tooltip" 
+                        data-placement="bottom" 
+                        data-original-title="Nuevo"
+                        class="btn"s>
+                        <i class="icon-pencil"></i>
+                    </a>
                     <button class="btn dropdown-toggle tooltip-demo" data-toggle="dropdown">
                         <a 
                             id="link-negro" 
@@ -114,7 +113,7 @@
                     </div>
                 </div>
             </div>
-            <div class="span1" style="margin-left:20px">
+            <div class="span1" style="margin-left:20px margin-top:20px">
                 <form class="navbar-search pull-left" action="/bandeja/{{ tipo_bandeja }}/" method="post">
                     {% csrf_token %}
                     <input type="text" class="search-query" name=filtro placeholder="Buscar memorándum">

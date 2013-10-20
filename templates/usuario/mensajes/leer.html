@@ -36,7 +36,7 @@
                           <div class="accordion-group">
                             <div class="accordion-heading">
                                 <div class="row accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" style="margin: 0px">
-                                    <div class="span6"> 
+                                    <div class="span9"> 
                                         <a>
                                             <h3 style="line-height:5px">{{ message.subject }} <br /></h3>
                                             {{ message.recipient }}
@@ -51,12 +51,14 @@
                             </div>
                             <div id="collapseOne" class="accordion-body collapse in">
                                 <div class="accordion-inner">
-                                    <i class="icon-chevron-sign-down"></i>
-                            
+
+
+                            <div > 
+                            <i class="icon-chevron-sign-down"></i>
                                     <a
-                                    class=" icon-info-sign" 
-                                    data-toggle="popover" 
-                                    data-placement="bottom"
+                                    class="icon-info-sign"
+                                    data-toggle="popover"
+                                    data-placement="light"
                                     data-html="true" 
                                     title=
                                     "<div>
@@ -72,7 +74,21 @@
                                         </div>
                                     </div>">
                                     </a>
+                                    </div>
 
+
+    <div>{{ message.body|linebreaksbr }}
+
+                                <br /><br />
+
+                                {{ message.codigo }}
+
+                                {% load menu %}
+                                {{ jefe|nombre_iniciales }}/{{ message.sender|nombre_iniciales|lower }}
+</div>
+
+
+                        {% comment %}
                        <!--  <div class="btn-group"> 
                             <button data-toggle="dropdown">
                                 <a 
@@ -87,15 +103,9 @@
                             </ul>
                         </div> -->
 
-                                {{ message.body|linebreaksbr }}
-
-                                <br /><br />
-
-
-                                {% load menu %}
-                                {{ jefe|nombre_iniciales }}/{{ message.sender|nombre_iniciales|lower }}
-
+                        {% endcomment %}
                                 </div>
+
                             </div>
                           </div>
                         </div> 

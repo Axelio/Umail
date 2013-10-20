@@ -5493,15 +5493,14 @@ input[type="submit"].btn.btn-mini {
   padding: 9px 14px;
 }*/
 
-.popover .arrow,
+/*.popover .arrow,
 .popover .arrow:after {
-  position: absolute;
   display: block;
   width: 0;
   height: 0;
   border-color: transparent;
   border-style: solid;
-}
+}*/
 
 .popover .arrow {
   border-width: 11px;

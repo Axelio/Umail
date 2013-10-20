@@ -42,7 +42,7 @@ DATABASES = {
         'NAME': 'db_umail',
         'USER': 'umail',                      # Not used with sqlite3.
         'PASSWORD': 'umail86245',                  # Not used with sqlite3.
-        'HOST': '192.168.1.5',                      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -180,6 +180,7 @@ INSTALLED_APPS = (
     'django_select2',
     'suit_redactor',
     'south',
+    'django_summernote',
 )
 #Configuraciones Django-suit
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
@@ -187,6 +188,12 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
+
+SUMMERNOTE_CONFIG = {
+    'width': '100%',
+    'height': '300',
+    'focus': 'true',
+}
 
 SUIT_CONFIG = {
     # header

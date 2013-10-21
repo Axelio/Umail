@@ -2,7 +2,6 @@
 {% load admin_static %}
 
 
-
 <body>
 
 <!-- ACCIONES -->
@@ -30,7 +29,6 @@
                     <!-- LEER -->
 
                     <div class="span9 row-fluid">
-
                         {% csrf_token %}
                         <div class="accordion" id="accordion2">
                           <div class="accordion-group">
@@ -51,10 +49,24 @@
                             </div>
                             <div id="collapseOne" class="accordion-body collapse in">
                                 <div class="accordion-inner">
+                                    {% comment %}
+                                       <!--  <div class="btn-group"> 
+                                            <button data-toggle="dropdown">
+                                                <a 
+                                                    id="link-negro" 
+                                                    data-placement="bottom">
+                                                    <i class="icon-caret-down"></i>
+                                                </a>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
+                                                <li><a tabindex="-1" href="{% url 'redactar' %}">Nuevo Memo</a></li>
+                                                <li><a tabindex="-1" href="{% url 'reportes' %}">Nuevo Reporte</a></li>
+                                            </ul>
+                                        </div> -->
+                                    {% endcomment %}
 
-
-                            <div > 
-                            <i class="icon-chevron-sign-down"></i>
+                                <div> 
+                                    <i class="icon-chevron-sign-down"></i>
                                     <a
                                     class="icon-info-sign"
                                     data-toggle="popover"
@@ -74,40 +86,29 @@
                                         </div>
                                     </div>">
                                     </a>
-                                    </div>
-
-
-    <div>{{ message.body|linebreaksbr }}
-
-                                <br /><br />
-
-                                {{ message.codigo }}
-
-                                {% load menu %}
-                                {{ jefe|nombre_iniciales }}/{{ message.sender|nombre_iniciales|lower }}
-</div>
-
-
-                        {% comment %}
-                       <!--  <div class="btn-group"> 
-                            <button data-toggle="dropdown">
-                                <a 
-                                    id="link-negro" 
-                                    data-placement="bottom">
-                                    <i class="icon-caret-down"></i>
-                                </a>
-                            </button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
-                                <li><a tabindex="-1" href="{% url 'redactar' %}">Nuevo Memo</a></li>
-                                <li><a tabindex="-1" href="{% url 'reportes' %}">Nuevo Reporte</a></li>
-                            </ul>
-                        </div> -->
-
-                        {% endcomment %}
+                                </div>
+                                <div>
+                                    {{ message.body|linebreaksbr }}
+                                    <div class="pull-right">
+                                        <br />
+                                        <i class="icon-barcode"></i>
+                                        <br />
+                                        {{ message.codigo }}
+                                        {% load menu %}
+                                        {{ jefe|nombre_iniciales }}/{{ message.sender|nombre_iniciales|lower }}
+                                    </div>                   
                                 </div>
 
+
+                      
+                                </div>
+
+
+
+
+
+                                </div>
                             </div>
-                          </div>
                         </div> 
                     </div>
                     <!-- LEER -->

@@ -7,6 +7,7 @@ from django_select2 import *
 from suit_redactor.widgets import RedactorWidget
 from django.contrib.auth.models import User
 from django_messages.models import *
+from django_summernote.widgets import SummernoteWidget
 
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
@@ -47,12 +48,13 @@ class ComposeForm(forms.ModelForm):
                                         )
     con_copia.widget.set_placeholder('Usuario o grupo') # Asignar un placeholder al campo
 
+    body = forms.CharField(widget=SummernoteWidget())
+
     class Meta:
         model = Message
-        exclude = ('recipient', 'con_copia')
-        fields = ('archivo', 'subject', 'body')
+        exclude = ('recipient', 'con_copia', 'body')
+        fields = ('archivo', 'subject')
         widgets = {
-                  'body': forms.Textarea(attrs={'id':'summernote'}),
                   'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum', 'class':'input-xxlarge'}),
                   }
     def clean(self):

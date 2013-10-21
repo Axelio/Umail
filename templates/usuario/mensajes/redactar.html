@@ -3,12 +3,6 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#summernote').summernote({
-          height: 300,
-          focus: true 
-        });
-    });
     setInterval(function() {
         document.getElementById('borrador').click();
     }, 300000);
@@ -79,7 +73,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            {{ form.body }}
+                                            {{ form.body|safe }}
                                         </td>
                                     </tr>
                                     <tr>                    

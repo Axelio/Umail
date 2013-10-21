@@ -132,6 +132,9 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+AUTO_LOGOUT_DELAY = 15 # each 1, one minute
+#AUTO_LOGOUT_DELAY = 1440 # equivalent to 24 hours
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -140,6 +143,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'auth.views.AutoLogout',
 )
 
 ROOT_URLCONF = 'umail.urls'

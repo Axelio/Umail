@@ -1,0 +1,107 @@
+{% include "usuario/base.html" %}
+{% load admin_static %}
+
+<script>
+setInterval(function() {
+    document.getElementById('cerrar').click();
+}, 5000);
+</script>
+<body>
+    <div class="container">
+        {% if mensaje %}
+            <div class="alert alert-{{ tipo_mensaje }}">
+                <button type="button" class="close" id="cerrar" data-dismiss="alert">&times;</button>
+                <strong>{{ expresion }}</strong>{{ mensaje }}.
+            </div>
+        {% endif %}
+        <div class="span9">
+            <div class="text-center">
+                <h2>Contactos</h2>
+            </div>
+        </div>
+
+        <div class="span9">
+            <div class="row">
+            </div>
+        </div>
+
+<div class="span9">
+<div class="navbar">
+    <div class="navbar-inner" style="min-height:0px">
+        <form class="navbar-search" align=center method="POST">
+            {% csrf_token %}
+            <input type="text" class="search-query" placeholder="Buscar" name=filtro>
+        </form>
+        <div class="pagination pagination-right" style="margin:0px">
+            <ul>
+                {% if lista_destinatarios.has_previous %}
+                    <li><a href="?page=1">&laquo;</a></li>
+                    <li><a href="?page={{ lista_destinatarios.previous_page_number }}">{{ lista_destinatarios.previous_page_number }}</a></li>
+                {% else %}
+                    <li class="disabled"><a href="#">&laquo;</a></li>
+                {% endif %}
+
+                <li class="active"><a>{{ lista_destinatarios.number }}</a></li>
+
+                {% if lista_destinatarios.has_next %}
+                    <li><a href="?page={{ lista_destinatarios.next_page_number }}">{{ lista_destinatarios.next_page_number }}</a></li>
+                    <li><a href="?page={{ lista_destinatarios.paginator.num_pages }}">&raquo;</a></li>
+                {% else %}
+                    <li class="disabled"><a href="#">&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+        <div class="span9">
+            <div class="accordion" id="accordion1" style="margin-bottom:5px">
+                {% for contacto in lista_destinatarios %}
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ contacto.id }}">
+                                {{ contacto.usuarios.persona.primer_nombre }} 
+                                {{ contacto.usuarios.persona.primer_apellido }}
+                                ({{ contacto.usuarios.persona.cargo_principal.dependencia.departamento }})
+
+                            </a>
+                        </div>
+                        <div id="collapse{{ contacto.id }}" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <dl class="dl-horizontal">
+                                    <dt style="width:160px">Nombre </dt>
+                                    <dd style="margin-left: 180px">
+                                        {{ contacto.usuarios.persona.primer_nombre }}
+                                        {{ contacto.usuarios.persona.segundo_nombre }}
+                                        {{ contacto.usuarios.persona.primer_apellido }}
+                                        {{ contacto.usuarios.persona.segundo_apellido }}
+                                    </dd>
+                                    <dt style="width:160px">Dependencia </dt>
+                                    <dd style="margin-left: 180px">
+                                        {{ contacto.usuarios.persona.cargo_principal.dependencia.departamento }}
+                                    </dd>
+                                    <dt style="width:160px">Cargo </dt>
+                                    <dd style="margin-left: 180px">
+                                        {{ contacto.usuarios.persona.cargo_principal.cargo.name }}
+                                    </dd>
+                                    <dt style="width:160px">Número telefónico </dt>
+                                    <dd style="margin-left: 180px">
+                                        {% if contacto.usuarios.persona.telefono %}
+                                            {{ contacto.usuarios.persona.telefono }}
+                                        {% else %}
+                                            <em>Ninguno</em>
+                                        {% endif %}
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+{% include "usuario/pie.html" %}

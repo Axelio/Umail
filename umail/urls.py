@@ -74,7 +74,7 @@ urlpatterns = patterns('',
     ## Perfil
     url(r'^perfil/', include('personas.urls')),
 
-    url(r'^contactos/', 'personas.views.contactos'),
+    url(r'^contactos/', 'personas.views.contactos', name='contactos'),
 
     # Reportes
     ## Perfil

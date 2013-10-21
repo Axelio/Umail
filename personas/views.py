@@ -24,9 +24,10 @@ from django.contrib.auth import login
 from lib.umail import msj_expresion, renderizar_plantilla
 from auth.models import PreguntasSecretas, UserProfile
 from personas.models import Personas
+from umail import settings
 
 @csrf_protect
-def contactos(request, template_name='user/contactos/index.html', mensaje=''):
+def contactos(request, template_name='usuario/contactos/contactos.html', mensaje=''):
     c = {}
     c.update(csrf(request))
     c.update({'request':request})
@@ -51,7 +52,8 @@ def contactos(request, template_name='user/contactos/index.html', mensaje=''):
                                                             models.Q(usuarios__user__userprofile__persona__cargo_principal__dependencia__siglas__icontains=q) # Dependencia (siglas)
 
                                                             ).distinct()
-            paginador = Paginator(lista_destinatarios, 20)
+
+            paginador = Paginator(lista_destinatarios, settings.SUIT_CONFIG['LIST_PER_PAGE'])
             pagina = request.GET.get('page')
             try:
                 lista_destinatarios = paginador.page(pagina)
@@ -67,7 +69,7 @@ def contactos(request, template_name='user/contactos/index.html', mensaje=''):
             print lista_destinatarios.object_list
 
             return render_to_response(template_name, c)
-    paginador = Paginator(lista_destinatarios, 20)
+    paginador = Paginator(lista_destinatarios, settings.SUIT_CONFIG['LIST_PER_PAGE'])
     pagina = request.GET.get('page')
     try:
         lista_destinatarios = paginador.page(pagina)

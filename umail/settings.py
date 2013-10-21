@@ -184,6 +184,7 @@ INSTALLED_APPS = (
     'django_select2',
     'suit_redactor',
     'south',
+    'django_summernote',
 )
 #Configuraciones Django-suit
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
@@ -191,6 +192,12 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
+
+SUMMERNOTE_CONFIG = {
+    'width': '100%',
+    'height': '300',
+    'focus': 'true',
+}
 
 SUIT_CONFIG = {
     # header

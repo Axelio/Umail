@@ -19,8 +19,9 @@ urlpatterns = patterns('',
     url(r'logout$',logout,{'next_page':'/'}, name='salir'),
     url(r'^$','auth.views.index', name='inicio'),
     url(r'^revisar_comentario$','auth.views.revisar_comentario', name='comentario'),
+    (r'^summernote/', include('django_summernote.urls')),
 
-   (r'^media/(?P<path>.*)$', 'django.views.static.serve',
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),
 
     # Auth

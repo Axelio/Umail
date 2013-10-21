@@ -3,6 +3,7 @@ django-suit
 django-suit-redactor
 django-select2
 django-filer
+django-summernote
 six
 gunicorn
 docutils

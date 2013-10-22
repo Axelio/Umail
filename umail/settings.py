@@ -42,7 +42,7 @@ DATABASES = {
         'NAME': 'db_umail',
         'USER': 'umail',                      # Not used with sqlite3.
         'PASSWORD': 'umail86245',                  # Not used with sqlite3.
-        'HOST': '192.168.1.4',                      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -132,6 +132,9 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+AUTO_LOGOUT_DELAY = 15 # each 1, one minute
+#AUTO_LOGOUT_DELAY = 1440 # equivalent to 24 hours
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -140,6 +143,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'auth.views.AutoLogout',
 )
 
 ROOT_URLCONF = 'umail.urls'
@@ -177,8 +181,9 @@ INSTALLED_APPS = (
     'noticias',
     'reportes',
     'django_select2',
-    'filer',
     'suit_redactor',
+    'south',
+    'django_summernote',
 )
 #Configuraciones Django-suit
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
@@ -186,6 +191,12 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
+
+SUMMERNOTE_CONFIG = {
+    'width': '100%',
+    'height': '300',
+    'focus': 'true',
+}
 
 SUIT_CONFIG = {
     # header
@@ -213,7 +224,7 @@ SUIT_CONFIG = {
     # ),
 
     # misc
-    'LIST_PER_PAGE': 50
+    'LIST_PER_PAGE': 15
 }
 
 #Configuraciones Django-suit

@@ -1,7 +1,146 @@
 {% include "usuario/base.html" %}
 {% load admin_static %} 
 
+
+<script type="text/javascript">
+    setInterval(function() {
+        document.getElementById('borrador').click();
+    }, 300000);
+    setInterval(function() {
+        document.getElementById('cerrar').click();
+    }, 10000);
+</script>
+
+
+
+
 <body>
+
+<!-- ACCIONES -->
+  {% include "usuario/mensajes/acciones.html" %}
+<!-- ACCIONES -->
+
+
+    <div>
+        <div class="container">
+            <div class="container-narrow">
+                <div class="row-fluid">
+                    <!-- BUZÓN -->
+                    <div class="span3">
+                    <div class="strip strip-white" id="strip-grey-degradado" style="padding:1px 0px 0px 0px; min-height: 635px">
+                        <ul class="nav nav-list">
+                            {% include "usuario/mensajes/lista_menu_mensajes.html" %}
+                            <li class="divider"></li>
+                            <li class="nav-header">Acciones</li>
+                        </ul>
+                    </div>
+                    </div>
+                    <!-- BUZÓN -->
+
+                    <!-- REDACTAR -->
+                    <div class="span9 row-fluid">
+                        <form action="" method="post">
+                        {% if mensaje %}
+                            <div class="alert alert-{{ tipo_mensaje }}">
+                                <button type="button" class="close" id="cerrar" data-dismiss="alert">&times;</button>
+                                <strong>{{ expresion }}</strong>{{ mensaje }}.
+                            </div>
+                        {% endif %}
+                        {% csrf_token %}
+                            <table style="margin-top:5px">
+                                <tbody>               
+                                    <tr>
+                                      <th>Para:</th>
+                                      {% if form.recipient%}
+                                          <th>{{ form.recipient }}</th>
+                                      {% else %}
+                                          <th>Nadie</th>
+                                      {% endif %}
+                                    </tr>
+                                    {% if form.recipient%}
+                                      <tr>                    
+                                        <td>Copia:</td>
+                                        <td>{{ form.con_copia }}</td>
+                                      </tr>
+                                    {% endif %}
+                                    <tr>                    
+                                      <th>Asunto:</th>
+                                      <td>{{ form.subject }}</td>
+                                    </tr>
+                                    <tr>                    
+                                      <td>Adjuntar:</td>
+                                      <td>{{ form.archivo }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            {{ form.body|safe }}
+                                        </td>
+                                    </tr>
+                                    <tr>                    
+                                      <td colspan=2></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <button 
+                                class="btn btn-primary pull-right" 
+                                style="margin: 10px 0px 0px 10px" 
+                                type="submit"
+                                name="enviar">
+                                Enviar
+                            </button>
+                            {% if message %}
+                            <a
+                                class="btn pull-right" 
+                                style="margin: 10px 0px 0px 10px" 
+                                name="previsualizar"
+                                href="{% url 'leer' message.id %} ">
+                                Previsualizar
+                            </a>
+                            {% endif %}
+
+                            <button 
+                                class="btn pull-right" 
+                                style="margin: 10px 0px 0px 10px" 
+                                type="submit"
+                                id="borrador"
+                                name="borrador">
+                                Guardar como borrador
+                            </button>
+                         
+                            {% comment %}
+                            <button 
+                                class="btn pull-right" 
+                                style="margin-top:10px" 
+                                type="submit"
+                                name="plantilla">
+                                Guardar como plantilla
+                            </button>
+                            {% endcomment %}
+                        </form>
+                    </div>
+
+
+
+
+
+
+
+
+                    <!-- REDACTAR -->
+
+
+                </div>
+            </div>
+        </div>                  
+    </div>
+</body>
+
+
+
+
+
+<!-- 
     <div class="container-narrow"> 
         <div class="row-fluid">
             <div class="span3">
@@ -41,6 +180,7 @@
                             </tbody>
                         </table>
                         <br /><br />
+
                         <table width=100%>
                             <tbody>
                                 <tr>
@@ -54,14 +194,13 @@
                         {% csrf_token %} 
                         <table>
                             <tbody>
-                                <!-- recipient -->
-
+                                <!-- recipient 
                                 <tr>
                                     <td>
                                         <b>{{ form.recipient.label }}</b>
                                     </td>
                                     <td>
-                                        <!--<input id="usuarios" type=text data-provide="typeahead" size="50" name="recipient"/>-->
+                                        <!--<input id="usuarios" type=text data-provide="typeahead" size="50" name="recipient"/>
                                         {{ form.recipient }}
                                     </td>
                                 </tr>
@@ -94,7 +233,6 @@
                                         <b>{{ form.body.label }}: </b>
                                     </td>
                                     <td width=100% colspan="4">
-                                        {{ form.body }}
                                     </td>
                                 </tr>
                             </body>
@@ -102,7 +240,7 @@
                         <table width=100%>
                             <tbody>
                                 <tr>
-                                    <td>
+                                    <td>    
                                         <br />
                                     </td>
                                 </tr>
@@ -117,7 +255,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </body>
 
 {% include "usuario/pie.html" %}

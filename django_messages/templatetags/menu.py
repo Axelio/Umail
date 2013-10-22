@@ -78,7 +78,7 @@ def por_aprobar(request):
     dependencia = request.user.profile.persona.cargo_principal.dependencia
     message_list = Message.objects.filter(models.Q( status__nombre__iexact='En espera', 
                                                     sender__usuarios__persona__cargo_principal__dependencia=dependencia)| 
-                                          models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=dependencia))
+                                          models.Q(sender__usuarios__persona__cargos_autorizados__dependencia=dependencia)).order_by('codigo').distinct('codigo')
     return message_list 
 por_aprobar.is_safe = True 
 register.filter(por_aprobar)
@@ -117,3 +117,37 @@ def respuesta_comentario(comentario):
     return Respuestas.objects.get(pregunta=comentario).id
 respuesta_comentario.is_safe = True 
 register.filter(respuesta_comentario)
+
+def nombre_iniciales(dest):
+    import re
+    m = re.findall(u'([A-Z])[A-Za-z]* *', u"%s %s %s %s"%(dest.usuarios.persona.primer_nombre, dest.usuarios.persona.segundo_nombre, dest.usuarios.persona.primer_apellido, dest.usuarios.persona.segundo_apellido ))
+    iniciales = "".join(m)
+    return iniciales
+nombre_iniciales.is_safe = True 
+register.filter(nombre_iniciales)
+
+def primero(paginador):
+    return '?page=1'
+primero.is_safe = True 
+register.filter(primero)
+
+def ultimo(paginador):
+    return '?page=%s' %(paginador.paginator.num_pages)
+ultimo.is_safe = True 
+register.filter(ultimo)
+
+def anterior(paginador):
+    if paginador.has_previous():
+        return '?page=%s' %(paginador.previous_page_number())
+    else:
+        return '#'
+anterior.is_safe = True 
+register.filter(anterior)
+
+def siguiente(paginador):
+    if paginador.has_next():
+        return '?page=%s' %(paginador.next_page_number())
+    else:
+        return '#'
+siguiente.is_safe = True 
+register.filter(siguiente)

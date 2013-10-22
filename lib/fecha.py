@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #! /usr/bin/python
 # normalDate.py - version 1.0 - 20000717
 #hacked by Robin Becker 10/Apr/2001
@@ -18,8 +19,8 @@ _bigBangScalar = -4345732  # based on (-9999, 1, 1) BC/BCE minimum
 _bigCrunchScalar = 2958463  # based on (9999,12,31) AD/CE maximum
 _daysInMonthNormal = [31,28,31,30,31,30,31,31,30,31,30,31]
 _daysInMonthLeapYear = [31,29,31,30,31,30,31,31,30,31,30,31]
-_dayOfWeekName = ['Lunes', 'Martes', 'Miercoles', 'Jueves',
-                  'Viernes', 'Sabado', 'Domingo']
+_dayOfWeekName = ['Lunes', 'Martes', u'Miércoles', 'Jueves',
+                  'Viernes', u'Sábado', 'Domingo']
 _monthName = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
               'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
 

@@ -22,10 +22,6 @@ class PermissionAdmin(admin.ModelAdmin):
     list_display    = ('name',)
 admin.site.register(Permission, PermissionAdmin)
 
-class PreguntasAdmin(admin.ModelAdmin):
-    list_display    = ('opcion',)
-admin.site.register(Pregunta, PreguntasAdmin)
-
 class UserProfileInline(admin.StackedInline):
     model=UserProfile
     can_delete=False 
@@ -129,4 +125,3 @@ class GroupAdmin(admin.ModelAdmin):
             db_field, request=request, **kwargs)
 admin.site.unregister(Group)
 admin.site.register(Group,GroupAdmin)
-admin.site.register(PreguntasSecretas)

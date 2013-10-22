@@ -7,6 +7,7 @@ from django_select2 import *
 from suit_redactor.widgets import RedactorWidget
 from django.contrib.auth.models import User
 from django_messages.models import *
+from django_summernote.widgets import SummernoteWidget
 
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
@@ -27,7 +28,7 @@ class BandejaForm(forms.Form):
 class ComposeForm(forms.ModelForm):
     recipient = ModelSelect2MultipleField(
                                         queryset=Destinatarios.objects, 
-                                        required=True, 
+                                        required=False, 
                                         label='Destinatario', 
                                         search_fields = ('usuarios__persona__primer_nombre__icontains', #primer nombre
                                                         'usuarios__persona__primer_apellido__icontains', #primer apellido
@@ -47,19 +48,34 @@ class ComposeForm(forms.ModelForm):
                                         )
     con_copia.widget.set_placeholder('Usuario o grupo') # Asignar un placeholder al campo
 
+    body = forms.CharField(widget=SummernoteWidget())
+
     class Meta:
         model = Message
-        exclude = ('recipient', 'con_copia')
-        fields = ('archivo', 'body', 'subject')
+        exclude = ('recipient', 'con_copia', 'body')
+        fields = ('archivo', 'subject')
         widgets = {
-                  #'body': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
-                  'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum'}),
-                  'body': RedactorWidget(editor_options={'lang': 'es'})
+                  'subject': forms.TextInput(attrs={'placeholder':'Resumen del memorándum', 'class':'input-xxlarge'}),
                   }
     def clean(self):
+        # Si hizo click en enviar, debe validar todos los campos
+        if self.data.has_key('enviar'):
+            # Validar destinatario obligatorio
+            if not self.data.has_key('recipient'):
+                raise forms.ValidationError(u'No seleccionó ningún destinatario. Por favor, indique para quién es el memorándum')
+
+            # Validar asunto obligatorio
+            if self.cleaned_data['subject'] == '':
+                raise forms.ValidationError(u'No introdujo ningún asunto. Por favor ingrese el resumen del contenido del memorándum')
+
+            # Validar cuerpo obligatorio
+            if not self.data.has_key('body'):
+                raise forms.ValidationError(u'No introdujo ningún mensaje. Por favor ingrese el contenido del memorándum')
+
         for con_copia in self.cleaned_data['con_copia']:
             if self.cleaned_data['recipient'].__contains__(con_copia):
-                raise forms.ValidationError('%s está "con copia" y se encuentra entre los destinatarios. Debe estar sólo en uno de ambos campos.' %(con_copia))
+                raise forms.ValidationError(u'%s está "con copia" y se encuentra entre los destinatarios. Debe estar sólo en uno de ambos campos' %(con_copia))
+
         return self.cleaned_data
 
 

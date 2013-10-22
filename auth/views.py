@@ -15,6 +15,24 @@ from django.views.generic.base import View
 from django.forms.formsets import formset_factory
 from django.forms.models import modelformset_factory
 from auth.models import PreguntasSecretas, Pregunta
+from datetime import datetime, timedelta 
+from umail import settings 
+from django.contrib import auth 
+
+class AutoLogout: 
+    def process_request(self, request): 
+        if not request.user.is_authenticated() : 
+            return 
+
+        try: 
+            if datetime.now() - request.session['last_touch'] > timedelta( 0, settings.AUTO_LOGOUT_DELAY * 60, 0): 
+                auth.logout(request) 
+                del request.session['last_touch'] 
+                return 
+        except KeyError: 
+            pass 
+
+        request.session['last_touch'] = datetime.now()
 
 class Auth(View):
     tipo_mensaje = ''

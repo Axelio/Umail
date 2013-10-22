@@ -82,11 +82,18 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
                     hora = resultado_memo.sent_at
                     sender = resultado_memo.sender
                     destinos = resultado_memo.recipient
+                    memo = resultado_memo
+                    # Si el memorándum es para el usuario conectado, o lo redactó él o es el jefe de la dependencia, entonces puede descargar el memorándum.
+                    descargable = False
+                    if request.user.profile.persona == destinos.usuarios.persona or request.user.profile.persona == sender.usuarios.persona or request.user.profile.persona == jefe.usuarios.persona:
+                        descargable = True
                     c.update({'jefe':jefe})
                     c.update({'asunto':asunto})
                     c.update({'hora':hora})
                     c.update({'sender':sender})
                     c.update({'destinos':destinos})
+                    c.update({'descargable':descargable})
+                    c.update({'memo':memo})
                     
                     if resultado_memo.status.nombre == 'Aprobado':
                         c.update({'aprobado':True})
@@ -101,8 +108,6 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
                 return render_to_response(template_name, c)
 
         else:
-            import pdb
-            #pdb.set_trace()
             mensaje = consulta_memo.errors['codigo']
 
         if libro_memo.is_valid():
@@ -234,8 +239,8 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
             ('BOTTOMPADDING', (0,0), (-1,-1), 2),
             ('GRID', (0,0), (-1,-1), 0.80, colors.black),
             ('FONT', (0,0), (-1,-1), "Helvetica", 7),
-            ('FONT', (0,0), (4,0), "Helvetica-Bold", 7),
-            ('ALIGN', (1,1), (2,-1), 'LEFT'),
+            ('FONT', (0,0), (5,0), "Helvetica-Bold", 7),
+            ('ALIGN', (1,1), (2,-1), 'CENTER'),
             ]
 
             elementos = []
@@ -283,7 +288,8 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
             tabla.append(['NUM', 'REDACTADO', 'APROBADO POR', 'PARA', 'FECHA', 'ASUNTO']) # Encabezado de la Tabla.
             for memo in memos:
                 num += 1
-                tabla.append([num, memo.sender, jefe_dep(request), memo.recipient, u'%s/%s/%s' %(memo.sent_at.day, memo.sent_at.month, memo.sent_at.year), memo.subject])
+                jefe = jefe_dep(request)
+                tabla.append([num, '%s \n(%s)' %(memo.sender.usuarios.persona.__unicode__(), memo.sender.usuarios.persona.cargo_principal.dependencia.departamento), '%s \n(%s)' %(jefe.usuarios.persona.__unicode__(), jefe.usuarios.persona.cargo_principal.dependencia.departamento), '%s \n(%s)' %(memo.recipient.usuarios.persona.__unicode__(), memo.recipient.usuarios.persona.cargo_principal.dependencia.departamento), u'%s/%s/%s' %(memo.sent_at.day, memo.sent_at.month, memo.sent_at.year), memo.subject])
 
                 t1 = Table(tabla, colWidths=('', '', '', '', '', ''))
                 t1.setStyle(TableStyle(x))
@@ -432,8 +438,8 @@ def Libro_Memos_PDF(request, memos):
             elementos.append(logo)
             elementos.append(Spacer(1,-25))
             txtEncabezado = u'REPÚBLICA BOLIVARIANA DE VENEZUELA'
+            txtEncabezado += u'<br />MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN SUPERIOR'
             txtEncabezado += u'<br />UNIVERSIDAD NACIONAL EXPERIMENTAL RÓMULO GALLEGOS'
-            txtEncabezado += u'<br />DIRECCIÓN DE ADMISIÓN, CONTROL Y EVALUACIÓN'
             txtEncabezado += u'<br />ÁREA: %s'%(texto)
             txtEncabezado += u'<br />CARRERA: %s'%(texto)
             styleEncabezado = getSampleStyleSheet()
@@ -567,21 +573,20 @@ def memo(request, message_id):
 
     identificador = '%s.%s.%s - %d %s' %(memo.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.siglas, memo.id, salto)
 
+    de = u'<b>De: </b> %s %s' %(memo.sender, salto)
+
     para = '' 
-    for destin in  memo.recipient.get_query_set()[0:memo.recipient.get_query_set().count()-1]:
-        para = u'%s, %s' %(destin, para)
-    para = u'%s %s' %(para, memo.recipient.get_query_set()[memo.recipient.get_query_set().count()-1])
+    memos = Message.objects.filter(codigo=memo.codigo)
+    for memorandums in  memos:
+        para = u'%s, %s' %(memorandums.recipient, para)
 
     para = u'<b>Para: </b> %s %s' %(para, salto)
 
-    de = u'<b>De: </b> %s %s' %(memo.sender, salto)
-
     memo_mes = fecha.NormalDate(memo.sent_at).monthName()
     memo_dia = fecha.NormalDate(memo.sent_at).dayOfWeekName()
-    enviado = '<b>Fecha:</b> %s, %s de %s de %s a las %s:%s:%s'%(memo_dia, memo.sent_at.day, memo_mes, memo.sent_at.year, memo.sent_at.time().hour, memo.sent_at.time().minute, memo.sent_at.time().second)
-    enviado = u'<b>Fecha:</b> %s %s' %(enviado, salto)
+    enviado = '<b>Fecha:</b> %s, %s de %s de %s a las %s:%s:%s %s'%(memo_dia, memo.sent_at.day, memo_mes, memo.sent_at.year, memo.sent_at.time().hour, memo.sent_at.time().minute, memo.sent_at.time().second, salto)
 
-    txtInfo = '%s %s %s %s' %(identificador, para, de, enviado)
+    txtInfo = '%s %s %s %s' %(identificador, de, para, enviado)
     # Estilo txtInfo
     info = style['Normal']
     info.fontSize = 12
@@ -616,7 +621,7 @@ def memo(request, message_id):
     codigoBarra.fontName = 'Courier'
     codigoBarra.alignment = TA_RIGHT
 
-    st = createBarcodeDrawing('Code128',value = str(memo.codigo), barWidth= 0.040*cm, barHeight=0.500*cm, lquiet=11.500*cm)
+    st = createBarcodeDrawing('Code128',value = str(memo.codigo), barWidth= 0.040*cm, barHeight=0.500*cm, lquiet=11.950*cm)
     elementos.append(st)
     txtCodigoBarra = Paragraph(str(memo.codigo), codigoBarra)
     elementos.append(txtCodigoBarra)
@@ -628,11 +633,11 @@ memo = login_required(memo)
 
 def encabezado_constancia(canvas, doc):
     canvas.saveState()
-    canvas.drawImage(settings.STATIC_ROOT+'images/institucion.jpg', 2.6*cm, PAGE_HEIGHT-4.5*cm, width = 100, height = 38)
+    canvas.drawImage(settings.STATIC_ROOT+'images/institucion.jpg', 2.0*cm, PAGE_HEIGHT-4.5*cm, width = 100, height = 38)
     canvas.setFont("Helvetica-Bold",10)
     canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-3.6*cm, u'REPÚBLICA BOLIVARIANA DE VENEZUELA')
-    canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.0*cm, u'UNIVERSIDAD NACIONAL EXPERIMENTAL RÓMULO GALLEGOS')
-    canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.4*cm, u'DIRECCIÓN DE ADMISIÓN, CONTROL Y EVALUACIÓN')
+    canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.0*cm, u'MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN SUPERIOR')
+    canvas.drawCentredString(PAGE_WIDTH-9.5*cm, PAGE_HEIGHT-4.4*cm, u'UNIVERSIDAD NACIONAL EXPERIMENTAL RÓMULO GALLEGOS')
     canvas.restoreState()
     canvas.saveState()
 

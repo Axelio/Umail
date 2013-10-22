@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.template import Library, Node, TemplateSyntaxError
 from django.utils.html import format_html
+from django_messages.models import Message
 
 class InboxOutput(Node):
     def __init__(self, varname=None):
@@ -64,28 +65,38 @@ register.filter(negrillas)
 @register.filter(name="destin", is_safe=True)
 def destin(tipo_dest,id_message):
     from django_messages.models import Message
+
     mensajes = ''
     if tipo_dest == 'sender':
         return Message.objects.get(id=id_message).sender
     else:
         mensaje = Message.objects.get(id=id_message)
         mensajes = Message.objects.filter(codigo=mensaje.codigo).exclude(con_copia=True)
-        if mensajes.count() > 1:
-            return u'%s y %s más' %(mensajes[0].recipient, mensajes.count()-1)
+        destinatario = mensajes[0].recipient
+        if destinatario:
+            if mensajes.count() > 1:
+                if destinatario.__unicode__().__len__() <= 23:
+                    return u'%s y %s más' %(destinatario.__unicode__()[:23], mensajes.count()-1)
+                else:
+                    return u'%s... y %s más' %(destinatario.__unicode__()[:23], mensajes.count()-1)
+            else:
+                if destinatario.__unicode__().__len__() <= 23:
+                    return destinatario
+                else:
+                    return u'%s...' %(destinatario.__unicode__()[:23])
         else:
-            return Message.objects.get(id=id_message).recipient
-
+            return 'Nadie hasta ahora'
 register.filter(destin)
 
 @register.filter(name="icon_status", is_safe=True)
 def icon_status(id_message):
-    from django_messages.models import Message
     memo = Message.objects.get(id=id_message)
     if memo.status.nombre == 'Aprobado':
-        icono = '<i class="icon-ok"></i>'
+        icono = '<i class="icon-ok" style="color:#2BC243"></i>'
     elif memo.status.nombre == 'Anulado':
-        icono = '<i class="icon-remove"></i>'
+        icono = '<i class="icon-remove" style="color:#EA4444"></i>'
     elif memo.status.nombre == 'En espera':
-        icono = '<i class="icon-time"></i>'
+        icono = '<i class="icon-time" style="color:#0088CC"></i>'
     return format_html(icono)
 register.filter(icon_status)
+

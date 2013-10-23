@@ -79,9 +79,4 @@ border-right: 1px solid #e5e5e5;
   background: -moz-linear-gradient(90deg, #F9F9F9, #fff);
   background: -o-linear-gradient(90deg, #F9F9F9, #fff);
   background: linear-gradient(90deg, #F9F9F9, #fff);
-
-  border-top: 1px -webkit-linear-gradient(90deg, #F9F9F9, #fff);
-  border-top: 1px -moz-linear-gradient(90deg, #F9F9F9, #fff);
-  border-top: 1px -o-linear-gradient(90deg, #F9F9F9, #fff);
-  border-top: 1px linear-gradient(90deg, #F9F9F9, #fff);
   }

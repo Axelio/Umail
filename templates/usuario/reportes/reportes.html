@@ -14,8 +14,188 @@ setInterval(function() {
     document.getElementById('cerrar').click();
 }, 5000);
 </script>
+
 <body>
+
     <div class="container">
+        {% if mensaje %}
+            <div class="alert alert-{{ tipo_mensaje }}">
+                <button type="button" class="close" id="cerrar" data-dismiss="alert">&times;</button>
+                <strong>{{ expresion }}</strong>{{ mensaje }}.
+            </div>
+        {% endif %}
+        <div class="container-narrow">
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="row">
+                        <!-- FECHA ACTUAL -->
+                        <div class="span6 text-center fecha_actual border_fecha_actual">
+                            <br />
+                            <br />
+                            <br />
+                            {{ fecha_actual|date:"d" }}
+                            <h3 style="margin-top: 40px">
+                            {{ fecha_actual|date:"l, d M" }}
+                            <br />
+                            {{ fecha_actual|date:"Y" }}
+                            </h3>
+                        </div>
+                        <!-- FECHA ACTUAL -->
+                        <!-- CONSULTA DE UN MEMO -->
+                        <div class="span6">
+                            <h3>Consulta un memo</h3>
+                            <form method="post">{% csrf_token %}
+                                <div>
+                                    <div>
+                                        código de barra{{ consulta_memo.codigo }}
+                                    </div>
+                                </div>
+                                <div>
+                                    <br />
+                                    <div align=center style="margin-right:10px">
+
+                                        {% if consulto %}
+                                            {% if memo_result.exists %}
+                                                <a href="{% url 'descargar' memo.id %}" class="btn">Descargar</a>
+                                            {% endif %}
+                                        {% endif %}
+                                        <input type="submit" value="Consultar" class="btn btn-primary">
+                                    </div>
+                                  
+                                </div>
+                            </form>
+                        </div>
+                        <!-- CONSULTA DE UN MEMO -->
+                    </div>
+
+                    <!-- LIBRO DE MEMOS -->
+                    <div class="row span12 libro_memo" style="width:98%">
+                        <h3>Libro de memos</h3>
+                        <form method="post">{% csrf_token %}
+                            <div class="span6 pull-left">
+                                <div>
+                                    fecha inicial{{ libro_memo.fecha_inicio }} <br />
+                                    fecha final{{ libro_memo.fecha_fin }}
+                                </div>
+                            </div>
+                            <div class="span5">
+                                <br />
+                                <br />
+
+                                {% if memos %}
+                                    <div class="pull-right" style="margin-top: 5px">
+                                {% else %}
+                                    <div class="pull-right" style="margin-top: 40px">
+                                {% endif %}
+                                    <input type="submit" value="Consultar" class="btn btn-primary">
+                                </div>
+
+                                {% if memos %}
+                                    <div class="pull-right" style="margin-top:5px">
+                                         <input type="submit" class="boton btn" value="Descargar libro">
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                    </div>
+                    <div class="span11">
+                                <div>
+                                    <input id="id_opcion_0" name="opcion" type="radio" value="entrada"> Entrada
+                                    <input id="id_opcion_1" name="opcion" type="radio" value="salida"> Salida
+                                    <input id="id_opcion_2" name="opcion" type="radio" value="ambos"> Ambos
+                                </div>
+                        </form>
+                    </div>
+                    <!-- LIBRO DE MEMOS --> 
+                </div>
+
+                <div class="span6">
+                    <div class="row">
+                        <div data-spy="scroll" class="scrollspy">
+                        <div style="margin-left:10px">
+                            {% if consulto %}
+                                <!-- RESULTADO DE LA BUSQUEDA MEMOS -->
+                                {% if memo_result.exists %}
+                                    <!-- MEMO ENCONTRADO -->
+                                    <h3>¡Memo encontrado!</h3>
+                                    {% if aprobado %}
+                                        <!-- MEMO AUTENTICO -->
+                                        <b>¡Este memo es auténtico!</b> 
+                                        Es un memorándum de {{ jefe }} enviado a las {{ hora }} para {{ destinos }} tiene como asunto: {{ asunto }}. 
+                                        {% if descargable %}
+                                            También si desea, puede <a style="color:#036FA6" href="{% url 'descargar' memo.id %}">descargarlo</a>.
+                                        {% endif %}
+                                        <!-- MEMO AUTENTICO SIN APROBAR -->
+                                    {% else %}
+                                        <b>¡Este memo es auténtico!</b> A pesar que el memorándum es verídico no podemos mostrarte su contenido porque aún no está aprobado. Revisa más tarde cuando se defina el estado del memorándum.
+                                    {% endif %}
+                                {% else %}
+                                    <!-- MEMO NO ENCONTRADO -->
+                                    <h3>Memo no encontrado</h3>
+                                        <b>¡Este memo no es auténtico!</b> No existe ningún memorándum generado con ese número de código de barras, por lo tanto, es falso. Revise el código de barras y vuelva a intentarlo.
+                                {% endif %}
+
+                            <!-- EXISTENCIA DE MEMOS -->
+                            {% elif memos %}
+                                <div class="pagination">
+                                    <ul>
+                                        {% if memos.has_previous %}
+                                            <li><a href="?page={{ memos.previous_page_number }}">Anterior</a></li>
+                                        {% endif %}
+
+                                        <h3 style="color:black">Página {{ memos.number }} de {{ memos.paginator.num_pages }}.</h3>
+
+                                        {% if memos.has_next %}
+                                            <li><a href="?page={{ memos.next_page_number }}">Siguiente</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+
+                                {% for memo in memos %} 
+                                    <b>De:</strong> {{ memo.sender }}<br />
+                                    <b>Para:</strong> {{ memo.recipient }}<br />
+                                    <b>Fecha:</strong> {{ memo.sent_at|date:_("DATETIME_FORMAT")}}<br />
+                                    <b>Asunto:</strong> {{ memo.subject }}<br />
+                                    <tr><td align=center><a style="color:#036FA6" href=/leer/{{ memo.id }}/>Ver memo</a></tr></td>
+                                    <br />
+                                    <br />
+                                {% endfor %}
+
+                                <form id="sign_up" method="post">{% csrf_token %}
+                                    <tr><td><input type="hidden" name="lista_mensajes" value="{{ lista_mensajes }}"></td></tr>
+                                    <tr><td><input type="hidden" name="opcion" value="{{ opcion }}"></td></tr>
+                                    <tr><td><input type="hidden" name="fecha_inicio" value="{{ fecha_inicio }}"></td></tr>
+                                    <tr><td><input type="hidden" name="fecha_fin" value="{{ fecha_fin }}"></td></tr>
+                                    <tr><td align=center><input type="submit" class="boton btn" value="Descargar libro"></td></tr>
+                                </form>
+
+                            {% else %}
+                                <h3>Historial</h3>
+                                {% if log_user %}
+                                        {% load accion %}
+                                        {% for log in log_user %} 
+                                            <b>{{ log.action_time|date:"D d M P" }}</b> - {{ log.change_message }}
+                                            <br />
+                                        {% endfor %}
+                                {% else %}
+                                    <h3>Sin acciones registradas</h3>
+                                {% endif %}
+                            {% endif %}
+
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+
+</body>
+{% include "usuario/pie.html" %}
+
+
+
+    <!-- <div class="container">
         {% if mensaje %}
             <div class="alert alert-{{ tipo_mensaje }}">
                 <button type="button" class="close" id="cerrar" data-dismiss="alert">&times;</button>
@@ -130,6 +310,5 @@ setInterval(function() {
             </div>
         </div>
     </div>
-    </div>
-</body>
-{% include "usuario/pie.html" %}
+    </div> -->
+

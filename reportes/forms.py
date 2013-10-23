@@ -7,11 +7,12 @@ from django.utils.safestring import mark_safe
 from reportes.models import Comentarios, Respuestas
 from suit_redactor.widgets import RedactorWidget
 
-class HorizontalRadioRenderer(forms.RadioSelect.renderer):
-  def render(self):
-      return mark_safe(u'\n'.join([u'%s\n' % w for w in self]))
 
-OPCIONES = (('entrada', 'Entrada',), ('salida', 'Salida',), ('ambos','Ambos'))
+class HorizontalRadioRenderer(forms.RadioSelect.renderer):
+    def render(self):
+        return mark_safe(u'\n'.join([u'%s\n' % w for w in self]))
+
+OPCIONES = [('entrada', 'Entrada',), ('salida', 'Salida',), ('ambos','Ambos')]
 class LibroMemoForm(forms.Form):
     opcion = forms.ChoiceField(choices=OPCIONES, widget=forms.RadioSelect(renderer=HorizontalRadioRenderer))
     fecha_inicio = forms.CharField()

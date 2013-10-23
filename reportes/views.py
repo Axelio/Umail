@@ -65,6 +65,8 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
     c.update({'libro_memo':libro_memo})
     c.update({'consulta_memo':consulta_memo})
     (tipo_mensaje, expresion) = msj_expresion('error')
+    c.update({'tipo_mensaje':tipo_mensaje})
+    c.update({'expresion':expresion})
     
 
     if request.method == 'POST':
@@ -82,30 +84,34 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
                     hora = resultado_memo.sent_at
                     sender = resultado_memo.sender
                     destinos = resultado_memo.recipient
-                    memo = resultado_memo
-                    # Si el memorándum es para el usuario conectado, o lo redactó él o es el jefe de la dependencia, entonces puede descargar el memorándum.
-                    descargable = False
-                    if request.user.profile.persona == destinos.usuarios.persona or request.user.profile.persona == sender.usuarios.persona or request.user.profile.persona == jefe.usuarios.persona:
-                        descargable = True
-                    c.update({'jefe':jefe})
-                    c.update({'asunto':asunto})
-                    c.update({'hora':hora})
-                    c.update({'sender':sender})
-                    c.update({'destinos':destinos})
-                    c.update({'descargable':descargable})
-                    c.update({'memo':memo})
-                    
-                    if resultado_memo.status.nombre == 'Aprobado':
-                        c.update({'aprobado':True})
+                    if destinos == None:
+                        mensaje = u"Ese memorándum no tiene todavía un destinatario."
+                        (tipo_mensaje, expresion) = msj_expresion('error')
                     else:
-                        c.update({'aprobado':False})
+                        memo = resultado_memo
+                        # Si el memorándum es para el usuario conectado, o lo redactó él o es el jefe de la dependencia, entonces puede descargar el memorándum.
+                        descargable = False
+                        if request.user.profile.persona == destinos.usuarios.persona or request.user.profile.persona == sender.usuarios.persona or request.user.profile.persona == jefe.usuarios.persona:
+                            descargable = True
+                        c.update({'jefe':jefe})
+                        c.update({'asunto':asunto})
+                        c.update({'hora':hora})
+                        c.update({'sender':sender})
+                        c.update({'destinos':destinos})
+                        c.update({'descargable':descargable})
+                        c.update({'memo':memo})
+                        
+                        if resultado_memo.status.nombre == 'Aprobado':
+                            c.update({'aprobado':True})
+                        else:
+                            c.update({'aprobado':False})
 
-                consulta_memo = ConsultaMemoForm(request.POST)
-                c.update({'consulta_memo':consulta_memo})
+                        consulta_memo = ConsultaMemoForm(request.POST)
+                        c.update({'consulta_memo':consulta_memo})
 
-                # Saber si consultó algún memorándum
-                c.update({'consulto':True})
-                return render_to_response(template_name, c)
+                        # Saber si consultó algún memorándum
+                        c.update({'consulto':True})
+                        return render_to_response(template_name, c)
 
         else:
             mensaje = consulta_memo.errors['codigo']

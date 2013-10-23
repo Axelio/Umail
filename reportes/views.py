@@ -180,14 +180,13 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
         else:
             if not request.POST.has_key('opcion') and not request.POST.has_key('codigo'):
                 mensaje = u'Debe elegir un tipo de libro de memos.'
-                return render_to_response(template_name, {
-                    'tipo_mensaje':tipo_mensaje,
-                    'mensaje':mensaje,
-                    'expresion':expresion,
-                    'request': request,
-                    'libro_memo':libro_memo,
-                    'consulta_memo':consulta_memo,
-                }, context_instance=RequestContext(request))
+                c.update({'tipo_mensaje':tipo_mensaje})
+                c.update({'mensaje':mensaje})
+                c.update({'expresion':expresion})
+                c.update({'request':request})
+                c.update({'libro_memo':libro_memo})
+                c.update({'consulta_memo':consulta_memo})
+                return render_to_response(template_name, c)
         if request.POST.has_key('lista_mensajes'):
             memos = request.POST['lista_mensajes']
             opcion = request.POST['opcion']

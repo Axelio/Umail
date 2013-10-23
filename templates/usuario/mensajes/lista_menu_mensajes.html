@@ -35,6 +35,6 @@
 </li>
 {% endifequal %}
 <li {{ request|active:'archivados' }} id="li-ancho">
-	<a href="#" id="link-negro">
+	<a href="{% url 'bandeja' 'archivados' %}" id="link-negro">
 	<i class="icon-folder-open icon-large"></i>Archivados</a>
 </li>

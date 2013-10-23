@@ -6373,6 +6373,8 @@ a.badge:focus {
 /* MIDDLE
     -------------------------------------------------- */
 
+/* SUBMENU
+    -------------------------------------------------- */
 .submenu {
   margin: 0px 0 0 0;
   padding: 0;
@@ -6409,4 +6411,42 @@ a.badge:focus {
 .texto-submenu{
   margin-top:10px;
   bottom:0px;
+/* SUBMENU
+    -------------------------------------------------- */
+
+/* FECHA_ACTUAL
+    -------------------------------------------------- */
+.fecha_actual {
+  color: #0086CC;
+  font-size: 130.5px;
+  margin-top: 0px;
+  font-family: inherit;
+  font-weight: bold;
+  text-rendering: optimizelegibility;
+}
+
+.border_fecha_actual {
+  border-right: dashed #0086CC; 
+  border-width: 2px; 
+}
+
+/* FECHA_ACTUAL
+    -------------------------------------------------- */
+
+
+.scrollspy {
+  height: 420px;
+  overflow: auto;
+  position: relative;
+  border-left: 1px solid #e5e5e5
+}
+
+
+.libro_memo{
+  border-top: 1px solid #e5e5e5;
+}
+
+
+.margen_izq10{
+  margin-left:10px;
 }

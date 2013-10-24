@@ -203,23 +203,24 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
 
         if request.POST.has_key('filtro'):
             filtro = request.POST['filtro']
-            if not filtro == '':
-                message_list = Message.objects.filter(deleted_at__isnull=True).distinct()
-                message_list = message_list.filter(Q(subject__icontains=filtro)| 
-                                                   Q(body__icontains=filtro)| 
-                                                   Q(sender__usuarios__persona__primer_nombre__icontains=filtro)| 
-                                                   Q(sender__usuarios__persona__primer_apellido__icontains=filtro)|
-                                                   Q(sender__usuarios__persona__segundo_nombre__icontains=filtro)|
-                                                   Q(sender__usuarios__persona__segundo_apellido__icontains=filtro)| 
-                                                   Q(recipient__grupos__name__icontains=filtro)|
-                                                   Q(recipient__usuarios__persona__primer_nombre__icontains=filtro)|
-                                                   Q(recipient__usuarios__persona__primer_apellido__icontains=filtro)|
-                                                   Q(recipient__usuarios__persona__segundo_nombre__icontains=filtro)| 
-                                                   Q(recipient__usuarios__persona__segundo_apellido__icontains=filtro)| 
-                                                   Q(status__nombre__iexact=filtro)| 
-                                                   Q(codigo__iexact=filtro)|
-                                                   Q(num_ident__iexact=filtro)
-                                    )
+            message_list = Message.objects.filter(deleted_at__isnull=True).distinct()
+            message_list = message_list.filter(Q(subject__icontains=filtro)| 
+                                               Q(body__icontains=filtro)| 
+                                               Q(sender__usuarios__persona__primer_nombre__icontains=filtro)| 
+                                               Q(sender__usuarios__persona__primer_apellido__icontains=filtro)|
+                                               Q(sender__usuarios__persona__segundo_nombre__icontains=filtro)|
+                                               Q(sender__usuarios__persona__segundo_apellido__icontains=filtro)| 
+                                               Q(recipient__usuarios__persona__cargo__dependencia__departamento__icontains=filtro)|
+                                               Q(sender__usuarios__persona__cargo__dependencia__departamento__icontains=filtro)|
+                                               Q(recipient__grupos__name__icontains=filtro)|
+                                               Q(recipient__usuarios__persona__primer_nombre__icontains=filtro)|
+                                               Q(recipient__usuarios__persona__primer_apellido__icontains=filtro)|
+                                               Q(recipient__usuarios__persona__segundo_nombre__icontains=filtro)| 
+                                               Q(recipient__usuarios__persona__segundo_apellido__icontains=filtro)| 
+                                               Q(status__nombre__iexact=filtro)| 
+                                               Q(codigo__iexact=filtro)|
+                                               Q(num_ident__iexact=filtro)
+                                )
 
         message_list = message_list.order_by('codigo','con_copia').distinct('codigo')
         if not message_list.exists() and mensaje == '':

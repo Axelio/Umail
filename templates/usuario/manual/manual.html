@@ -1,0 +1,386 @@
+{% include "usuario/base.html" %}
+{% load admin_static %} 
+
+
+<body>
+
+ <!-- Hero
+    ================================================== -->
+    <div id="hero" >
+      <div id="hero-background">
+        <div class="container">
+          <div class="row" style="color:#FFFFFF" >
+            <div class="span4">
+              <div class="title pull-left" style="margin-top:10px;">
+                <h1>Manual de usuario</h1>
+              </div>
+            </div>
+            <div style="padding-top:30px">
+                <div class="span6 submenu">
+                    <ul class="pull-right" class="text-center">
+                        <!-- email -->
+                        <li>
+                            <a  href="#email">
+                                <i class="icon-envelope icon-3x"></i>
+                                <div class="texto-submenu">
+                                    Mensajes
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- perfil -->
+                        <li>
+                            <a  href="#perfil">
+                                <i class="icon-user icon-3x"></i>
+                                <div class="texto-submenu">
+                                    Perfil
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- contactos -->
+                        <li>
+                            <a  href="#contactos">
+                                <i class="icon-book icon-3x"></i>
+                                <div class="texto-submenu">
+                                    Contactos
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- administracion -->
+                        <li>
+                            <a  href="#admin">
+                                <i class="icon-cogs icon-3x"></i>
+                                <div class="texto-submenu">
+                                    Admin
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- reportes -->
+                        <li>
+                            <a  href="#reportes">
+                                <i class="icon-file icon-3x"></i>
+                                <div class="texto-submenu">
+                                    Reportes
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- archivos -->
+                        <li>
+                            <a  href="#archivos">
+                                <i class="icon-briefcase icon-3x"></i>
+                                <div class="texto-submenu">
+                                    Archivos
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- seguridad -->
+                        <li>
+                            <a  href="#seguridad">
+                                <i class="icon-lock icon-3x"></i>
+                                <div class="texto-submenu">
+                                    Seguridad
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ <!-- Hero
+    ================================================== -->
+
+ <!-- Middle
+    ================================================== -->
+
+    <div id="middle">
+    <div class="strip white" id="email">
+      <div class="container">
+
+        <!-- EMAIL -->
+        <div class="row">
+          <div class="span4">
+            <img src="{% static "images/manual/entrada.png" %}">   
+            
+          </div><!-- /.span -->
+          <div class="span6">
+            <h1>Email</h1>
+            <h3>El sistema de mensajería de Umail demuestra ser una herramienta intuitiva para los usuarios, además de rápido, rico en características y en completo orden.</h3>
+          </div><!-- /.span -->
+        </div><!-- /.row -->
+      </div><!-- /.container -->
+
+        <hr style="margin: 60px 0 60px 0">
+
+        <div class="container-fluid text-center">
+            <div class="row" id="email">
+              <div class="span3">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span3">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span3">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span3">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+
+            <div class="row" id="email">
+              <div class="span3 text-right">
+                <p>
+                    <a href={% url 'bandeja' 'entrada' %}>La bandeja de entrada</a> es el lugar donde tendrás todos los memorándum que te han enviado. Estos se están por orden de llegada
+                <p>
+              </div><!-- /.span -->
+              <div class="span3">
+                <p>
+                    Revisa todos los memorándum que has enviado en la <a href={% url 'bandeja' 'enviados' %}>bandeja de mensajes enviados</a>, allí también puedes ver si el envío ha sido aprobado, rechazado o si está aún en espera.
+                </p>
+              </div><!-- /.span -->
+              <div class="span3">
+                <p>
+                    En <a href={% url 'redactar' %}>redactar</a> tendrás varios campos para llenar, entre ellos, el destinatario (uno o múltiples departamentos), el asunto (un resumen del contenido del memorándum), el mensaje para enviar un mensaje. Además, otros campos opcionales como archivos adjuntos o destinatarios con copia.
+                </p>
+              </div><!-- /.span -->
+              <div class="span3 text-left">
+                <p>
+                    Busca los memorándum que necesites escribiendo en el campo de búsqueda lo que necesites. El filtro funciona para buscar los memorándum de un departamento, código de barras de un momerándum, número de identificación del memorándum, datos de la persona que lo envío y/o datos de la persona que lo recibe.
+                </p>
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+        </div>
+        </div>
+        <!-- FIN EMAIL -->
+
+        <!-- PERFIL -->
+        <div class="container" id="perfil" style="padding: 60px">
+            <div class="row">
+              <div class="span6">
+                <h1>Perfil</h1>
+                <h3>Tu información personal es muy importante mantenerla lo más exacta posible, así que te proporcionamos una serie de campos para que los actualices tú mismo y especificar aún más <a href={% url 'perfil' %}>tus datos</a>.</h3>
+              </div><!-- /.span -->
+              <div class="span4">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+        </div><!-- container -->
+        <!-- FIN PERFIL -->
+
+        <!-- CONTACTOS -->
+    <div class="strip white" id="contactos">
+        <div class="container">
+            <div class="row">
+              <div class="span4">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span6">
+                <h1>Contactos</h1>
+                <h3>Revisa los grupos y <a href={% url 'contactos' %}>contactos</a> individuales que están registrados en el sistema. Revísalos desde tu computador, tablet o teléfono.</h3>
+              </div><!-- /.span -->
+            </div><!-- container -->
+        </div><!-- /.row -->
+
+        <hr style="margin: 60px 0 60px 0">
+
+        <div class="container-fluid text-center">
+            <div class="row" id="email">
+              <div class="span4">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span4">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span4">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+
+            <div class="row" id="email">
+              <div class="span4 text-right">
+                <p>
+                    Ahora puedes revisar los contactos individuales. Estos contactos están ordenados por orden alfabético y muestra información como su correo electrónico, número teléfonico (si lo actualizó), nombres y apellidos y el departamento al que pertenece.
+                </p>
+              </div><!-- /.span -->
+              <div class="span4">
+                <p>
+                    Los grupos no son más que un grupo de personas que están en una dependencia. Al seleccionar una dependencia puedes escribir y enviar un memo a todo el personal de este grupo.
+                </p>
+              </div><!-- /.span -->
+              <div class="span4 text-right">
+                <p>
+                    Filtra los contactos que necesites... Sí, si no recuerdas más que el nombre o la dependencia, puedes escribir en el buscador los datos que recuerdes para obtener los contactos y/o grupos que buscas. De esta manera, es más rápido encontrar el listado de destinatarios exactos para tu memorándum.
+                </p>
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div><!-- /.strip-white -->
+        <!-- FIN PERFIL -->
+
+        <!-- ADMIN -->
+        <div class="container" style="padding: 60px" id="admin">
+            <div class="row">
+              <div class="span6">
+                <h1>Panel administrativo</h1>
+                <p>
+                    Construimos un Umail para ti, con código libre. Tanto, que tú mismo puedes controlar y configurar tu Umail. El personal con permisos de "staff", pueden observar las configuraciones de los usuarios, dependencias, cargos y demás (pero siempre manteniendo la integridad de los datos).
+                </p>
+              </div><!-- /.span -->
+              <div class="span4">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+          </div><!-- /.container -->
+        <div class="container-fluid text-center">
+            <div class="row" id="email">
+              <div class="span3">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span3">
+                <img src="{% static "images/manual/admin_responsivo.png" %}">   
+              </div><!-- /.span -->
+              <div class="span3">
+                <img src="{% static "images/manual/reestablecer_datos.png" %}">   
+              </div><!-- /.span -->
+              <div class="span3">
+                <img src="{% static "images/manual/documentacion.png" %}">   
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+
+            <div class="row" id="email">
+              <div class="span3 text-right">
+                <p>Revisa la <a href="/admin/auth/user/"><b>información detallada del usuario</b></a> tales como correo electrónico, persona asociada a la cuenta, último inicio de sesión, cargo principal, permisos de acceso, entre otros.</p>
+              </div><!-- /.span -->
+              <div class="span3">
+                <p>Puedes ver el panel administrativo desde cualquier lugar, hasta de tu teléfono al ser diseñado con un framework responsivo.</p>
+              </div><!-- /.span -->
+              <div class="span3">
+                <p>Si el usuario necesita modificar algún dato de su cuenta que sea inaccesible, como su cédula de identidad, un personal del staff puede entrar al panel administrativo y modificar su contraseña.</p>
+              </div><!-- /.span -->
+              <div class="span3 text-left">
+                <p>Puedes revisar la documentación que existe de cada módulo específico, de esta manera puedes conocer la función y finalidad de los campos existentes en todo el sistema.</p>
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+        <!-- FIN PERFIL -->
+
+    <div class="strip white" id="reportes">
+        <!-- REPORTES -->
+        <div class="container">
+            <div class="row">
+              <div class="span4">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span6">
+                <h1>Reportes</h1>
+                <p>Descarga tus reportes en PDF y llévalos adonde quieras. Estos reportes corresponden a los libros de memorándum (enviados, recibidos o ambos en un mismo libro), los memorándum que recibas o los que envíes. Si una dependencia no tiene acceso a una cuenta o computadora, será mejor que generes el PDF y se lo hagas llegar personalmente.</p>
+              </div><!-- /.span -->
+            </div><!-- container -->
+        </div><!-- /.row -->
+
+        <hr style="margin: 60px 0 60px 0">
+
+        <div class="container-fluid text-center">
+            <div class="row" id="email">
+              <div class="span4">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span4">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span4">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+
+            <div class="row" id="email">
+              <div class="span4 text-right">
+                <p>De entrada podrás observar cuáles han sido tus últimos movimientos haciéndose una referencia breve al historial de movimientos de tu cuenta. ¿Archivaste? ¿Redactaste? ¿Aprobaste? Todo queda registrado.. Todo queda registrado....</p>
+              </div><!-- /.span -->
+              <div class="span4">
+                <p>Revisa si un memorándum es verídico o es falsificado. Puedes revisar con el código de barras del documento si existe en la base de datos. Si existe puedes incluso imprimirlo (siempre y cuando lo hayas redactado tú, enviado por ti o sea para ti).</p>
+              </div><!-- /.span -->
+              <div class="span4 text-left">
+                <p>Descarga el libro de memorándum para que puedas tener un registro detallado de los memorándum enviados o recibidos. Selecciona un rango de fecha en el que quieras tu libro, luego el tipo de libro que desees (los enviados, recibidos o ambos) y consúltalos. Ya sólo quedará descargar el PDF generado.</p>
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div> <!-- /.strip-white-->
+        <!-- FIN REPORTES-->
+
+        <!-- ARCHIVO -->
+        <div class="container" style="padding: 60px" id="archivos">
+            <div class="row">
+              <div class="span6">
+                <h1>Archivo</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet ante viverra, ultricies magna sed, volutpat dui. Donec nec porttitor tellus, a rhoncus massa. Mauris ut augue porta, hendrerit risus et, accumsan nunc. Sed tellus lorem, luctus sit amet lacinia quis, posuere sed mi. Morbi blandit in nisi et ornare. Sed in iaculis magna. Maecenas non interdum dui. Mauris tempus ullamcorper arcu, ut euismod dui sagittis nec. Suspendisse gravida nulla lacinia ante cursus consectetur.</p>
+              </div><!-- /.span -->
+              <div class="span4">
+                <img src="{% static "images/manual/bandeja_archivados.png" %}">   
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+          </div><!-- /.container -->
+        <!-- FIN ARCHIVO -->
+
+        <!-- SEGURIDAD -->
+    <div class="strip white">
+        <div class="container">
+            <div class="row" id="seguridad">
+              <div class="span4">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span6">
+                <h1>Seguridad</h1>
+                <p>Umail te proporciona algunas herramientas para mantener la integridad de tu información con algunos métodos de seguridad en distintos niveles del sistema. Confía en Umail, tus datos siempre estarán a salvo...</p>
+              </div><!-- /.span -->
+            </div><!-- container -->
+        </div><!-- /.row -->
+
+        <hr style="margin: 60px 0 60px 0">
+
+        <div class="container-fluid text-center">
+            <div class="row" id="email">
+              <div class="span3">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span3">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span3">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+              <div class="span3">
+                <img src="{% static "images/manual/entrada.png" %}">   
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+
+            <div class="row" id="email">
+              <div class="span3 text-right">
+                <p>Proporciona un conjunto de preguntas/respuestas secretas:t</p>
+              </div><!-- /.span -->
+              <div class="span3">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet ante viverra, ultricies magna sed, volutpat dui. Donec nec porttitor tellus, a rhoncus massa. Mauris ut augue porta, hendrerit risus et, accumsan nunc. Sed tellus lorem, luctus sit amet lacinia quis, posuere sed mi. Morbi blandit in nisi et ornare. Sed in iaculis magna. Maecenas non interdum dui. Mauris tempus ullamcorper arcu, ut euismod dui sagittis nec. Suspendisse gravida nulla lacinia ante cursus consectetur.
+              </div><!-- /.span -->
+              <div class="span3">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet ante viverra, ultricies magna sed, volutpat dui. Donec nec porttitor tellus, a rhoncus massa. Mauris ut augue porta, hendrerit risus et, accumsan nunc. Sed tellus lorem, luctus sit amet lacinia quis, posuere sed mi. Morbi blandit in nisi et ornare. Sed in iaculis magna. Maecenas non interdum dui. Mauris tempus ullamcorper arcu, ut euismod dui sagittis nec. Suspendisse gravida nulla lacinia ante cursus consectetur.
+              </div><!-- /.span -->
+              <div class="span3 text-left">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet ante viverra, ultricies magna sed, volutpat dui. Donec nec porttitor tellus, a rhoncus massa. Mauris ut augue porta, hendrerit risus et, accumsan nunc. Sed tellus lorem, luctus sit amet lacinia quis, posuere sed mi. Morbi blandit in nisi et ornare. Sed in iaculis magna. Maecenas non interdum dui. Mauris tempus ullamcorper arcu, ut euismod dui sagittis nec. Suspendisse gravida nulla lacinia ante cursus consectetur.
+              </div><!-- /.span -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+        <!-- FIN REPORTES-->
+     </div><!-- /.strip white -->
+
+     </div><!-- /.strip white -->
+  </div>
+</body>
+{% include "usuario/pie.html" %}

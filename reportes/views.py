@@ -260,7 +260,7 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
             dia = fecha.NormalDate().dayOfWeekName()
             salto = '<br />'
 
-            txtFecha = '%s, %s DE %s DE %s'%(dia.upper(), fechas.day, mes.upper(), fechas.year)
+            txtFecha = '%s, %s %s %s'%(dia.upper(), fechas.day, mes.upper(), fechas.year)
             styleF = styleFecha['Normal']
             styleF.fontSize = 8
             styleF.fontName = 'Helvetica'

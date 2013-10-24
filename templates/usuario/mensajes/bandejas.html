@@ -31,13 +31,11 @@
             <div class="row-fluid">
                 <!-- BUZÓN -->
                 <div class="span3">
-                <div class="strip strip-white" id="strip-grey-degradado" style="padding:0px 0px 0px 0px; min-height: 350px">
-                    <ul class="nav nav-list">
-                        {% include "usuario/mensajes/lista_menu_mensajes.html" %}
-                        <li class="divider"></li>
-                        <li class="nav-header">Acciones</li>
-                    </ul>
-                </div>
+                    <div class="strip strip-white" id="strip-grey-degradado" style="padding:0px 0px 0px 0px; min-height: 350px">
+                        <ul class="nav nav-list">
+                            {% include "usuario/mensajes/lista_menu_mensajes.html" %}
+                        </ul>
+                    </div>
                 </div>
                 <!-- BUZÓN -->
 
@@ -73,16 +71,29 @@
                                             {% if not form.read_at %}
                                                 <b>
                                             {% endif %}
-                                                <a href="{% url 'leer' form.id %}">
+                                                {% ifequal tipo_bandeja 'borradores' %}
+                                                <a href="{% url 'redactar' form.id %}">
                                                     {{ 'sender'|destin:form.id }}
                                                 </a>
+                                                {% else %}
+                                                    <a href="{% url 'leer' form.id %}">
+                                                        {{ 'sender'|destin:form.id }}
+                                                    </a>
+                                                {% endifequal %}
                                             {% if not form.read_at %}
                                                 </b>
                                             {% endif %}
                                         {% else %}
-                                            <a href="/leer/{{ form.id }}">
+                                            {% ifequal tipo_bandeja 'borradores' %}
+                                            <a href="{% url 'redactar' form.id %}">
                                                 {{ 'recipient'|destin:form.id }}
                                             </a>
+                                            {% else %}
+                                                <a href="{% url 'leer' form.id %}">
+                                                    {{ 'recipient'|destin:form.id }}
+                                                </a>
+                                            {% endifequal %}
+                                                    
                                         {% endifequal %}
                                     </td>
                                     <td>
@@ -91,9 +102,16 @@
                                                 <b>
                                             {% endifequal %}
                                         {% endif %}
-                                            <a href="{% url 'leer' form.id %}">
-                                                {{ form.subject }}
-                                            </a>
+                                            {% ifequal tipo_bandeja 'borradores' %}
+                                                <a href="{% url 'redactar' form.id %}">
+                                                    {{ form.subject }}
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url 'leer' form.id %}">
+                                                    {{ form.subject }}
+                                                </a>
+                                            {% endifequal %}
+                                            
                                         {% if not form.read_at %}
                                             {% ifequal tipo_bandeja 'entrada' %}
                                                 </b>
@@ -109,9 +127,15 @@
                                                 <b>
                                             {% endifequal %}
                                         {% endif %}
-                                            <a href="{% url 'leer' form.id %}" >
-                                                {{ form.sent_at|date:"D d M P" }}
-                                            </a>
+                                            {% ifequal tipo_bandeja 'borradores' %}
+                                                <a href="{% url 'redactar' form.id %}">
+                                                    {{ form.sent_at|date:"D d M P" }}
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url 'leer' form.id %}">
+                                                    {{ form.sent_at|date:"D d M P" }}
+                                                </a>
+                                            {% endifequal %}
                                         {% if not form.read_at %}
                                             {% ifequal tipo_bandeja 'entrada' %}
                                                 </b>
@@ -248,6 +272,6 @@
             </form>
         </div>
     </div> 
-</body>
+</body>-->
 
-<!-- {% include "usuario/pie.html" %} -->
+{% include "usuario/pie.html" %} 

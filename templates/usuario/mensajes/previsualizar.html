@@ -1,39 +1,68 @@
 {% include "usuario/base.html" %}
 {% load admin_static %}
 
+
 <body>
+	
+	<style type="text/css">
+      body {
+        background-color: #f5f5f5;
+      }
+    </style>
+        
+     <div class="container form-signin" style="width:740px">
+  		<div class="row-fluid" >
+	  		<div style="margin: 50px 50px 50px 50px">
+	  			<div class="text-right">
+					<h8><b>{{ fecha_actual|date:'l, j F Y'|upper }}</b></h8>
+			    </div>
+			    <br />
+			    <br />
+			    <div>
+					<div class="span3">
+						<img width=150px src="{% static "images/institucion.jpg" %}" alt="">
+					</div>
+				    <div class="span9 text-center" >
+				    	<b>REPÚBLICA BOLIVARIANA DE VENEZUELA
+				    	<br />
+				    	MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN SUPERIOR
+						<br />
+				    	UNIVERSIDAD "RÓMULO GALLEGOS"</b>
+				    </div>
+			    </div>
+			   	<br style="line-height:120px" />
+			   	<div class="span12 text-center">
+			    	<h4><b>MEMORÁNDUM</b></h4>
+			    </div>
+			    <br style="line-height:70px" />
+			   	<div class="span12">
+			    	<b>{{ message.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.siglas }} - {{ message.id }}</b>
+			    	<br />
+			    	<b>PARA:</b> {{ message.recipient|upper }}
+			    	<br />
+			    	<b>DE:</b> {{ jefe|upper }}
+			    	<br />
+			    	<b>ASUNTO:</b> {{ message.subject|upper }}
+			    	<br />
+			    	<b>FECHA:</b> {{ message.sent_at|date:_("DATETIME_FORMAT")|upper }}
+			    </div>
+			    <br style="line-height:150px" />
+			   	<div class="span12">
+			    	{{ message.body|safe|center:"5" }}
+			    </div>
+			    <br style="line-height:100px" />
+			   	<div class="span12 text-right" >
+			    	{{ message.codigo }}
+			    </div>
+			    <div class="span12" >
+			    	{% load menu %}
+                    {{ jefe|nombre_iniciales }}/{{ message.sender|nombre_iniciales|lower }}
+			    </div>
+		    </div>
+	    </div>
 
-<!-- ACCIONES -->
-  {% include "usuario/mensajes/acciones.html" %}
-<!-- ACCIONES -->
-
-	<div>
-		<div class="container">
-            <div class="container-narrow">
-                <div class="row-fluid">
-
-                <!-- BUZÓN -->
-                    <div class="span3">
-                    <div class="strip strip-white" id="strip-grey-degradado" style="padding:1px 0px 0px 0px; min-height: 635px">
-                        <ul class="nav nav-list">
-                            {% include "usuario/mensajes/lista_menu_mensajes.html" %}
-                            <li class="divider"></li>
-                            <li class="nav-header">Acciones</li>
-                        </ul>
-                    </div>
-                    </div>
-                <!-- BUZÓN -->
-
-                <div class="span3">
-                	<img width=150px src="{% static "images/institucion.jpg" %}" alt="">
-                </div>
-                <div class="span9">
-                	
-                </div>
-
-        		</div>
-        	</div>
-        </div>
-	</div>
+	     
+    </div> 
+    
 
 </body>

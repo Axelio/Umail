@@ -853,6 +853,7 @@ def view(request, message_id, template_name='usuario/mensajes/leer.html', mensaj
     now = datetime.datetime.now()
     message = get_object_or_404(Message, id=message_id)
     esta_destinatario = False
+    fecha_actual = datetime.datetime.today()
 
     import pdb
     #pdb.set_trace()
@@ -899,6 +900,7 @@ def view(request, message_id, template_name='usuario/mensajes/leer.html', mensaj
         'loggeado': request.user.is_authenticated,
         'request':request,
         'jefe':jefe,
+        'fecha_actual':fecha_actual,
         'message': message,
     }, context_instance=RequestContext(request))
 view = login_required(view, login_url='/auth')

@@ -180,7 +180,6 @@ INSTALLED_APPS = (
     'sedes',
     'noticias',
     'reportes',
-    'manual_usuario',
     'django_select2',
     'suit_redactor',
     'south',

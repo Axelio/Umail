@@ -852,6 +852,12 @@ def view(request, message_id, template_name='usuario/mensajes/leer.html', mensaj
     message = get_object_or_404(Message, id=message_id)
     esta_destinatario = False
 
+    import pdb
+    #pdb.set_trace()
+
+    if request.path.__contains__('previsualizar'):
+        template_name = 'usuario/mensajes/previsualizar.html'
+
     destinatario = message.recipient
     if destinatario:
         if destinatario.grupos == None:

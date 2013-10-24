@@ -87,13 +87,17 @@
                                     </td>
                                     <td>
                                         {% if not form.read_at %}
-                                            <b>
+                                            {% ifequal tipo_bandeja 'entrada' %}
+                                                <b>
+                                            {% endifequal %}
                                         {% endif %}
                                             <a href="{% url 'leer' form.id %}">
                                                 {{ form.subject }}
                                             </a>
                                         {% if not form.read_at %}
-                                            </b>
+                                            {% ifequal tipo_bandeja 'entrada' %}
+                                                </b>
+                                            {% endifequal %}
                                         {% endif %}
                                     </td>
                                     <td >
@@ -101,13 +105,17 @@
                                         {#<a id="table-striped-degradado"href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>#}
 
                                         {% if not form.read_at %}
-                                            <b>
+                                            {% ifequal tipo_bandeja 'entrada' %}
+                                                <b>
+                                            {% endifequal %}
                                         {% endif %}
                                             <a href="{% url 'leer' form.id %}" >
                                                 {{ form.sent_at|date:"D d M P" }}
                                             </a>
                                         {% if not form.read_at %}
-                                            </b>
+                                            {% ifequal tipo_bandeja 'entrada' %}
+                                                </b>
+                                            {% endifequal %}
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -224,7 +232,7 @@
                                             </td>
                                             <td>
                                                 {% comment %}
-                                                <a href="{% url 'messages_detail' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>
+                                                <a href="{% url 'leer' form.id %}">{{ form.sent_at|date:"D d M P" }}</a>
                                                 {% endcomment %}
 
                                                 <a href="{% url 'leer' form.id %}">

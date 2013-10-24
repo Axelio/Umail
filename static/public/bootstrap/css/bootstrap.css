@@ -6411,6 +6411,7 @@ a.badge:focus {
 .texto-submenu{
   margin-top:10px;
   bottom:0px;
+}
 /* SUBMENU
     -------------------------------------------------- */
 
@@ -6451,8 +6452,3 @@ a.badge:focus {
   margin-left:10px;
 }
 
-#icon_thumbnail{
-  top: calc(55% -6rem);
-  color: #1e81ad;
-  position: absolute;
-}

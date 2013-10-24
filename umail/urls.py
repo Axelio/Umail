@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^preguntas_secretas/$', Revisar_preguntas.as_view(), name='preguntas_secretas'),
 
     # Manual de usuario 
+    url(r'^ayuda/(?P<seccion>\w+)/$', Ayuda.as_view(), name='manual'),
     url(r'^ayuda/$', TemplateView.as_view(template_name="usuario/manual/manual.html"), name='manual'),
 
     # Memos

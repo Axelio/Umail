@@ -372,157 +372,6 @@ def libro_memos(request, memos):
     doc.build(elementos, canvasmaker=pieDePaginaConstancias, onFirstPage=encabezado_constancia)
     return response  
 
-def Libro_Memos_PDF(request, memos):
-    response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=Acta_Recuperacion_Integrales.pdf; pagesize=A4;'
-    texto = 'texto'
-
-    #elementos es la lista donde almaceno todos lo que voy a incluir al documento pdf
-    elementos = []
-
-    # SimpleDocTemplate es la clase para generar el pdf
-    doc = SimpleDocTemplate(response)
-
-    style = getSampleStyleSheet()
-    styleFecha = getSampleStyleSheet()
-
-    fechas = datetime.datetime.today()
-    mes = fecha.NormalDate().monthName() # esta variable contiene el nombre del mes actual a partir de la libreria fecha añadida en lib/
-    dia = fecha.NormalDate().dayOfWeekName() # esta variable contiene el dia actual a partir de la libreria fecha añadida en lib/
-
-    #Espacio para poner el encabezado con la clase Canvas
-    elementos.append(Spacer(1,40))
-
-
-    # Estilos de la tabla.
-    x = [
-    #('BOX', (0,0), (4,0), 0.60, colors.black),
-    ('ALIGN', (0,0), (-1,-1), 'CENTER'),
-    ('TOPPADDING', (0,0), (-1,-1), 1),
-    ('BOTTOMPADDING', (0,0), (-1,-1), 2),
-    ('GRID', (0,0), (-1,-1), 0.80, colors.black),
-    ('FONT', (0,0), (-1,-1), "Helvetica", 7),
-    ('FONT', (0,0), (4,0), "Helvetica-Bold", 7),
-    ('ALIGN', (1,1), (2,-1), 'LEFT'),
-    ]
-
-    #Declaración de variables para el for
-    memorandum = ''
-    #materia = integrales[0][7] #Primera fila, columna 7
-    num = 0
-    '''
-    periodo = i[0]
-    cedula = i[1]
-    primer_apellido = i[2]
-    segundo_apellido = i[3]
-    primer_nombre = i[4]
-    segundo_nombre = i[5]
-    materia_cod = i[6]
-    materia_id = i[7]
-    materia_nombre = i[8]
-    '''
-    #Obtener el periodo para integrales
-
-    for memo in memos:
-
-        if memo != memorandum:
-            #tabla.append([i[1], i[2]])
-            memorandum = memo
-            if num != 0: #Si es la primera vuelta, no se carga el salto de página
-                # Salto de página
-                elementos.append(t1)# Se van cargado las tablas antes del salto de página
-                salto = style['Heading3']
-                txt = ''
-                salto.pageBreakBefore = 1
-                saltoV = Paragraph(txt, salto)
-                elementos.append(saltoV)
-
-            # Datos del encabezado
-            logo = Image(settings.STATIC_ROOT+'images/institucion.jpg', width = 100, height = 38)
-            logo.hAlign = 'LEFT'
-            elementos.append(logo)
-            elementos.append(Spacer(1,-25))
-            txtEncabezado = u'REPÚBLICA BOLIVARIANA DE VENEZUELA'
-            txtEncabezado += u'<br />MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN SUPERIOR'
-            txtEncabezado += u'<br />UNIVERSIDAD NACIONAL EXPERIMENTAL RÓMULO GALLEGOS'
-            txtEncabezado += u'<br />ÁREA: %s'%(texto)
-            txtEncabezado += u'<br />CARRERA: %s'%(texto)
-            styleEncabezado = getSampleStyleSheet()
-            areaSedeCarrera = styleEncabezado['Normal']
-            areaSedeCarrera.fontSize = 9
-            areaSedeCarrera.fontName = 'Helvetica-Bold'
-            areaSedeCarrera.alignment = TA_CENTER
-            unirElementos = Paragraph(txtEncabezado, areaSedeCarrera)
-            elementos.append(unirElementos)
-
-            #Fecha del reporte
-            txtFecha = '%s, %s DE %s DE %s <br />'%(dia.upper(), fechas.day, mes.upper(), fechas.year)
-            # txtFecha += 'Generado por: %s %s'%(perfil_user.persona.primer_apellido, perfil_user.persona.primer_nombre)
-            styleF = styleFecha['Normal']
-            styleF.fontSize = 8
-            styleF.fontName = 'Helvetica-Bold'
-            styleF.alignment = TA_RIGHT
-            fechaV = Paragraph(txtFecha, styleF)
-            elementos.append(fechaV)
-
-            #Titulo del reporte
-            num_integral = str(texto)
-            txtTitulo = u'RECUPERACIÓN INTEGRAL - %s' %(texto)
-            titulo = style['Heading1']
-            titulo.fontSize = 9
-            titulo.fontName = 'Helvetica-Bold'
-            titulo.alignment = TA_CENTER
-            tituloV = Paragraph(txtTitulo, titulo)
-            elementos.append(tituloV)
-
-            #Periodo
-            elementos.append(Spacer(1,-15))# Quitandole espacio al periodo para subirlo un poco mas
-            txtPeriodo = u'Período: %s'%(texto)
-            periodo = Paragraph(txtPeriodo, styleF)
-            elementos.append(periodo)
-
-            #Materia del integral
-            if texto == '0':
-                txtAsignatura = u'MATERIA: %s  -  Nivel: Todos' %(texto)
-            else:
-                txtAsignatura = u'MATERIA: %s  -   Nivel: %s' %(texto, texto)
-
-            asignatura = style['Heading2']
-            asignatura.fontSize = 9
-            asignatura.fontName = 'Helvetica-Bold'
-            asignatura.alignment = TA_CENTER
-            asignaturaV = Paragraph(txtAsignatura, asignatura)
-            elementos.append(asignaturaV)
-
-            '''
-            periodo = i[0]
-            cedula = i[1]
-            primer_apellido = i[2]
-            segundo_apellido = i[3]
-            primer_nombre = i[4]
-            segundo_nombre = i[5]
-            materia_cod = i[6]
-            materia_id = i[7]
-            materia_nombre = i[8]
-            '''
-            #t1.setStyle(TableStyle(x))
-            #elementos.append(t1)
-
-            num = 0
-            tabla = []
-            tabla.append(['NUM', 'CÉDULA', 'NOMBRE Y APELLIDO', 'NOTA', 'NOTA (LETRAS)']) # Encabezado de la Tabla.
-        #tabla.append(Spacer(1,+60))# Añadiéndole espacio al bajarlo un poco mas
-
-        tabla.append([texto, texto, texto + " " +  texto + " " + texto  + " " + texto  , '', ''])
-
-        t1 = Table(tabla, colWidths=('', '', 8.0*cm, '', ''))
-        num = num + 1
-        t1.setStyle(TableStyle(x))
-    elementos.append(t1)#--> Para cargar la ultima tabla del reporte
-
-    doc.build(elementos, onFirstPage=firma_actasIntegrales, onLaterPages=firma_actasIntegrales)
-    return response
-
 def memo(request, message_id):
     ''' Función para descarga de memorándums en PDF '''
     response = HttpResponse(mimetype='application/pdf')
@@ -578,20 +427,22 @@ def memo(request, message_id):
 
     identificador = '%s.%s.%s - %d %s' %(memo.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.nivel, memo.sender.usuarios.persona.cargo_principal.dependencia.siglas, memo.id, salto)
 
-    de = u'<b>De: </b> %s %s' %(memo.sender, salto)
+    de = u'<b>DE: </b> %s %s' %(memo.sender, salto)
 
     para = '' 
     memos = Message.objects.filter(codigo=memo.codigo)
     for memorandums in  memos:
         para = u'%s, %s' %(memorandums.recipient, para)
 
-    para = u'<b>Para: </b> %s %s' %(para, salto)
+    para = u'<b>PARA: </b> %s %s' %(para, salto)
+
+    para = u'<b>ASUNTO: </b> %s %s' %(para, salto)
 
     memo_mes = fecha.NormalDate(memo.sent_at).monthName()
     memo_dia = fecha.NormalDate(memo.sent_at).dayOfWeekName()
-    enviado = '<b>Fecha:</b> %s, %s de %s de %s a las %s:%s:%s %s'%(memo_dia, memo.sent_at.day, memo_mes, memo.sent_at.year, memo.sent_at.time().hour, memo.sent_at.time().minute, memo.sent_at.time().second, salto)
+    enviado = '<b>FECHA:</b> %s, %s de %s de %s a las %s:%s:%s %s'%(memo_dia, memo.sent_at.day, memo_mes, memo.sent_at.year, memo.sent_at.time().hour, memo.sent_at.time().minute, memo.sent_at.time().second, salto)
 
-    txtInfo = '%s %s %s %s' %(identificador, de, para, enviado)
+    txtInfo = '%s %s %s %s' %(identificador, para, de, enviado)
     # Estilo txtInfo
     info = style['Normal']
     info.fontSize = 12

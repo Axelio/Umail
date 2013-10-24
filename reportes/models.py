@@ -12,6 +12,7 @@ class Comentarios(models.Model):
     comentario = models.TextField()
     nombre = models.CharField(max_length=50, verbose_name=u"nombre y apellido")
     correo = models.EmailField()
+    archivo = models.FileField(upload_to='media/adjuntos/',null=True, blank=True)
     class Meta:
         db_table            = u'comentarios'
         verbose_name_plural = u'comentarios'

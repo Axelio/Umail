@@ -599,7 +599,8 @@ def compose(request, message_id=None,
             form.fields['archivo'].initial = message.archivo
                 
         else:
-            form.fields['body'].initial = u"Cordialmente, %s. %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
+            persona = u"%s.</br /> %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
+            form.fields['body'].initial = u"<br /><br />Sin otro particular al cual hacer referencia, se despide. </br /></br /><b>Atentamente,</br /> %s</b>" %(persona.upper())
     return render_to_response(template_name, {
         'tipo': 'Redactar',
         'tipo_mensaje':tipo_mensaje,

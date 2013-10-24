@@ -48,12 +48,8 @@
                         {% endif %}
                     </div>
 
-
                     <hr>
-                    <div class="help-block pull-right">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-                        <button  type="submit" class="btn btn-primary" aria-hidden="true">Enviar</button>
-                    </div>
+                        <input type=file name="archivo" class="prependedInput" required="required" placeholder="usuario@correo.com" size=16>
                 
             </div>
             <div class="span6">
@@ -62,12 +58,15 @@
 " style="width:230px; height:230px"></textarea>
             
             </div>
-            </form>
         </div>
     </div>
 </div>
     <div class="modal-footer">
-        <p><i>{{fecha}}</i></p>
+        <div class="help-block pull-right">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            <button  type="submit" class="btn btn-primary" aria-hidden="true">Enviar</button>
+        </div>
     </div>
 </div>
     
+</form>

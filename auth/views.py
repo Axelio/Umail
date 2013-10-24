@@ -199,11 +199,13 @@ def revisar_comentario(request):
         comentario = request.POST['comentario']
         nombre = request.POST['nombre']
         correo = request.POST['correo']
+        archivo = request.POST['archivo']
         comentario = Comentarios.objects.create(
                                                 pregunta = pregunta,
                                                 comentario = comentario,
                                                 nombre = nombre,
-                                                correo = correo
+                                                correo = correo,
+                                                archivo = archivo 
                                                 )
 
         # Enviar correo a los administradores del sistema

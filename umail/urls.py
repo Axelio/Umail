@@ -67,6 +67,7 @@ urlpatterns = patterns('',
 
     ## Leer memo
     url(r'^leer/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='leer'),
+    url(r'^previsualizar/(?P<message_id>[\d]+)/$', 'django_messages.views.view', name='previsualizar'),
 
 
     # Personas

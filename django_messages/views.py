@@ -599,7 +599,8 @@ def compose(request, message_id=None,
             form.fields['archivo'].initial = message.archivo
                 
         else:
-            form.fields['body'].initial = u"Cordialmente, %s. %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
+            persona = u"%s.</br /> %s de %s" %(request.user.profile.persona, request.user.profile.persona.cargo_principal.cargo, request.user.profile.persona.cargo_principal.dependencia)
+            form.fields['body'].initial = u"<br /><br />Sin otro particular al cual hacer referencia, se despide. </br /></br /><b>Atentamente,</br /> %s</b>" %(persona.upper())
     return render_to_response(template_name, {
         'tipo': 'Redactar',
         'tipo_mensaje':tipo_mensaje,
@@ -852,6 +853,13 @@ def view(request, message_id, template_name='usuario/mensajes/leer.html', mensaj
     now = datetime.datetime.now()
     message = get_object_or_404(Message, id=message_id)
     esta_destinatario = False
+    fecha_actual = datetime.datetime.today()
+
+    import pdb
+    #pdb.set_trace()
+
+    if request.path.__contains__('previsualizar'):
+        template_name = 'usuario/mensajes/previsualizar.html'
 
     destinatario = message.recipient
     if destinatario:
@@ -892,6 +900,7 @@ def view(request, message_id, template_name='usuario/mensajes/leer.html', mensaj
         'loggeado': request.user.is_authenticated,
         'request':request,
         'jefe':jefe,
+        'fecha_actual':fecha_actual,
         'message': message,
     }, context_instance=RequestContext(request))
 view = login_required(view, login_url='/auth')

@@ -19,8 +19,6 @@
                     <div class="strip strip-white" id="strip-grey-degradado" style="padding:1px 0px 0px 0px; min-height: 635px">
                         <ul class="nav nav-list">
                             {% include "usuario/mensajes/lista_menu_mensajes.html" %}
-                            <li class="divider"></li>
-                            <li class="nav-header">Acciones</li>
                         </ul>
                     </div>
                     </div>
@@ -66,7 +64,7 @@
                                     {% endcomment %}
 
                                 <div> 
-                                    <i class="icon-chevron-sign-down"></i>
+                                    <!-- <i class="icon-chevron-sign-down"></i> -->
                                     <a
                                     class="icon-info-sign"
                                     data-toggle="popover"
@@ -88,25 +86,16 @@
                                     </a>
                                 </div>
                                 <div>
-                                    {{ message.body|linebreaksbr }}
+                                    {{ message.body|safe }}
                                     <div class="pull-right">
                                         <br />
-                                        <i class="icon-barcode"></i>
                                         <br />
                                         {{ message.codigo }}
                                         {% load menu %}
                                         {{ jefe|nombre_iniciales }}/{{ message.sender|nombre_iniciales|lower }}
                                     </div>                   
                                 </div>
-
-
-                      
                                 </div>
-
-
-
-
-
                                 </div>
                             </div>
                         </div> 
@@ -117,33 +106,11 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+{% include "usuario/pie.html" %}
 
 <!-- LEER MENSAJES -->
 
-  <div class="container">
+  <!-- <div class="container">
     <div class="container-narrow">
         <div class="row-fluid">
             <div class="span3">
@@ -156,7 +123,7 @@
                 </div>
             </div>
 
-            <div class="span9 row-fluid"> 
+            <div class="span9 row-fluid">
                 <table width=100%>
                     <tr>
                     <td rowspan="3" align=center>
@@ -254,6 +221,6 @@
         </div>
     </div>
   </div>
-</body>
+</body> -->
 
-{% include "usuario/pie.html" %}
+

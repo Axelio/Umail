@@ -184,6 +184,7 @@ INSTALLED_APPS = (
     'suit_redactor',
     'south',
     'django_summernote',
+    'manual_usuario',
 )
 #Configuraciones Django-suit
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP

@@ -8,6 +8,7 @@ from django.contrib.auth.views import logout
 from django.views.generic import TemplateView
 from auth.views import *
 from django.contrib.auth.decorators import login_required
+from manual_usuario.views import Manual
 
 admin.autodiscover()
 
@@ -29,8 +30,8 @@ urlpatterns = patterns('',
     url(r'^preguntas_secretas/$', Revisar_preguntas.as_view(), name='preguntas_secretas'),
 
     # Manual de usuario 
-    url(r'^ayuda/(?P<seccion>\w+)/$', Ayuda.as_view(), name='manual'),
-    url(r'^ayuda/$', TemplateView.as_view(template_name="usuario/manual/manual.html"), name='manual'),
+    url(r'^ayuda/(?P<manual_id>[\d]+)/$', Manual.as_view(), name='seccion'),
+    url(r'^ayuda/$', Manual.as_view(), name='manual'),
 
     # Memos
     ## Bandejas

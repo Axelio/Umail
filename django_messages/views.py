@@ -364,6 +364,16 @@ def compose(request, message_id=None,
         if valido:
             if request.POST.has_key('recipient'):
                 destinatarios = form.cleaned_data['recipient']
+                destinos = []
+                for dest in destinatarios:
+                    if dest.usuarios == None:
+                        destinatarios2 = Destinatarios.objects.filter(usuarios__persona__cargo_principal__cargo=dest.grupos)
+                        for dest2 in destinatarios2:
+                            if not dest2 in form.cleaned_data['recipient']:
+                                destinos.append(dest2)
+                    else:
+                        destinos.append(dest)
+                destinatarios = destinos
             else:
                 destinatarios = None
 
@@ -416,6 +426,7 @@ def compose(request, message_id=None,
                 if con_copia:
                     for dest_cc in con_copia:
                         destinos.append(dest_cc)
+                '''
                 if not destinatarios or not con_copia:
                     message = Message.objects.get(id=message_id)
                     message.body = body
@@ -423,12 +434,13 @@ def compose(request, message_id=None,
                     message.archivo = archivo
                     message.borrador = borrador
                     message.save()
+                '''
 
 
                 msjs_guardados = Message.objects.filter(codigo=codigo)
                 for dest in destinos:
                     # Si el destinatario no está en el campo 'recipient', entonces está en 'con_copia'
-                    if not str(dest.id) in request.POST.getlist('recipient'):
+                    if not dest in destinatarios:
                         cc = True
                     else:
                         cc = False
@@ -854,9 +866,6 @@ def view(request, message_id, template_name='usuario/mensajes/leer.html', mensaj
     message = get_object_or_404(Message, id=message_id)
     esta_destinatario = False
     fecha_actual = datetime.datetime.today()
-
-    import pdb
-    #pdb.set_trace()
 
     if request.path.__contains__('previsualizar'):
         template_name = 'usuario/mensajes/previsualizar.html'

@@ -77,10 +77,16 @@
                                             <dt>De:</dt>
                                             <dt>Fecha:</dt>
                                             <dt>Ident:</dt>
+                                            <dt>Leido:</dt>
                                             <dd>{{ message.recipient}}</dd>
                                             <dd>{{ jefe }}</dd>
                                             <dd>{{ message.sent_at|date:_("DATETIME_FORMAT")}}</dd>
                                             <dd>{{ message.sender.usuarios.persona.cargo_principal.dependencia.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.nivel }}.{{ message.sender.usuarios.persona.cargo_principal.dependencia.siglas }} - {{ message.id }}</dd>
+                                            {% if message.read_at %}
+                                                <dd>{{ message.read_at|date:_("DATETIME_FORMAT") }}</dd>
+                                            {% else %}
+                                                No ha sido leído aún
+                                            {% endif %}
                                         </div>
                                     </div>">
                                     </a>

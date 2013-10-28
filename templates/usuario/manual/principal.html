@@ -115,14 +115,22 @@
                                 <img src="/media/{{ modulo.imagen }}">   
                             </div><!-- /.span -->
                             <div class="span6">
-                                <h1><a id="link-azul" href="/ayuda/{{ modulo.id }}">{{ modulo.titulo }}</a></h1>
-                                <p><b>{{ modulo.resumen }}</b></p>
+                                {% if modulo.modulo %}
+                                    <h1><a id="link-azul" href="#">{{ modulo.titulo }}</a></h1>
+                                {% else %}
+                                    <h1><a id="link-azul" href="/ayuda/{{ modulo.id }}">{{ modulo.titulo }}</a></h1>
+                                {% endif %}
+                                <p><b>{{ modulo.resumen|safe }}</b></p>
                             </div><!-- /.span -->
                         {% endifequal %}
                         {% ifequal modulo.alineacion 'Izquierda' %}
                             <div class="span6">
-                                <h1><a id="link-azul" href="/ayuda/{{ modulo.id }}">{{ modulo.titulo }}</a></h1>
-                                <p><b>{{ modulo.resumen }}</b></p>
+                                {% if modulo.modulo %}
+                                    <h1><a id="link-azul" href="#">{{ modulo.titulo }}</a></h1>
+                                {% else %}
+                                    <h1><a id="link-azul" href="/ayuda/{{ modulo.id }}">{{ modulo.titulo }}</a></h1>
+                                {% endif %}
+                                <p><b>{{ modulo.resumen|safe }}</b></p>
                             </div><!-- /.span -->
                             <div class="span4">
                                 <img src="/media/{{ modulo.imagen }}">   

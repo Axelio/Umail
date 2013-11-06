@@ -152,10 +152,10 @@ setInterval(function() {
                                 </div>
 
                                 {% for memo in memos %} 
-                                    <b>De:</strong> {{ memo.sender }}<br />
-                                    <b>Para:</strong> {{ memo.recipient }}<br />
-                                    <b>Fecha:</strong> {{ memo.sent_at|date:_("DATETIME_FORMAT")}}<br />
-                                    <b>Asunto:</strong> {{ memo.subject }}<br />
+                                    <b>De:</b> {{ memo.sender }}<br />
+                                    <b>Para:</b> {{ memo.recipient }}<br />
+                                    <b>Fecha:</b> {{ memo.sent_at|date:_("DATETIME_FORMAT")}}<br />
+                                    <b>Asunto:</b> {{ memo.subject }}<br />
                                     <tr><td align=center><a style="color:#036FA6" href=/leer/{{ memo.id }}/>Ver memo</a></tr></td>
                                     <br />
                                     <br />
@@ -192,123 +192,3 @@ setInterval(function() {
 
 </body>
 {% include "usuario/pie.html" %}
-
-
-
-    <!-- <div class="container">
-        {% if mensaje %}
-            <div class="alert alert-{{ tipo_mensaje }}">
-                <button type="button" class="close" id="cerrar" data-dismiss="alert">&times;</button>
-                <strong>{{ expresion }}</strong>{{ mensaje }}.
-            </div>
-        {% endif %}
-        <div class="row">
-            {% if consulto %}
-                {% if memo_result.exists %}
-                    <h2>¡Memo encontrado!</h2>
-                    {% if aprobado %}
-                        <b>¡Este memo es auténtico!</b> Es un memorándum de {{ jefe }} enviado a las {{ hora }} para {{ destinos }} tiene como asunto: {{ asunto }}. 
-                        {% if descargable %}
-                            También si desea, puede <a style="color:#036FA6" href="{% url 'descargar' memo.id %}">descargarlo</a>.
-                        {% endif %}
-
-                    {% else %}
-                        <b>¡Este memo es auténtico!</b> A pesar que el memorándum es verídico no podemos mostrarte su contenido porque aún no está aprobado. Revisa más tarde cuando se defina el estado del memorándum.
-                    {% endif %}
-                {% else %}
-                    <h2>Memo no encontrado</h2>
-                        <b>¡Este memo no es auténtico!</b> No existe ningún memorándum generado con ese número de código de barras, por lo tanto, es falso. Revise el código de barras y vuelva a intentarlo.
-                {% endif %}
-
-            {% elif memos %}
-                <div class="pagination">
-                    <ul>
-                        {% if memos.has_previous %}
-                            <li><a href="?page={{ memos.previous_page_number }}">Anterior</a></li>
-                        {% endif %}
-                        <h3 style="color:black">Página {{ memos.number }} de {{ memos.paginator.num_pages }}.</h3>
-                        {% if memos.has_next %}
-                            <li><a href="?page={{ memos.next_page_number }}">Siguiente</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-
-                <span>
-                </span>
-
-                                            
-                    {% for memo in memos %} 
-                        <b>De:</strong> {{ memo.sender }}<br />
-                        <b>Para:</strong> {{ memo.recipient }}<br />
-                        <b>Fecha:</strong> {{ memo.sent_at|date:_("DATETIME_FORMAT")}}<br />
-                        <b>Asunto:</strong> {{ memo.subject }}<br />
-                        <tr><td align=center><a style="color:#036FA6" href=/leer/{{ memo.id }}/>Ver memo</a></tr></td>
-                        <br />
-                        <br />
-                    {% endfor %}
-                    <form id="sign_up" method="post">{% csrf_token %}
-                        <tr><td><input type="hidden" name="lista_mensajes" value="{{ lista_mensajes }}"></td></tr>
-                        <tr><td><input type="hidden" name="opcion" value="{{ opcion }}"></td></tr>
-                        <tr><td><input type="hidden" name="fecha_inicio" value="{{ fecha_inicio }}"></td></tr>
-                        <tr><td><input type="hidden" name="fecha_fin" value="{{ fecha_fin }}"></td></tr>
-                        <tr><td align=center><input type="submit" class="boton btn" value="Descargar libro"></td></tr>
-                    </form>
-
-            {% else %}
-                <h2>Historial</h2>
-                {% if log_user %}
-                        {% load accion %}
-                        {% for log in log_user %} 
-                            <b>{{ log.action_time }}</b> - {{ log.id|accion }}{{ log.change_message }}
-                            <br />
-                        {% endfor %}
-                {% else %}
-                    <h3>Sin acciones registradas</h3>
-                {% endif %}
-            {% endif %}
-        </div>
-
-    <div class="row">
-        <div class="span4">
-            <h2>Consulta un memo</h2>
-            <form method="post" height=150px>{% csrf_token %}
-                <div class="row">
-                    <div class="span3">
-                        {{ consulta_memo.codigo }}
-                    </div>
-                <div class="row">
-                </div>
-                    <div align=center>
-                        <input type="submit" value="Consultar" class="btn btn-primary">
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="span1">
-            <br />
-        </div>
-
-        <div class="row">
-            <div class="span4">
-                <h2>Libro de memos</h2>
-                <form method="post">{% csrf_token %}
-                    <div class="row">
-                        {{ libro_memo.hora}}
-                        <div class="span1 pull-left">
-                            {{ libro_memo.opcion }}
-                        </div>
-                        <div class="span2 pull-right">
-                            {{ libro_memo.fecha_inicio }}
-                            {{ libro_memo.fecha_fin }}
-                        </div>
-                    </div>
-                    <div class="row" align=center>
-                        <input type="submit" value="Consultar" class="btn btn-primary">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    </div> -->
-

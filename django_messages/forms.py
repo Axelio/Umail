@@ -21,8 +21,7 @@ class BandejaForm(forms.Form):
     mensajes = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple)
     class Meta:
         widgets = {
-              #'mensaje': forms.Textarea(attrs={'rows':15, 'cols':'80%'}),
-              'mensaje': RedactorWidget(editor_options={'lang': 'es'}),
+              'mensaje': SummernoteWidget(),
               }
 
 class ComposeForm(forms.ModelForm):

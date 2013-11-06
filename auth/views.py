@@ -19,6 +19,26 @@ from datetime import datetime, timedelta
 from umail import settings 
 from django.contrib import auth 
 
+class Ayuda(View):
+    secciones = [
+                'email', 
+                'perfil', 
+                'contactos',
+                'admin',
+                'reportes',
+                'archivos',
+                'seguridad',
+                ]
+    def get(self, request, *args, **kwargs):
+        seccion = kwargs['seccion'].lower()
+        if not seccion.lower() in self.secciones:
+            return HttpResponseRedirect('/ayuda')
+        else:
+            template = 'usuario/manual/seccion_%s.html' %(seccion)
+            return renderizar_plantilla(request, 
+                                plantilla = template, 
+                            )
+
 class AutoLogout: 
     def process_request(self, request): 
         if not request.user.is_authenticated() : 

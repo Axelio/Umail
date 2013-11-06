@@ -1,0 +1,147 @@
+{% include "usuario/base.html" %}
+{% load admin_static %} 
+
+
+<body>
+
+    <!-- Hero
+    ================================================== -->
+    <div id="hero" >
+        <div id="hero-background">
+            <div class="container">
+                <div class="row" style="color:#FFFFFF" >
+                    <div class="span4">
+                        <div class="title pull-left" style="margin-top:10px;">
+                            <h1>Manual de usuario</h1>
+                        </div><!--<div class="title pull-left" style="margin-top:10px;">-->
+                    </div><!--<div class="span4">-->
+                    <div style="padding-top:30px">
+                        <div class="span6 submenu">
+                            <ul class="pull-right" class="text-center">
+                                <!-- email -->
+                                <li>
+                                    <a  href="#email">
+                                        <i class="icon-envelope icon-3x"></i>
+                                        <div class="texto-submenu">
+                                            Mensajes
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- perfil -->
+                                <li>
+                                    <a  href="#perfil">
+                                        <i class="icon-user icon-3x"></i>
+                                        <div class="texto-submenu">
+                                            Perfil
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <!-- contactos -->
+                                <li>
+                                    <a  href="#contactos">
+                                        <i class="icon-book icon-3x"></i>
+                                        <div class="texto-submenu">
+                                            Contactos
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <!-- administracion -->
+                                <li>
+                                    <a  href="#admin">
+                                        <i class="icon-cogs icon-3x"></i>
+                                        <div class="texto-submenu">
+                                            Admin
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <!-- reportes -->
+                                <li>
+                                    <a  href="#reportes">
+                                        <i class="icon-file icon-3x"></i>
+                                        <div class="texto-submenu">
+                                            Reportes
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <!-- archivos -->
+                                <li>
+                                    <a  href="#archivos">
+                                        <i class="icon-briefcase icon-3x"></i>
+                                        <div class="texto-submenu">
+                                            Archivos
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <!-- seguridad -->
+                                <li>
+                                    <a  href="#seguridad">
+                                        <i class="icon-lock icon-3x"></i>
+                                        <div class="texto-submenu">
+                                            Seguridad
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div> <!--div class="span6 submenu"-->
+                    </div><!--<div style="padding-top:30px">-->
+                </div><!--<div class="row" style="color:#FFFFFF" >-->
+            </div><!--<div class="container">-->
+        </div><!--<div id="hero-background">-->
+    </div><!--<div id="hero" >-->
+    <!-- Hero
+    ================================================== -->
+
+    <!-- Middle
+    ================================================== -->
+
+    <div id="middle">
+        {% for modulo in modulos %}
+            {% ifequal modulo.alineacion 'Izquierda' %}
+                <div class="strip white" id="{{ modulo.id }}">
+            {% else %}
+                <div class="strip gray" id="{{ modulo.id }}">
+            {% endifequal %}
+                <div class="container">
+
+                    <!-- EMAIL -->
+                    <div class="row">
+                        {% ifequal modulo.alineacion 'Derecha' %}
+                            <div class="span4">
+                                <img src="/media/{{ modulo.imagen }}">   
+                            </div><!-- /.span -->
+                            <div class="span6">
+                                {% if modulo.modulo %}
+                                    <h1><a id="link-azul" href="#">{{ modulo.titulo }}</a></h1>
+                                {% else %}
+                                    <h1><a id="link-azul" href="/ayuda/{{ modulo.id }}">{{ modulo.titulo }}</a></h1>
+                                {% endif %}
+                                <p><b>{{ modulo.resumen|safe }}</b></p>
+                            </div><!-- /.span -->
+                        {% endifequal %}
+                        {% ifequal modulo.alineacion 'Izquierda' %}
+                            <div class="span6">
+                                {% if modulo.modulo %}
+                                    <h1><a id="link-azul" href="#">{{ modulo.titulo }}</a></h1>
+                                {% else %}
+                                    <h1><a id="link-azul" href="/ayuda/{{ modulo.id }}">{{ modulo.titulo }}</a></h1>
+                                {% endif %}
+                                <p><b>{{ modulo.resumen|safe }}</b></p>
+                            </div><!-- /.span -->
+                            <div class="span4">
+                                <img src="/media/{{ modulo.imagen }}">   
+                            </div><!-- /.span -->
+                        {% endifequal %}
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+
+            <!-- FIN EMAIL -->
+            </div><!-- /.strip white or gray-->
+        {% endfor %}
+    </div><!--<div id="middle">-->
+</body>
+{% include "usuario/pie.html" %}

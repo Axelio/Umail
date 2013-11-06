@@ -201,8 +201,6 @@ def bandeja(request, tipo_bandeja='', expresion='', tipo_mensaje='', mensaje='')
             if not request.user.profile.persona.cargo_principal.cargo == request.user.profile.persona.cargo_principal.dependencia.cargo_max:
                 message_list = message_list.filter(status__nombre__iexact='Aprobado')
 
-        import pdb
-        pdb.set_trace()
         if request.POST.has_key('filtro'):
             filtro = request.POST['filtro']
             if not filtro == '':

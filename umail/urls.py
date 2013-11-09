@@ -4,6 +4,7 @@ from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout
 from django.views.generic import TemplateView
 from auth.views import *
@@ -27,7 +28,7 @@ urlpatterns = patterns('',
 
     # Auth
     url(r'^auth$', Auth.as_view(), name='auth'),
-    url(r'^preguntas_secretas/$', Revisar_preguntas.as_view(), name='preguntas_secretas'),
+    url(r'^preguntas_secretas/$', login_required(Revisar_preguntas.as_view(), login_url='/auth'), name='preguntas_secretas'),
 
     # Manual de usuario 
     url(r'^ayuda/(?P<manual_id>[\d]+)/$', Manual.as_view(), name='seccion'),

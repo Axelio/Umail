@@ -140,6 +140,8 @@ class Revisar_preguntas(View):
     form = formset_factory(PreguntasForm, extra = 6)
 
     def get(self, request, *args, **kwargs):
+        import pdb
+        pdb.set_trace()
         if not request.user.preguntassecretas_set.get_query_set().exists():
             form = self.form()
             self.mensaje = u'Para su mayor seguridad debe proporcionar algunas preguntas y respuestas secretas'

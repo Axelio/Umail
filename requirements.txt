@@ -3,12 +3,12 @@ django-suit
 django-suit-redactor
 django-select2
 django-filer
-django-summernote
-six
+django-summernote==0.4.2
+six==1.4.1
 gunicorn
 docutils
 reportlab
 psycopg2
-dj-database-url
+dj-databasie-url==0.2.2
 pil
 south

@@ -1,4 +1,4 @@
-django
+django==1.5.4
 django-suit
 django-suit-redactor
 django-select2

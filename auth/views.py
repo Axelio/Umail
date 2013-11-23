@@ -140,22 +140,23 @@ class Revisar_preguntas(View):
     form = formset_factory(PreguntasForm, extra = 6)
 
     def get(self, request, *args, **kwargs):
-        import pdb
-        pdb.set_trace()
-        if not request.user.preguntassecretas_set.get_query_set().exists():
-            form = self.form()
-            self.mensaje = u'Para su mayor seguridad debe proporcionar algunas preguntas y respuestas secretas'
-            (self.tipo_mensaje, self.expresion) = msj_expresion('alert')
-            return renderizar_plantilla(request, 
-                                plantilla = self.template, 
-                                tipo_mensaje = self.tipo_mensaje, 
-                                expresion = self.expresion, 
-                                mensaje = self.mensaje, 
-                                form = form 
-                            )
+        if request.user.is_authenticated():
+            if not request.user.preguntassecretas_set.get_query_set().exists():
+                form = self.form()
+                self.mensaje = u'Para su mayor seguridad debe proporcionar algunas preguntas y respuestas secretas'
+                (self.tipo_mensaje, self.expresion) = msj_expresion('alert')
+                return renderizar_plantilla(request, 
+                                    plantilla = self.template, 
+                                    tipo_mensaje = self.tipo_mensaje, 
+                                    expresion = self.expresion, 
+                                    mensaje = self.mensaje, 
+                                    form = form 
+                                )
 
+            else:
+                return HttpResponseRedirect('/')
         else:
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/auth')
 
     @transaction.commit_on_success
     def post(self, request, *args, **kwargs):

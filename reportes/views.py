@@ -106,12 +106,12 @@ def index(request, template_name='usuario/reportes/reportes.html', mensaje=''):
                         else:
                             c.update({'aprobado':False})
 
-                        consulta_memo = ConsultaMemoForm(request.POST)
-                        c.update({'consulta_memo':consulta_memo})
+                consulta_memo = ConsultaMemoForm(request.POST)
+                c.update({'consulta_memo':consulta_memo})
 
-                        # Saber si consultó algún memorándum
-                        c.update({'consulto':True})
-                        return render_to_response(template_name, c)
+                # Saber si consultó algún memorándum
+                c.update({'consulto':True})
+                return render_to_response(template_name, c)
 
         else:
             mensaje = consulta_memo.errors['codigo']

@@ -9,6 +9,6 @@ gunicorn
 docutils
 reportlab
 psycopg2
-dj-databasie-url==0.2.2
+dj-databasie-url
 pil
 south

@@ -1,0 +1,82 @@
+[
+{
+    "pk": 1, 
+    "model": "manual_usuario.modulo", 
+    "fields": {
+        "titulo": "P\u00e1gina inicial", 
+        "resumen": "Es la primera p\u00e1gina que encontrar\u00e1s antes o despu\u00e9s de ingresar a tu cuenta. En esta p\u00e1gina encontrar\u00e1s la secci\u00f3n del men\u00fa del sistema en la barra superior, adem\u00e1s de informaci\u00f3n extra como Misi\u00f3n, Visi\u00f3n y Objetivo. M\u00e1s abajo encontrar\u00e1s algunos enlaces de inter\u00e9s en el pie de p\u00e1gina.", 
+        "imagen": "manual/index.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 2, 
+    "model": "manual_usuario.modulo", 
+    "fields": {
+        "titulo": "Mensajes", 
+        "resumen": "El sistema de mensajer\u00eda de Umail demuestra ser una herramienta intuitiva para los usuarios, adem\u00e1s de r\u00e1pido, rico en caracter\u00edsticas y en completo orden.", 
+        "imagen": "manual/entrada.png", 
+        "alineacion": "Derecha"
+    }
+},
+{
+    "pk": 3, 
+    "model": "manual_usuario.modulo", 
+    "fields": {
+        "titulo": "Perfil", 
+        "resumen": "Tu informaci\u00f3n personal es muy importante mantenerla lo m\u00e1s exacta posible, as\u00ed que te proporcionamos una serie de campos para que los actualices t\u00fa mismo y especificar a\u00fan m\u00e1s tus datos", 
+        "imagen": "manual/perfil.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 4, 
+    "model": "manual_usuario.modulo", 
+    "fields": {
+        "titulo": "Contactos", 
+        "resumen": "Revisa los grupos y contactos individuales que est\u00e1n registrados en el sistema. Rev\u00edsalos desde tu computador, tablet o tel\u00e9fono.", 
+        "imagen": "manual/contactos.png", 
+        "alineacion": "Derecha"
+    }
+},
+{
+    "pk": 5, 
+    "model": "manual_usuario.modulo", 
+    "fields": {
+        "titulo": "Admin", 
+        "resumen": "Construimos un Umail para ti, con c\u00f3digo libre. Tanto, que t\u00fa mismo puedes controlar y configurar tu Umail. El personal con permisos de \"staff\", pueden observar las configuraciones de los usuarios, dependencias, cargos y dem\u00e1s (pero siempre manteniendo la integridad de los datos).", 
+        "imagen": "manual/admin.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 6, 
+    "model": "manual_usuario.modulo", 
+    "fields": {
+        "titulo": "Manual de usuario", 
+        "resumen": "\u00bfNo entiendes c\u00f3mo funciona algo? Ac\u00e1 te explicamos un poco m\u00e1s detallado su funci\u00f3n y c\u00f3mo utilizarlo.", 
+        "imagen": "manual/manual_usuario.png", 
+        "alineacion": "Derecha"
+    }
+},
+{
+    "pk": 7, 
+    "model": "manual_usuario.modulo", 
+    "fields": {
+        "titulo": "Login", 
+        "resumen": "Para inciar sesi\u00f3n debes hacer click arriba a la derecha en el bot\u00f3n Ingresar. Te llevar\u00e1 a un formulario de usuario y contrase\u00f1a. Ambos campos son sensibles a las may\u00fasculas y min\u00fasculas as\u00ed que intenta escribirlos bien. Si es la primera vez que entras probablemente te lleve a una plantillade preguntas/respuestas secretas, no te preocupes, s\u00f3lo pasar\u00e1 una vez (debemos asegurarnos de mantener una buena seguridad en un sistema tan importante).", 
+        "imagen": "manual/login.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 8, 
+    "model": "manual_usuario.modulo", 
+    "fields": {
+        "titulo": "Reportes", 
+        "resumen": "\u00bfNecesitas alg\u00fan reporte? Libro de memor\u00e1ndum, certificar si un memor\u00e1ndum es o no ver\u00eddico. Ingresa ac\u00e1 y descubre c\u00f3mo hacerlo.", 
+        "imagen": "manual/reportes.png", 
+        "alineacion": "Derecha"
+    }
+}
+]

@@ -1,0 +1,156 @@
+[
+{
+    "pk": 1, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Mensajes recibidos", 
+        "resumen": "La bandeja de entrada es el lugar donde tendr\u00e1s todos los memor\u00e1ndum que te han enviado. Estos se est\u00e1n por orden de llegada.\r\n<br /><br />\r\nSi te fijas, arriba tienes un paginador, el l\u00edmite de mensajes son 15 por p\u00e1gina, una vez alcanzado este n\u00famero, puedes dirigirte a la siguiente a trav\u00e9s de dicha barra.\r\n<br /><br />\r\nA la derecha se encuentra un buscador. \u00bfBuscas alg\u00fan mensaje en especial? Puedes buscar por primer nombre, segundo nombre, primer apellido, segundo apellido, cargo, departamento (tanto del emisor como del receptor), c\u00f3digo de barras, identificador.", 
+        "modulo": 2, 
+        "imagen": "manual/entrada_1.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 2, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Mensajes enviados", 
+        "resumen": "Aqu\u00ed tendr\u00e1s todos los memor\u00e1ndum que te han enviado. Estos se est\u00e1n por orden de llegada.\r\n<br /><br />\r\nSi te fijas, arriba tienes un paginador, el l\u00edmite de mensajes son 15 por p\u00e1gina, una vez alcanzado este n\u00famero, puedes dirigirte a la siguiente a trav\u00e9s de dicha barra.\r\n<br /><br />\r\nA la derecha se encuentra un buscador. \u00bfBuscas alg\u00fan mensaje en especial? Puedes buscar por primer nombre, segundo nombre, primer apellido, segundo apellido, cargo, departamento (tanto del emisor como del receptor), c\u00f3digo de barras, identificador.", 
+        "modulo": 2, 
+        "imagen": "manual/enviados.png", 
+        "alineacion": "Derecha"
+    }
+},
+{
+    "pk": 3, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Redactar", 
+        "resumen": "Escribe el memor\u00e1ndum que necesites enviar. Encontrar\u00e1s un formulario donde necesitar\u00e1s escribir el destinatario: Este es un campo con un autocompletado que contiene a todos los usuarios registrados en el sistema.\r\n<br /><br />\r\nEl campo de \"copia\" es un campo con los usuarios que desees que les llegue una copia del memor\u00e1ndum. Estos no podr\u00e1n responder directamente, pero s\u00ed podr\u00e1n leerlo.\r\n<br /><br />\r\nEl asunto es el resumen del memor\u00e1ndum, intenta escribir algo acorde con el mensaje que se env\u00eda.\r\n<br /><br />\r\n\u00bfNecesitas adjuntar un archivo? Archivo es el campo que necesitas para enviar adjuntar cualquier documento que desees enviar.\r\n<br /><br />\r\nA continuaci\u00f3n tienes el campo para escribir el mensaje, se te proporciona el cierre y firma del memor\u00e1ndum. Al inicio de \u00e9ste puedes escribir lo que desees hacer llegar.\r\n\r\nComo podr\u00e1s observar, m\u00e1s abajo hay dos opciones: Guardar como borrador y enviar. Guardar como borrador almacenar\u00e1 tu mensaje en la bandeja de borradores para que puedas seguir edit\u00e1ndolo luego. Una vez finalizada la redacci\u00f3n, puedes hacer click en Enviar. All\u00ed se enviar\u00e1 directamente al jefe de la dependencia y el mensaje esperar\u00e1 a ser aprobado para que llegue al destino instant\u00e1neamente.", 
+        "modulo": 2, 
+        "imagen": "manual/redactar.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 4, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Mensajes Archivados", 
+        "resumen": "Aqu\u00ed tendr\u00e1s todos los memor\u00e1ndum que no hayas deseado en tu bandeja de entrada. Al archivarlos se env\u00edan directamente a esta bandeja. Estos se est\u00e1n por orden de llegada.\r\n<br /><br />\r\nSi te fijas, arriba tienes un paginador, el l\u00edmite de mensajes son 15 por p\u00e1gina, una vez alcanzado este n\u00famero, puedes dirigirte a la siguiente a trav\u00e9s de dicha barra.\r\n<br /><br />\r\nA la derecha se encuentra un buscador. \u00bfBuscas alg\u00fan mensaje en especial? Puedes buscar por primer nombre, segundo nombre, primer apellido, segundo apellido, cargo, departamento (tanto del emisor como del receptor), c\u00f3digo de barras, identificador.", 
+        "modulo": 2, 
+        "imagen": "manual/archivados_1.png", 
+        "alineacion": "Derecha"
+    }
+},
+{
+    "pk": 6, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Borradores", 
+        "resumen": "Aqu\u00ed tendr\u00e1s almacenados todos aquellos mensajes que guardaste para seguir editando m\u00e1s adelante. No te preocupes, aunque el mensaje est\u00e9 guardado s\u00f3lo t\u00fa puedes verlos.", 
+        "modulo": 2, 
+        "imagen": "manual/borradores.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 7, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Perfil", 
+        "resumen": "Aqu\u00ed puedes encontrar una serie de valores que tal vez necesites actualizar. Entre ellos tienes el primer nombre, segundo nombre, primer apellido, segundo apellido, g\u00e9nero, n\u00famero de tel\u00e9fono. Adicionalmente, puedes elegir si quieres que los memor\u00e1ndum te lleguen tambi\u00e9n a tu correo electr\u00f3nico.<div><br></div><div>Otros valores como la c\u00e9dula de identidad y el correo electr\u00f3nico est\u00e1n bloqueados por seguridad. Al tener lleno tu formulario haz click en Ingresar para guardar los cambios. M\u00e1s abajo tienes tambi\u00e9n, la opci\u00f3n de cambiar tu contrase\u00f1a. Se recomienda hacer cambios de contrase\u00f1a regularmente para mayor seguridad de tu cuenta.</div>", 
+        "modulo": 3, 
+        "imagen": "manual/perfil_1.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 8, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Cambiar contrase\u00f1a", 
+        "resumen": "Por medidas de seguridad, deber\u00edas cambiar tu clave. Por lo que te proponemos este formulario que consta de tu contrase\u00f1a actual, tu nueva contrase\u00f1a y la repetici\u00f3n de la contrase\u00f1a. Una vez que est\u00e9n todos los datos haz click en Ingresar.", 
+        "modulo": 3, 
+        "imagen": "manual/cambiar_clave.png", 
+        "alineacion": "Derecha"
+    }
+},
+{
+    "pk": 9, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Panel Administrativo", 
+        "resumen": "Administra cada uno de los m\u00f3dulos del sistema. Revisa los hist\u00f3ricos y los movimientos en las cuentas. Lo \u00fanico a lo que no tendr\u00e1s acceso es a los memor\u00e1ndum en los que no est\u00e9s incluido de alguna forma. Recuerda, debes ser usuario de tipo Staff para poder ingresar al panel administrativo.", 
+        "modulo": 5, 
+        "imagen": "manual/admin_1.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 10, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Contactos", 
+        "resumen": "Ahora tienes el listado de todos los usuarios del sistema. Aqu\u00ed tendr\u00e1s todos los detalles de la persona como sus nombres y apellidos, correo electr\u00f3nico, n\u00famero telef\u00f3nico, departamento en el que est\u00e1 y el cargo de esta persona.&nbsp;<div><br></div><div>Adicionalmente, arriba a la izquierda tienes un buscador, puedes buscar por cada uno de los campos mencionados anteriormente. A la derecha de este buscador encontrar\u00e1s un paginador, puede que tal vez hayan demasiados contactos para listarlos en una sola p\u00e1gina.</div>", 
+        "modulo": 4, 
+        "imagen": "manual/contactos_1.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 11, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Manual de usuario", 
+        "resumen": "Separado por secciones, encontrar\u00e1s una buena ayuda sobre c\u00f3mo utilizar las herramientas de Umail, as\u00ed, si no encuentras c\u00f3mo hacer funcionar alg\u00fan m\u00f3dulo, puedes asesorarte aqu\u00ed. Cada m\u00f3dulo se divide en subm\u00f3dulos que tambi\u00e9n tienen su debida documentaci\u00f3n.", 
+        "modulo": 6, 
+        "imagen": "manual/manual_usuario_1.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 12, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Login", 
+        "resumen": "Para inciar sesi\u00f3n debes hacer click arriba a la derecha en el bot\u00f3n Ingresar. Te llevar\u00e1 a un formulario de usuario y contrase\u00f1a. Ambos campos son sensibles a las may\u00fasculas y min\u00fasculas as\u00ed que intenta escribirlos bien. Si es la primera vez que entras probablemente te lleve a una plantillade preguntas/respuestas secretas, no te preocupes, s\u00f3lo pasar\u00e1 una vez (debemos asegurarnos de mantener una buena seguridad en un sistema tan importante).", 
+        "modulo": 7, 
+        "imagen": "manual/login_1.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 13, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Preguntas y respuestas secretas", 
+        "resumen": "Seguramente debe ser la primera vez que entras al sistema. Por seguridad se te establece un conjunto de 12 preguntas y sus respectivas respuestas. La idea de esto es que por seguridad, si se te olvida la contrase\u00f1a, puedas responder al menos 3 preguntas aleatorias. Las preguntas no se pueden repetir, deben ser 12 preguntas distintas obligatoriamente.&nbsp;<div>\u00bfCu\u00e1nto tiempo te puede tomar? Vamos, an\u00edmate a mejorar la seguridad de tu cuenta.<br></div>", 
+        "modulo": 7, 
+        "imagen": "manual/preguntas_respuestas.png", 
+        "alineacion": "Derecha"
+    }
+},
+{
+    "pk": 14, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Veracidad de un memor\u00e1ndum", 
+        "resumen": "A la derecha de la fecha actual del sistema, podr\u00e1s encontrar un campo para el c\u00f3digo de barras. El c\u00f3digo de barras est\u00e1 impreso en los memor\u00e1ndum (tanto f\u00edsicos, como digitales), si dudas que el memor\u00e1ndum sea o no verdadero, ingresa el c\u00f3digo de barras en este campo y cons\u00faltalo. Te dar\u00e1 algunas descripciones del mensaje y podr\u00e1s saber si es cierta o no la informaci\u00f3n que te presentan.", 
+        "modulo": 8, 
+        "imagen": "manual/reportes_1.png", 
+        "alineacion": "Izquierda"
+    }
+},
+{
+    "pk": 15, 
+    "model": "manual_usuario.submodulo", 
+    "fields": {
+        "titulo": "Libro de memor\u00e1ndum", 
+        "resumen": "Debajo de la fecha actual tendr\u00e1s un formulario para descargar tu libro de memor\u00e1ndum. Funciona por rangos de fecha, una fecha de inicio para indicar desde cu\u00e1ndo deseas el reporte del libro; una fecha final para indicar hasta cu\u00e1ndo deseas el libro de memor\u00e1ndum y deber\u00e1s elegir qu\u00e9 tipo de libro deseas, si con los memor\u00e1ndum recibidos, los enviados o ambos si as\u00ed lo deseas.<div><br></div><div>Al hacer click en consultar tendr\u00e1s los resultados a la derecha en formato digital, podr\u00e1s descargar el libro en formato PDF si lo deseas.</div>", 
+        "modulo": 8, 
+        "imagen": "manual/reportes_2.png", 
+        "alineacion": "Derecha"
+    }
+}
+]

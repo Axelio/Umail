@@ -26,7 +26,6 @@ MANAGERS = ADMINS
 import dj_database_url
 import socket
 if socket.gethostname().__contains__('heroku'):
-    import dj_database_url
     DATABASES['default'] =  dj_database_url.config()
 
 LOGIN_URL = '/'

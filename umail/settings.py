@@ -5,17 +5,10 @@ import glob
 
 USE_THOUSAND_SEPARATOR = True
 
-#Configuración de envío de correo por Gmail
-REMITENTE='Nombre Remitente <correo@correo.com>' #Correo remitente por defecto que usará la activación de cuentas
-EMAIL_SUBJECT_PREFIX = '[Umail] '
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'diaz.axelio@gmail.com'
-EMAIL_HOST_PASSWORD = 'axelio-19276008-'
-
-# Control para que cuando se use un sitio con conexión segura
-EMAIL_USE_TLS = True 
+conffiles = glob.glob(os.path.join(os.path.dirname(__file__), 'settings', '*.conf'))
+conffiles.sort()
+for f in conffiles:
+        execfile(os.path.abspath(f))
 
 LOGIN_URL='/auth'
 
@@ -30,24 +23,11 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        #'ENGINE' : 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle.'
-        #'NAME': 'db_umail',
-        #'USER': '',                      # Not used with sqlite3.
-        #'PASSWORD': '',                  # Not used with sqlite3.
-        #'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        #'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-        'ENGINE' : 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle.'
-        'NAME': 'db_umail',
-        'USER': 'umail',                      # Not used with sqlite3.
-        'PASSWORD': 'umail86245',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+import socket
+if socket.gethostname().__contains__('heroku'):
+    import dj_database_url
+    DATABASES['default'] =  dj_database_url.config()
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'

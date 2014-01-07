@@ -18,6 +18,11 @@ CACHES={
         }
 }
 
+import dj_database_url
+import socket
+if socket.gethostname().__contains__('heroku'):
+    DATABASES['default'] =  dj_database_url.config()
+
 DATABASES = {
     'default': {
         'ENGINE' : 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle.'

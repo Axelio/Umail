@@ -23,11 +23,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-import dj_database_url
-import socket
-if socket.gethostname().__contains__('heroku'):
-    DATABASES['default'] =  dj_database_url.config()
-
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 
@@ -37,6 +32,7 @@ CACHES={
                 'LOCATION':'/tmp/'
         }
 }
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

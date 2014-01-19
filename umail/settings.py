@@ -17,7 +17,7 @@ if not socket.gethostbyname(socket.gethostname()).__contains__('127.0.'):
 
 LOGIN_URL='/auth'
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = ['umail.herokuapp.com','localhost']
 

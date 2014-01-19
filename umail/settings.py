@@ -14,6 +14,7 @@ LOGIN_URL='/auth'
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+ALLOWED_HOSTS = ['umail.herokuapp.com','localhost']
 
 ADMINS = (
     (u'Axel Díaz', 'diaz.axelio@gmail.com'),

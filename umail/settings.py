@@ -12,7 +12,7 @@ for f in conffiles:
 
 LOGIN_URL='/auth'
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = ['umail.herokuapp.com','localhost']
 

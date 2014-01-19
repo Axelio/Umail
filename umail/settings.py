@@ -12,7 +12,7 @@ for f in conffiles:
 
 LOGIN_URL='/auth'
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

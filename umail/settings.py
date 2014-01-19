@@ -5,15 +5,15 @@ import glob
 
 USE_THOUSAND_SEPARATOR = True
 
-import dj_database_url
-import socket
-if not socket.gethostname().__contains__('localhost'):
-    DATABASES['default'] =  dj_database_url.config()
-
 conffiles = glob.glob(os.path.join(os.path.dirname(__file__), 'settings', '*.conf'))
 conffiles.sort()
 for f in conffiles:
         execfile(os.path.abspath(f))
+
+import dj_database_url
+import socket
+if not socket.gethostbyname(socket.gethostname()).__contains__('127.0.'):
+    DATABASES['default'] =  dj_database_url.config()
 
 LOGIN_URL='/auth'
 
